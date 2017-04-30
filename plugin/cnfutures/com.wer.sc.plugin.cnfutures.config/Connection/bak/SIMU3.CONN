@@ -1,0 +1,9 @@
+{"Data":
+[{"Key":"ID","Value":"SIMNOW3"},
+{"Key":"NAME","Value":"SimuNow模拟CTP3，移动"},
+{"Key":"DESC","Value":"SimuNow模拟CTP3，三号线，移动"},
+{"Key":"DataServer","Value":"tcp://218.202.237.33:10012"},
+{"Key":"TradeServer","Value":"tcp://218.202.237.33:10002"},
+{"Key":"BrokerId","Value":"9999"},
+{"Key":"UserID","Value":"076657"},
+{"Key":"Passwd","Value":"800906"}]}

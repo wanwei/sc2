@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Plugins>
+  <Assembly file="com.wer.sc.plugin.mock.market.dll">
+    <Plugin class="com.wer.sc.plugin.mock.market.Plugin_Market_Mock">
+    </Plugin>
+  </Assembly>
+</Plugins>

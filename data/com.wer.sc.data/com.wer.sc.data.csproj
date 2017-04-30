@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1EE9E83B-FD37-42FA-A263-EEE93479AD45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.data</RootNamespace>
+    <AssemblyName>com.wer.sc.data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="market\data\KLineData_Merge.cs" />
+    <Compile Include="market\data\KLineData_RealTime.cs" />
+    <Compile Include="market\data\TickData_RealTime.cs" />
+    <Compile Include="market\data\TimeLineData_RealTime.cs" />
+    <Compile Include="market\IMarketData.cs" />
+    <Compile Include="market\IMarketTrader.cs" />
+    <Compile Include="market\impl\MarketData.cs" />
+    <Compile Include="market\impl\MarketTrader.cs" />
+    <Compile Include="market\receiver\RealDataReceiver.cs" />
+    <Compile Include="market\receiver\update\Plugin_HistoryData_Daily.cs" />
+    <Compile Include="market\receiver\RealTimeDataReceiver_Code.cs" />
+    <Compile Include="market\receiver\RecentKLineDataLoader.cs" />
+    <Compile Include="market\receiver\update\TickData_RealReader.cs" />
+    <Compile Include="market\receiver\update\TickData_RealWriter.cs" />
+    <Compile Include="reader\DataReaderFactory.cs" />
+    <Compile Include="reader\IDataReader.cs" />
+    <Compile Include="reader\impl\DataReader.cs" />
+    <Compile Include="reader\IInstrumentReader.cs" />
+    <Compile Include="reader\IKLineDataReader.cs" />
+    <Compile Include="reader\impl\InstrumentReader.cs" />
+    <Compile Include="reader\ITickDataReader.cs" />
+    <Compile Include="reader\ITimeLineDataReader.cs" />
+    <Compile Include="reader\impl\KLineDataReader.cs" />
+    <Compile Include="reader\impl\TickDataReader.cs" />
+    <Compile Include="reader\impl\TimeLineDataReader.cs" />
+    <Compile Include="reader\impl\TradingSessionReader.cs" />
+    <Compile Include="datacenter\DataCenter.cs" />
+    <Compile Include="datacenter\DataCenterManager.cs" />
+    <Compile Include="datacenter\DataCenterConfig.cs" />
+    <Compile Include="datacenter\StoreMethod.cs" />
+    <Compile Include="market\MarketFactory.cs" />
+    <Compile Include="market\IMarket.cs" />
+    <Compile Include="market\impl\Market.cs" />
+    <Compile Include="market\IMarketDataReceiveTragger.cs" />
+    <Compile Include="market\receiver\MarketDataReceiveTragger_TickWriter.cs" />
+    <Compile Include="market\receiver\MarketDataReceiveTragger_RealTimeBuilder.cs" />
+    <Compile Include="store\DataStoreFactory.cs" />
+    <Compile Include="store\file\DataStore_File.cs" />
+    <Compile Include="store\file\InstrumentStore_File.cs" />
+    <Compile Include="store\file\KLineDataIndexer.cs" />
+    <Compile Include="store\file\KLineDataStore_File.cs" />
+    <Compile Include="store\file\TickDataStore_File.cs" />
+    <Compile Include="store\file\TradingSessionStore_File.cs" />
+    <Compile Include="store\IDataStore.cs" />
+    <Compile Include="store\IInstrumentStore.cs" />
+    <Compile Include="store\IKLineDataStore.cs" />
+    <Compile Include="store\ITickDataStore.cs" />
+    <Compile Include="store\ITradingDayStore.cs" />
+    <Compile Include="store\ITradingSessionStore.cs" />
+    <Compile Include="datacenter\StoreDataTypes.cs" />
+    <Compile Include="store\file\DataPathUtils.cs" />
+    <Compile Include="update\DataUpdate.cs" />
+    <Compile Include="update\StepGetter_UpdateKLineData.cs" />
+    <Compile Include="update\StepGetter_UpdateTickData.cs" />
+    <Compile Include="update\StepPreparer.cs" />
+    <Compile Include="update\Step_UpdateInstrument.cs" />
+    <Compile Include="update\Step_UpdateKLineData.cs" />
+    <Compile Include="update\Step_UpdateTickData.cs" />
+    <Compile Include="update\Step_UpdateTradingDays.cs" />
+    <Compile Include="update\Step_UpdateTradingSession_Instrument.cs" />
+    <Compile Include="utils\KLineDataTimeGetter.cs" />
+    <Compile Include="utils\DaySplitter.cs" />
+    <Compile Include="store\file\TradingDayStore_File.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="store\file\KLineDataStore_File_Single.cs" />
+    <Compile Include="store\file\TickDataStore_File_Single.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="datacenter\datacenter.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(ProjectDir)datacenter\datacenter.config $(TargetDir)config\ /s /e /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

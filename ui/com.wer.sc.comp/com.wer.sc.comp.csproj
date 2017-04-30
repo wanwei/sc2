@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9898BD8E-1DB1-4EC5-9AF8-220B9055981C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.comp</RootNamespace>
+    <AssemblyName>com.wer.sc.comp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnaComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnaComponent.Designer.cs">
+      <DependentUpon>AnaComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ana\AnaDrawer_KLine.cs" />
+    <Compile Include="ana\CompKLineModels.cs" />
+    <Compile Include="DrawControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawControl.Designer.cs">
+      <DependentUpon>DrawControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawMainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawMainControl.Designer.cs">
+      <DependentUpon>DrawMainControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicDrawerHelper.cs" />
+    <Compile Include="graphic\candle\GraphicOperator_Candle.cs" />
+    <Compile Include="graphic\ColorConfig.cs" />
+    <Compile Include="graphic\candle\GraphicDrawer_Candle.cs" />
+    <Compile Include="graphic\candle\GraphicDrawer_Candle_Abstract.cs" />
+    <Compile Include="graphic\candle\GraphicDrawer_CandleMount.cs" />
+    <Compile Include="graphic\candle\GraphicDataProvider_CandleDefault.cs" />
+    <Compile Include="graphic\candle\GraphicDataProvider_CandleNav.cs" />
+    <Compile Include="graphic\info\CurrentInfo.cs" />
+    <Compile Include="graphic\info\GraphicOperator_CurrentInfo_Nav.cs" />
+    <Compile Include="graphic\info\IGraphicDataProvider_CurrentInfo.cs" />
+    <Compile Include="graphic\info\GraphicDataProvider_CurrentInfo_Nav.cs" />
+    <Compile Include="graphic\info\GraphicDrawer_CurrentInfo.cs" />
+    <Compile Include="graphic\info\IGraphicOperator_CurrentInfo.cs" />
+    <Compile Include="graphic\main\GraphicDrawer_Switch_CandleReal.cs" />
+    <Compile Include="graphic\main\GraphicOperator_Main.cs" />
+    <Compile Include="graphic\main\GraphicDataProvider_Main.cs" />
+    <Compile Include="graphic\GraphicDrawer_Compound.cs" />
+    <Compile Include="graphic\main\GraphicDrawer_Main.cs" />
+    <Compile Include="graphic\GraphicDrawer_Switch.cs" />
+    <Compile Include="graphic\main\IGraphicDataProvider_Main.cs" />
+    <Compile Include="graphic\main\IGraphicOperator_Main.cs" />
+    <Compile Include="graphic\real\IGraphicDataProvider_Real.cs" />
+    <Compile Include="graphic\real\GraphicDataProvider_RealNav.cs" />
+    <Compile Include="graphic\real\GraphicDrawer_Real.cs" />
+    <Compile Include="graphic\real\GraphicDrawer_RealChart.cs" />
+    <Compile Include="graphic\real\GraphicDrawer_RealMount.cs" />
+    <Compile Include="graphic\real\GraphicDrawer_Real_Abstract.cs" />
+    <Compile Include="graphic\utils\CrossHairDrawer.cs" />
+    <Compile Include="graphic\utils\PriceGraphicArgs.cs" />
+    <Compile Include="graphic\utils\PriceGraphicDrawerUtils.cs" />
+    <Compile Include="graphic\GraphicDrawer_Abstract.cs" />
+    <Compile Include="graphic\candle\IGraphicDataProvider_Candle.cs" />
+    <Compile Include="graphic\candle\GraphicDrawer_CandleChart.cs" />
+    <Compile Include="graphic\GraphicMarginInfo.cs" />
+    <Compile Include="graphic\GraphicPaddingInfo.cs" />
+    <Compile Include="graphic\utils\PriceGraphicMapping.cs" />
+    <Compile Include="graphic\utils\SelectPointInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="graphic\StockGraph_Abstract.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ana\com.wer.sc.ana\com.wer.sc.ana.csproj">
+      <Project>{0acf6f33-a700-47fd-aa61-5e0b3b4b8f80}</Project>
+      <Name>com.wer.sc.ana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils.ui\com.wer.sc.utils.ui.csproj">
+      <Project>{ffffc645-3a82-48f2-8705-d4ee4552f1b7}</Project>
+      <Name>com.wer.sc.utils.ui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AnaComponent.resx">
+      <DependentUpon>AnaComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawControl.resx">
+      <DependentUpon>DrawControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrawMainControl.resx">
+      <DependentUpon>DrawMainControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="graphic\tick\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

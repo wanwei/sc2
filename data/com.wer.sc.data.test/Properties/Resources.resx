@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="m01_20131231" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\m01_20131231.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="AG05_20141230" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AG05_20141230.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="M13_20150105" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\M13_20150105.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="M05_20150106" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\M05_20150106.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="M05_20141229" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\M05_20141229.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M01_20131202" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M01_20131202.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M05_20141229" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M05_20141229.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M01_20131202" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M01_20131202.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20141229" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20141229.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20141230" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20141230.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20150624" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20150624.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M05_20141230" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M05_20141230.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M05_20150624" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M05_20150624.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M05_20150629" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M05_20150629.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20150504" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20150504.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20150506" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20150506.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Charts_M05_20040630" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Charts_M05_20040630.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="AG05_20141230_Result" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AG05_20141230_Result.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="M05_20150106_Result" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\M05_20150106_Result.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Kline_M01_20131202_20131213" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Kline_M01_20131202_20131213.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Kline_M01_20131202_20131213_15Second" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Kline_M01_20131202_20131213_15Second.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2Kline_M05_20131202_20131231" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2Kline_M05_20131202_20131231.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TimePeriod_M05_20141229_5Second" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimePeriod_M05_20141229_5Second.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="DaySplit_M05_20131201_20131231" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DaySplit_M05_20131201_20131231.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="DaySplit_M05_20141229_20150115" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DaySplit_M05_20141229_20150115.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="DaySplit_M05_20150625_20150715" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DaySplit_M05_20150625_20150715.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Kline2Kline_M05_20131216_20131231_15Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kline2Kline_M05_20131216_20131231_15Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Kline2Kline_M05_20131216_20131231_1Hour" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kline2Kline_M05_20131216_20131231_1Hour.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Kline2Kline_M05_20131216_20131231_5Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kline2Kline_M05_20131216_20131231_5Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20000717_20131225" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20000717_20131225.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Store_Catelog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Store_Catelog.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Store_Code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Store_Code.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="MockData_Code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MockData_Code.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="MockData_OpenDate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MockData_OpenDate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Store_OpenDate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Store_OpenDate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Store_KlineData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Store_KlineData.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Store_TickData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Store_TickData.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TickData_M01_20131231" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TickData_M01_20131231.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="MockData_Code2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MockData_Code2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="MockData_OpenDate2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MockData_OpenDate2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TickData_M01_20141223" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TickData_M01_20141223.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150116_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150116_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TickData_M05_20150121" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TickData_M05_20150121.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="TickData_M09_20141223" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TickData_M09_20141223.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Kline2kline_M05_20131216_20131231_Day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kline2kline_M05_20131216_20131231_Day.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Kline2Kline_M05_20141215_20150116_Day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kline2Kline_M05_20141215_20150116_Day.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150116_15Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150116_15Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150116_Day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150116_Day.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150127_15Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150127_15Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150127_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150127_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141215_20150127_Day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141215_20150127_Day.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M09_20141215_20150127_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M09_20141215_20150127_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="DataUpdate_DataPrepare" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DataUpdate_DataPrepare.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Resource_M01_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Resource_M01_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Cache_OpenDate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cache_OpenDate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20130101_20151231_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20130101_20151231_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20130101_20151231_1Minute_Index" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20130101_20151231_1Minute_Index.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M05_20141229_20141229_1Minute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M05_20141229_20141229_1Minute.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineOpenTime_NightNormal_WeekStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineOpenTime_NightNormal_WeekStart.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineOpenTime_Night_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineOpenTime_Night_Normal.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineOpenTime_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineOpenTime_Normal.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineOpenTime_OverNight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineOpenTime_OverNight.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineOpenTime_OverNight_WeekStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineOpenTime_OverNight_WeekStart.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="KLineData_M01_20040101_20040130" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KLineData_M01_20040101_20040130.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2KLine_M01_20131202" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2KLine_M01_20131202.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Tick2KLine_M05_20040129" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tick2KLine_M05_20040129.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+</root>

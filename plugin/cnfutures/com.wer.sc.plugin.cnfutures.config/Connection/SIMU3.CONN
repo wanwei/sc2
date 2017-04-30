@@ -1,0 +1,8 @@
+ID:SIMNOW3
+NAME:SimuNow模拟CTP3，移动
+DESC:SimuNow模拟CTP3，三号线，移动
+DataServer:tcp://218.202.237.33:10012
+TradeServer:tcp://218.202.237.33:10002
+BrokerId:9999
+UserID:076657
+Passwd:800906

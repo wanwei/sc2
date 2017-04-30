@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Plugins>
+  <Assembly file="com.wer.sc.plugin.mock.historydata.dll">
+    <Plugin class="com.wer.sc.plugin.mock.historydata.Plugin_HistoryData_Mock">
+      <Options>
+        <Option key="test" value="test"></Option>
+        <Option key="test2" value="test"></Option>
+      </Options>
+    </Plugin>
+  </Assembly>
+</Plugins>

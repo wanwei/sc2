@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A8045DD4-BD73-4425-920D-C994F8C9786A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.plugin.cnfutures.config</RootNamespace>
+    <AssemblyName>com.wer.sc.plugin.cnfutures.config</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\Debug\plugin\cnfutures\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataLoader_InstrumentInfo.cs" />
+    <Compile Include="DataLoader_TradingSessionDetail.cs" />
+    <Compile Include="PathUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\catelogs.csv" />
+    <None Include="config\varieties.csv" />
+    <None Include="config\instruments.csv" />
+    <None Include="config\instruments_m.csv" />
+    <None Include="config\mainfutures.csv" />
+    <None Include="config\tradingsessiondetail.config" />
+    <None Include="Connection\bak\SIMU1.CONN" />
+    <None Include="Connection\bak\SIMU2.CONN" />
+    <None Include="Connection\bak\SIMU3.CONN" />
+    <None Include="Connection\bak\SIMUTEST.CONN" />
+    <None Include="Connection\SIMU1.CONN" />
+    <None Include="Connection\SIMU2.CONN" />
+    <None Include="Connection\SIMU3.CONN" />
+    <None Include="Connection\SIMUTEST.CONN" />
+    <None Include="ctp\CTP_Quote_x86.lib" />
+    <None Include="ctp\CTP_Trade_x86.lib" />
+    <None Include="ctp\Queue_x86.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ctp\CTP_Quote_x86.dll" />
+    <Content Include="ctp\CTP_Trade_x86.dll" />
+    <Content Include="ctp\Queue_x86.dll" />
+    <Content Include="ctp\thostmduserapi.dll" />
+    <Content Include="ctp\thosttraderapi.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)config\
+copy $(ProjectDir)config\* $(TargetDir)config\
+mkdir $(TargetDir)ctp\
+copy $(ProjectDir)ctp\* $(TargetDir)ctp\
+mkdir $(TargetDir)Connection\
+copy $(ProjectDir)Connection\* $(TargetDir)Connection\</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

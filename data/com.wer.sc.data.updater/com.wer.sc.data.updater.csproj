@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4DD302CC-6E1C-48C1-8647-54473B9D1EED}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.data.updater</RootNamespace>
+    <AssemblyName>com.wer.sc.data.updater</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="com.wer.sc.utils.ui">
+      <HintPath>..\com.wer.sc.utils.ui\obj\Debug\com.wer.sc.utils.ui.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormChoosePlugin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChoosePlugin.Designer.cs">
+      <DependentUpon>FormChoosePlugin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormChooseUpdater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChooseUpdater.Designer.cs">
+      <DependentUpon>FormChooseUpdater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataUpdate2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataUpdate2.Designer.cs">
+      <DependentUpon>FormDataUpdate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataUpdater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataUpdater.Designer.cs">
+      <DependentUpon>FormDataUpdater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataUpdater3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataUpdater3.Designer.cs">
+      <DependentUpon>FormDataUpdater3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPrepareHistoryData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrepareHistoryData.Designer.cs">
+      <DependentUpon>FormPrepareHistoryData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugin_DataUpdater.cs" />
+    <Compile Include="Plugin_HistoryData_Default.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test\FormTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="test\FormTest.Designer.cs">
+      <DependentUpon>FormTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateConfig.cs" />
+    <EmbeddedResource Include="FormChoosePlugin.resx">
+      <DependentUpon>FormChoosePlugin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormChooseUpdater.resx">
+      <DependentUpon>FormChooseUpdater.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataUpdate2.resx">
+      <DependentUpon>FormDataUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataUpdater.resx">
+      <DependentUpon>FormDataUpdater.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataUpdater3.resx">
+      <DependentUpon>FormDataUpdater3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPrepareHistoryData.resx">
+      <DependentUpon>FormPrepareHistoryData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="test\FormTest.resx">
+      <DependentUpon>FormTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="config\dataupdate.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)config
+xcopy $(ProjectDir)config\dataupdate.config $(TargetDir)config\ /s /e /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

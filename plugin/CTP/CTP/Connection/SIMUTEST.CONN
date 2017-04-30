@@ -1,0 +1,10 @@
+{"Data":
+[{"Key":"ID","Value":"SIMNOWMOCK"},
+{"Key":"NAME","Value":"SimuNow模拟CTP，非正式数据"},
+{"Key":"DESC","Value":"SimuNow模拟CTP，24小时都可登陆"},
+{"Key":"DataServer","Value":"tcp://180.168.146.187:10031"},
+{"Key":"TradeServer","Value":"tcp://180.168.146.187:10030"},
+{"Key":"BrokerId","Value":"9999"},
+{"Key":"UserID","Value":"076657"},
+{"Key":"Passwd","Value":"800906"}]}
+

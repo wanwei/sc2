@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BFF52B2B-D048-47A2-B3E3-029F057D5508}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.data</RootNamespace>
+    <AssemblyName>com.wer.sc.data.test</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="datacenter\TestDataCenter.cs" />
+    <Compile Include="datacenter\TestDataCenterConfig.cs" />
+    <Compile Include="datacenter\TestDataCenterManager.cs" />
+    <Compile Include="market\data\TestKLineData_RealTime.cs" />
+    <Compile Include="market\data\TestTickData_RealTime.cs" />
+    <Compile Include="market\data\TestTimeLineData_RealTime.cs" />
+    <Compile Include="market\TestMarketData.cs" />
+    <Compile Include="reader\DataCenterUri.cs" />
+    <Compile Include="reader\TestIInstrumentReader.cs" />
+    <Compile Include="reader\TestIKLineDataReader.cs" />
+    <Compile Include="reader\TestTickDataReader.cs" />
+    <Compile Include="reader\TestTimeLineDataReader.cs" />
+    <Compile Include="store\file\TestGetBytes.cs" />
+    <Compile Include="store\file\TestInstrumentStore_File.cs" />
+    <Compile Include="store\file\TestKLineDataStore_File.cs" />
+    <Compile Include="store\file\TestTickDataStore_File.cs" />
+    <Compile Include="store\file\TestTradingDayStore_File.cs" />
+    <Compile Include="store\TestInstrumentStore.cs" />
+    <Compile Include="store\TestKLineDataStore.cs" />
+    <Compile Include="store\TestTickDataStore.cs" />
+    <Compile Include="store\TestTradingDayStore.cs" />
+    <Compile Include="store\TestTradingSessionStore.cs" />
+    <Compile Include="store\UriGetter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\market\data\KLineData_RealTime" />
+    <None Include="TestCase\com\wer\sc\data\market\data\TimeLineData_RealTime" />
+    <Compile Include="update\Plugin_History_MockUpdate.cs" />
+    <Compile Include="update\TestDataProceed_DataUpdate.cs" />
+    <Compile Include="update\TestStepGetter_UpdateKLineData.cs" />
+    <Compile Include="update\TestStepGetter_UpdateTickData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AG05_20141230.csv" />
+    <None Include="Resources\m01_20131231.csv" />
+    <None Include="Resources\m05_20040630.csv" />
+    <None Include="Resources\M05_20141229.csv" />
+    <None Include="Resources\M05_20150106.csv" />
+    <None Include="Resources\M13_20150105.csv" />
+    <None Include="TestCase\com\wer\sc\data\datacenter\datacenter.config" />
+    <None Include="TestCase\com\wer\sc\data\datacenter\instruments" />
+    <None Include="TestCase\com\wer\sc\data\reader\cache\OpenDate_Cache" />
+    <None Include="TestCase\com\wer\sc\data\reader\instruments" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M01_20040101_20040130" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20130101_20151231_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20130101_20151231_1Minute_Index" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150116_15Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150116_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150116_Day" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150127_15Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150127_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141215_20150127_Day" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M05_20141229_20141229_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_M09_20141215_20150127_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\reader\TickData_M01_20131231" />
+    <None Include="TestCase\com\wer\sc\data\reader\TickData_M01_20141223" />
+    <None Include="TestCase\com\wer\sc\data\reader\TickData_M05_20150121" />
+    <None Include="TestCase\com\wer\sc\data\reader\TickData_M09_20141223" />
+    <None Include="TestCase\com\wer\sc\data\reader\TimeLineData_M05_20100108" />
+    <None Include="TestCase\com\wer\sc\data\store\datacenter.config" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_Catelog" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_Code" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_KlineData" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_TickData" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_TradingDay" />
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20131201_20131231.txt" />
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20141229_20150115.txt" />
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20150625_20150715.txt" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2Kline_M01_20131202_20131213" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2Kline_M01_20131202_20131213_15Second" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20040129" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2Kline_M05_20131202_20131231" />
+    <None Include="TestCase\com\wer\sc\data\update\datacenter.config" />
+    <None Include="TestCase\com\wer\sc\data\update\Steps_DataProceed_DataUpdate" />
+    <None Include="TestCase\com\wer\sc\data\update\Steps_UpdateKLineData1" />
+    <None Include="TestCase\com\wer\sc\data\update\Steps_UpdateTickData" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_KLineData" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TickData" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M01_20131202" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M05_20141229" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M05_20141229_5Second" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M05_20141230" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M05_20150624" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_M05_20150629" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_NightNormal_WeekStart" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_Night_Normal" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_Normal" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_OverNight" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTimePeriod_OverNight_WeekStart" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTime_Normal_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenTime_OverNight_1Minute" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\com.wer.sc.mockdata\com.wer.sc.mockdata.csproj">
+      <Project>{4645ed74-abf5-449e-8c75-16a2c8ce5612}</Project>
+      <Name>com.wer.sc.mockdata</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\opentime.config" />
+    <None Include="Resources\TimePeriod_M01_20131202.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimePeriod_M05_20141229.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimePeriod_M05_20141230.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimePeriod_M05_20150629.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimePeriod_M05_20150624.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M01_20131202.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20141230.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20150624.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20141229.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20150504.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20150506.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Charts_M05_20040630.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AG05_20141230_Result.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\M05_20150106_Result.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Kline_M01_20131202_20131213.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Kline_M05_20131202_20131231.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2Kline_M01_20131202_20131213_15Second.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimePeriod_M05_20141229_5Second.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kline2Kline_M05_20131216_20131231_5Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kline2Kline_M05_20131216_20131231_15Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kline2Kline_M05_20131216_20131231_1Hour.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DaySplit_M05_20131201_20131231.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DaySplit_M05_20141229_20150115.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DaySplit_M05_20150625_20150715.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Store_Code.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Store_Catelog.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20000717_20131225.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MockData_OpenDate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MockData_Code.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Store_OpenDate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TickData_M01_20131231.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Store_KlineData.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Store_TickData.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MockData_Code2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MockData_OpenDate2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TickData_M01_20141223.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TickData_M05_20150121.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TickData_M09_20141223.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150116_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kline2kline_M05_20131216_20131231_Day.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kline2Kline_M05_20141215_20150116_Day.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150116_Day.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150116_15Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150127_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150127_15Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141215_20150127_Day.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M09_20141215_20150127_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataUpdate_DataPrepare.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Resource_M01_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cache_OpenDate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20130101_20151231_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\M05_20130101_20151231_1Minute_index.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20130101_20151231_1Minute_Index.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M05_20141229_20141229_1Minute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineOpenTime_Normal.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineOpenTime_Night_Normal.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineOpenTime_OverNight.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineOpenTime_OverNight_WeekStart.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineOpenTime_NightNormal_WeekStart.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KLineData_M01_20040101_20040130.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2KLine_M01_20131202.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tick2KLine_M05_20040129.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_15Minute.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_1Hour.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_5Minute.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Kline2kline_M05_20131216_20131231_Day.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20141215_20150116_Day.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M01_20131202.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20040630.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20141229.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20141230.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20150504.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20150506.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20150624.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Kline_M01_20040102_20040301.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150106.txt" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)TestCase\
+xcopy $(ProjectDir)TestCase\* $(TargetDir)TestCase\ /s /e /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

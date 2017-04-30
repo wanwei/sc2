@@ -1,0 +1,8 @@
+ID:SIMNOW2
+NAME:SimuNow模拟CTP2，电信
+DESC:SimuNow模拟CTP，二号线
+DataServer:tcp://180.168.146.187:10011
+TradeServer:tcp://180.168.146.187:10001
+BrokerId:9999
+UserID:076657
+Passwd:800906

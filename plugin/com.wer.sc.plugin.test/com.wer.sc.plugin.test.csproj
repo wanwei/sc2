@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F452AE5A-D1B5-4A14-97D0-9E323E2C0871}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.plugin</RootNamespace>
+    <AssemblyName>com.wer.sc.plugin.test</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="data\reader\cache\TestTradingDayCache.cs" />
+    <Compile Include="data\reader\cache\TestTradingSessionCache_Instrument.cs" />
+    <Compile Include="data\TestKLineData.cs" />
+    <Compile Include="data\TestKLinePeriod.cs" />
+    <Compile Include="data\transfer\TestDataTransfer_KLine2KLine.cs" />
+    <Compile Include="data\transfer\TestDataTransfer_KLine2TimeLine.cs" />
+    <Compile Include="data\transfer\TestDataTransfer_Tick2KLine.cs" />
+    <Compile Include="data\transfer\TestDaySplitter.cs" />
+    <Compile Include="data\utils\TestCsvUtils_Instruments.cs" />
+    <Compile Include="data\utils\TestCsvUtils_KLineData.cs" />
+    <Compile Include="data\utils\TestCsvUtils_TickData.cs" />
+    <Compile Include="data\utils\TestCsvUtils_TradingDay.cs" />
+    <Compile Include="data\utils\TestCsvUtils_TradingSession.cs" />
+    <Compile Include="data\utils\TestKLineTimeListUtils.cs" />
+    <Compile Include="data\utils\TestTimeIndexUtils.cs" />
+    <Compile Include="data\utils\TestTimeUtils.cs" />
+    <Compile Include="data\utils\TestTradingTimeUtils.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceLoader.cs" />
+    <Compile Include="market\TestConnectionInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingSession" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingDay" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150107" />
+    <None Include="TestCase\com\wer\sc\data\transfer\KLine2TimeLine_M05_20150107" />
+    <Compile Include="TestPluginMgr.cs" />
+    <Compile Include="strategy\TestStrategyMgr.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.mockdata\com.wer.sc.mockdata.csproj">
+      <Project>{4645ed74-abf5-449e-8c75-16a2c8ce5612}</Project>
+      <Name>com.wer.sc.mockdata</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\reader\cache\OpenDate_Cache" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202_20131213" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202_20131213_15Second" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20040129" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20131202_20131231" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_KLineData" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TickData" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M01_20131202" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M05_20141229" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M05_20141229_5Second" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M05_20141230" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M05_20150624" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_M05_20150629" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_NightNormal_WeekStart" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_Night_Normal" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_Normal" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_OverNight" />
+    <None Include="TestCase\com\wer\sc\data\utils\KLineTimeList_OverNight_WeekStart" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\plugin\market\ConnectionInfo" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20131201_20131231" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20141229_20150115" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20150625_20150715" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\KLineData_M01_1Minute" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_15Minute" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_1Hour" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_5Minute" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Kline2kline_M05_20131216_20131231_Day" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20141215_20150116_Day" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20040630" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20141229.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20141230.txt" />
+    <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150504" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20150506.txt" />
+    <Content Include="TestCase\com\wer\sc\data\transfer\Tick2Charts_M05_20150624.txt" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_Instruments" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)TestCase\
+xcopy $(ProjectDir)TestCase\* $(TargetDir)TestCase\ /s /e /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

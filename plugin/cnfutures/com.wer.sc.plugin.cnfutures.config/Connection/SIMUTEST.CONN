@@ -1,0 +1,8 @@
+ID:SIMNOWMOCK
+NAME:SimuNow模拟CTP，非正式数据
+DESC:SimuNow模拟CTP，24小时都可登陆
+DataServer:tcp://180.168.146.187:10031
+TradeServer:tcp://180.168.146.187:10030
+BrokerId:9999
+UserID:076657
+Passwd:800906

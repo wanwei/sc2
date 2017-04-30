@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Plugins>
+  <Assembly file="com.wer.sc.plugin.mock.historydata.sina.dll">
+    <Plugin class="com.wer.sc.plugin.mock.historydata.Plugin_HistoryData_Mock_Sina">
+      <Options>
+        <Option key="hq" value="http://hq"></Option>
+      </Options>
+    </Plugin>
+  </Assembly>
+  <Assembly file="com.wer.sc.plugin.mock.historydata.sina.dll">
+  </Assembly>
+</Plugins>

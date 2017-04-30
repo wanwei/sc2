@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Plugins>
+  <Assembly file="com.wer.sc.plugin.cnfutures.historydata.dll">
+    <Plugin class="com.wer.sc.plugin.cnfutures.historydata.Plugin_HistoryData_CnFutures">
+    </Plugin>
+    <Plugin class="com.wer.sc.plugin.cnfutures.historydata.dataupdater.Plugin_DataUpdater_CnFutures_BiaoPuYongHua">
+    </Plugin>
+    <Plugin class="com.wer.sc.plugin.cnfutures.historydata.dataupdater.Plugin_DataUpdater_CnFutures_JinShuYuan">
+    </Plugin>
+    <Plugin class="com.wer.sc.plugin.cnfutures.historydata.dataupdater.Plugin_DataUpdater_CnFutures_Daily">
+    </Plugin>
+  </Assembly>
+</Plugins>
