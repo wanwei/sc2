@@ -9,29 +9,17 @@ namespace com.wer.sc.plugin.cnfutures.config
 {
     public class PathUtils
     {
-        private string pluginPath;
+        //private string pluginPath;
 
-        private string configPath = ScConfig.Instance.ScPath + "\\config\\";
+        private string configPath;// = ScConfig.Instance.ScPath + "\\config\\";
 
         public PathUtils(String pluginPath)
         {
-            this.pluginPath = pluginPath;
-            this.configPath = pluginPath + "\\config\\";
+            if (pluginPath == null || pluginPath.Equals("") || (!pluginPath.EndsWith("\\")))
+                this.configPath = pluginPath + "config\\";
+            else
+                this.configPath = pluginPath + "\\config\\";
         }
-
-        //private static PathUtils instance_RunInPluginPath = new PathUtils(ScConfig.Instance.ScPath + "\\config\\");
-
-        //public static PathUtils Instance_RunInPluginPath
-        //{
-        //    get { return instance_RunInPluginPath; }
-        //}
-
-        //private static PathUtils instance_RunInBin = new PathUtils(ScConfig.Instance.ScPath + "\\plugin\\cnfutures\\config\\");
-
-        //public static PathUtils Instance_RunInBin
-        //{
-        //    get { return instance_RunInBin; }
-        //}
 
         public string InstrumentPath
         {
@@ -48,9 +36,9 @@ namespace com.wer.sc.plugin.cnfutures.config
             get { return configPath + "\\tradingsessiondetail.config"; }
         }
 
-        public static String CTPPath
-        {
-            get { return ""; }
-        }
+        //public static String CTPPath
+        //{
+        //    get { return ""; }
+        //}
     }
 }

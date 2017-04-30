@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A8045DD4-BD73-4425-920D-C994F8C9786A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.wer.sc.plugin.cnfutures.config</RootNamespace>
-    <AssemblyName>com.wer.sc.plugin.cnfutures.config</AssemblyName>
+    <RootNamespace>com.wer.sc.plugin.cnfutures.adjust</RootNamespace>
+    <AssemblyName>com.wer.sc.plugin.cnfutures.adjust</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,74 +24,85 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\bin\Release\plugin\cnfutures\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="com.wer.sc.utils.ui">
+      <HintPath>..\..\..\common\com.wer.sc.utils.ui\obj\Debug\com.wer.sc.utils.ui.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeInfoGenerator.cs" />
-    <Compile Include="DataLoader_InstrumentInfo.cs" />
-    <Compile Include="DataLoader_TradingSessionDetail.cs" />
-    <Compile Include="PathUtils.cs" />
+    <Compile Include="AdjustDataCenterTickData.cs" />
+    <Compile Include="AdjustTickStepGetter.cs" />
+    <Compile Include="FormAdjustTickSrcData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdjustTickSrcData.Designer.cs">
+      <DependentUpon>FormAdjustTickSrcData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormAdjustTickSrcData.resx">
+      <DependentUpon>FormAdjustTickSrcData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config\catelogs.csv" />
-    <None Include="config\instruments.csv" />
-    <None Include="config\varieties.csv" />
-    <None Include="config\mainfutures.csv" />
-    <None Include="config\tradingsessiondetail.config" />
-    <None Include="Connection\bak\SIMU1.CONN" />
-    <None Include="Connection\bak\SIMU2.CONN" />
-    <None Include="Connection\bak\SIMU3.CONN" />
-    <None Include="Connection\bak\SIMUTEST.CONN" />
-    <None Include="Connection\SIMU1.CONN" />
-    <None Include="Connection\SIMU2.CONN" />
-    <None Include="Connection\SIMU3.CONN" />
-    <None Include="Connection\SIMUTEST.CONN" />
-    <None Include="ctp\CTP_Quote_x86.lib" />
-    <None Include="ctp\CTP_Trade_x86.lib" />
-    <None Include="ctp\Queue_x86.lib" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
       <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
       <Name>com.wer.sc.utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
       <Name>com.wer.sc.plugin</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ctp\CTP_Quote_x86.dll" />
-    <Content Include="ctp\CTP_Trade_x86.dll" />
-    <Content Include="ctp\Queue_x86.dll" />
-    <Content Include="ctp\thostmduserapi.dll" />
-    <Content Include="ctp\thosttraderapi.dll" />
+    <ProjectReference Include="..\com.wer.sc.plugin.cnfutures.config\com.wer.sc.plugin.cnfutures.config.csproj">
+      <Project>{a8045dd4-bd73-4425-920d-c994f8c9786a}</Project>
+      <Name>com.wer.sc.plugin.cnfutures.config</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir $(TargetDir)config\
-copy $(ProjectDir)config\* $(TargetDir)config\
-mkdir $(TargetDir)ctp\
-copy $(ProjectDir)ctp\* $(TargetDir)ctp\
-mkdir $(TargetDir)Connection\
-copy $(ProjectDir)Connection\* $(TargetDir)Connection\</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

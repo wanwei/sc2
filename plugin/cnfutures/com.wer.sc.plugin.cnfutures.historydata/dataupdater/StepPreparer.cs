@@ -47,7 +47,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             List<IStep> steps = new List<IStep>();
             steps.Add(new Step_TradingDay(dataLoader));
-            steps.Add(new Step_InstrumentInfo(pluginHelper.PluginDirPath, targetDataPath));
+            steps.Add(new Step_CodeInfo(pluginHelper.PluginDirPath, targetDataPath));
             this.preparer = new DataUpdateUtils(targetDataPath, dataLoader.LoadAllInstruments(), dataLoader.LoadTradingDayReader().GetAllTradingDays(), new UpdatedInfo_Csv(targetDataPath));
 
             GetDayStartTime(steps);

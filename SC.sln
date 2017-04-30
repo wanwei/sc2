@@ -43,6 +43,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.cnfutures
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.cnfutures.market", "plugin\cnfutures\com.wer.sc.plugin.cnfutures.market\com.wer.sc.plugin.cnfutures.market.csproj", "{57976458-9E94-4F34-A7C8-3BBBBC64C0ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mock", "mock", "{8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.historydata", "plugin\mock\com.wer.sc.plugin.mock.historydata\com.wer.sc.plugin.mock.historydata.csproj", "{304172E6-26E3-40F5-8561-9D493AE1C08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.historydata.sina", "plugin\mock\com.wer.sc.plugin.mock.historydata.sina\com.wer.sc.plugin.mock.historydata.sina.csproj", "{9401B543-F778-4164-982F-C14F29B0C692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.market", "plugin\mock\com.wer.sc.plugin.mock.market\com.wer.sc.plugin.mock.market.csproj", "{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.market.web", "plugin\mock\com.wer.sc.plugin.mock.market.web\com.wer.sc.plugin.mock.market.web.csproj", "{6030821A-4F51-4166-8F92-59257E5192BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.strategy", "plugin\mock\com.wer.sc.plugin.mock.strategy\com.wer.sc.plugin.mock.strategy.csproj", "{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.strategy.notexist", "plugin\mock\com.wer.sc.plugin.mock.strategy.notexist\com.wer.sc.plugin.mock.strategy.notexist.csproj", "{E55019B7-C7A2-422A-B936-72C84018AAB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.mock.strategy2", "plugin\mock\com.wer.sc.plugin.mock.strategy2\com.wer.sc.plugin.mock.strategy2.csproj", "{3A6F855D-036E-4B42-9804-5AD62EDF1A28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{BFFCBB38-3657-4399-8240-10F096E9E461}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.tools", "UI\com.wer.sc.tools\com.wer.sc.tools.csproj", "{20F18428-DADF-43D2-8CA4-4C86B9A83F28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.cnfutures.adjust", "plugin\cnfutures\com.wer.sc.plugin.cnfutures.adjust\com.wer.sc.plugin.cnfutures.adjust.csproj", "{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +135,42 @@ Global
 		{57976458-9E94-4F34-A7C8-3BBBBC64C0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57976458-9E94-4F34-A7C8-3BBBBC64C0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57976458-9E94-4F34-A7C8-3BBBBC64C0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{304172E6-26E3-40F5-8561-9D493AE1C08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{304172E6-26E3-40F5-8561-9D493AE1C08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{304172E6-26E3-40F5-8561-9D493AE1C08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{304172E6-26E3-40F5-8561-9D493AE1C08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9401B543-F778-4164-982F-C14F29B0C692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9401B543-F778-4164-982F-C14F29B0C692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9401B543-F778-4164-982F-C14F29B0C692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9401B543-F778-4164-982F-C14F29B0C692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6030821A-4F51-4166-8F92-59257E5192BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6030821A-4F51-4166-8F92-59257E5192BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6030821A-4F51-4166-8F92-59257E5192BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6030821A-4F51-4166-8F92-59257E5192BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E55019B7-C7A2-422A-B936-72C84018AAB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E55019B7-C7A2-422A-B936-72C84018AAB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E55019B7-C7A2-422A-B936-72C84018AAB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E55019B7-C7A2-422A-B936-72C84018AAB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6F855D-036E-4B42-9804-5AD62EDF1A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6F855D-036E-4B42-9804-5AD62EDF1A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6F855D-036E-4B42-9804-5AD62EDF1A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6F855D-036E-4B42-9804-5AD62EDF1A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20F18428-DADF-43D2-8CA4-4C86B9A83F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20F18428-DADF-43D2-8CA4-4C86B9A83F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20F18428-DADF-43D2-8CA4-4C86B9A83F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20F18428-DADF-43D2-8CA4-4C86B9A83F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFA3D4D-E226-434B-AC7D-D6380DEDD336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,5 +193,15 @@ Global
 		{FD1BC523-AB97-41A6-B7F4-ECAF2CBE9758} = {E7FA8D04-FF11-483D-BDBA-E1FE522F07F0}
 		{83769E79-3760-4F70-A9CE-14B92B7428DA} = {E7FA8D04-FF11-483D-BDBA-E1FE522F07F0}
 		{57976458-9E94-4F34-A7C8-3BBBBC64C0ED} = {E7FA8D04-FF11-483D-BDBA-E1FE522F07F0}
+		{8DA3DBBD-1D1B-432E-90AF-A5766D5BD949} = {2979CB39-2B74-4787-A4E2-F4695BE03B03}
+		{304172E6-26E3-40F5-8561-9D493AE1C08D} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{9401B543-F778-4164-982F-C14F29B0C692} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{3863C8D9-F1F7-4912-B13B-3DC2B5C498C1} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{6030821A-4F51-4166-8F92-59257E5192BC} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{6C2E82AE-03AA-4B3C-9F9E-A13DC050C782} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{E55019B7-C7A2-422A-B936-72C84018AAB3} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{3A6F855D-036E-4B42-9804-5AD62EDF1A28} = {8DA3DBBD-1D1B-432E-90AF-A5766D5BD949}
+		{20F18428-DADF-43D2-8CA4-4C86B9A83F28} = {BFFCBB38-3657-4399-8240-10F096E9E461}
+		{2AFA3D4D-E226-434B-AC7D-D6380DEDD336} = {E7FA8D04-FF11-483D-BDBA-E1FE522F07F0}
 	EndGlobalSection
 EndGlobal

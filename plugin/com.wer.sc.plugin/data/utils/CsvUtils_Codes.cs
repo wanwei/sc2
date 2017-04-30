@@ -44,8 +44,17 @@ namespace com.wer.sc.data.utils
                 if (line.Equals(""))
                     continue;
                 String[] dataArr = line.Split(',');
-                CodeInfo code = new CodeInfo(dataArr[0], dataArr[1], dataArr[2]);
-                data.Add(code);
+                CodeInfo codeInfo = new CodeInfo();
+                codeInfo.Code = dataArr[0];
+                codeInfo.Name = dataArr[1];
+                codeInfo.Catelog = dataArr[2];
+                if (dataArr.Length > 3)
+                {
+                    codeInfo.Start = int.Parse(dataArr[3]);
+                    codeInfo.End = int.Parse(dataArr[4]);
+                    codeInfo.Exchange = dataArr[5];
+                }
+                data.Add(codeInfo);
             }
             return data;
         }

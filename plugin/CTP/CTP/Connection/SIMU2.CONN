@@ -1,9 +1,0 @@
-{"Data":
-[{"Key":"ID","Value":"SIMNOW2"},
-{"Key":"NAME","Value":"SimuNow模拟CTP2，电信"},
-{"Key":"DESC","Value":"SimuNow模拟CTP，二号线"},
-{"Key":"DataServer","Value":"tcp://180.168.146.187:10011"},
-{"Key":"TradeServer","Value":"tcp://180.168.146.187:10001"},
-{"Key":"BrokerId","Value":"9999"},
-{"Key":"UserID","Value":"076657"},
-{"Key":"Passwd","Value":"800906"}]}

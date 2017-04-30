@@ -63,7 +63,7 @@
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Daily.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_JinShuYuan.cs" />
     <Compile Include="dataupdater\StepPreparer.cs" />
-    <Compile Include="dataupdater\Step_InstrumentInfo.cs" />
+    <Compile Include="dataupdater\Step_CodeInfo.cs" />
     <Compile Include="dataupdater\Step_KLineData.cs" />
     <Compile Include="dataupdater\Step_KLineData_OneDay.cs" />
     <Compile Include="dataupdater\Step_TickData.cs" />
