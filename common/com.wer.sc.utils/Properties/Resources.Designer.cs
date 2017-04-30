@@ -59,26 +59,5 @@ namespace com.wer.sc.utils.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找类似   &lt;log4net&gt;
-        ///    &lt;appender name=&quot;RollingLogFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;
-        ///      &lt;!--定义文件存放位置--&gt;
-        ///      &lt;file value=&quot;log\\&quot;/&gt;
-        ///      &lt;appendToFile value=&quot;true&quot;/&gt;
-        ///      &lt;rollingStyle value=&quot;Date&quot;/&gt;
-        ///      &lt;datePattern value=&quot;yyyyMMdd&apos;.txt&apos;&quot;/&gt;
-        ///      &lt;staticLogFileName value=&quot;false&quot;/&gt;
-        ///      &lt;param name=&quot;MaxSizeRollBackups&quot; value=&quot;100&quot;/&gt;
-        ///      &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
-        ///        &lt;!--每条日志末尾的文字说明--&gt;
-        ///        &lt;!--输出格式--&gt;
-        ///        &lt;!--样例：2008-03-26 13:42:32,111 [10] [字符串的其余部分被截断]&quot;; 的本地化字符串。
-        /// </summary>
-        internal static string log4net_config {
-            get {
-                return ResourceManager.GetString("log4net_config", resourceCulture);
-            }
-        }
     }
 }
