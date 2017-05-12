@@ -58,6 +58,7 @@
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan.cs" />
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan_TickData.cs" />
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan_TradingDay.cs" />
+    <Compile Include="dataupdater\DataUpdateUtils.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Abstract.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_BiaoPuYongHua.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Daily.cs" />

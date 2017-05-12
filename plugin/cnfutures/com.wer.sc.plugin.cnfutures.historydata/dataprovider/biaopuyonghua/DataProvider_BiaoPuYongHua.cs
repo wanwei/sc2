@@ -23,7 +23,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
 
         private DataProvider_BiaoPuYongHua_TradingDay tradingDayProvider;
 
-
         /// <summary>
         /// 构造函数
         /// </summary>

@@ -6,6 +6,7 @@ using com.wer.sc.utils;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,10 +46,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             try
             {
+                string path = CsvHistoryData_PathUtils.GetTickDataPath(dataLoader.GetTargetDataPath(), code, date);
+                if (File.Exists(path))
+                    return code + "-" + date + "的Tick数据已存在";
                 ITickData tickData = this.dataLoader.LoadTickData(code, date);
                 if (tickData == null)
-                    return code + "-" + date + "没有数据";
-                string path = CsvHistoryData_PathUtils.GetTickDataPath(dataLoader.GetTargetDataPath(), code, date);
+                    return code + "-" + date + "没有数据";                
                 CsvUtils_TickData.Save(path, tickData);
             }
             catch (Exception e)

@@ -46,6 +46,9 @@ namespace com.wer.sc.data.reader.cache
             int startIndex = GetTradingDayIndex(start, false);
             int endIndex = GetTradingDayIndex(end, true);
 
+            if (startIndex < 0)
+                return ListUtils.EmptyIntList;
+
             int[] opendates = new int[endIndex - startIndex + 1];
             for (int i = startIndex; i <= endIndex; i++)
             {
@@ -81,6 +84,12 @@ namespace com.wer.sc.data.reader.cache
 
         public int GetTradingDayIndex(int date, bool isFindPrev)
         {
+            if (date < 0)
+            {
+                if (isFindPrev)
+                    return openDatesList.Count - 1;
+                return 0;
+            }
             int index = GetTradingDayIndex(date);
             if (index >= 0)
                 return index;

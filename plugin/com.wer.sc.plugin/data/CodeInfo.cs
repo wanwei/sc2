@@ -17,6 +17,8 @@ namespace com.wer.sc.data
 
         private string catelog;
 
+        private string catelogName;
+
         private int start;
 
         private int end;
@@ -63,6 +65,18 @@ namespace com.wer.sc.data
             }
         }
 
+        public string CatelogName
+        {
+            get
+            {
+                return catelogName;
+            }
+
+            set
+            {
+                catelogName = value;
+            }
+        }
         public int Start
         {
             get
@@ -114,11 +128,12 @@ namespace com.wer.sc.data
             this.Name = name;
         }
 
-        public CodeInfo(String code, String name, String catelog, int start, int end, string exchange)
+        public CodeInfo(String code, String name, String catelog, string catelogName, int start, int end, string exchange)
         {
             this.Code = code;
-            this.Catelog = catelog;
             this.Name = name;
+            this.Catelog = catelog;
+            this.CatelogName = catelogName;
             this.start = start;
             this.end = end;
             this.exchange = exchange;
@@ -127,7 +142,8 @@ namespace com.wer.sc.data
         override
          public String ToString()
         {
-            return Code + "," + Name + "," + Catelog + "," + start + "," + end + "," + exchange;
+            return Code + "," + Name + "," + Catelog + "," + CatelogName + "," 
+                + start + "," + end + "," + exchange;
         }
 
         public override bool Equals(object obj)

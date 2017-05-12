@@ -1,4 +1,6 @@
-﻿using com.wer.sc.plugin.cnfutures.config;
+﻿using com.wer.sc.data;
+using com.wer.sc.data.utils;
+using com.wer.sc.plugin.cnfutures.config;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.utils.update;
 using System;
@@ -17,11 +19,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     {
         private string pluginPath;
         private string csvDataPath;
+        private List<CodeInfo> codes;
 
-        public Step_CodeInfo(string pluginPath, string csvDataPath)
+        public Step_CodeInfo(string pluginPath, string csvDataPath, DataLoader_InstrumentInfo dataLoader_InstrumentInfo)
         {
             this.pluginPath = pluginPath;
             this.csvDataPath = csvDataPath;
+            this.codes = dataLoader_InstrumentInfo.GetAllInstruments();
         }
 
         public int ProgressStep
@@ -42,9 +46,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            File.Copy(new PathUtils(pluginPath).InstrumentPath, csvDataPath + "\\instruments.csv", true);
+            CsvUtils_Code.Save(csvDataPath + "\\instruments.csv", codes);
             return "期货信息更新完成";
-        }
+        }        
 
         public override string ToString()
         {

@@ -112,7 +112,6 @@
     <Compile Include="data\transfer\DataTransfer_Tick2KLine.cs" />
     <Compile Include="historydata\UpdatedDataInfo_Csv.cs" />
     <Compile Include="historydata\CsvHistoryData_PathUtils.cs" />
-    <Compile Include="historydata\utils\DataUpdateUtils.cs" />
     <Compile Include="historydata\utils\IUpdatedDataInfo.cs" />
     <Compile Include="historydata\Plugin_HistoryData_Csv.cs" />
     <Compile Include="historydata\utils\InstrumentDatesInfo.cs" />

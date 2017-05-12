@@ -1,4 +1,5 @@
-﻿using com.wer.sc.plugin.cnfutures.historydata.dataloader;
+﻿using com.wer.sc.data.reader;
+using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using com.wer.sc.utils;
 using com.wer.sc.utils.update;
 using System;
@@ -16,10 +17,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     public class Step_TradingDay : IStep
     {
         private IDataLoader dataLoader;
+        private List<int> openDates;
 
-        public Step_TradingDay(IDataLoader dataLoader)
+        public Step_TradingDay(IDataLoader dataLoader, ITradingDayReader tradingDayReader)
         {
             this.dataLoader = dataLoader;
+            this.openDates = tradingDayReader.GetAllTradingDays();
         }
 
         public int ProgressStep
@@ -40,7 +43,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            List<int> openDates = dataLoader.LoadTradingDayReader().GetAllTradingDays();
             String[] openDateStr = new String[openDates.Count];
             for (int i = 0; i < openDates.Count; i++)
             {

@@ -50,9 +50,10 @@ namespace com.wer.sc.data.utils
                 codeInfo.Catelog = dataArr[2];
                 if (dataArr.Length > 3)
                 {
-                    codeInfo.Start = int.Parse(dataArr[3]);
-                    codeInfo.End = int.Parse(dataArr[4]);
-                    codeInfo.Exchange = dataArr[5];
+                    codeInfo.CatelogName = dataArr[3];
+                    codeInfo.Start = int.Parse(dataArr[4]);
+                    codeInfo.End = int.Parse(dataArr[5]);
+                    codeInfo.Exchange = dataArr[6];
                 }
                 data.Add(codeInfo);
             }

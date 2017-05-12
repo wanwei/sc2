@@ -16,8 +16,8 @@ namespace com.wer.sc.plugin.cnfutures.config.test
         [TestMethod]
         public void TestCodeInfoGenerate()
         {
-            CodeInfoGenerator generator = new CodeInfoGenerator("");
-            List<CodeInfo> codes = generator.GenerateCodes();
+            DataLoader_InstrumentInfo generator = new DataLoader_InstrumentInfo("");
+            List<CodeInfo> codes = generator.GetAllInstruments();
             AssertUtils.PrintLineList(codes);
             //for (int i = 0; i < codes.Count; i++)
             //{
@@ -31,8 +31,8 @@ namespace com.wer.sc.plugin.cnfutures.config.test
         [TestMethod]
         public void TestAdjust()
         {
-            CodeInfoGenerator gen = new CodeInfoGenerator("");
-            List<CodeInfo> codes = gen.GenerateCodes();
+            DataLoader_InstrumentInfo gen = new DataLoader_InstrumentInfo("");
+            List<CodeInfo> codes = gen.GetAllInstruments();
             //codes.Count
             //for (int i = 0; i < codes.Count; i++)
             for (int i = 0; i < 2; i++)

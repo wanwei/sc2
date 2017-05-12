@@ -1,4 +1,6 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.reader;
+using com.wer.sc.plugin.cnfutures.config;
 using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider;
 using com.wer.sc.plugin.historydata;
@@ -46,19 +48,24 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public List<IStep> GetAllSteps()
         {
             List<IStep> steps = new List<IStep>();
-            steps.Add(new Step_TradingDay(dataLoader));
-            steps.Add(new Step_CodeInfo(pluginHelper.PluginDirPath, targetDataPath));
-            this.preparer = new DataUpdateUtils(targetDataPath, dataLoader.LoadAllInstruments(), dataLoader.LoadTradingDayReader().GetAllTradingDays(), new UpdatedInfo_Csv(targetDataPath));
+            ITradingDayReader tradingDayReader = dataLoader.LoadTradingDayReader();
+            Step_TradingDay step_TradingDay = new Step_TradingDay(dataLoader,tradingDayReader);
+            steps.Add(step_TradingDay);
 
-            GetDayStartTime(steps);
+            DataLoader_InstrumentInfo dataLoader_InstrumentInfo = new DataLoader_InstrumentInfo(pluginHelper.PluginDirPath);
+            Step_CodeInfo step_CodeInfo = new Step_CodeInfo(pluginHelper.PluginDirPath, targetDataPath, dataLoader_InstrumentInfo);            
+            steps.Add(step_CodeInfo);
+
+            this.preparer = new DataUpdateUtils(targetDataPath, tradingDayReader, dataLoader_InstrumentInfo, new UpdatedInfo_Csv(targetDataPath));
+
+            GetDayStartTime(steps, dataLoader_InstrumentInfo.GetAllInstruments());
             GetTickSteps(steps);
             GetKLineDataSteps(steps);
             return steps;
         }
 
-        private void GetDayStartTime(List<IStep> steps)
+        private void GetDayStartTime(List<IStep> steps, List<CodeInfo> codes)
         {
-            List<CodeInfo> codes = dataLoader.LoadAllInstruments();
             for (int i = 0; i < codes.Count; i++)
             {
                 steps.Add(new Step_TradingSession(codes[i].Code, dataLoader));

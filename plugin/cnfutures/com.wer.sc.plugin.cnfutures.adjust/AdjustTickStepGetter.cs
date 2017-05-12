@@ -18,8 +18,8 @@ namespace com.wer.sc.plugin.cnfutures.adjust
 
         public AdjustTickStepGetter()
         {
-            CodeInfoGenerator gen = new CodeInfoGenerator("");
-            codes = gen.GenerateCodes();
+            DataLoader_InstrumentInfo gen = new DataLoader_InstrumentInfo("");
+            codes = gen.GetAllInstruments();
 
             for (int i = 0; i < codes.Count; i++)
             {

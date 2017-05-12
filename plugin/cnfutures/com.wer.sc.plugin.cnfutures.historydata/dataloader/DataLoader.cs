@@ -72,23 +72,51 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
             List<TradingSession> dayStartTimes = this.LoadUpdatedTradingSessions(code);
 
             ITradingDayReader openDateReader = this.LoadTradingDayReader();
+            CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
+
+            int lastCodeTradingDay = GetLastTradingDay(code);
             int firstIndex = 0;
             if (dayStartTimes != null && dayStartTimes.Count != 0)
             {
                 int lastDate = dayStartTimes[dayStartTimes.Count - 1].TradingDay;
-                if (lastDate == openDateReader.LastTradingDay)
+                if (lastDate == lastCodeTradingDay)
                     return null;
                 int lastIndex = openDateReader.GetTradingDayIndex(lastDate);
                 firstIndex = lastIndex + 1;
             }
             List<int> openDates = openDateReader.GetAllTradingDays();
-            List<TradingSession> updateStartTimes = CalcDayOpenTime(code, openDates, firstIndex, openDates.Count - 1);
+            List<TradingSession> updateStartTimes = CalcDayOpenTime(code, openDates, firstIndex, GetCodeLastTradingDayIndex(code));
 
             List<TradingSession> result = new List<TradingSession>();
             if (dayStartTimes != null)
                 result.AddRange(dayStartTimes);
             result.AddRange(updateStartTimes);
             return result;
+        }
+
+        private int GetLastTradingDay(string code)
+        {
+            CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
+            ITradingDayReader openDateReader = this.LoadTradingDayReader();
+            int codeLastDate = codeInfo.End;
+            int lastTradingDay = openDateReader.LastTradingDay;
+            return codeLastDate > lastTradingDay ? lastTradingDay : codeLastDate;
+        }
+
+        private int GetCodeLastTradingDayIndex(string code)
+        {
+            CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
+            ITradingDayReader openDateReader = this.LoadTradingDayReader();
+            int codeLastDate = codeInfo.End;
+            int codeLastIndex = openDateReader.GetTradingDayIndex(codeLastDate);
+            if (codeLastIndex < 0)
+                return openDateReader.GetAllTradingDays().Count - 1;
+            return openDateReader.GetTradingDayIndex(codeLastDate);
+        }
+
+        private List<int> GetOpenDates()
+        {
+            return null;
         }
 
         private List<TradingSession> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)

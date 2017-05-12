@@ -29,6 +29,13 @@ namespace com.wer.sc.data
         string Catelog { get; }
 
         /// <summary>
+        /// 得到该股票或期货所属类别名称
+        /// 期货返回该合约所属品种名称，如m1705，那返回豆粕
+        /// 股票返回其所属的行业板块
+        /// </summary>
+        string CatelogName { get; }
+
+        /// <summary>
         /// 该合约或股票的开始日期
         /// </summary>
         int Start { get; }

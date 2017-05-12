@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeInfoGenerator.cs" />
     <Compile Include="DataLoader_InstrumentInfo.cs" />
+    <Compile Include="DataLoader_InstrumentInfo2.cs" />
     <Compile Include="DataLoader_TradingSessionDetail.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,8 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.reader.cache;
+using com.wer.sc.plugin.cnfutures.config;
+using com.wer.sc.plugin.historydata.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.plugin.historydata.utils
+namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 {
     /// <summary>
     /// 该类帮助获取需要更新的Csv数据信息，包括类型和日期
@@ -16,17 +18,19 @@ namespace com.wer.sc.plugin.historydata.utils
     public class DataUpdateUtils
     {
         private List<CodeInfo> codes;
+
+        private DataLoader_InstrumentInfo dataLoader_InstrumentInfo;
+
         private List<int> openDates;
 
-        private WaitForUpdateDateGetter updateDateGetter;        
+        private WaitForUpdateDateGetter updateDateGetter;
 
-        public DataUpdateUtils(string dataPath, ITradingDayReader tradingDayReader, List<CodeInfo> codes, IUpdatedDataInfo openDateReader_HistoryData)
+        public DataUpdateUtils(string dataPath, ITradingDayReader tradingDayReader, DataLoader_InstrumentInfo dataLoader_InstrumentInfo, IUpdatedDataInfo openDateReader_HistoryData)
         {
-            //List<CodeInfo> codes, List< int > openDates
-            this.codes = codes;
-            this.openDates = openDates;
-            //IOpenDateReader_HistoryData openDateReader_HistoryData = new OpenDateReader_HistoryData_CsvData(srcDataPath);
-            this.updateDateGetter = new WaitForUpdateDateGetter(openDateReader_HistoryData, openDates);
+            this.dataLoader_InstrumentInfo = dataLoader_InstrumentInfo;
+            this.codes = dataLoader_InstrumentInfo.GetAllInstruments();
+            this.openDates = tradingDayReader.GetAllTradingDays();
+            this.updateDateGetter = new WaitForUpdateDateGetter(openDateReader_HistoryData, tradingDayReader, dataLoader_InstrumentInfo);
         }
 
         /// <summary>
@@ -82,49 +86,65 @@ namespace com.wer.sc.plugin.historydata.utils
     {
         private IUpdatedDataInfo historyDataInfoLoader;
 
-        private List<int> openDates;
+        //private List<int> openDates;
 
-        public WaitForUpdateDateGetter(IUpdatedDataInfo historyDataInfoLoader, List<int> openDates)
+        private DataLoader_InstrumentInfo dataLoader_InstrumentInfo;
+
+        private ITradingDayReader tradingDayReader;
+
+        public WaitForUpdateDateGetter(IUpdatedDataInfo historyDataInfoLoader, ITradingDayReader tradingDayReader, DataLoader_InstrumentInfo dataLoader_InstrumentInfo)
         {
             //this.historyDataInfoLoader = new HistoryDataInfoLoader(srcDataPath);
             this.historyDataInfoLoader = historyDataInfoLoader;
-            this.openDates = openDates;
+            this.tradingDayReader = tradingDayReader;
+            this.dataLoader_InstrumentInfo = dataLoader_InstrumentInfo;
         }
 
         public List<int> GetWaitForUpdateOpenDates_TickData(string code)
         {
             List<int> codeOpenDates = this.historyDataInfoLoader.GetOpenDates_TickData(code);
             if (codeOpenDates == null || codeOpenDates.Count == 0)
-                return this.openDates;
+                return GetCodeOpenDates(code);
             TradingDayCache cache = new TradingDayCache(codeOpenDates);
-            return GetWaitForUpdateOpenDates(this.openDates, cache);
+            codeOpenDates.Sort();
+            int lastUpdatedOpenDate = codeOpenDates[codeOpenDates.Count - 1];
+
+            return GetWaitForUpdateOpenDates(GetCodeOpenDates(code), cache);
+        }
+
+        private List<int> GetCodeOpenDates(string code)
+        {
+            CodeInfo codeInfo = this.dataLoader_InstrumentInfo.GetInstrument(code);
+            List<int> list = new List<int>();
+            list.AddRange(tradingDayReader.GetTradingDays(codeInfo.Start, codeInfo.End));
+            return list;
         }
 
         public List<int> GetWaitForUpdateOpenDates_TickData_FillUp(string code)
         {
             List<int> codeOpenDates = this.historyDataInfoLoader.GetOpenDates_TickData(code);
             if (codeOpenDates == null || codeOpenDates.Count == 0)
-                return this.openDates;
+                return GetCodeOpenDates(code);
             TradingDayCache cache = new TradingDayCache(codeOpenDates);
-            return GetWaitForUpdateOpenDates_FillUp(this.openDates, cache);
+            return GetWaitForUpdateOpenDates_FillUp(GetCodeOpenDates(code), cache);
         }
 
         public List<int> GetWaitForUpdateOpenDates_KLineData(string code, KLinePeriod period)
         {
             List<int> codeOpenDates = this.historyDataInfoLoader.GetOpenDates_KLineData(code, period);
             if (codeOpenDates == null || codeOpenDates.Count == 0)
-                return this.openDates;
+                return GetCodeOpenDates(code);
             TradingDayCache cache = new TradingDayCache(codeOpenDates);
-            return GetWaitForUpdateOpenDates(this.openDates, cache);
+            return GetWaitForUpdateOpenDates(GetCodeOpenDates(code), cache);
         }
 
         public List<int> GetWaitForUpdateOpenDates_KLineData_FillUp(string code, KLinePeriod period)
         {
             List<int> codeOpenDates = this.historyDataInfoLoader.GetOpenDates_KLineData(code, period);
             if (codeOpenDates == null || codeOpenDates.Count == 0)
-                return this.openDates;
+                return GetCodeOpenDates(code);
             TradingDayCache cache = new TradingDayCache(codeOpenDates);
-            return GetWaitForUpdateOpenDates_FillUp(this.openDates, cache);
+            return GetWaitForUpdateOpenDates_FillUp(GetCodeOpenDates(code), cache);
         }
 
         private static List<int> GetWaitForUpdateOpenDates(List<int> allOpenDates, TradingDayCache currentOpenDateCache)

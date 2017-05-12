@@ -15,7 +15,7 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         public PathUtils(String pluginPath)
         {
-            if (pluginPath == null || pluginPath.Equals("") || (!pluginPath.EndsWith("\\")))
+            if (pluginPath == null || pluginPath.Equals("") || (pluginPath.EndsWith("\\")))
                 this.configPath = pluginPath + "config\\";
             else
                 this.configPath = pluginPath + "\\config\\";
