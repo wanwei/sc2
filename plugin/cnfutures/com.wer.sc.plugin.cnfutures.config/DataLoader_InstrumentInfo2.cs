@@ -14,7 +14,9 @@ namespace com.wer.sc.plugin.cnfutures.config
         private PathUtils pathUtils;
         private Dictionary<String, CodeInfo> dicInstruments = new Dictionary<string, CodeInfo>();
         private List<CodeInfo> instruments;
-        private Dictionary<String, String> dicCatelogs = new Dictionary<string, string>();
+        private Dictionary<String, String> dic_Catelog_Exchange = new Dictionary<string, string>();
+        private Dictionary<String, String> dic_CatelogId_CatelogName = new Dictionary<string, string>();
+        //private Dictionary<String, String> dic_Catelog_Market = new Dictionary<string, string>();
         private List<String> catelogs = new List<string>();
 
         public DataLoader_InstrumentInfo2(string pluginPath)
@@ -25,7 +27,7 @@ namespace com.wer.sc.plugin.cnfutures.config
         }
 
         private void InitInstruments()
-        {            
+        {
             this.instruments = CsvUtils_Code.LoadByContent(File.ReadAllText(pathUtils.InstrumentPath));
             for (int i = 0; i < instruments.Count; i++)
             {
@@ -42,7 +44,8 @@ namespace com.wer.sc.plugin.cnfutures.config
                 if (line.Equals(""))
                     continue;
                 String[] strs = line.Split(',');
-                dicCatelogs.Add(strs[0], strs[2]);
+                dic_Catelog_Exchange.Add(strs[0], strs[2]);
+                dic_CatelogId_CatelogName.Add(strs[0], strs[1]);
                 catelogs.Add(strs[0]);
             }
         }
@@ -64,7 +67,7 @@ namespace com.wer.sc.plugin.cnfutures.config
         /// <returns></returns>
         public String GetBelongMarket(String code)
         {
-            return dicCatelogs[dicInstruments[code.ToUpper()].Catelog];
+            return dic_Catelog_Exchange[dicInstruments[code.ToUpper()].Catelog];
         }
 
         /// <summary>
@@ -75,6 +78,11 @@ namespace com.wer.sc.plugin.cnfutures.config
         public String GetVariety(String code)
         {
             return dicInstruments[code.ToUpper()].Catelog;
+        }
+
+        public String GetVarietyName(String code)
+        {
+            return dic_CatelogId_CatelogName[GetVariety(code)];
         }
 
         /// <summary>

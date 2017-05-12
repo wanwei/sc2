@@ -56,6 +56,10 @@ namespace com.wer.sc.plugin.cnfutures.config
                 }
             }
         }
+        private string GetCatelogName(string code)
+        {
+            return loader.GetVarietyName(code.ToUpper());
+        }
 
         private List<CodeInfo> GetCodes(CodeInfo code, int startYear, int endYear)
         {
@@ -64,11 +68,12 @@ namespace com.wer.sc.plugin.cnfutures.config
             bool isIndex = codeId.EndsWith("MI") || codeId.EndsWith("13");
             if (isIndex)
             {
-                CodeInfo codeInfo = new CodeInfo(code.Code, code.Name, code.Catelog, code.CatelogName, -1, -1, loader.GetBelongMarket(codeId));
+                string catelogName = GetCatelogName(code.Code);
+                CodeInfo codeInfo = new CodeInfo(code.Code, code.Name, code.Catelog, catelogName, -1, -1, loader.GetBelongMarket(codeId));
                 if (codeId.EndsWith("13"))
                     codeInfo.Code = codeId.Substring(0, codeId.Length - 2) + "0000";
                 codes.Add(codeInfo);
-                dic_Code_OldCodeInfo.Add(codeInfo.Code, code);
+                dic_Code_OldCodeInfo.Add(codeInfo.Code.ToUpper(), code);
                 return codes;
             }
 
@@ -78,7 +83,7 @@ namespace com.wer.sc.plugin.cnfutures.config
                 if (codeInfo != null)
                 {
                     codes.Add(codeInfo);
-                    dic_Code_OldCodeInfo.Add(codeInfo.Code, code);
+                    dic_Code_OldCodeInfo.Add(codeInfo.Code.ToUpper(), code);
                 }
             }
             return codes;
@@ -102,6 +107,7 @@ namespace com.wer.sc.plugin.cnfutures.config
             newCode.Code = codePrefix + codeSuffix;
             newCode.Name = code.Name.Substring(0, code.Name.Length - 2) + codeSuffix;
             newCode.Catelog = code.Catelog;
+            newCode.CatelogName = GetCatelogName(code.Code);
             int month = int.Parse(codeId.Substring(codeId.Length - 2, 2));
             newCode.Start = GetEndDay(year - 1, month) + 1;
             newCode.End = GetEndDay(year, month);
@@ -136,6 +142,7 @@ namespace com.wer.sc.plugin.cnfutures.config
             newCode.Code = codePrefix + codeSuffix;
             newCode.Name = code.Name.Substring(0, code.Name.Length - 2) + codeSuffix;
             newCode.Catelog = code.Catelog;
+            newCode.CatelogName = GetCatelogName(code.Code);
             int month = int.Parse(codeId.Substring(codeId.Length - 2, 2));
             newCode.Start = GetEndDay(year - 2, month) + 1;
             newCode.End = GetEndDay(year, month);
@@ -204,8 +211,8 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         public CodeInfo GetOldCodeInfo(String code)
         {
-            if (dic_Code_OldCodeInfo.ContainsKey(code))
-                return dic_Code_OldCodeInfo[code];
+            if (dic_Code_OldCodeInfo.ContainsKey(code.ToUpper()))
+                return dic_Code_OldCodeInfo[code.ToUpper()];
             return null;
         }
     }

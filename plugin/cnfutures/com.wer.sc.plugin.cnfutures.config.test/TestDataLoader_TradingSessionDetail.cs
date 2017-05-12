@@ -19,10 +19,10 @@ namespace com.wer.sc.plugin.cnfutures.config
             DataLoader_InstrumentInfo dataLoader_Instrument = new DataLoader_InstrumentInfo(pluginPath);
             DataLoader_TradingSessionDetail dataLoader = new DataLoader_TradingSessionDetail(pluginPath, dataLoader_Instrument);
 
-            List<double[]> tradingSessionDetail = dataLoader.GetTradingTime("m05", 20100104);
+            List<double[]> tradingSessionDetail = dataLoader.GetTradingTime("m1005", 20100104);
             AssertUtils.AssertEqual_List<double[]>("tradingsessiondetail_normal", GetType(), tradingSessionDetail);
 
-            tradingSessionDetail = dataLoader.GetTradingTime("rb05", 20100106);
+            tradingSessionDetail = dataLoader.GetTradingTime("rb1005", 20100106);
             AssertUtils.AssertEqual_List<double[]>("tradingsessiondetail_sqearly", GetType(), tradingSessionDetail);
         }
     }

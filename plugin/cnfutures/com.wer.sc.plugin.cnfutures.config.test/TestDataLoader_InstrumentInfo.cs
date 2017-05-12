@@ -16,6 +16,7 @@ namespace com.wer.sc.plugin.cnfutures.config
             string pluginPath = ScConfig.Instance.ScPath;
             DataLoader_InstrumentInfo dataLoader = new DataLoader_InstrumentInfo(pluginPath);
             List<CodeInfo> instruments = dataLoader.GetAllInstruments();
+            AssertUtils.PrintLineList(instruments);
             AssertUtils.AssertEqual_List<CodeInfo>("instruments", GetType(), instruments);
         }
     }

@@ -17,7 +17,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     {
         private string code;
 
-        private List<int> dates;
+        //private List<int> dates;
 
         private IDataLoader dataLoader;
 
@@ -63,7 +63,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             return dataLoader.LoadTradingSessions(this.code);
         }
-      
+
         public override string ToString()
         {
             return StepDesc;

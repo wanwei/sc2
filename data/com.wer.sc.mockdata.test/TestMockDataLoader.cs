@@ -11,6 +11,7 @@ namespace com.wer.sc.mockdata
         public void TestGetInstruments()
         {
             List<CodeInfo> instruments = MockDataLoader.GetAllInstruments();
+            AssertUtils.PrintLineList(instruments);
             AssertUtils.AssertEqual_List("Instruments", GetType(), instruments);
         }
 

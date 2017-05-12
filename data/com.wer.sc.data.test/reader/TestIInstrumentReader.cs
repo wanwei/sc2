@@ -16,6 +16,7 @@ namespace com.wer.sc.data.reader
         {
             IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
             List<CodeInfo> instruments = dataReader.InstrumentReader.GetAllInstruments();
+            //AssertUtils.PrintLineList(instruments);
             AssertUtils.AssertEqual_List("instruments", GetType(), instruments);
 
             CodeInfo instrument = dataReader.InstrumentReader.GetInstrument("m05");
