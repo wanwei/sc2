@@ -10,7 +10,7 @@ namespace com.wer.sc.plugin.historydata
     public abstract class Plugin_DataUpdater : IPlugin_DataUpdater
     {        
 
-        public abstract IUpdateStepGetter UpdateStepGetter { get; }
+        public abstract IUpdateHelper PluginHelper { get; }
 
         public abstract List<PreparerArgument> GetAllArguments();
 

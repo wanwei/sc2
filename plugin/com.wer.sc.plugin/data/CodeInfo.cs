@@ -25,6 +25,10 @@ namespace com.wer.sc.data
 
         private string exchange;
 
+        private string serverCode;
+
+        private string shortCode;
+
         public string Code
         {
             get
@@ -116,6 +120,32 @@ namespace com.wer.sc.data
             }
         }
 
+        public string ServerCode
+        {
+            get
+            {
+                return serverCode;
+            }
+
+            set
+            {
+                serverCode = value;
+            }
+        }
+
+        public string ShortCode
+        {
+            get
+            {
+                return shortCode;
+            }
+
+            set
+            {
+                shortCode = value;
+            }
+        }
+
         public CodeInfo()
         {
 
@@ -128,7 +158,7 @@ namespace com.wer.sc.data
             this.Name = name;
         }
 
-        public CodeInfo(String code, String name, String catelog, string catelogName, int start, int end, string exchange)
+        public CodeInfo(String code, String name, String catelog, string catelogName, int start, int end, string exchange, string servercode)
         {
             this.Code = code;
             this.Name = name;
@@ -137,13 +167,14 @@ namespace com.wer.sc.data
             this.start = start;
             this.end = end;
             this.exchange = exchange;
+            this.serverCode = servercode;
         }
 
         override
          public String ToString()
         {
-            return Code + "," + Name + "," + Catelog + "," + CatelogName + "," 
-                + start + "," + end + "," + exchange;
+            return Code + "," + Name + "," + Catelog + "," + CatelogName + ","
+                + start + "," + end + "," + exchange + "," + serverCode + "," + shortCode;
         }
 
         public override bool Equals(object obj)

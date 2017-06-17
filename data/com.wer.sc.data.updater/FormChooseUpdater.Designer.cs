@@ -59,7 +59,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.btOK);
             this.splitContainer1.Panel2.Controls.Add(this.btCancel);
             this.splitContainer1.Size = new System.Drawing.Size(528, 97);
-            this.splitContainer1.SplitterDistance = 48;
+            this.splitContainer1.SplitterDistance = 47;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 14;
             // 
@@ -76,7 +76,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(528, 48);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(528, 47);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // cbUpdaters
@@ -96,7 +96,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(24, 14);
+            this.label1.Location = new System.Drawing.Point(24, 13);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 20);

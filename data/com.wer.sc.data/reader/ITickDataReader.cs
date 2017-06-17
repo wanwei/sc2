@@ -8,11 +8,11 @@ namespace com.wer.sc.data.reader
     public interface ITickDataReader
     {
         /// <summary>
-        /// 得到某日的tick数据
+        /// 得到一张合约单日的tick数据
         /// </summary>
         /// <param name="code"></param>
         /// <param name="date"></param>
         /// <returns></returns>
         TickData GetTickData(string code, int date);
-    }
+  }
 }

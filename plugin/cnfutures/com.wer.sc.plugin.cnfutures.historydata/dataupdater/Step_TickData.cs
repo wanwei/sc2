@@ -1,5 +1,4 @@
-﻿using com.wer.sc.plugin.cnfutures.historydata.dataloader;
-using com.wer.sc.utils.update;
+﻿using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +13,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private List<int> dates;
 
-        private IDataLoader dataLoader;
+        private DataUpdateHelper dataLoader;
 
-        public Step_TickData(string code, List<int> dates, IDataLoader dataLoader)
+        public Step_TickData(string code, List<int> dates, DataUpdateHelper dataLoader)
         {
             this.code = code;
             this.dates = dates;

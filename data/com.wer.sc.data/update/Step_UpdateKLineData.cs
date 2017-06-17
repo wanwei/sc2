@@ -63,6 +63,8 @@ namespace com.wer.sc.data.update
         {
             //Console.WriteLine(code + "," + startDate + "," + endDate + period);
             IKLineData klineData = historyData.GetKLineData(code, startDate, endDate, period);
+            if (klineData == null || klineData.Length == 0)
+                return "";
             klineDataStore.Append(code, period, klineData);
             return StepDesc + "完毕";
         }

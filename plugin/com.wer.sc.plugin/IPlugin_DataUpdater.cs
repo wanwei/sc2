@@ -17,7 +17,7 @@ namespace com.wer.sc.plugin
         /// <summary>
         /// 得到所有更新步骤
         /// </summary>
-        IUpdateStepGetter UpdateStepGetter { get; }
+        IUpdateHelper PluginHelper { get; }
 
         /// <summary>
         /// 得到更新时用到的所有参数及其描述

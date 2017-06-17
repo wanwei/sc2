@@ -1,6 +1,5 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
-using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
@@ -16,13 +15,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private List<int> dates;
 
-        private IDataLoader dataLoader;
+        private DataUpdateHelper dataUpdateHelper;
 
-        public Step_KLineData(string code, List<int> dates, IDataLoader dataLoader)
+        public Step_KLineData(string code, List<int> dates, DataUpdateHelper dataUpdateHelper)
         {
             this.code = code;
             this.dates = dates;
-            this.dataLoader = dataLoader;
+            this.dataUpdateHelper = dataUpdateHelper;
         }
 
         public int ProgressStep
@@ -40,6 +39,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 return "更新" + GetDesc();
             }
         }
+
         private string GetDesc()
         {
             return code + "的K线数据：" + dates[0] + "-" + dates[dates.Count - 1];
@@ -47,8 +47,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            ITradingDayReader openDateReader = this.dataLoader.LoadTradingDayReader();
-            KLineDataLastEndInfo lastEndInfo;// = GetLastEndInfo(dates[0]);
+            ITradingDayReader openDateReader = this.dataUpdateHelper.GetAllTradingDayReader();
+            KLineDataLastEndInfo lastEndInfo;
             IKLineData lastKLineData = null;
 
             for (int i = 0; i < dates.Count; i++)
@@ -70,7 +70,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                         lastEndInfo = GetLastEndInfo(date);
                     }
                 }
-                Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(code, date, KLinePeriod.KLinePeriod_1Minute, dataLoader, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold);
+                Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(dataUpdateHelper, code, date, KLinePeriod.KLinePeriod_1Minute, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold);
                 step_klineData.Proceed();
                 lastKLineData = step_klineData.KlineData;
             }
@@ -79,8 +79,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private KLineDataLastEndInfo GetLastEndInfo(int date)
         {
-            int prevDate = this.dataLoader.LoadTradingDayReader().GetPrevTradingDay(date);
-            IKLineData lastKLineData = this.dataLoader.LoadUpdatedKLineData(code, prevDate, KLinePeriod.KLinePeriod_1Minute);
+            int prevDate = this.dataUpdateHelper.GetAllTradingDayReader().GetPrevTradingDay(date);
+            IKLineData lastKLineData = this.dataUpdateHelper.GetUpdatedKLineData(code, prevDate, KLinePeriod.KLinePeriod_1Minute);
             float lastEndPrice = lastKLineData != null ? lastKLineData.Arr_End[lastKLineData.Length - 1] : -1;
             int lastEndHold = lastKLineData != null ? lastKLineData.Arr_Hold[lastKLineData.Length - 1] : -1;
             return new KLineDataLastEndInfo(lastEndPrice, lastEndHold);

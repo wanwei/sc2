@@ -49,7 +49,7 @@
     <Compile Include="ByteUtils.cs" />
     <Compile Include="ColorUtils.cs" />
     <Compile Include="ItemObject.cs" />
-    <Compile Include="update\IUpdateStepGetter.cs" />
+    <Compile Include="update\IUpdateHelper.cs" />
     <Compile Include="OpenTimeUtil.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="JSonUtils.cs" />

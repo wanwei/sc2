@@ -14,5 +14,13 @@ namespace com.wer.sc.plugin.historydata.utils
         public String instrument;
 
         public List<int> dates;
+
+        public override string ToString()
+        {
+            string str = instrument + "," + dates.Count;
+            if (dates.Count > 0)
+                return str + "," + dates[0] + "," + dates[dates.Count - 1];
+            return str;
+        }
     }
 }

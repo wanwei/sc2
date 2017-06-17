@@ -7,7 +7,6 @@ using com.wer.sc.data;
 using com.wer.sc.data.reader;
 using com.wer.sc.plugin.cnfutures.config;
 using com.wer.sc.data.cnfutures;
-using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using System.IO;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua.adjust;
 
@@ -17,11 +16,19 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
     {
         private string srcDataPath;
 
-        private DataLoader_InstrumentInfo dataLoader_InstrumentInfo;
+        private string pluginPath;
+
+        //private CodeInfoGenerator codeInfoGenerator;
 
         private DataLoader_TradingSessionDetail dataLoader_TradingSessionDetail;
 
-        private DataProvider_BiaoPuYongHua_TradingDay tradingDayProvider;
+        private DataProvider_BiaoPuYongHua_TradingDay dataprovider_TradingDay;
+
+        private DataProvider_BiaoPuYongHua_CodeInfo dataprovider_CodeInfo;
+
+        private DataLoader_Variety dataLoader_Variety;
+
+        //private Dictionary<string, int> dic_OldCodeId_IpoDate = new Dictionary<string, int>();
 
         /// <summary>
         /// 构造函数
@@ -31,9 +38,61 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
         public DataProvider_BiaoPuYongHua(string srcDataPath, string pluginPath)
         {
             this.srcDataPath = srcDataPath;
-            this.dataLoader_InstrumentInfo = new DataLoader_InstrumentInfo(pluginPath);
-            this.tradingDayProvider = new DataProvider_BiaoPuYongHua_TradingDay(srcDataPath);
+            this.pluginPath = pluginPath;
+            this.dataLoader_Variety = new DataLoader_Variety(pluginPath);
+            this.dataprovider_CodeInfo = new DataProvider_BiaoPuYongHua_CodeInfo(srcDataPath, pluginPath);
+            this.dataprovider_TradingDay = new DataProvider_BiaoPuYongHua_TradingDay(srcDataPath, pluginPath);
+            this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginPath, dataLoader_Variety);
         }
+
+        private void Init()
+        {
+            //if (this.codeInfoGenerator != null)
+            //    return;
+            //this.codeInfoGenerator = new CodeInfoGenerator(pluginPath);
+            //this.dataprovider_TradingDay = new DataProvider_BiaoPuYongHua_TradingDay(srcDataPath);
+            //this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginPath, codeInfoGenerator);
+            //this.initIpoDates();
+        }
+
+        //private void initIpoDates()
+        //{
+        //    List<CodeInfo> codes = this.codeInfoGenerator.GetAllOldCodes();
+        //    for (int i = 0; i < codes.Count; i++)
+        //    {
+        //        string code = codes[i].Code;
+        //        dic_OldCodeId_IpoDate.Add(code, GetIpoDateInternal(code));
+        //    }
+        //}
+
+        //private int GetIpoDateInternal(string oldCodeId)
+        //{
+        //    ITradingDayReader reader = this.dataprovider_TradingDay.GetTradingDayReader();
+        //    List<int> tradingDays = reader.GetAllTradingDays();
+        //    for (int i = 0; i < tradingDays.Count; i++)
+        //    {
+        //        int date = tradingDays[i];
+        //        string path = GetOldCodePath(oldCodeId, date);
+        //        if (File.Exists(path))
+        //            return date;
+        //    }
+        //    return -1;
+        //}
+
+        //private String GetOldCodePath(String code, int date)
+        //{
+        //    return srcDataPath + "\\" + codeInfoGenerator.DataLoader_CodeInfo.GetBelongMarket(code) + "\\" + date + "\\" + code + "_" + date + ".csv";
+        //}
+
+        //private int GetIpoDate(String oldCodeId)
+        //{
+        //    Init();
+        //    if (dic_OldCodeId_IpoDate.ContainsKey(oldCodeId))
+        //        return dic_OldCodeId_IpoDate[oldCodeId];
+        //    return -1;
+        //}
+
+        #region 获得tickdata
 
         public ITickData LoadTickData(string code, int date)
         {
@@ -86,6 +145,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             }
             return data;
         }
+
         private static int GetEmptyLines(string[] lines)
         {
             int cnt = 0;
@@ -108,12 +168,22 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
 
         private String GetCodePath(String code, int date)
         {
-            return srcDataPath + "\\" + dataLoader_InstrumentInfo.GetBelongMarket(code) + "\\" + date + "\\" + code + "_" + date + ".csv";
+            CodeIdParser parser = new CodeIdParser(code);
+            VarietyInfo varietyInfo = dataLoader_Variety.GetVariety(parser.VarietyId);
+            return srcDataPath + "\\" + varietyInfo.Exchange + "\\" + date + "\\"
+                + CodeInfoUtils.GetSimpleCodeId(code) + "_" + date + ".csv";
         }
 
-        public ITradingDayReader LoadTradingDayReader()
+        #endregion
+
+        public List<int> GetNewTradingDays()
         {
-            return tradingDayProvider.GetTradingDayReader();
+            return dataprovider_TradingDay.GetTradingDays();
+        }
+
+        public List<CodeInfo> GetNewCodes()
+        {
+            return dataprovider_CodeInfo.GetNewCodes();
         }
     }
 }

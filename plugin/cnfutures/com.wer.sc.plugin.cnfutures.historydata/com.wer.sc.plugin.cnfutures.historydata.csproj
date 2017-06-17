@@ -40,25 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dataloader\DataLoader.cs" />
-    <Compile Include="dataloader\DataLoaderFactory.cs" />
-    <Compile Include="dataloader\IDataLoader.cs" />
+    <None Include="config\cnfuturespath" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickAdjustMethod.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickDataAdjuster.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickDataAnalysis.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickInfo_Period.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickPeriodAdjustInfo.cs" />
-    <Compile Include="dataloader\tick\generator\DataGenerator_TickData_Index.cs" />
-    <Compile Include="dataloader\tick\generator\DataGenerator_TickData_Main.cs" />
+    <Compile Include="dataupdater\DataUpdateHelper.cs" />
+    <Compile Include="dataupdater\generator\DataGenerator_TickData_Index.cs" />
+    <Compile Include="dataupdater\generator\DataGenerator_TickData_Main.cs" />
     <Compile Include="dataprovider\biaopuyonghua\DataProvider_BiaoPuYongHua.cs" />
+    <Compile Include="dataprovider\biaopuyonghua\DataProvider_BiaoPuYongHua_CodeInfo.cs" />
     <Compile Include="dataprovider\biaopuyonghua\DataProvider_BiaoPuYongHua_TradingDay.cs" />
-    <Compile Include="dataprovider\daily\DataProvider_JinShuYuan.cs" />
-    <Compile Include="dataprovider\daily\DataProvider_JinShuYuan_TradingDay.cs" />
+    <Compile Include="dataprovider\CodeInfoComparer.cs" />
+    <Compile Include="dataupdater\UpdatedDataLoader.cs" />
+    <Compile Include="dataprovider\daily\DataProvider_Daily.cs" />
+    <Compile Include="dataprovider\daily\DataProvider_Daily_CodeInfo.cs" />
+    <Compile Include="dataprovider\daily\DataProvider_Daily_TradingDay.cs" />
     <Compile Include="dataprovider\IDataProvider.cs" />
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan.cs" />
+    <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan_CodeInfo.cs" />
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan_TickData.cs" />
     <Compile Include="dataprovider\jinshuyuan\DataProvider_JinShuYuan_TradingDay.cs" />
-    <Compile Include="dataupdater\DataUpdateUtils.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Abstract.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_BiaoPuYongHua.cs" />
     <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Daily.cs" />
@@ -79,9 +82,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="updater\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
       <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
@@ -97,12 +98,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="config\jinshuyuan.instruments.csv" />
     <None Include="config\HistoryData.CnFutures.pluginconfig" />
+    <None Include="config\biaopuyonghua.instruments.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir $(TargetDir)config
-xcopy $(ProjectDir)config\HistoryData.CnFutures.pluginconfig $(TargetDir) /s /e /y</PostBuildEvent>
+copy $(ProjectDir)config\* $(TargetDir)config\
+copy $(ProjectDir)config\HistoryData.CnFutures.pluginconfig $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

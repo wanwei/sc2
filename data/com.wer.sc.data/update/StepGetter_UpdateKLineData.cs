@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.store;
+﻿using com.wer.sc.data.reader.cache;
+using com.wer.sc.data.store;
 using com.wer.sc.plugin;
 using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
@@ -46,24 +47,54 @@ namespace com.wer.sc.data.update
             List<CodeInfo> instruments = historyData.GetInstruments();
             List<int> tradingDays = historyData.GetTradingDays();
 
+            TradingDayCache cache = new TradingDayCache(tradingDays);
+
             for (int i = 0; i < instruments.Count; i++)
             {
                 CodeInfo instrument = instruments[i];
-                AddSteps_KLineData_Instrument(steps, instrument.Code, tradingDays);
+                AddSteps_KLineData_Instrument(steps, instrument, cache);
             }
         }
 
-        private void AddSteps_KLineData_Instrument(List<IStep> steps, string code, List<int> tradingDays)
+        private void AddSteps_KLineData_Instrument(List<IStep> steps, CodeInfo codeInfo, TradingDayCache tradingDaysCache)
         {
+            string code = codeInfo.Code;
             for (int i = 0; i < updatePeriods.Count; i++)
             {
+                //TODO 暂时没处理FillUp的情况，考虑使用全覆盖的方式实现
                 KLinePeriod period = updatePeriods[i];
                 int lastTradingDay = klineDataStore.GetLastTradingDay(code, period);
-                int lastIndex = lastTradingDay < 0 ? 0 : tradingDays.IndexOf(lastTradingDay);
-                if (lastIndex >= tradingDays.Count - 1)
-                    continue;
-                int startDate = tradingDays[lastIndex + 1];
-                int endDate = tradingDays[tradingDays.Count - 1];
+
+                int startDate;
+                if (lastTradingDay < 0)
+                {
+                    if (codeInfo.Start != 0)
+                        startDate = codeInfo.Start;
+                    else
+                        startDate = tradingDaysCache.GetAllTradingDays()[0];
+                }
+                else
+                {
+                    int lastTradingDayIndex = tradingDaysCache.GetTradingDayIndex(lastTradingDay);
+                    if (lastTradingDayIndex < 0)
+                    {
+                        //TODO 不应该出现这种情况
+                    }
+                    int startIndex = lastTradingDayIndex + 1;
+                    if (startIndex >= tradingDaysCache.GetAllTradingDays().Count)
+                        continue;
+                    startDate = tradingDaysCache.GetTradingDay(startIndex);
+                }
+
+                int endIndex;
+                if (codeInfo.End <= 0)
+                    endIndex = tradingDaysCache.GetAllTradingDays().Count - 1;
+                else
+                    endIndex = tradingDaysCache.GetTradingDayIndex(codeInfo.End, true);
+
+                int endDate = tradingDaysCache.GetTradingDay(endIndex);
+                if (endDate < startDate)
+                    return;
                 Step_UpdateKLineData step = new Step_UpdateKLineData(code, startDate, endDate, period, historyData, klineDataStore);
                 steps.Add(step);
             }

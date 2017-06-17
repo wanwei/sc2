@@ -26,6 +26,11 @@ namespace com.wer.sc.plugin.cnfutures.config
             get { return configPath + "\\instruments.csv"; }
         }
 
+        public string GeneratedCodesPath
+        {
+            get { return configPath + "\\generatedcodes.csv"; }
+        }
+
         public string CatelogPath
         {
             get { return configPath + "\\catelogs.csv"; }

@@ -18,12 +18,12 @@ namespace com.wer.sc.plugin.mock.strategy.complex
             throw new NotImplementedException();
         }
 
-        public void ModelEnd()
+        public void StrategyEnd()
         {
             throw new NotImplementedException();
         }
 
-        public void ModelStart()
+        public void StrategyStart()
         {
             throw new NotImplementedException();
         }

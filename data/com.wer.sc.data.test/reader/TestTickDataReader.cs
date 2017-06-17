@@ -14,25 +14,25 @@ namespace com.wer.sc.data.reader
         [TestMethod]
         public void TestTickData_M01_20131231()
         {
-            TestLoadTickData("m01", 20131231, "TickData_M01_20131231");
+            TestLoadTickData("m1401", 20131231, "TickData_M01_20131231");
         }
 
         [TestMethod]
         public void TestTickData_M01_20141223()
         {
-            TestLoadTickData("m01", 20141223, "TickData_M01_20141223");
+            TestLoadTickData("m1501", 20141223, "TickData_M01_20141223");
         }
 
         [TestMethod]
         public void TestTickData_M05_20150121()
         {
-            TestLoadTickData("m05", 20150121, "TickData_M05_20150121");
+            TestLoadTickData("m1505", 20150121, "TickData_M05_20150121");
         }
 
         [TestMethod]
         public void TestTickData_M09_20141223()
         {
-            TestLoadTickData("m09", 20141223, "TickData_M09_20141223");
+            TestLoadTickData("m1509", 20141223, "TickData_M09_20141223");
         }
 
         private void TestLoadTickData(string code, int date, string fileName)

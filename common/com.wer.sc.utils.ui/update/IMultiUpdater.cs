@@ -20,6 +20,6 @@ namespace com.wer.sc.utils.ui.update
         /// 得到所有的更新步骤获取器
         /// </summary>
         /// <returns></returns>
-        List<IUpdateStepGetter> GetDataUpdaters();
+        List<IUpdateHelper> GetDataUpdaters();
     }
 }

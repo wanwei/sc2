@@ -18,19 +18,19 @@ namespace com.wer.sc.data.update
     [TestClass]
     public class TestDataProceed_DataUpdate
     {
-        [TestMethod]
-        public void TestDataProceed_DataUpdate_Prepare()
-        {
-            IPlugin_HistoryData plugin_HistoryData = new Plugin_History_MockUpdate(@"E:\FUTURES\MOCKDATAUPDATE\UpdateData1\");
-            string configFilePath = TestCaseManager.GetTestCasePath(GetType(), "datacenter.config");
-            DataCenter dataCenter = DataCenterManager.Create(configFilePath).GetDataCenter("file:/E:/FUTURES/MOCKDATAUPDATE/DataCenter/");
-            IDataStore dataStore = dataCenter.DataStore;
+        //[TestMethod]
+        //public void TestDataProceed_DataUpdate_Prepare()
+        //{
+        //    IPlugin_HistoryData plugin_HistoryData = new Plugin_History_MockUpdate(@"E:\FUTURES\MOCKDATAUPDATE\UpdateData1\");
+        //    string configFilePath = TestCaseManager.GetTestCasePath(GetType(), "datacenter.config");
+        //    DataCenter dataCenter = DataCenterManager.Create(configFilePath).GetDataCenter("file:/E:/FUTURES/MOCKDATAUPDATE/DataCenter/");
+        //    IDataStore dataStore = dataCenter.DataStore;
 
-            DataUpdate dataProceed = new DataUpdate(plugin_HistoryData, dataCenter, true);
-            List<IStep> steps = dataProceed.GetSteps();
-            AssertUtils.PrintLineList(steps);
-            //AssertUtils.AssertEqual_List("Steps_DataProceed_DataUpdate", GetType(), steps);
-        }
+        //    DataUpdate dataProceed = new DataUpdate(plugin_HistoryData, dataCenter, true);
+        //    List<IStep> steps = dataProceed.GetSteps();
+        //    AssertUtils.PrintLineList(steps);
+        //    //AssertUtils.AssertEqual_List("Steps_DataProceed_DataUpdate", GetType(), steps);
+        //}
 
         [TestMethod]
         public void TestDataProceed_DataUpdate_Update()

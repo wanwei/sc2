@@ -6,7 +6,7 @@
     public interface IKLineDataReader
     {
         /// <summary>
-        /// 得到某股票或期货的所有K线数据
+        /// 得到一张合约的所有K线数据
         /// </summary>
         /// <param name="code"></param>
         /// <param name="period"></param>
@@ -14,7 +14,7 @@
         IKLineData GetAllData(string code, KLinePeriod period);
 
         /// <summary>
-        /// 得到某股票或期货的一段时间的K线数据
+        /// 得到一张合约一段时间的K线数据
         /// </summary>
         /// <param name="code"></param>
         /// <param name="startDate"></param>

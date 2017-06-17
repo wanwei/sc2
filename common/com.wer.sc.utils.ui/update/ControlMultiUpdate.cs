@@ -92,10 +92,10 @@ namespace com.wer.sc.utils.ui.update
             this.splitContainer1.Panel1.Controls.Add(tableLayoutPanel1);
 
             tableLayoutPanel1.CellPaint += TableLayoutPanel1_CellPaint;
-            tableLayoutPanel1.RowCount = multiUpdater.GetDataUpdaters().Count;
+            tableLayoutPanel1.RowCount = multiUpdater.GetDataUpdaterNames().Count;
             //this.Height = tableLayoutPanel1.RowCount * 45 + 50;
             this.Height = tableLayoutPanel1.RowCount * 30 + 40;
-            for (int i = 0; i < multiUpdater.GetDataUpdaters().Count; i++)
+            for (int i = 0; i < multiUpdater.GetDataUpdaterNames().Count; i++)
             {
                 Label lb = new Label();
                 lb.Text = multiUpdater.GetDataUpdaterNames()[i];
@@ -121,8 +121,10 @@ namespace com.wer.sc.utils.ui.update
 
             for (int i = 0; i < multiUpdater.GetDataUpdaters().Count; i++)
             {
-                IUpdateStepGetter stepGetter = multiUpdater.GetDataUpdaters()[i];
+                IUpdateHelper stepGetter = multiUpdater.GetDataUpdaters()[i];
                 UpdateExecutor executor = new UpdateExecutor(stepGetter);
+                executor.Tag = multiUpdater.GetDataUpdaterNames()[i];
+                executor.BeforePrepared += Executor_BeforePrepared;
                 executor.AfterPrepared += Executor_AfterPrepared;
                 executor.AfterStepBegin += Executor_AfterStepBegin;
                 executor.AfterStepFinished += Executor_AfterStepFinished;
@@ -231,6 +233,20 @@ namespace com.wer.sc.utils.ui.update
             executor.Update();
         }
 
+        private void Executor_BeforePrepared(object sender)
+        {
+            string desc = "正在准备执行更新";
+            if (sender is UpdateExecutor)
+            {
+                UpdateExecutor executor = (UpdateExecutor)sender;
+                if (executor.Tag != null)
+                    desc += executor.Tag.ToString();
+            }
+            UpdateStatusLabel(desc);
+            if (BeforePrepared != null)
+                BeforePrepared(sender);
+        }
+
         private void Executor_AfterPrepared(object sender, int totalProgress)
         {
             UpdateMaxProgress(CurrentProgressBar, totalProgress);
@@ -320,6 +336,7 @@ namespace com.wer.sc.utils.ui.update
 
         private delegate void UpdateStatusInvokeCallback(String txt);
 
+        public event DelegateOnBeforePrepared BeforePrepared;
 
         /// <summary>
         /// 更新准备完成事件

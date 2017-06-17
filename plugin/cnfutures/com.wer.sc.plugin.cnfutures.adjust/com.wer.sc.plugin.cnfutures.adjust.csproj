@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdjustDataCenterTickData.cs" />
+    <Compile Include="AdjustIndexTick.cs" />
     <Compile Include="AdjustTickStepGetter.cs" />
     <Compile Include="FormAdjustTickSrcData.cs">
       <SubType>Form</SubType>

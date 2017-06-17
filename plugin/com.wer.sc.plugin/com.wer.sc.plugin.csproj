@@ -47,6 +47,7 @@
     <Compile Include="data\market\InstrumentInfo.cs" />
     <Compile Include="data\market\LoginInfo.cs" />
     <Compile Include="data\market\account\PositionInfo.cs" />
+    <Compile Include="data\reader\cache\CodeInfoCache.cs" />
     <Compile Include="data\reader\cache\TradingSessionCache_Instrument.cs" />
     <Compile Include="data\TradingTime.cs" />
     <Compile Include="data\utils\CsvUtils_Codes.cs" />

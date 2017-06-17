@@ -13,9 +13,9 @@ namespace com.wer.sc.strategy
     /// </summary>
     public interface IStrategy
     {
-        void ModelStart();
+        void StrategyStart();
 
-        void ModelEnd();
+        void StrategyEnd();
 
         void OnTick(IRealTimeDataReader currentData);
 

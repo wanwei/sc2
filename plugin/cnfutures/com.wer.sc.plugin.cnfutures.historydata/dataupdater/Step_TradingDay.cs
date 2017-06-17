@@ -1,5 +1,4 @@
 ﻿using com.wer.sc.data.reader;
-using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using com.wer.sc.utils;
 using com.wer.sc.utils.update;
 using System;
@@ -16,13 +15,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     /// </summary>
     public class Step_TradingDay : IStep
     {
-        private IDataLoader dataLoader;
-        private List<int> openDates;
+        private DataUpdateHelper dataUpdateHelper;
 
-        public Step_TradingDay(IDataLoader dataLoader, ITradingDayReader tradingDayReader)
+        public Step_TradingDay(DataUpdateHelper dataUpdateHelper)
         {
-            this.dataLoader = dataLoader;
-            this.openDates = tradingDayReader.GetAllTradingDays();
+            this.dataUpdateHelper = dataUpdateHelper;
         }
 
         public int ProgressStep
@@ -43,14 +40,35 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            String[] openDateStr = new String[openDates.Count];
+            string fileName = dataUpdateHelper.GetPath_TradingDays();             
+
+            HashSet<string> set_oldTradingDays = new HashSet<string>();
+            if (File.Exists(fileName))
+            {
+                String[] oldTradingDays = File.ReadAllLines(fileName);
+                for (int i = 0; i < oldTradingDays.Length; i++)
+                    set_oldTradingDays.Add(oldTradingDays[i]);
+            }
+
+            List<int> openDates = dataUpdateHelper.GetNewTradingDays();
+            List<string> newOpenDates = new List<string>();
             for (int i = 0; i < openDates.Count; i++)
             {
-                openDateStr[i] = openDates[i].ToString(); ;
+                string newOpenDateStr = openDates[i].ToString();
+                if (set_oldTradingDays.Contains(newOpenDateStr))
+                    continue;
+                newOpenDates.Add(newOpenDateStr);
             }
-            string fileName = dataLoader.GetTargetDataPath() + "\\tradingdays.csv";
+
+            String[] newOpenDateStrArr = new String[newOpenDates.Count];
+            for (int i = 0; i < newOpenDates.Count; i++)
+            {
+                newOpenDateStrArr[i] = newOpenDates[i].ToString(); ;
+            }
+
             FileUtils.EnsureParentDirExist(fileName);
-            File.WriteAllLines(fileName, openDateStr);
+            File.AppendAllLines(fileName, newOpenDateStrArr);
+
             return "开盘日数据更新完成";
         }
 

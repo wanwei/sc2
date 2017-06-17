@@ -38,13 +38,13 @@ namespace com.wer.sc.data.reader.cache
 
         public int LastTradingDay { get { return openDatesList[openDatesList.Count - 1]; } }
 
-        public IList<int> GetTradingDays(int start, int end)
+        public IList<int> GetTradingDays(int startDate, int endDate)
         {
-            if (end < start)
+            if (endDate < startDate)
                 return ListUtils.EmptyIntList;
 
-            int startIndex = GetTradingDayIndex(start, false);
-            int endIndex = GetTradingDayIndex(end, true);
+            int startIndex = GetTradingDayIndex(startDate, false);
+            int endIndex = GetTradingDayIndex(endDate, true);
 
             if (startIndex < 0)
                 return ListUtils.EmptyIntList;

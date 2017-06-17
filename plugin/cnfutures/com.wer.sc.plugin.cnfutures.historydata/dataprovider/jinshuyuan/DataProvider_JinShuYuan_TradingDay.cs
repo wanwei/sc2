@@ -33,9 +33,36 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
         {
             if (this.tradingDays != null)
                 return;
-            String path = srcDataPath + "\\DL";
-            this.tradingDays = GetTradingDays(path);
+
+            DirectoryInfo srcPathDir = new DirectoryInfo(srcDataPath);
+            DirectoryInfo[] dirs = srcPathDir.GetDirectories();
+            this.tradingDays = new List<int>();
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                DirectoryInfo dir = dirs[i];
+                int month = int.Parse(dir.Name);
+                GetTradingDays(month, tradingDays);
+            }
+
+            //String path = srcDataPath + "\\DL";
+            //this.tradingDays = GetTradingDays(path);
             this.openDateReader = new TradingDayCache(tradingDays);
+        }
+
+        private void GetTradingDays(int month, List<int> tradingDays)
+        {
+            string tickPath = srcDataPath + "\\" + month + "\\dc\\";
+
+            string prefix = "a主力连续_*";
+            DirectoryInfo dir = new DirectoryInfo(tickPath);
+            FileInfo[] files = dir.GetFiles(prefix);
+            for (int i = 0; i < files.Length; i++)
+            {
+                string fileName = files[i].Name;
+                int dotIndex = fileName.IndexOf('.');
+                int tradingDay = int.Parse(fileName.Substring(dotIndex - 8, 8));
+                tradingDays.Add(tradingDay);
+            }
         }
 
         public ITradingDayReader GetTradingDayReader()

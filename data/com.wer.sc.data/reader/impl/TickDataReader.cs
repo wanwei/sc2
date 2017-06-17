@@ -36,6 +36,6 @@ namespace com.wer.sc.data.reader.impl
         public TickData GetTickData(String code, int date)
         {
             return tickDataStore.Load(code, date);
-        }
+        }      
     }
 }

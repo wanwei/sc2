@@ -14,7 +14,7 @@ namespace com.wer.sc.data.reader
         [TestMethod]
         public void TestTimeLineData_M05_20100108()
         {
-            TestGetTimeLineData("m05", 20100108);
+            TestGetTimeLineData("m1005", 20100108);
         }
 
         private void TestGetTimeLineData(string code, int date)

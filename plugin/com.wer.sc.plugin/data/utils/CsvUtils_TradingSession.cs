@@ -13,6 +13,8 @@ namespace com.wer.sc.data.utils
     {
         public static void Save(string path, List<TradingSession> data)
         {
+            if (data == null)
+                return;
             string[] contents = new string[data.Count];
             for (int i = 0; i < contents.Length; i++)
             {

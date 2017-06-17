@@ -1,6 +1,7 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.utils;
 using com.wer.sc.plugin.cnfutures.config;
+using com.wer.sc.plugin.cnfutures.historydata.dataprovider;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.utils.update;
 using System;
@@ -17,15 +18,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     /// </summary>
     public class Step_CodeInfo : IStep
     {
-        private string pluginPath;
-        private string csvDataPath;
-        private List<CodeInfo> codes;
+        private DataUpdateHelper dataUpdateHelper;
 
-        public Step_CodeInfo(string pluginPath, string csvDataPath, DataLoader_InstrumentInfo dataLoader_InstrumentInfo)
+        public Step_CodeInfo(DataUpdateHelper dataUpdateHelper)
         {
-            this.pluginPath = pluginPath;
-            this.csvDataPath = csvDataPath;
-            this.codes = dataLoader_InstrumentInfo.GetAllInstruments();
+            this.dataUpdateHelper = dataUpdateHelper;
         }
 
         public int ProgressStep
@@ -46,9 +43,35 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            CsvUtils_Code.Save(csvDataPath + "\\instruments.csv", codes);
+            string path = this.dataUpdateHelper.GetPath_Code();
+
+            //装载已更新好的股票
+            Dictionary<string, CodeInfo> dic_Id_CodeInfo = new Dictionary<string, CodeInfo>();
+            List<CodeInfo> updatedCodes = CsvUtils_Code.Load(path);
+            if (File.Exists(path))
+            {                
+                for (int i = 0; i < updatedCodes.Count; i++)
+                {
+                    dic_Id_CodeInfo.Add(updatedCodes[i].Code, updatedCodes[i]);
+                }
+            }
+
+            //从新的合约中找到之前没有的合约
+            List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            List<CodeInfo> newcodes = new List<CodeInfo>(updatedCodes);
+            for (int i = 0; i < codes.Count; i++)
+            {
+                CodeInfo code = codes[i];
+                if (dic_Id_CodeInfo.ContainsKey(code.Code))
+                    continue;
+                newcodes.Add(code);
+            }
+
+            newcodes.Sort(new CodeInfoComparer());
+            //CsvUtils_Code.Append(path, newcodes);
+            CsvUtils_Code.Save(path, newcodes);
             return "期货信息更新完成";
-        }        
+        }
 
         public override string ToString()
         {

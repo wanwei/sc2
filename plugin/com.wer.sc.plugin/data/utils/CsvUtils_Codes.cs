@@ -21,6 +21,17 @@ namespace com.wer.sc.data.utils
             File.WriteAllLines(path, contents);
         }
 
+        public static void Append(string path, List<CodeInfo> data)
+        {
+            string[] contents = new string[data.Count];
+            for (int i = 0; i < contents.Length; i++)
+            {
+                contents[i] = data[i].ToString();
+            }
+            FileUtils.EnsureParentDirExist(path);
+            File.AppendAllLines(path, contents);
+        }
+
         public static List<CodeInfo> Load(string path)
         {
             if (!File.Exists(path))
@@ -55,6 +66,10 @@ namespace com.wer.sc.data.utils
                     codeInfo.End = int.Parse(dataArr[5]);
                     codeInfo.Exchange = dataArr[6];
                 }
+                if (dataArr.Length > 7)
+                    codeInfo.ServerCode = dataArr[7];
+                if (dataArr.Length > 8)
+                    codeInfo.ShortCode = dataArr[8];
                 data.Add(codeInfo);
             }
             return data;

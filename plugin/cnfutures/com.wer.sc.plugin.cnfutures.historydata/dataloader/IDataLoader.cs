@@ -11,10 +11,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
     public interface IDataLoader
     {
         /// <summary>
-        /// 得到所有的交易合约
+        /// 得到新的交易合约
         /// </summary>
         /// <returns></returns>
-        List<CodeInfo> LoadAllInstruments();
+        List<CodeInfo> LoadNewInstruments();
 
         /// <summary>
         /// 获得某品种的所有合约
@@ -22,6 +22,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
         /// <param name="variety"></param>
         /// <returns></returns>
         List<CodeInfo> LoadInstruments(string variety);
+
+        /// <summary>
+        /// 根据id名称得到对应品种
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        CodeInfo GetInstrument(string code);
 
         /// <summary>
         /// 得到交易日读取器
@@ -98,5 +105,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
         /// <param name="code"></param>
         /// <returns></returns>
         List<TradingSession> LoadUpdatedTradingSessions(string code);
+
     }
 }

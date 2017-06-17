@@ -16,20 +16,29 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
     {
         private string srcDataPath;
 
-        private DataLoader_InstrumentInfo dataLoader_InstrumentInfo;
+        //private CodeInfoGenerator dataLoader_InstrumentInfo;
+        private DataLoader_Variety dataLoader_Variety;
 
         private DataLoader_TradingSessionDetail dataLoader_TradingSessionDetail;
 
         public DataProvider_JinShuYuan_TickData(string srcDataPath, string pluginPath)
         {
             this.srcDataPath = srcDataPath;
-            this.dataLoader_InstrumentInfo = new DataLoader_InstrumentInfo(pluginPath);
-            this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginPath, dataLoader_InstrumentInfo);
+            this.dataLoader_Variety = new DataLoader_Variety(pluginPath);
+            //this.dataLoader_InstrumentInfo = new CodeInfoGenerator(pluginPath);
+            this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginPath, dataLoader_Variety);
         }
 
         public TickData GetOriginalTickData(string code, int date)
         {
-            String path = GetCodePath(code, date);
+            String path = GetTickDataPath(code, date);
+            if (!File.Exists(path))
+                return null;
+            return GetTickData(path);
+        }
+
+        public static TickData GetTickData(string path)
+        {
             if (!File.Exists(path))
                 return null;
             String[] lines = File.ReadAllLines(path);
@@ -43,6 +52,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
 
         private static TickData ReadLinesToTickData(string[] lines)
         {
+            int totalmount = 0;
             int cnt = GetEmptyLines(lines);
             TickData data = new TickData(lines.Length - 1 - cnt);
             for (int i = 0; i < lines.Length - 1 - cnt; i++)
@@ -64,14 +74,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
 
                 data.arr_time[i] = fulltime;
                 data.arr_price[i] = float.Parse(dataArr[3]);
-                data.arr_mount[i] = int.Parse(dataArr[3]);
+                data.arr_mount[i] = (int)float.Parse(dataArr[7]);
                 data.Arr_Hold[i] = int.Parse(dataArr[4]);
                 data.arr_add[i] = int.Parse(dataArr[5]);
+                if (i == 0)
+                    data.arr_add[i] += data.Arr_Hold[i];
                 //data.arr_ = int.Parse(dataArr[6]);
-                data.arr_totalMount[i] = int.Parse(dataArr[7]);
-                data.arr_buyPrice[i] = (int)float.Parse(dataArr[12]);
+                totalmount += data.arr_mount[i];
+                data.arr_totalMount[i] = totalmount;
+                data.arr_buyPrice[i] = float.Parse(dataArr[12]);
                 data.arr_buyMount[i] = int.Parse(dataArr[14]);
-                data.arr_sellPrice[i] = (int)float.Parse(dataArr[13]);
+                data.arr_sellPrice[i] = float.Parse(dataArr[13]);
                 data.arr_sellMount[i] = int.Parse(dataArr[15]);
                 data.arr_isBuy[i] = dataArr[11].Equals("B");
             }
@@ -85,7 +98,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
             string secondStr = timeStr.Substring(11, 2) + timeStr.Substring(14, 2) + timeStr.Substring(17, 2);
             int day = int.Parse(dayStr);
             int second = int.Parse(secondStr);
-            return day + Math.Round((double)second / 100000, 6);
+            return day + Math.Round((double)second / 1000000, 6);
         }
 
         private static int GetEmptyLines(string[] lines)
@@ -108,11 +121,14 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
             return s;
         }
 
-        private String GetCodePath(String code, int date)
+        private String GetTickDataPath(String code, int date)
         {
             int month = date / 100;
 
-            string market = dataLoader_InstrumentInfo.GetBelongMarket(code);
+            VarietyInfo varietyInfo = dataLoader_Variety.GetVariety(CodeInfoUtils.GetVariety(code));
+            if (varietyInfo == null)
+                return null;
+            string market = varietyInfo.Exchange;
             if (market.Equals("DL"))
                 market = "dc";
             else if (market.Equals("SZ"))

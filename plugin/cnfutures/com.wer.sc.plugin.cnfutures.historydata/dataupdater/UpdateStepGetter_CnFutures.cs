@@ -11,7 +11,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     /// <summary>
     /// 中国期货数据的执行过程
     /// </summary>
-    public class UpdateStepGetter_CnFutures : IUpdateStepGetter
+    public class UpdateStepGetter_CnFutures : IUpdateHelper
     {
         private Boolean isCancel;
         public bool IsCancel
@@ -31,7 +31,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public UpdateStepGetter_CnFutures(PluginHelper pluginHelper, IDataProvider dataProvider, string srcDataPath, string targetDataPath, bool updateFillUp)
         {
-            this.stepPreparer = new StepPreparer(pluginHelper, dataProvider, srcDataPath, targetDataPath, updateFillUp);
+            this.stepPreparer = new StepPreparer(pluginHelper.PluginDirPath, srcDataPath, targetDataPath, updateFillUp, dataProvider);
         }
 
         public List<IStep> GetSteps()

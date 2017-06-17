@@ -16,7 +16,7 @@ namespace com.wer.sc.plugin.cnfutures.config
         public void TestGetTradingSessionDetail()
         {
             string pluginPath = ScConfig.Instance.ScPath;
-            DataLoader_InstrumentInfo dataLoader_Instrument = new DataLoader_InstrumentInfo(pluginPath);
+            DataLoader_Variety dataLoader_Instrument = new DataLoader_Variety(pluginPath);
             DataLoader_TradingSessionDetail dataLoader = new DataLoader_TradingSessionDetail(pluginPath, dataLoader_Instrument);
 
             List<double[]> tradingSessionDetail = dataLoader.GetTradingTime("m1005", 20100104);

@@ -23,9 +23,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
     /// </summary>
     public class DataLoader : IDataLoader
     {
-        private DataLoader_InstrumentInfo dataLoader_Instrument;
-
         private DataLoader_TradingSessionDetail dataLoader_TradingSessionDetail;
+
+        private DataLoader_Variety dataLoader_Variety;
 
         private Plugin_HistoryData_CnFutures plugin_HistoryData_CnFutures;
 
@@ -47,45 +47,72 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
             this.dataProvider = dataProvider;
             this.srcDataPath = srcDataPath;
             this.targetDataPath = targetDataPath;
-            this.dataLoader_Instrument = new DataLoader_InstrumentInfo(pluginHelper.PluginDirPath);
-            this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginHelper.PluginDirPath, dataLoader_Instrument);
+            this.dataLoader_Variety = new DataLoader_Variety(pluginHelper.PluginDirPath);
+            //this.dataLoader_Instrument = new CodeInfoGenerator(pluginHelper.PluginDirPath);
+            this.dataLoader_TradingSessionDetail = new DataLoader_TradingSessionDetail(pluginHelper.PluginDirPath, dataLoader_Variety);
             this.plugin_HistoryData_CnFutures = new Plugin_HistoryData_CnFutures(pluginHelper);
         }
 
-        public List<CodeInfo> LoadAllInstruments()
+        /// <summary>
+        /// 得到
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public CodeInfo GetInstrument(string code)
         {
-            return dataLoader_Instrument.GetAllInstruments();
+            //return dataLoader_Instrument.GetInstrument(code);
+            return null;
+        }
+
+        public List<CodeInfo> LoadNewInstruments()
+        {
+            //return dataLoader_Instrument.GetAllInstruments();
+            return dataProvider.GetNewCodes();
         }
 
         public List<CodeInfo> LoadInstruments(string variety)
         {
-            return dataLoader_Instrument.GetInstruments(variety);
+            //return dataLoader_Instrument.GetInstruments(variety);
+            return null;
         }
 
         public ITradingDayReader LoadTradingDayReader()
         {
-            return dataProvider.LoadTradingDayReader();
+            //return dataProvider.LoadTradingDayReader();
+            return null;
+        }
+
+        private CodeInfo GetCodeInfo(String code)
+        {
+            return null;
         }
 
         public List<TradingSession> LoadTradingSessions(string code)
-        {
+        {            
             List<TradingSession> dayStartTimes = this.LoadUpdatedTradingSessions(code);
 
-            ITradingDayReader openDateReader = this.LoadTradingDayReader();
             CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
-
-            int lastCodeTradingDay = GetLastTradingDay(code);
-            int firstIndex = 0;
-            if (dayStartTimes != null && dayStartTimes.Count != 0)
+            ITradingDayReader openDateReader = this.LoadTradingDayReader();
+            int firstCodeTradingDayIndex;
+            int lastCodeTradingDayIndex;
+            int lastUpdateTradingDayIndex = GetLastUpdatedIndex(dayStartTimes);
+            if (lastUpdateTradingDayIndex < 0)
             {
-                int lastDate = dayStartTimes[dayStartTimes.Count - 1].TradingDay;
-                if (lastDate == lastCodeTradingDay)
-                    return null;
-                int lastIndex = openDateReader.GetTradingDayIndex(lastDate);
-                firstIndex = lastIndex + 1;
+                firstCodeTradingDayIndex = GetFirstTradingDayIndex(codeInfo, openDateReader);
+                lastCodeTradingDayIndex = GetLastTradingDayIndex(codeInfo, openDateReader);
             }
+            else
+            {
+                lastCodeTradingDayIndex = lastUpdateTradingDayIndex + 1;
+                if (lastCodeTradingDayIndex >= openDateReader.GetAllTradingDays().Count)
+                    return null;
+                firstCodeTradingDayIndex = GetFirstTradingDayIndex(codeInfo, openDateReader);
+            }
+            if (firstCodeTradingDayIndex < 0)
+                return null;
+
             List<int> openDates = openDateReader.GetAllTradingDays();
-            List<TradingSession> updateStartTimes = CalcDayOpenTime(code, openDates, firstIndex, GetCodeLastTradingDayIndex(code));
+            List<TradingSession> updateStartTimes = CalcDayOpenTime(code, openDates, firstCodeTradingDayIndex, lastCodeTradingDayIndex);
 
             List<TradingSession> result = new List<TradingSession>();
             if (dayStartTimes != null)
@@ -94,30 +121,56 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataloader
             return result;
         }
 
-        private int GetLastTradingDay(string code)
+        private int GetLastUpdatedIndex(List<TradingSession> dayStartTimes)
         {
-            CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
+            if (dayStartTimes == null || dayStartTimes.Count == 0)
+                return -1;
+            int lastDate = dayStartTimes[dayStartTimes.Count - 1].TradingDay;
             ITradingDayReader openDateReader = this.LoadTradingDayReader();
-            int codeLastDate = codeInfo.End;
-            int lastTradingDay = openDateReader.LastTradingDay;
-            return codeLastDate > lastTradingDay ? lastTradingDay : codeLastDate;
+            int lastIndex = openDateReader.GetTradingDayIndex(lastDate);
+            return lastIndex;
         }
 
-        private int GetCodeLastTradingDayIndex(string code)
+        private int GetFirstTradingDayIndex(CodeInfo codeInfo, ITradingDayReader openDateReader)
         {
-            CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
-            ITradingDayReader openDateReader = this.LoadTradingDayReader();
+            int codeFirstDate = codeInfo.Start;
+            if (codeFirstDate < 0)
+                return 0;
+            int firstTradingDay = openDateReader.FirstTradingDay;
+            firstTradingDay = codeFirstDate > firstTradingDay ? codeFirstDate : firstTradingDay;
+
+            int index = openDateReader.GetTradingDayIndex(firstTradingDay);
+            if (index >= 0)
+                return index;
+            int date = openDateReader.GetNextTradingDay(firstTradingDay);
+            return openDateReader.GetTradingDayIndex(date);
+        }
+
+        private int GetLastTradingDayIndex(CodeInfo codeInfo, ITradingDayReader openDateReader)
+        {
             int codeLastDate = codeInfo.End;
-            int codeLastIndex = openDateReader.GetTradingDayIndex(codeLastDate);
-            if (codeLastIndex < 0)
+            if (codeLastDate < 0)
                 return openDateReader.GetAllTradingDays().Count - 1;
-            return openDateReader.GetTradingDayIndex(codeLastDate);
+            int lastTradingDay = openDateReader.LastTradingDay;
+            lastTradingDay = codeLastDate > lastTradingDay ? lastTradingDay : codeLastDate;
+
+            int index = openDateReader.GetTradingDayIndex(lastTradingDay);
+            if (index >= 0)
+                return index;
+            int date = openDateReader.GetPrevTradingDay(lastTradingDay);
+            return openDateReader.GetTradingDayIndex(date);
         }
 
-        private List<int> GetOpenDates()
-        {
-            return null;
-        }
+        //private int GetCodeLastTradingDayIndex(string code)
+        //{
+        //    CodeInfo codeInfo = this.dataLoader_Instrument.GetInstrument(code);
+        //    ITradingDayReader openDateReader = this.LoadTradingDayReader();
+        //    int codeLastDate = codeInfo.End;
+        //    int codeLastIndex = openDateReader.GetTradingDayIndex(codeLastDate);
+        //    if (codeLastIndex < 0)
+        //        return openDateReader.GetAllTradingDays().Count - 1;
+        //    return openDateReader.GetTradingDayIndex(codeLastDate);
+        //}
 
         private List<TradingSession> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)
         {

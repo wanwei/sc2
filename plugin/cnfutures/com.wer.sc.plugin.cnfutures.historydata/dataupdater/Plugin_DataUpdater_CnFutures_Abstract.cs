@@ -27,7 +27,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             this.pluginHelper = pluginHelper;
         }
 
-        public IUpdateStepGetter UpdateStepGetter
+        public IUpdateHelper PluginHelper
         {
             get
             {

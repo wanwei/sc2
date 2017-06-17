@@ -1,7 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
 using com.wer.sc.plugin.cnfutures.config;
-using com.wer.sc.plugin.cnfutures.historydata.dataloader;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.plugin.historydata.utils;
@@ -24,111 +23,149 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private const int DAYS_EVERYKLINESTEP = 50;
 
-        private PluginHelper pluginHelper;
+        //private PluginHelper pluginHelper;
 
         private string srcDataPath;
 
         private string targetDataPath;
 
-        private DataUpdateUtils preparer;
+        private DataUpdateHelper dataUpdateHelper;
 
-        private IDataLoader dataLoader;
+        private IDataProvider dataProvider;
 
         private bool updateFillUp;
 
-        public StepPreparer(PluginHelper pluginHelper, IDataProvider dataProvider, string srcDataPath, string targetDataPath, bool updateFillUp)
+        /// <summary>
+        /// 创建一个更新准备器
+        /// </summary>
+        /// <param name="pluginHelper"></param>
+        /// <param name="dataProvider"></param>
+        /// <param name="srcDataPath"></param>
+        /// <param name="targetDataPath"></param>
+        /// <param name="updateFillUp"></param>
+        public StepPreparer(string pluginPath, string srcDataPath, string targetDataPath, bool updateFillUp, IDataProvider dataProvider)
         {
-            this.pluginHelper = pluginHelper;
             this.srcDataPath = srcDataPath;
             this.targetDataPath = targetDataPath;
             this.updateFillUp = updateFillUp;
-            this.dataLoader = DataLoaderFactory.CreateDataLoader(pluginHelper, dataProvider, srcDataPath, targetDataPath);
+            this.dataProvider = dataProvider;
+            this.dataUpdateHelper = new DataUpdateHelper(pluginPath, new UpdatedDataLoader(), dataProvider);
         }
 
         public List<IStep> GetAllSteps()
         {
             List<IStep> steps = new List<IStep>();
-            ITradingDayReader tradingDayReader = dataLoader.LoadTradingDayReader();
-            Step_TradingDay step_TradingDay = new Step_TradingDay(dataLoader,tradingDayReader);
-            steps.Add(step_TradingDay);
 
-            DataLoader_InstrumentInfo dataLoader_InstrumentInfo = new DataLoader_InstrumentInfo(pluginHelper.PluginDirPath);
-            Step_CodeInfo step_CodeInfo = new Step_CodeInfo(pluginHelper.PluginDirPath, targetDataPath, dataLoader_InstrumentInfo);            
-            steps.Add(step_CodeInfo);
+            steps.Add(new Step_TradingDay(dataUpdateHelper));
+            steps.Add(new Step_CodeInfo(dataUpdateHelper));
 
-            this.preparer = new DataUpdateUtils(targetDataPath, tradingDayReader, dataLoader_InstrumentInfo, new UpdatedInfo_Csv(targetDataPath));
-
-            GetDayStartTime(steps, dataLoader_InstrumentInfo.GetAllInstruments());
+            GetTradingSession(steps, dataUpdateHelper.GetNewCodes());
             GetTickSteps(steps);
             GetKLineDataSteps(steps);
             return steps;
         }
 
-        private void GetDayStartTime(List<IStep> steps, List<CodeInfo> codes)
+        private void GetTradingSession(List<IStep> steps, List<CodeInfo> codes)
         {
             for (int i = 0; i < codes.Count; i++)
             {
-                steps.Add(new Step_TradingSession(codes[i].Code, dataLoader));
+                steps.Add(new Step_TradingSession(codes[i].Code, dataUpdateHelper));
             }
         }
 
         private void GetTickSteps(List<IStep> steps)
         {
-            List<InstrumentDatesInfo> dataInfoList = preparer.GetTickNewData(updateFillUp);
-            for (int i = 0; i < dataInfoList.Count; i++)
+            List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            //必须要先更新合约，再更新指数
+            GetTickSteps(steps, GetNotIndexCodes(codes));
+            GetTickSteps(steps, GetIndexCodes(codes));
+        }
+
+        private List<CodeInfo> GetIndexCodes(List<CodeInfo> codes)
+        {
+            List<CodeInfo> indexCodes = new List<CodeInfo>();
+            for (int i = 0; i < codes.Count; i++)
             {
-                GetTickSteps(steps, dataInfoList[i]);
+                CodeInfo codeInfo = codes[i];
+                CodeIdParser parser = new CodeIdParser(codeInfo.Code);
+                if (parser.IsIndex)
+                    indexCodes.Add(codeInfo);
+            }
+            return indexCodes;
+        }
+
+        private List<CodeInfo> GetNotIndexCodes(List<CodeInfo> codes)
+        {
+            List<CodeInfo> notIndexCodes = new List<CodeInfo>();
+            for (int i = 0; i < codes.Count; i++)
+            {
+                CodeInfo codeInfo = codes[i];
+                CodeIdParser parser = new CodeIdParser(codeInfo.Code);
+                if (!parser.IsIndex)
+                    notIndexCodes.Add(codeInfo);
+            }
+            return notIndexCodes;
+        }
+
+        private void GetTickSteps(List<IStep> steps, List<CodeInfo> codes)
+        {
+            for (int i = 0; i < codes.Count; i++)
+            {
+                string code = codes[i].Code;
+                List<int> notUpdatedTradingDays = dataUpdateHelper.GetNotUpdateTradingDays_TickData(code, updateFillUp);
+                GetTickSteps(steps, code, notUpdatedTradingDays);
             }
         }
 
-        private void GetTickSteps(List<IStep> steps, InstrumentDatesInfo updateDataInfo)
+        private void GetTickSteps(List<IStep> steps, string code, List<int> tradingDays)
         {
-            int stepCount = updateDataInfo.dates.Count / DAYS_EVERYTICKSTEP;
-            int lastStepUpdateCount = updateDataInfo.dates.Count % DAYS_EVERYTICKSTEP;
+            int stepCount = tradingDays.Count / DAYS_EVERYTICKSTEP;
+            int lastStepUpdateCount = tradingDays.Count % DAYS_EVERYTICKSTEP;
             if (lastStepUpdateCount != 0)
                 stepCount++;
             else
                 lastStepUpdateCount = DAYS_EVERYTICKSTEP;
-            List<int> openDates = updateDataInfo.dates;
+            List<int> openDates = tradingDays;
             for (int i = 0; i < stepCount; i++)
             {
                 IStep step;
                 if (i != stepCount - 1)
-                    step = new Step_TickData(updateDataInfo.instrument, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), dataLoader);
+                    step = new Step_TickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), dataUpdateHelper);
                 else
-                    step = new Step_TickData(updateDataInfo.instrument, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), dataLoader);
+                    step = new Step_TickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), dataUpdateHelper);
                 steps.Add(step);
             }
         }
 
         private void GetKLineDataSteps(List<IStep> steps)
         {
-            List<InstrumentDatesInfo> dataInfoList = preparer.GetKLineNewData(KLinePeriod.KLinePeriod_1Minute, updateFillUp);
-            for (int i = 0; i < dataInfoList.Count; i++)
+            List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            for (int i = 0; i < codes.Count; i++)
             {
-                GetKLineDataSteps(steps, dataInfoList[i]);
+                string code = codes[i].Code;
+                List<int> notUpdatedTradingDays = dataUpdateHelper.GetNotUpdateTradingDays_KLineData(code, updateFillUp);
+                GetKLineDataSteps(steps, code, notUpdatedTradingDays);
             }
         }
 
-        private void GetKLineDataSteps(List<IStep> steps, InstrumentDatesInfo updateDataInfo)
+        private void GetKLineDataSteps(List<IStep> steps, string code, List<int> tradingDays)
         {
-            int stepCount = updateDataInfo.dates.Count / DAYS_EVERYKLINESTEP;
-            int lastStepUpdateCount = updateDataInfo.dates.Count % DAYS_EVERYKLINESTEP;
+            int stepCount = tradingDays.Count / DAYS_EVERYKLINESTEP;
+            int lastStepUpdateCount = tradingDays.Count % DAYS_EVERYKLINESTEP;
             if (lastStepUpdateCount != 0)
                 stepCount++;
             else
                 lastStepUpdateCount = DAYS_EVERYKLINESTEP;
 
-            List<int> openDates = updateDataInfo.dates;
-            string code = updateDataInfo.instrument;
+            List<int> openDates = tradingDays;
 
             for (int i = 0; i < stepCount; i++)
             {
                 Step_KLineData step;
                 if (i != stepCount - 1)
-                    step = new Step_KLineData(updateDataInfo.instrument, openDates.GetRange(i * DAYS_EVERYKLINESTEP, DAYS_EVERYKLINESTEP), dataLoader);
+                    step = new Step_KLineData(code, openDates.GetRange(i * DAYS_EVERYKLINESTEP, DAYS_EVERYKLINESTEP), dataUpdateHelper);
                 else
-                    step = new Step_KLineData(updateDataInfo.instrument, openDates.GetRange(i * DAYS_EVERYKLINESTEP, lastStepUpdateCount), dataLoader);
+                    step = new Step_KLineData(code, openDates.GetRange(i * DAYS_EVERYKLINESTEP, lastStepUpdateCount), dataUpdateHelper);
                 steps.Add(step);
             }
         }

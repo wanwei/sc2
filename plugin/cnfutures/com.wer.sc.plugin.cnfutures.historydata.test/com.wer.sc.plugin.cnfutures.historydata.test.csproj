@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{83769E79-3760-4F70-A9CE-14B92B7428DA}</ProjectGuid>
+    <ProjectGuid>{61D2A702-B20D-4D61-A6B1-EC4601BC77B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>com.wer.sc.plugin.cnfutures.historydata</RootNamespace>
@@ -50,15 +50,32 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="dataloader\jinshuyuan\TestDataLoader_JinShuYuan.cs" />
-    <Compile Include="dataloader\tick\adjust\MockDataLoader.cs" />
-    <Compile Include="dataloader\tick\adjust\TestTickDataAdjuster.cs" />
-    <Compile Include="dataloader\tick\adjust\TestTickDataAnalysis.cs" />
+    <Compile Include="dataprovider\biaopuyonghua\TestDataProvider_BiaoPuYongHua.cs" />
+    <Compile Include="dataprovider\daily\TestDataProvider_Daily.cs" />
+    <Compile Include="dataprovider\jinshuyuan\TestDataProvider_JinShuYuan.cs" />
+    <Compile Include="dataprovider\TestMainFuturesScan.cs" />
+    <Compile Include="dataprovider\tick\adjust\MockDataLoader.cs" />
+    <Compile Include="dataprovider\tick\adjust\TestTickDataAdjuster.cs" />
+    <Compile Include="dataprovider\tick\adjust\TestTickDataAnalysis.cs" />
+    <Compile Include="DataUpdateConst.cs" />
+    <Compile Include="dataupdater\generator\TestDataGenerator_TickData_Index.cs" />
+    <Compile Include="dataupdater\TestDataUpdateHelper.cs" />
+    <Compile Include="dataupdater\TestStepPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataupdater\generator\TickData_M_20150106_Index" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataupdater\generator\TickData_M_20100106_Index" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\data\com.wer.sc.mockdata\com.wer.sc.mockdata.csproj">
-      <Project>{4645ED74-ABF5-449E-8C75-16A2C8CE5612}</Project>
+      <Project>{4645ed74-abf5-449e-8c75-16a2c8ce5612}</Project>
       <Name>com.wer.sc.mockdata</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
@@ -66,18 +83,22 @@
       <Name>com.wer.sc.plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\com.wer.sc.plugin.cnfutures.historydata\com.wer.sc.plugin.cnfutures.historydata.csproj">
-      <Project>{ee24efd7-a046-46e6-8a16-9640d85cb96a}</Project>
+      <Project>{fd1bc523-ab97-41a6-b7f4-ecaf2cbe9758}</Project>
       <Name>com.wer.sc.plugin.cnfutures.historydata</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataloader\tick\adjust\TickDataAdjust_M05_20040106" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataloader\tick\adjust\TickDataAdjust_M05_20140106" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataloader\TradingSession_M05" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\biaopuyonghua\codes" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\biaopuyonghua\TickData_A1005_20100105" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\biaopuyonghua\tradingdays" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\daily\TickData_A1705_20170405" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\daily\tradingdays" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\jinshuyuan\codes" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\jinshuyuan\TickData_A1607_20160503" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\jinshuyuan\tradingdays" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

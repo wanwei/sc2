@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="data\reader\cache\TestCodes_Cache.cs" />
     <Compile Include="data\reader\cache\TestTradingDayCache.cs" />
     <Compile Include="data\reader\cache\TestTradingSessionCache_Instrument.cs" />
     <Compile Include="data\TestKLineData.cs" />
@@ -76,10 +77,12 @@
     </Compile>
     <Compile Include="ResourceLoader.cs" />
     <Compile Include="market\TestConnectionInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\reader\cache\Codes" />
     <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingSession" />
     <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingDay" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150107" />
     <None Include="TestCase\com\wer\sc\data\transfer\KLine2TimeLine_M05_20150107" />
+    <None Include="TestCase\com\wer\sc\data\reader\cache\Codes_M_20160101" />
     <Compile Include="TestPluginMgr.cs" />
     <Compile Include="strategy\TestStrategyMgr.cs" />
   </ItemGroup>

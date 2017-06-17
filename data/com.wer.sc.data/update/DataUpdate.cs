@@ -12,7 +12,7 @@ namespace com.wer.sc.data.update
     /// <summary>
     /// 数据更新进程
     /// </summary>
-    public class DataUpdate : IUpdateStepGetter
+    public class DataUpdate : IUpdateHelper
     {
         private bool isCancel;
         public bool IsCancel

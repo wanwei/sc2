@@ -7,15 +7,30 @@ using System.Threading.Tasks;
 namespace com.wer.sc.utils.update
 {
     /// <summary>
-    /// 更新器
+    /// 更新执行器
     /// </summary>
     public class UpdateExecutor
     {
-        private IUpdateStepGetter updateProceed;
+        private Object tag;
+
+        private IUpdateHelper updateProceed;
 
         private bool isCancel = false;
 
-        public UpdateExecutor(IUpdateStepGetter updateProceed)
+        public object Tag
+        {
+            get
+            {
+                return tag;
+            }
+
+            set
+            {
+                tag = value;
+            }
+        }
+
+        public UpdateExecutor(IUpdateHelper updateProceed)
         {
             this.updateProceed = updateProceed;
         }
@@ -26,6 +41,10 @@ namespace com.wer.sc.utils.update
                 return;
             int currentCnt = 0;
             int totalProgressStep = 0;
+            if (BeforePrepared != null)
+            {
+                BeforePrepared(this);
+            }
             List<IStep> steps = updateProceed.GetSteps();
             for (int i = 0; i < steps.Count; i++)
             {
@@ -34,7 +53,7 @@ namespace com.wer.sc.utils.update
 
             if (AfterPrepared != null)
             {
-                AfterPrepared(this, totalProgressStep);                
+                AfterPrepared(this, totalProgressStep);
             }
 
             for (int i = 0; i < steps.Count; i++)
@@ -73,6 +92,8 @@ namespace com.wer.sc.utils.update
             isCancel = true;
         }
 
+        public event DelegateOnBeforePrepared BeforePrepared;
+
         /// <summary>
         /// 更新准备完成事件
         /// </summary>
@@ -90,6 +111,13 @@ namespace com.wer.sc.utils.update
         //取消更新完成
         public event DelegateOnAfterCancelled AfterCancelled;
     }
+
+    /// <summary>
+    /// 更新准备阶段开始委托
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="totalProgress"></param>
+    public delegate void DelegateOnBeforePrepared(Object sender);
 
     /// <summary>
     /// 更新准备阶段完成委托

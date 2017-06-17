@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.plugin.cnfutures.adjust
 {
-    public class AdjustDataCenterTickData : IUpdateStepGetter
+    public class AdjustDataCenterTickData : IUpdateHelper
     {
         string targetPath = @"E:\SCDATA\CNFUTURES\instruments";
         private List<CodeInfo> codes;
@@ -19,15 +19,15 @@ namespace com.wer.sc.plugin.cnfutures.adjust
 
         public AdjustDataCenterTickData()
         {
-            DataLoader_InstrumentInfo gen = new DataLoader_InstrumentInfo("");
-            codes = gen.GetAllInstruments();
-            CsvUtils_Code.Save(targetPath, codes);
-            for (int i = 0; i < codes.Count; i++)
-            {
-                CodeInfo code = codes[i];
-                AdjustDataCenterTickDataStep step = new AdjustDataCenterTickDataStep(code, gen.GetOldCodeInfo(code.Code).Code);
-                steps.Add(step);
-            }
+            //CodeInfoGenerator gen = new CodeInfoGenerator("");
+            //codes = gen.GetAllInstruments();
+            //CsvUtils_Code.Save(targetPath, codes);
+            //for (int i = 0; i < codes.Count; i++)
+            //{
+            //    CodeInfo code = codes[i];
+            //    AdjustDataCenterTickDataStep step = new AdjustDataCenterTickDataStep(code, gen.GetOldCodeInfo(code.Code).Code);
+            //    steps.Add(step);
+            //}
         }
 
         public List<IStep> GetSteps()

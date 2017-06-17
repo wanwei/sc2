@@ -22,8 +22,9 @@ namespace com.wer.sc.plugin.cnfutures.adjust
         public FormAdjustTickSrcData()
         {
             InitializeComponent();
-            this.controlDataUpdate1.DataProceed = new AdjustTickStepGetter();
+            //this.controlDataUpdate1.DataProceed = new AdjustTickStepGetter();
             //this.controlDataUpdate1.DataProceed = new AdjustDataCenterTickData();
+            this.controlDataUpdate1.DataProceed = new AdjustIndexTick();
         }
     }
 }

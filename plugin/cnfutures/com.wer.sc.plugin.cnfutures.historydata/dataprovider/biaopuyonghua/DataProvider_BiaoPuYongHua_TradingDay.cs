@@ -18,7 +18,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
         private List<int> tradingDays;
         private String srcDataPath;
 
-        public DataProvider_BiaoPuYongHua_TradingDay(string srcDataPath)
+        public DataProvider_BiaoPuYongHua_TradingDay(string srcDataPath, string pluginPath)
         {
             this.srcDataPath = srcDataPath;
         }

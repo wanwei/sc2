@@ -53,9 +53,8 @@ namespace com.wer.sc.data.update
                 AddSteps_TradingSessions(steps);
 
             //确定是否保存tick数据
-            if (dataCenterConfig.StoredDataTypes.IsStoreTick)
-                steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp).GetSteps());
-
+            // if (dataCenterConfig.StoredDataTypes.IsStoreTick)
+            steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp).GetSteps());
             //增加k线数据保存步骤
             steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp).GetSteps());
 

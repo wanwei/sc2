@@ -83,7 +83,7 @@ namespace com.wer.sc.data.updater
 
         private void DoUpdate(IPlugin_DataUpdater updater)
         {
-            UpdateExecutor executor = new UpdateExecutor(updater.UpdateStepGetter);
+            UpdateExecutor executor = new UpdateExecutor(updater.PluginHelper);
             executor.Update();
         }
 
@@ -171,7 +171,7 @@ namespace com.wer.sc.data.updater
         {
             this.dataUpdater = dataUpdater;
             this.progressBar1 = progress;
-            this.executor = new UpdateExecutor(dataUpdater.UpdateStepGetter);
+            this.executor = new UpdateExecutor(dataUpdater.PluginHelper);
             this.executor.AfterFinished += Executor_AfterFinished;
             this.executor.AfterStepFinished += Executor_AfterStepFinished;
             this.executor.AfterStepBegin += Executor_AfterStepBegin;

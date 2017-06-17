@@ -33,7 +33,7 @@ namespace com.wer.sc.data.updater
 
         private List<String> names = new List<string>();
 
-        private List<IUpdateStepGetter> updateStepGetters = new List<IUpdateStepGetter>();
+
 
         public MultiDataUpdater(DataUpdaterPackageConfigInfo package)
         {
@@ -42,7 +42,7 @@ namespace com.wer.sc.data.updater
             {
                 DataUpdaterConfigInfo configInfo = package.DataUpdaters[i];
                 names.Add(configInfo.Name);
-                updateStepGetters.Add(configInfo.DataUpdater.UpdateStepGetter);
+
             }
         }
 
@@ -51,8 +51,20 @@ namespace com.wer.sc.data.updater
             return names;
         }
 
-        public List<IUpdateStepGetter> GetDataUpdaters()
+        private List<IUpdateHelper> updateStepGetters;
+
+        public List<IUpdateHelper> GetDataUpdaters()
         {
+            if (updateStepGetters != null)
+                return updateStepGetters;
+            updateStepGetters = new List<IUpdateHelper>();
+
+            for (int i = 0; i < package.DataUpdaters.Count; i++)
+            {
+                DataUpdaterConfigInfo configInfo = package.DataUpdaters[i];
+                updateStepGetters.Add(configInfo.DataUpdater.PluginHelper);
+            }            
+
             return updateStepGetters;
         }
     }

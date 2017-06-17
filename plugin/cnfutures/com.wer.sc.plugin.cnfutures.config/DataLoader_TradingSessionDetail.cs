@@ -19,14 +19,14 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         public Dictionary<String, TradingSessionDetail_Item> dicOpenPeriod = new Dictionary<string, TradingSessionDetail_Item>();
 
-        private DataLoader_InstrumentInfo dataLoader_InstrumentInfo;
+        private DataLoader_Variety dataLoader_Variety;
 
-        public DataLoader_TradingSessionDetail(string pluginPath, DataLoader_InstrumentInfo dataLoader_InstrumentInfo)
+        public DataLoader_TradingSessionDetail(string pluginPath, DataLoader_Variety dataLoader_Variety)
         {
             PathUtils pathUtils = new PathUtils(pluginPath);
             XmlDocument doc = new XmlDocument();
             doc.Load(pathUtils.TradingSessionDetailPath);
-            this.dataLoader_InstrumentInfo = dataLoader_InstrumentInfo;
+            this.dataLoader_Variety = dataLoader_Variety;
             Load(doc);
         }
 
@@ -37,12 +37,16 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         private String GetCodeMarket(String code)
         {
-            return dataLoader_InstrumentInfo.GetBelongMarket(code);
+            string variety = GetVariety(code);
+            VarietyInfo v = dataLoader_Variety.GetVariety(variety);
+            if (v == null)
+                return null;
+            return v.Exchange;
         }
 
         private String GetVariety(String code)
         {
-            return dataLoader_InstrumentInfo.GetVariety(code);
+            return new CodeIdParser(code).VarietyId;
         }
 
         public List<double[]> GetTradingSessionDetail(String market, String variety, int date)

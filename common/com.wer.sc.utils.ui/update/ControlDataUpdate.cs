@@ -16,7 +16,7 @@ namespace com.wer.sc.utils.ui.update
     {
         private bool isProceeding = false;
 
-        private IUpdateStepGetter dataProceed;
+        private IUpdateHelper dataProceed;
 
         private UpdateExecutor updateExecutor;
 
@@ -45,7 +45,7 @@ namespace com.wer.sc.utils.ui.update
             }
         }
 
-        public IUpdateStepGetter DataProceed
+        public IUpdateHelper DataProceed
         {
             get
             {

@@ -51,41 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormChoosePlugin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormChoosePlugin.Designer.cs">
-      <DependentUpon>FormChoosePlugin.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormChooseUpdater.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormChooseUpdater.Designer.cs">
       <DependentUpon>FormChooseUpdater.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormDataUpdate2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDataUpdate2.Designer.cs">
-      <DependentUpon>FormDataUpdate2.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormDataUpdater.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormDataUpdater.Designer.cs">
       <DependentUpon>FormDataUpdater.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormDataUpdater3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDataUpdater3.Designer.cs">
-      <DependentUpon>FormDataUpdater3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormPrepareHistoryData.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormPrepareHistoryData.Designer.cs">
-      <DependentUpon>FormPrepareHistoryData.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin_DataUpdater.cs" />
     <Compile Include="Plugin_HistoryData_Default.cs" />
@@ -98,23 +74,11 @@
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateConfig.cs" />
-    <EmbeddedResource Include="FormChoosePlugin.resx">
-      <DependentUpon>FormChoosePlugin.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormChooseUpdater.resx">
       <DependentUpon>FormChooseUpdater.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormDataUpdate2.resx">
-      <DependentUpon>FormDataUpdate2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormDataUpdater.resx">
       <DependentUpon>FormDataUpdater.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormDataUpdater3.resx">
-      <DependentUpon>FormDataUpdater3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormPrepareHistoryData.resx">
-      <DependentUpon>FormPrepareHistoryData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

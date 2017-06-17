@@ -15,7 +15,7 @@ namespace com.wer.sc.data.reader
         /// 创建一个品种信息读取器
         /// </summary>
         /// <returns></returns>
-        IInstrumentReader InstrumentReader { get; }
+        ICodeReader CodeReader { get; }
 
         /// <summary>
         /// 创建一个交易日读取器

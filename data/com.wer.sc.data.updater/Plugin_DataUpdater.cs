@@ -17,7 +17,7 @@ namespace com.wer.sc.data.updater
         private const string DATACENTERURI = "dataCenterUri";
         private const string UPDATEFILLUP = "updateFillUp";
 
-        private IUpdateStepGetter updateStepGetter;
+        private IUpdateHelper updateStepGetter;
 
         private List<PreparerArgument> args;
 
@@ -28,7 +28,7 @@ namespace com.wer.sc.data.updater
         }
 
 
-        public IUpdateStepGetter UpdateStepGetter
+        public IUpdateHelper PluginHelper
         {
             get
             {

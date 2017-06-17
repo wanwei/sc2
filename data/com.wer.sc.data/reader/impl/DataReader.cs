@@ -11,7 +11,7 @@ namespace com.wer.sc.data.reader.impl
     public class DataReader : IDataReader
     {
         private IDataStore dataStore;
-        private InstrumentReader instrumentReader;
+        private CodeReader instrumentReader;
         private ITradingDayReader tradingDayReader;
         private ITickDataReader tickDataReader;
         private IKLineDataReader klineDataReader;
@@ -22,7 +22,7 @@ namespace com.wer.sc.data.reader.impl
         public DataReader(string dataCenterUri)
         {
             this.dataStore = DataStoreFactory.CreateDataStore(dataCenterUri);
-            this.instrumentReader = new InstrumentReader(dataStore.CreateInstrumentStore());
+            this.instrumentReader = new CodeReader(dataStore.CreateInstrumentStore());
             this.tradingDayReader = new TradingDayCache(dataStore.CreateTradingDayStore().Load());
             this.tradingSessionStore = dataStore.CreateTradingSessionStore();
             this.tickDataReader = new TickDataReader(dataStore);
@@ -30,7 +30,7 @@ namespace com.wer.sc.data.reader.impl
             this.timeLineDataReader = new TimeLineDataReader(this);
         }
 
-        public IInstrumentReader InstrumentReader
+        public ICodeReader CodeReader
         {
             get
             {

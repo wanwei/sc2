@@ -111,6 +111,11 @@ namespace com.wer.sc.plugin.historydata
                 return GetKLineData(code, klinePeriod, resultOpenDates);
 
             IKLineData oneMinuteKLine = GetKLineData(code, KLinePeriod.KLinePeriod_1Minute, resultOpenDates);
+            if (oneMinuteKLine.Length == 0)
+                return null;
+            List<TradingSession> sessions = GetTradingSessions(code);
+            if (sessions == null)
+                return null;
             return DataTransfer_KLine2KLine.Transfer(oneMinuteKLine, klinePeriod, new TradingSessionCache_Instrument(code, GetTradingSessions(code)));
         }
 

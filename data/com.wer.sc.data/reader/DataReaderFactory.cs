@@ -9,7 +9,17 @@ namespace com.wer.sc.data.reader
 {
     public class DataReaderFactory
     {
+        /// <summary>
+        /// 创建一个数据读取器
+        /// </summary>
+        /// <param name="dataCenterUri"></param>
+        /// <returns></returns>
         public static IDataReader CreateDataReader(string dataCenterUri)
+        {
+            return new DataReader(dataCenterUri);
+        }
+
+        public static IDataReader CreateDataReader_ShortCode(string dataCenterUri)
         {
             return new DataReader(dataCenterUri);
         }

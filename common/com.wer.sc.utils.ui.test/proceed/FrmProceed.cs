@@ -33,7 +33,7 @@ namespace com.wer.sc.utils.ui.update
         }
     }
 
-    internal class MockUpdateStepGetter : IUpdateStepGetter
+    internal class MockUpdateStepGetter : IUpdateHelper
     {
         private List<IStep> steps = new List<IStep>();
 

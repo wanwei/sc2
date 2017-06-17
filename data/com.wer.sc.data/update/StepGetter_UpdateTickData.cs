@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.store;
+﻿using com.wer.sc.data.reader.cache;
+using com.wer.sc.data.store;
 using com.wer.sc.plugin;
 using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
@@ -42,30 +43,71 @@ namespace com.wer.sc.data.update
         {
             ITickDataStore tickDataStore = dataStore.CreateTickDataStore();
 
-            List<CodeInfo> allInstruments = historyData.GetInstruments();                       
+            List<CodeInfo> allInstruments = historyData.GetInstruments();
             List<int> allTradingDays = historyData.GetTradingDays();
+
+            TradingDayCache tradingDayCache = new TradingDayCache(allTradingDays);
 
             for (int i = 0; i < allInstruments.Count; i++)
             {
                 CodeInfo instrument = allInstruments[i];
                 List<int> storedAllDays = tickDataStore.GetAllDays(instrument.Code);
-                storedAllDays.Sort();
-                List<int> allDays = GetAllUpdateTickData(allTradingDays, storedAllDays, isFillUp);
+                List<int> allDays = GetAllNotUpdateTickData(instrument, tradingDayCache, storedAllDays, isFillUp);
+                if (allDays == null)
+                    continue;
                 AddSteps_TickData_Instrument(steps, instrument.Code, allDays);
             }
         }
 
-        private List<int> GetAllUpdateTickData(List<int> allTradingDays, List<int> storedDays, bool isFillUp)
+        private List<int> GetAllNotUpdateTickData(CodeInfo codeInfo, TradingDayCache allTradingDayCache, List<int> storedDays, bool isFillUp)
         {
-            HashSet<int> set = new HashSet<int>(storedDays);
-            List<int> allUpdateTickData = new List<int>(set.Count);
-            for (int i = 0; i < allTradingDays.Count; i++)
+            if (isFillUp)
             {
-                int day = allTradingDays[i];
-                if (!set.Contains(day))
-                    allUpdateTickData.Add(day);
+                HashSet<int> set = new HashSet<int>(storedDays);
+                IList<int> codeAllTradingDays = GetCodeTradingDays(codeInfo, allTradingDayCache);
+                List<int> allNotUpdateTickData = new List<int>(set.Count);
+                for (int i = 0; i < codeAllTradingDays.Count; i++)
+                {
+                    int day = codeAllTradingDays[i];
+                    if (!set.Contains(day))
+                        allNotUpdateTickData.Add(day);
+                }
+                return allNotUpdateTickData;
             }
-            return allUpdateTickData;
+            else
+            {
+                int startIndex;
+                if (storedDays.Count == 0)
+                {
+                    startIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.Start, false);
+                }
+                else
+                {
+                    storedDays.Sort();
+                    int lastUpdateIndex = allTradingDayCache.GetTradingDayIndex(storedDays[storedDays.Count - 1]);
+                    if (lastUpdateIndex < 0)
+                    {
+                        //TODO 不应该出现这种情况，TODO 写日志
+                    }
+                    startIndex = lastUpdateIndex + 1;
+                }
+                if (startIndex < 0 || startIndex >= allTradingDayCache.GetAllTradingDays().Count)
+                    return null;
+
+                int endIndex;
+                if (codeInfo.End <= 0)
+                    endIndex = allTradingDayCache.GetAllTradingDays().Count - 1;
+                else
+                    endIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.End, true);
+                if (endIndex < startIndex)
+                    return null;
+                return allTradingDayCache.GetAllTradingDays().GetRange(startIndex, endIndex - startIndex + 1);
+            }
+        }
+
+        private IList<int> GetCodeTradingDays(CodeInfo codeInfo, TradingDayCache allTradingCache)
+        {
+            return allTradingCache.GetTradingDays(codeInfo.Start, codeInfo.End);
         }
 
         private void AddSteps_TickData_Instrument(List<IStep> steps, string code, List<int> updateDays)

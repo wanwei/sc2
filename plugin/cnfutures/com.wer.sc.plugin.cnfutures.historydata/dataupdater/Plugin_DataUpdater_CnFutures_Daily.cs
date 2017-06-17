@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan;
+using com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily;
 
 namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 {
@@ -21,7 +22,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             if (dataProvider != null)
                 return dataProvider;
-            dataProvider = new DataProvider_JinShuYuan(srcDataPath, pluginHelper.PluginDirPath);
+            dataProvider = new DataProvider_Daily(srcDataPath, pluginHelper.PluginDirPath);
             return dataProvider;
         }
     }

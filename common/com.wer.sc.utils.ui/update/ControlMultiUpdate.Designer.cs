@@ -55,7 +55,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.btStop);
             this.splitContainer1.Panel2.Controls.Add(this.btStart);
             this.splitContainer1.Size = new System.Drawing.Size(741, 136);
-            this.splitContainer1.SplitterDistance = 93;
+            this.splitContainer1.SplitterDistance = 96;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -64,9 +64,8 @@
             this.lbStatus.AutoSize = true;
             this.lbStatus.Location = new System.Drawing.Point(21, 11);
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(169, 20);
+            this.lbStatus.Size = new System.Drawing.Size(0, 20);
             this.lbStatus.TabIndex = 2;
-            this.lbStatus.Text = "正在准备执行更新";
             // 
             // btStop
             // 
