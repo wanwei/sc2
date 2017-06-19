@@ -17,5 +17,14 @@ namespace com.wer.sc.utils
                 Directory.CreateDirectory(fileInfo.Directory.FullName);
             }
         }
+
+        public static void EnsureDirExist(string path)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(dir.FullName);
+            }
+        }
     }
 }

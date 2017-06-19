@@ -17,13 +17,14 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private CodeInfoCache codeInfoCache;
 
-        public UpdatedDataLoader() : this(null)
+        public UpdatedDataLoader(string pluginPath) : this(pluginPath, null)
         {
         }
 
-        public UpdatedDataLoader(string csvDataPath)
+        public UpdatedDataLoader(string pluginPath, string csvDataPath)
         {
-            this.plugin_HistoryData = new Plugin_HistoryData_CnFutures(null, csvDataPath);
+            PluginHelper helper = new PluginHelper(pluginPath);
+            this.plugin_HistoryData = new Plugin_HistoryData_CnFutures(helper, csvDataPath);
             this.tradingDayCache = new TradingDayCache(plugin_HistoryData.GetTradingDays());
             this.codeInfoCache = new CodeInfoCache(plugin_HistoryData.GetInstruments());
         }

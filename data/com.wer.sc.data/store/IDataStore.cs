@@ -12,6 +12,12 @@ namespace com.wer.sc.data.store
     public interface IDataStore
     {
         /// <summary>
+        /// 创建更新信息的保存类
+        /// </summary>
+        /// <returns></returns>
+        IUpdateInfoStore CreateUpdateInfoStore();
+
+        /// <summary>
         /// 创建股票或期货信息保存接口
         /// </summary>
         /// <returns></returns>

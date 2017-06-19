@@ -18,6 +18,11 @@ namespace com.wer.sc.data.store.file
             this.dataPathUtils = new DataPathUtils(dataCenterPath);
         }
 
+        public IUpdateInfoStore CreateUpdateInfoStore()
+        {
+            return new UpdateInfoStore_File(dataPathUtils.GetUpdateInfoPath());
+        }
+
         public IInstrumentStore CreateInstrumentStore()
         {
             return new InstrumentStore_File(dataPathUtils.GetInstrumentPath());

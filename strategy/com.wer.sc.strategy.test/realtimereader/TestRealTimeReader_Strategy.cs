@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace com.wer.sc.strategy.test
+namespace com.wer.sc.strategy.realtimereader
 {
     [TestClass]
-    public class TestRealTimeDataReader_History
+    public class TestRealTimeReader_Strategy
     {
         [TestMethod]
         public void TestMethod1()

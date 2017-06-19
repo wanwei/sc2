@@ -6,31 +6,59 @@ using com.wer.sc.data;
 namespace com.wer.sc.strategy.realtimereader
 {
     /// <summary>
-    /// 历史数据加载
+    /// 实时数据读取器，用作策略的历史数据回测
     /// </summary>
     public class RealTimeReader_Strategy : IRealTimeDataReader
     {
+        private IDataReader dataReader;
+
         private string code;
 
         private int startDate;
 
         private int endDate;
 
+        private IList<int> tradingDays;
+
         private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
+
+        private ITickData lastTickData;
+
+        private ITickData currentTickData;
+
+        private ITimeLineData timeLineData;
+
+        private double time;
 
         private bool isTickForward;
 
         private KLinePeriod forwardPeriod;
 
-        private IDataReader dataReader;
-
         public RealTimeReader_Strategy(IDataReader dataReader, string code, int startDate, int endDate, StrategyReferdPeriods referedPeriods)
         {
+            this.dataReader = dataReader;
+            this.code = code;
+            this.startDate = startDate;
+            this.endDate = endDate;
+
             List<KLinePeriod> klinePeriods = referedPeriods.UsedKLinePeriods;
             for (int i = 0; i < klinePeriods.Count; i++)
             {
                 KLinePeriod klinePeriod = klinePeriods[i];
                 IKLineData klineData = dataReader.KLineDataReader.GetData(code, startDate, endDate, klinePeriod);
+                dic_Period_KLineData.Add(klinePeriod, klineData);
+            }
+
+            if (referedPeriods.UseTickData)
+            {
+                this.tradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
+                currentTickData = dataReader.TickDataReader.GetTickData(code, tradingDays[0]);
+            }
+
+            if (referedPeriods.isReferTimeLineData)
+            {
+                //TODO
+                timeLineData = null;
             }
         }
 
@@ -49,17 +77,17 @@ namespace com.wer.sc.strategy.realtimereader
 
         public IKLineData GetKLineData(KLinePeriod period)
         {
-            throw new NotImplementedException();
+            return dic_Period_KLineData[period];
         }
 
         public ITickData GetTickData()
         {
-            throw new NotImplementedException();
+            return currentTickData;
         }
 
         public ITimeLineData GetTimeLineData()
         {
-            throw new NotImplementedException();
+            return timeLineData;
         }
 
         #region 前进

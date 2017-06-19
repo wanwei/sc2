@@ -38,7 +38,28 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily
             HashSet<string> hashset = new HashSet<string>();
             LoopDic(srcDataPath, codes, hashset);
             codes.Sort(new CodeInfoComparer());
+            GenerateIndexCodes(codes);
             return codes;
+        }
+
+        private void GenerateIndexCodes(List<CodeInfo> codes)
+        {
+            List<CodeInfo> indexCodes = new List<CodeInfo>();
+            HashSet<string> set_Variety = new HashSet<string>();
+            for (int i = 0; i < codes.Count; i++)
+            {
+                CodeInfo codeInfo = codes[i];
+                string code = codeInfo.Code;
+                CodeIdParser parser = new CodeIdParser(code);
+                string variety = parser.VarietyId;
+                if (!set_Variety.Contains(variety))
+                {
+                    indexCodes.Add(CodeInfoUtils.GetCodeInfo(variety + "0000", dataLoader_Variety));
+                    indexCodes.Add(CodeInfoUtils.GetCodeInfo(variety + "MI", dataLoader_Variety));
+                    set_Variety.Add(variety);
+                }
+            }
+            codes.AddRange(indexCodes);
         }
 
         private void LoopDic(string path, List<CodeInfo> codes, HashSet<string> hashset)

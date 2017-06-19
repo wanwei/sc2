@@ -25,11 +25,17 @@ namespace com.wer.sc.data.update
 
         private bool isFillUp;
 
-        public StepGetter_UpdateTickData(IPlugin_HistoryData historyData, IDataStore dataStore, bool isFillUp)
+        private UpdatedDataInfo updatedDataInfo;
+
+        private IUpdateInfoStore updateInfoStore;
+
+        public StepGetter_UpdateTickData(IPlugin_HistoryData historyData, IDataStore dataStore, bool isFillUp, UpdatedDataInfo updatedDataInfo)
         {
             this.historyData = historyData;
             this.dataStore = dataStore;
             this.isFillUp = isFillUp;
+            this.updatedDataInfo = updatedDataInfo;
+            this.updateInfoStore = dataStore.CreateUpdateInfoStore();
         }
 
         public List<IStep> GetSteps()
@@ -76,33 +82,61 @@ namespace com.wer.sc.data.update
             }
             else
             {
+                /*
+                 * 如果已更新数据记录中保存了该合约的最后更新日期，则直接按该信息更新后面的数据
+                 * 否则扫描整个目录来获取待更新信息
+                 */
+                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(codeInfo.Code);
                 int startIndex;
-                if (storedDays.Count == 0)
+                if (lastUpdatedDate >= 0)
                 {
-                    startIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.Start, false);
+                    int lastSavedUpdateTickIndex = allTradingDayCache.GetTradingDayIndex(lastUpdatedDate);
+                    startIndex = lastSavedUpdateTickIndex + 1;
                 }
                 else
                 {
-                    storedDays.Sort();
-                    int lastUpdateIndex = allTradingDayCache.GetTradingDayIndex(storedDays[storedDays.Count - 1]);
-                    if (lastUpdateIndex < 0)
+                    if (storedDays.Count == 0)
                     {
-                        //TODO 不应该出现这种情况，TODO 写日志
+                        startIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.Start, false);
                     }
-                    startIndex = lastUpdateIndex + 1;
+                    else
+                    {
+                        storedDays.Sort();
+                        int lastUpdateIndex = allTradingDayCache.GetTradingDayIndex(storedDays[storedDays.Count - 1]);
+                        if (lastUpdateIndex < 0)
+                        {
+                            //TODO 不应该出现这种情况，TODO 写日志
+                        }
+                        startIndex = lastUpdateIndex + 1;
+                    }
+
+                    //保存更新信息
+                    int lastUpdateTickIndex = startIndex - 1;
+                    if (lastUpdateTickIndex >= 0 && lastUpdateTickIndex < allTradingDayCache.GetAllTradingDays().Count)
+                        updatedDataInfo.WriteUpdateInfo_Tick(codeInfo.Code, allTradingDayCache.GetAllTradingDays()[lastUpdateTickIndex]);
                 }
                 if (startIndex < 0 || startIndex >= allTradingDayCache.GetAllTradingDays().Count)
                     return null;
 
-                int endIndex;
-                if (codeInfo.End <= 0)
-                    endIndex = allTradingDayCache.GetAllTradingDays().Count - 1;
-                else
-                    endIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.End, true);
+                int endIndex = GetEndIndex(codeInfo, allTradingDayCache);
                 if (endIndex < startIndex)
                     return null;
-                return allTradingDayCache.GetAllTradingDays().GetRange(startIndex, endIndex - startIndex + 1);
+
+                int len = endIndex - startIndex + 1;
+                if (len <= 0)
+                    return null;
+                return allTradingDayCache.GetAllTradingDays().GetRange(startIndex, len);
             }
+        }
+
+        private static int GetEndIndex(CodeInfo codeInfo, TradingDayCache allTradingDayCache)
+        {
+            int endIndex;
+            if (codeInfo.End <= 0)
+                endIndex = allTradingDayCache.GetAllTradingDays().Count - 1;
+            else
+                endIndex = allTradingDayCache.GetTradingDayIndex(codeInfo.End, true);
+            return endIndex;
         }
 
         private IList<int> GetCodeTradingDays(CodeInfo codeInfo, TradingDayCache allTradingCache)
@@ -124,7 +158,9 @@ namespace com.wer.sc.data.update
             {
                 IStep step;
                 if (i != stepCount - 1)
-                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), historyData, tickDataStore);
+                {
+                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), historyData, tickDataStore, updatedDataInfo, updateInfoStore);
+                }
                 else
                     step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), historyData, tickDataStore);
                 steps.Add(step);

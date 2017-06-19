@@ -6,7 +6,7 @@
     <ProjectGuid>{D12FBFEA-2E8B-4F2B-B915-B584F0D60F0F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.wer.sc.strategy.test</RootNamespace>
+    <RootNamespace>com.wer.sc.strategy</RootNamespace>
     <AssemblyName>com.wer.sc.strategy.test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,9 +50,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="TestRealTimeDataReader_History.cs" />
+    <Compile Include="realtimereader\TestRealTimeReader_Strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\com.wer.sc.strategy\com.wer.sc.strategy.csproj">
+      <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
+      <Name>com.wer.sc.strategy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

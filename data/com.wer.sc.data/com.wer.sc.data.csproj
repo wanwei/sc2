@@ -102,6 +102,7 @@
     <Compile Include="store\file\KLineDataStore_File.cs" />
     <Compile Include="store\file\TickDataStore_File.cs" />
     <Compile Include="store\file\TradingSessionStore_File.cs" />
+    <Compile Include="store\file\UpdateInfoStore_File.cs" />
     <Compile Include="store\IDataStore.cs" />
     <Compile Include="store\IInstrumentStore.cs" />
     <Compile Include="store\IKLineDataStore.cs" />
@@ -110,16 +111,17 @@
     <Compile Include="store\ITradingSessionStore.cs" />
     <Compile Include="datacenter\StoreDataTypes.cs" />
     <Compile Include="store\file\DataPathUtils.cs" />
+    <Compile Include="store\IUpdateInfoStore.cs" />
     <Compile Include="update\DataUpdate.cs" />
     <Compile Include="update\StepGetter_UpdateKLineData.cs" />
     <Compile Include="update\StepGetter_UpdateTickData.cs" />
     <Compile Include="update\StepPreparer.cs" />
+    <Compile Include="update\Step_SaveUpdateInfo.cs" />
     <Compile Include="update\Step_UpdateInstrument.cs" />
     <Compile Include="update\Step_UpdateKLineData.cs" />
     <Compile Include="update\Step_UpdateTickData.cs" />
     <Compile Include="update\Step_UpdateTradingDays.cs" />
     <Compile Include="update\Step_UpdateTradingSession_Instrument.cs" />
-    <Compile Include="update\UpdatedDataInfo.cs" />
     <Compile Include="utils\KLineDataTimeGetter.cs" />
     <Compile Include="utils\DaySplitter.cs" />
     <Compile Include="store\file\TradingDayStore_File.cs" />

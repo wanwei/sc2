@@ -20,12 +20,22 @@ namespace com.wer.sc.data.update
 
         private ITickDataStore tickDataStore;
 
-        public Step_UpdateTickData(string code, List<int> openDates, IPlugin_HistoryData historyData, ITickDataStore tickDataStore)
+        private UpdatedDataInfo updatedDataInfo;
+
+        private IUpdateInfoStore updateInfoStore;
+
+        public Step_UpdateTickData(string code, List<int> tradingDays, IPlugin_HistoryData historyData, ITickDataStore tickDataStore)
         {
             this.code = code;
-            this.tradingDays = openDates;
+            this.tradingDays = tradingDays;
             this.historyData = historyData;
             this.tickDataStore = tickDataStore;
+        }
+
+        public Step_UpdateTickData(string code, List<int> tradingDays, IPlugin_HistoryData historyData, ITickDataStore tickDataStore, UpdatedDataInfo updatedDataInfo, IUpdateInfoStore updateInfoStore) : this(code, tradingDays, historyData, tickDataStore)
+        {
+            this.updatedDataInfo = updatedDataInfo;
+            this.updateInfoStore = updateInfoStore;
         }
 
         public int ProgressStep
@@ -51,12 +61,20 @@ namespace com.wer.sc.data.update
 
         public string Proceed()
         {
+            if (tradingDays == null || tradingDays.Count == 0)
+                return "";
+
             for (int i = 0; i < tradingDays.Count; i++)
             {
                 int tradingDay = tradingDays[i];
                 TickData tickData = (TickData)historyData.GetTickData(code, tradingDay);
                 if (tickData != null)
                     tickDataStore.Save(code, tradingDay, tickData);
+            }
+            if (tradingDays.Count > 0 && updatedDataInfo != null)
+            {
+                updatedDataInfo.WriteUpdateInfo_Tick(code, tradingDays[tradingDays.Count - 1]);
+                updateInfoStore.Save(updatedDataInfo);
             }
             return StepDesc + "完成";
         }

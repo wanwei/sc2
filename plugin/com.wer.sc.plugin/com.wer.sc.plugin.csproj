@@ -57,6 +57,7 @@
     <Compile Include="data\utils\TimeIndeierUtils.cs" />
     <Compile Include="data\utils\TradingTimeUtils.cs" />
     <Compile Include="historydata\Plugin_DataUpdater.cs" />
+    <Compile Include="data\update\UpdatedDataInfo.cs" />
     <Compile Include="PluginHelper.cs" />
     <Compile Include="IPlugin_DataUpdater.cs" />
     <Compile Include="historydata\utils\TradingSessionDetailUtils.cs" />
@@ -111,9 +112,7 @@
     <Compile Include="data\transfer\DataTransfer_KLine2KLine.cs" />
     <Compile Include="data\transfer\DataTransfer_KLine2TimeLine.cs" />
     <Compile Include="data\transfer\DataTransfer_Tick2KLine.cs" />
-    <Compile Include="historydata\UpdatedDataInfo_Csv.cs" />
     <Compile Include="historydata\CsvHistoryData_PathUtils.cs" />
-    <Compile Include="historydata\utils\IUpdatedDataInfo.cs" />
     <Compile Include="historydata\Plugin_HistoryData_Csv.cs" />
     <Compile Include="historydata\utils\InstrumentDatesInfo.cs" />
     <Compile Include="IPlugin_Market.cs" />

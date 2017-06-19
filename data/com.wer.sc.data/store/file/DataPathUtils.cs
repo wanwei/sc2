@@ -32,6 +32,10 @@ namespace com.wer.sc.data.store.file
         {
             this.dataPath = RealPath(dataPath);
         }
+        public String GetUpdateInfoPath()
+        {
+            return dataPath + "\\updateinfo";
+        }
 
         public String GetInstrumentPath()
         {

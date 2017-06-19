@@ -27,12 +27,15 @@ namespace com.wer.sc.data.update
 
         private bool isFillUp;
 
-        public StepGetter_UpdateKLineData(IPlugin_HistoryData historyData, IDataStore dataStore, List<KLinePeriod> updatePeriods, bool isFillUp)
+        private UpdatedDataInfo updatedDataInfo;
+
+        public StepGetter_UpdateKLineData(IPlugin_HistoryData historyData, IDataStore dataStore, List<KLinePeriod> updatePeriods, bool isFillUp, UpdatedDataInfo updatedDataInfo)
         {
             this.historyData = historyData;
             this.klineDataStore = dataStore.CreateKLineDataStore();
             this.updatePeriods = updatePeriods;
             this.isFillUp = isFillUp;
+            this.updatedDataInfo = updatedDataInfo;
         }
 
         public List<IStep> GetSteps()
@@ -64,7 +67,6 @@ namespace com.wer.sc.data.update
                 //TODO 暂时没处理FillUp的情况，考虑使用全覆盖的方式实现
                 KLinePeriod period = updatePeriods[i];
                 int lastTradingDay = klineDataStore.GetLastTradingDay(code, period);
-
                 int startDate;
                 if (lastTradingDay < 0)
                 {
@@ -95,6 +97,24 @@ namespace com.wer.sc.data.update
                 int endDate = tradingDaysCache.GetTradingDay(endIndex);
                 if (endDate < startDate)
                     return;
+
+                //保存更新数据
+                //int lastUpdateTickIndex = startIndex - 1;
+                //int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(codeInfo.Code);
+                //if (lastUpdatedDate >= 0)
+                //{
+                //    int lastSavedUpdateTickIndex = allTradingDayCache.GetTradingDayIndex(lastUpdatedDate);
+                //    if (lastSavedUpdateTickIndex > lastUpdateTickIndex)
+                //    {
+                //        startIndex = lastUpdateTickIndex + 1;
+                //        if (startIndex >= allTradingDayCache.GetAllTradingDays().Count)
+                //            return null;
+                //    }
+                //}
+                //if (lastUpdateTickIndex >= 0 && lastUpdateTickIndex < allTradingDayCache.GetAllTradingDays().Count)
+                //    updatedDataInfo.WriteUpdateInfo_Tick(codeInfo.Code, allTradingDayCache.GetAllTradingDays()[lastUpdateTickIndex]);
+
+
                 Step_UpdateKLineData step = new Step_UpdateKLineData(code, startDate, endDate, period, historyData, klineDataStore);
                 steps.Add(step);
             }

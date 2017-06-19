@@ -20,6 +20,11 @@ namespace com.wer.sc.plugin
             this.pluginDirPath = new FileInfo(pluginInfo.PluginPath).DirectoryName;
         }
 
+        public PluginHelper(string pluginPath)
+        {
+            this.pluginDirPath = pluginPath;
+        }
+
         public PluginInfo PluginInfo
         {
             get

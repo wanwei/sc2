@@ -78,8 +78,6 @@ namespace com.wer.sc.data
             return "";
         }
 
-
-
         public override bool Equals(object obj)
         {
             if (!(obj is KLinePeriod))
@@ -139,7 +137,5 @@ namespace com.wer.sc.data
         {
             get { return period_Day; }
         }
-
-
     }
 }

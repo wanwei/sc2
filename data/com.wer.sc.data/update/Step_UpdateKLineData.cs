@@ -25,6 +25,8 @@ namespace com.wer.sc.data.update
 
         private IKLineDataStore klineDataStore;
 
+        private UpdatedDataInfo updatedDataInfo;
+
         public Step_UpdateKLineData(string code, int startDate, int endDate, KLinePeriod period, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore)
         {
             this.code = code;
@@ -33,6 +35,11 @@ namespace com.wer.sc.data.update
             this.period = period;
             this.historyData = historyData;
             this.klineDataStore = klineDataStore;
+        }
+
+        public Step_UpdateKLineData(string code, int startDate, int endDate, KLinePeriod period, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore, UpdatedDataInfo updatedDataInfo) : this(code, startDate, endDate, period, historyData, klineDataStore)
+        {
+            this.updatedDataInfo = updatedDataInfo;
         }
 
         public int ProgressStep
@@ -66,6 +73,10 @@ namespace com.wer.sc.data.update
             if (klineData == null || klineData.Length == 0)
                 return "";
             klineDataStore.Append(code, period, klineData);
+            if (updatedDataInfo != null)
+            {
+                updatedDataInfo.WriteUpdateInfo_KLine(code, period, endDate);
+            }
             return StepDesc + "完毕";
         }
     }

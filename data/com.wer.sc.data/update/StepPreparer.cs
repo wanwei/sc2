@@ -45,6 +45,8 @@ namespace com.wer.sc.data.update
         {
             List<IStep> steps = new List<IStep>();
 
+            UpdatedDataInfo updateDataInfo = dataStore.CreateUpdateInfoStore().Load();
+
             steps.Add(new Step_UpdateTradingDays(historyData, dataStore));
             steps.Add(new Step_UpdateInstrument(historyData, dataStore));
 
@@ -54,9 +56,9 @@ namespace com.wer.sc.data.update
 
             //确定是否保存tick数据
             // if (dataCenterConfig.StoredDataTypes.IsStoreTick)
-            steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp).GetSteps());
+            steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp, updateDataInfo).GetSteps());
             //增加k线数据保存步骤
-            steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp).GetSteps());
+            steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp, updateDataInfo).GetSteps());
 
             return steps;
         }

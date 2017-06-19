@@ -49,7 +49,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             this.targetDataPath = targetDataPath;
             this.updateFillUp = updateFillUp;
             this.dataProvider = dataProvider;
-            this.dataUpdateHelper = new DataUpdateHelper(pluginPath, new UpdatedDataLoader(), dataProvider);
+            this.dataUpdateHelper = new DataUpdateHelper(pluginPath, new UpdatedDataLoader(pluginPath), dataProvider);
         }
 
         public List<IStep> GetAllSteps()
