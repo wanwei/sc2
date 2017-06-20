@@ -79,6 +79,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
                 string complexCodeId = CodeInfoUtils.GetComplexCodeId(parser, tradingDay);
                 if (complexCodeId == null)
                     continue;
+                CodeIdParser parser2 = new CodeIdParser(complexCodeId);
+                if (parser2.Suffix == null)
+                    continue;
+                if (parser2.Suffix.Length < 2 || parser2.Suffix.Length > 4)
+                    continue;
                 //string varietyId = CodeInfoUtils.GetVariety(oldCodeId);
                 //string[] splitCodeArr = CodeInfoUtils.SplitCodeId(oldCodeId);
                 //string newCodeId = GetCodeId(tradingDay, splitCodeArr);

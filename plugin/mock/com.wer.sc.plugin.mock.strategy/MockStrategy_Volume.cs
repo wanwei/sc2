@@ -12,7 +12,7 @@ namespace com.wer.sc.plugin.mock.strategy
     [Strategy("MOCK.STRATEGY.VOLUME","量能过滤", "量能过滤，测试专用")]
     public class MockStrategy_Volume : IStrategy
     {      
-        public StrategyReferdPeriods GetStrategyPeriods()
+        public StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
+using com.wer.sc.data.update;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private DataUpdateHelper dataUpdateHelper;
 
-        public Step_KLineData(string code, List<int> dates, DataUpdateHelper dataUpdateHelper)
+        private UpdatedDataInfo updatedDataInfo;
+
+        private bool updateFillUp;
+
+        public Step_KLineData(string code, List<int> dates, DataUpdateHelper dataUpdateHelper, UpdatedDataInfo updatedDataInfo, bool updateFillUp)
         {
             this.code = code;
             this.dates = dates;
             this.dataUpdateHelper = dataUpdateHelper;
+            this.updatedDataInfo = updatedDataInfo;
+            this.updateFillUp = updateFillUp;
         }
 
         public int ProgressStep
@@ -73,6 +80,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(dataUpdateHelper, code, date, KLinePeriod.KLinePeriod_1Minute, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold);
                 step_klineData.Proceed();
                 lastKLineData = step_klineData.KlineData;
+            }
+            if (!updateFillUp && updatedDataInfo != null)
+            {
+                updatedDataInfo.WriteUpdateInfo_KLine(code, KLinePeriod.KLinePeriod_1Minute, dates[dates.Count - 1]);
+                updatedDataInfo.Save();
             }
             return "更新完毕" + GetDesc();
         }

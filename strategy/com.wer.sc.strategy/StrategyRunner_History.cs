@@ -18,7 +18,7 @@ namespace com.wer.sc.strategy
 
         private bool isRunning;
 
-        private StrategyReferdPeriods referedPeriods;
+        private StrategyReferedPeriods referedPeriods;
 
         private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();        
 

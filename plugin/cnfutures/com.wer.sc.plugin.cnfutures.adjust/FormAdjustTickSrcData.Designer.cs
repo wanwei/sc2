@@ -41,13 +41,14 @@
             this.controlDataUpdate1.Size = new System.Drawing.Size(752, 65);
             this.controlDataUpdate1.TabIndex = 0;
             // 
-            // Form1
+            // FormAdjustTickSrcData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 67);
             this.Controls.Add(this.controlDataUpdate1);
-            this.Name = "Form1";
+            this.Name = "FormAdjustTickSrcData";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
 

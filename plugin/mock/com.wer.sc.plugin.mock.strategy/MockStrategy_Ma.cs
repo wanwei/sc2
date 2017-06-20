@@ -12,17 +12,17 @@ namespace com.wer.sc.plugin.mock.zb
     [Strategy("MOCK.STRATEGY.MA", "MA指标", "MA指标，测试专用")]
     public class MockStrategy_Ma : IStrategy
     {
-        private StrategyReferdPeriods strategyPeriods;
+        private StrategyReferedPeriods strategyPeriods;
 
         public MockStrategy_Ma()
         {
-            strategyPeriods = new StrategyReferdPeriods();
+            strategyPeriods = new StrategyReferedPeriods();
             strategyPeriods.UseTickData = false;
             strategyPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             strategyPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
         }
 
-        public StrategyReferdPeriods GetStrategyPeriods()
+        public StrategyReferedPeriods GetStrategyPeriods()
         {
             return strategyPeriods;
         }

@@ -139,6 +139,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private ITradingDayReader allTradingDayReader;
 
+        /// <summary>
+        /// 得到本次更新的所有K线数据
+        /// </summary>
+        /// <returns></returns>
         public ITradingDayReader GetAllTradingDayReader()
         {
             if (allTradingDayReader == null)
@@ -148,6 +152,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 List<int> tradingDays = updatedTradingDayReader.GetAllTradingDays();
                 allTradingDays.AddRange(tradingDays);
                 List<int> newTradingDays = GetNewTradingDays();
+                RemoveTradingDays(allTradingDays, newTradingDays[newTradingDays.Count - 1]);
                 for (int i = 0; i < newTradingDays.Count; i++)
                 {
                     int newTradingDay = newTradingDays[i];
@@ -157,6 +162,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 allTradingDayReader = new TradingDayCache(allTradingDays);
             }
             return allTradingDayReader;
+        }
+
+        private void RemoveTradingDays(List<int> tradingDays, int endDay)
+        {
+            int index = tradingDays.IndexOf(endDay);
+            tradingDays.RemoveRange(index + 1, tradingDays.Count - index - 1);
         }
 
         /// <summary>

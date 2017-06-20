@@ -17,16 +17,18 @@ namespace com.wer.sc.data.reader.cache
 
         private Dictionary<String, List<CodeInfo>> dic_Catelog_Codes = new Dictionary<string, List<CodeInfo>>();
 
+        private Dictionary<string, List<CodeInfo>> dic_Exhcange_Codes = new Dictionary<string, List<CodeInfo>>();
+
         public CodeInfoCache(List<CodeInfo> codes)
         {
             this.codes = codes;
-            for(int i = 0; i < codes.Count; i++)
+            for (int i = 0; i < codes.Count; i++)
             {
                 CodeInfo code = codes[i];
                 dic_Code_Codes.Add(code.Code.ToUpper(), code);
 
                 string catelog = code.Catelog.ToUpper();
-                if (!catelogs.Contains(catelog))                
+                if (!catelogs.Contains(catelog))
                     catelogs.Add(catelog);
 
                 if (dic_Catelog_Codes.ContainsKey(catelog))
@@ -38,6 +40,18 @@ namespace com.wer.sc.data.reader.cache
                     List<CodeInfo> catelogCodes = new List<CodeInfo>();
                     catelogCodes.Add(code);
                     dic_Catelog_Codes.Add(catelog, catelogCodes);
+                }
+
+                string exchange = code.Exchange.ToUpper();
+                if(dic_Exhcange_Codes.ContainsKey(exchange))
+                {
+                    dic_Exhcange_Codes[exchange].Add(code);
+                }
+                else
+                {
+                    List<CodeInfo> exchangeCodes = new List<CodeInfo>();
+                    exchangeCodes.Add(code);
+                    dic_Exhcange_Codes.Add(exchange, exchangeCodes);
                 }
             }
         }
@@ -68,7 +82,17 @@ namespace com.wer.sc.data.reader.cache
         public List<CodeInfo> GetCodesByCatelog(String catelog)
         {
             string key = catelog.ToUpper();
-            return dic_Catelog_Codes[key];
+            if (dic_Catelog_Codes.ContainsKey(catelog))
+                return dic_Catelog_Codes[key];
+            return null;
+        }
+
+        public List<CodeInfo> GetCodesByExchange(string exchange)
+        {
+            string key = exchange.ToUpper();
+            if (dic_Exhcange_Codes.ContainsKey(exchange))
+                return dic_Exhcange_Codes[key];
+            return null;
         }
 
         public List<CodeInfo> GetCodesByCatelog(String catelog, int day)

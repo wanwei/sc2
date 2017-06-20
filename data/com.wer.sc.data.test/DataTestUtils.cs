@@ -33,6 +33,7 @@ namespace com.wer.sc.data.test
             openTime.Add(new double[] { .133000, .150000 });
             return openTime;
         }
+
         public static List<double[]> GetOpenTimeNight()
         {
             List<double[]> openTime = new List<double[]>();

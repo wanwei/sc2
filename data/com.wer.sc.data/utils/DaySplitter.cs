@@ -23,6 +23,12 @@ namespace com.wer.sc.data.utils
         public static List<SplitterResult> Split(TimeGetter timeGetter)
         {
             double lastTime = timeGetter.GetTime(0);
+            if (timeGetter.Count <= 1)
+            {
+                List<SplitterResult> results = new List<SplitterResult>(1);
+                results.Add(new SplitterResult((int)lastTime, 0));
+                return results;
+            }
             double time = timeGetter.GetTime(1);
 
             //算法                
@@ -174,5 +180,5 @@ namespace com.wer.sc.data.utils
         {
             return date + "," + index;
         }
-    }    
+    }
 }

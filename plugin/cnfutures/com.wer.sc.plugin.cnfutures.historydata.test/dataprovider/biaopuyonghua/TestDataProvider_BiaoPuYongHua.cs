@@ -29,7 +29,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             AssertUtils.AssertEqual_TickData("TickData_A1005_20100105", GetType(), tickData);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void TestDataProvider_BiaoPuYongHua_Code()
         {
             string srcDataPath = DataUpdateConst.SRCDATAPATH_BIAOPUYONGHUA;

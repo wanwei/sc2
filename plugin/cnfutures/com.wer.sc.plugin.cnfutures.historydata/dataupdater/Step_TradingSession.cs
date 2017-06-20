@@ -49,7 +49,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             List<TradingSession> result = GetAllTradingSession();
             if (result == null)
+            {
+                //List<TradingSession> updatedTradingSessionList = this.dataUpdateHelper.GetUpdatedTradingSessions(code);
+                //result = GetTradingSessionDataResult(updatedTradingSessionList, null);
+                //string path2 = dataUpdateHelper.GetPath_TradingSession(code);
+                //CsvUtils_TradingSession.Save(path2, result);
                 return code + "的开盘时间已经是最新的，不需要更新";
+            }                
             string path = dataUpdateHelper.GetPath_TradingSession(code);
             CsvUtils_TradingSession.Save(path, result);
             return "更新完成" + code + "的开盘时间";
@@ -91,12 +97,34 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             if (updateStartTimes == null || updateStartTimes.Count == 0)
                 return null;
 
+            return GetTradingSessionDataResult(updatedTradingSessionList, updateStartTimes);
+        }
+
+        private List<TradingSession> GetTradingSessionDataResult(List<TradingSession> updatedTradingSessionList, List<TradingSession> updateTradingSessionList)
+        {
+            HashSet<int> set_TradingDay = new HashSet<int>();
             List<TradingSession> result = new List<TradingSession>();
-            if (updatedTradingSessionList != null)
-                result.AddRange(updatedTradingSessionList);
-            result.AddRange(updateStartTimes);
+            for (int i = 0; i < updatedTradingSessionList.Count; i++)
+            {
+                TradingSession session = updatedTradingSessionList[i];
+                if (set_TradingDay.Contains(session.TradingDay))
+                    continue;
+                set_TradingDay.Add(session.TradingDay);
+                result.Add(session);
+            }
+            if (updateTradingSessionList == null)
+                return result;
+            for (int i = 0; i < updateTradingSessionList.Count; i++)
+            {
+                TradingSession session = updateTradingSessionList[i];
+                if (set_TradingDay.Contains(session.TradingDay))
+                    continue;
+                set_TradingDay.Add(session.TradingDay);
+                result.Add(session);
+            }
             return result;
         }
+
 
         private List<TradingSession> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)
         {

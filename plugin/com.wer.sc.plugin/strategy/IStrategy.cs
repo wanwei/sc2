@@ -21,10 +21,10 @@ namespace com.wer.sc.strategy
 
         void OnBar(IRealTimeDataReader currentData);
 
-        StrategyReferdPeriods GetStrategyPeriods();
+        StrategyReferedPeriods GetStrategyPeriods();
     }
 
-    public class StrategyReferdPeriods
+    public class StrategyReferedPeriods
     {
         public bool UseTickData = false;
 

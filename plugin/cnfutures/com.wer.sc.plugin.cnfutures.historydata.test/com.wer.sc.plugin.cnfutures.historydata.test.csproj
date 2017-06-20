@@ -62,6 +62,7 @@
     <Compile Include="dataupdater\TestDataUpdateHelper.cs" />
     <Compile Include="dataupdater\TestStepPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataprovider\jinshuyuan\TickData_CF1607_20160503" />
     <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataupdater\generator\TickData_M_20150106_Index" />
     <None Include="TestCase\com\wer\sc\plugin\cnfutures\historydata\dataupdater\generator\TickData_M_20100106_Index" />
   </ItemGroup>

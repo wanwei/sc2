@@ -7,6 +7,8 @@ namespace com.wer.sc.strategy.realtimereader
 {
     /// <summary>
     /// 实时数据读取器，用作策略的历史数据回测
+    /// 该读取器使用方法：
+    /// 1.设置前进周期
     /// </summary>
     public class RealTimeReader_Strategy : IRealTimeDataReader
     {
@@ -34,7 +36,7 @@ namespace com.wer.sc.strategy.realtimereader
 
         private KLinePeriod forwardPeriod;
 
-        public RealTimeReader_Strategy(IDataReader dataReader, string code, int startDate, int endDate, StrategyReferdPeriods referedPeriods)
+        public RealTimeReader_Strategy(IDataReader dataReader, string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods)
         {
             this.dataReader = dataReader;
             this.code = code;

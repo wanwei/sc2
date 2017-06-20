@@ -125,7 +125,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
         {
             int month = date / 100;
 
-            VarietyInfo varietyInfo = dataLoader_Variety.GetVariety(CodeInfoUtils.GetVariety(code));
+            CodeIdParser parser = new CodeIdParser(code);
+            VarietyInfo varietyInfo = dataLoader_Variety.GetVariety(parser.VarietyId);
             if (varietyInfo == null)
                 return null;
             string market = varietyInfo.Exchange;
@@ -136,15 +137,19 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
             else if (market.Equals("ZZ"))
                 market = "zc";
 
-            string path = srcDataPath + "\\" + month + "\\" + market + "\\" + GetFullCode(code, date) + "_" + date + ".csv";
+            string path = srcDataPath + "\\" + month + "\\" + market + "\\" + GetFullCode(code, parser, market == "zc") + "_" + date + ".csv";
             return path;
 
             //return srcDataPath + "\\" + dataLoader_InstrumentInfo.GetBelongMarket(code) + "\\" + date + "\\" + code + "_" + date + ".csv";
         }
 
-        private string GetFullCode(String code, int date)
+        private string GetFullCode(String code, CodeIdParser parser, bool isZZ)
         {
-
+            if (isZZ)
+            {
+                string suffix = parser.Suffix;
+                return parser.VarietyId + suffix.Substring(1, 3);
+            }
             return code;
         }
     }

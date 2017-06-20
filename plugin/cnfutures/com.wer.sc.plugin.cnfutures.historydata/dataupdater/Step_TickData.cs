@@ -1,4 +1,5 @@
-﻿using com.wer.sc.utils.update;
+﻿using com.wer.sc.data.update;
+using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private DataUpdateHelper dataLoader;
 
-        public Step_TickData(string code, List<int> dates, DataUpdateHelper dataLoader)
+        private UpdatedDataInfo updatedDataInfo;
+
+        private bool updateFillUp;
+
+        public Step_TickData(string code, List<int> dates, DataUpdateHelper dataLoader, UpdatedDataInfo updatedDataInfo, bool updateFillUp)
         {
             this.code = code;
             this.dates = dates;
             this.dataLoader = dataLoader;
+            this.updatedDataInfo = updatedDataInfo;
+            this.updateFillUp = updateFillUp;
         }
 
         public int ProgressStep
@@ -50,6 +57,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 int date = dates[i];
                 Step_TickData_CodeDate step_tickData = new Step_TickData_CodeDate(dataLoader, code, date);
                 step_tickData.Proceed();
+            }
+            if (!updateFillUp && updatedDataInfo != null) { 
+                updatedDataInfo.WriteUpdateInfo_Tick(code, dates[dates.Count - 1]);
+                updatedDataInfo.Save();
             }
             return "更新完毕" + GetDesc();
         }

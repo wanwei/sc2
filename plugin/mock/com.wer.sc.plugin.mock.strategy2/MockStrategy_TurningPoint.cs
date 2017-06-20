@@ -28,7 +28,7 @@ namespace com.wer.sc.plugin.mock.strategy
             }
         }
 
-        public StrategyReferdPeriods GetStrategyPeriods()
+        public StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }

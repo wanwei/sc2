@@ -13,7 +13,7 @@ namespace com.wer.sc.plugin.mock.strategy.complex
     public class MockStrategy_Real : IStrategy
     {
 
-        public StrategyReferdPeriods GetStrategyPeriods()
+        public StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }

@@ -31,6 +31,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
 
             ITickData tickData = dataProvider.LoadTickData("a1607", 20160503);
             AssertUtils.AssertEqual_TickData("TickData_A1607_20160503", GetType(), tickData);
+
+            tickData = dataProvider.LoadTickData("CF1607", 20160503);
+            AssertUtils.AssertEqual_TickData("TickData_CF1607_20160503", GetType(), tickData);
             //AssertUtils.PrintTickData(tickData);
         }
 

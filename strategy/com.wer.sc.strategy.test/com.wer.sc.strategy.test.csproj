@@ -54,6 +54,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{B8955457-F108-4060-A35B-69B482A19AB6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\com.wer.sc.strategy\com.wer.sc.strategy.csproj">
       <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
       <Name>com.wer.sc.strategy</Name>

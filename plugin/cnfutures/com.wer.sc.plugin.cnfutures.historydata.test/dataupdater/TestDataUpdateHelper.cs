@@ -31,7 +31,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             string pluginPath = DataUpdateConst.PLUGINPATH;
             string srcDataPath = DataUpdateConst.SRCDATAPATH_BIAOPUYONGHUA;            
-            UpdatedDataLoader updatedDataLoader = new UpdatedDataLoader();
+            UpdatedDataLoader updatedDataLoader = new UpdatedDataLoader(pluginPath);
             IDataProvider dataProvider = new DataProvider_BiaoPuYongHua(srcDataPath, pluginPath);
             DataUpdateHelper dataUpdateHelper = new DataUpdateHelper(pluginPath, updatedDataLoader, dataProvider);
             return dataUpdateHelper;
@@ -42,7 +42,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             string pluginPath = DataUpdateConst.PLUGINPATH;
             //string srcDataPath = DataUpdateConst.SRCDATAPATH_BIAOPUYONGHUA;
             string srcDataPath = DataUpdateConst.SRCDATAPATH_JINSHUYUAN;
-            UpdatedDataLoader updatedDataLoader = new UpdatedDataLoader();
+            UpdatedDataLoader updatedDataLoader = new UpdatedDataLoader(pluginPath);
             IDataProvider dataProvider = new DataProvider_JinShuYuan(srcDataPath, pluginPath);
             DataUpdateHelper dataUpdateHelper = new DataUpdateHelper(pluginPath, updatedDataLoader, dataProvider);
             return dataUpdateHelper;

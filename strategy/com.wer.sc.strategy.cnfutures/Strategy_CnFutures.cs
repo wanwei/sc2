@@ -14,13 +14,13 @@ namespace com.wer.sc.strategy.cnfutures
     /// </summary>
     public class Strategy_CnFutures : IStrategy
     {
-        private StrategyReferdPeriods refered;
+        private StrategyReferedPeriods refered;
 
         //private List<>
 
         public Strategy_CnFutures()
         {
-            refered = new StrategyReferdPeriods();
+            refered = new StrategyReferedPeriods();
             refered.isReferTimeLineData = false;
             refered.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             //refered.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
@@ -72,7 +72,7 @@ namespace com.wer.sc.strategy.cnfutures
 
         }
 
-        public StrategyReferdPeriods GetStrategyPeriods()
+        public StrategyReferedPeriods GetStrategyPeriods()
         {
             return refered;
         }
