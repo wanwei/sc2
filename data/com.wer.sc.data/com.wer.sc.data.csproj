@@ -79,6 +79,8 @@
     <Compile Include="market\IMarketDataReceiveTragger.cs" />
     <Compile Include="market\receiver\MarketDataReceiveTragger_TickWriter.cs" />
     <Compile Include="market\receiver\MarketDataReceiveTragger_RealTimeBuilder.cs" />
+    <Compile Include="realtime\KLineData_RealTime.cs" />
+    <Compile Include="realtime\TimeLineData_RealTime.cs" />
     <Compile Include="receiver\DataReceiver.cs" />
     <Compile Include="receiver\DataReceiver_Tick.cs" />
     <Compile Include="receiver\data\KLineData_Merge.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="update\Step_UpdateTickData.cs" />
     <Compile Include="update\Step_UpdateTradingDays.cs" />
     <Compile Include="update\Step_UpdateTradingSession_Instrument.cs" />
+    <Compile Include="utils\DataCache.cs" />
     <Compile Include="utils\KLineDataTimeGetter.cs" />
     <Compile Include="utils\DaySplitter.cs" />
     <Compile Include="store\file\TradingDayStore_File.cs" />

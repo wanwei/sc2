@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertUtils.cs" />
+    <Compile Include="MockDataLoader_Long.cs" />
     <Compile Include="MockDataLoader.cs" />
     <Compile Include="Plugin_HistoryData_MockData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

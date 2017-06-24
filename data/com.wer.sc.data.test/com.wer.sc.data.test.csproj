@@ -63,6 +63,7 @@
     <Compile Include="reader\TestIKLineDataReader.cs" />
     <Compile Include="reader\TestTickDataReader.cs" />
     <Compile Include="reader\TestTimeLineDataReader.cs" />
+    <Compile Include="realtime\TestKLineData_RealTime.cs" />
     <Compile Include="receiver\TestDataReceiver.cs" />
     <Compile Include="store\file\TestGetBytes.cs" />
     <Compile Include="store\file\TestInstrumentStore_File.cs" />

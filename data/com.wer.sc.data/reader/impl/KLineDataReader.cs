@@ -57,6 +57,13 @@ namespace com.wer.sc.data.reader.impl
             throw new ArgumentException("暂未实现");
         }
 
+        //public IKLineData GetData(string code, int startDate, int endDate, KLinePeriod period, int beforeBarCount)
+        //{
+        //    //beforeBarCount
+
+        //    return null;
+        //}
+
         private IKLineData LoadKLineData(string code, int startDate, int endDate, KLinePeriod period)
         {
             KLineData klineData = klineDataStore.Load(code, startDate, endDate, period);

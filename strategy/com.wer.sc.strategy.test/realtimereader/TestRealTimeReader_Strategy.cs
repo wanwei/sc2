@@ -12,7 +12,7 @@ namespace com.wer.sc.strategy.realtimereader
         [TestMethod]
         public void TestMethod1()
         {
-            IDataReader dataReader = DataReaderFactory.CreateDataReader("file:/E:/SCDATA/CNFUTURES/");
+            IDataReader dataReader = CommonData.GetDataReader();
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170610;
@@ -30,5 +30,6 @@ namespace com.wer.sc.strategy.realtimereader
                 Console.WriteLine(klineData);
             }
         }
+
     }
 }

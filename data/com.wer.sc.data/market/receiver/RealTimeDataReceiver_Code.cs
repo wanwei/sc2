@@ -54,7 +54,7 @@ namespace com.wer.sc.data.market.receiver
 
             List<double> timeList = KLineTimeListUtils.GetKLineTimeList(date, lastOpenDate, openTime, KLinePeriod.KLinePeriod_1Minute);
             IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, KLinePeriod.KLinePeriod_1Day);
-            this.timeLineData = new TimeLineData_RealTime(klineData.End, timeList);
+            //this.timeLineData = new TimeLineData_RealTime(timeList);
         }
 
         public void Receive(ITickData tickData)
@@ -64,7 +64,7 @@ namespace com.wer.sc.data.market.receiver
             {
                 klineData.Receive(tickData);
             }
-            this.timeLineData.Receive(tickData);
+            //this.timeLineData.Receive(tickData);
         }
 
         public IKLineData GetKLineData(KLinePeriod period)

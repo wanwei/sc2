@@ -13,12 +13,29 @@ namespace com.wer.sc.mockdata
     /// </summary>
     public class Plugin_HistoryData_MockData : Plugin_HistoryData_Csv
     {
+        private string csvDataPath;
+
         public Plugin_HistoryData_MockData() : base(null)
         {
         }
 
+        public Plugin_HistoryData_MockData(string csvDataPath) : base(null)
+        {
+            this.csvDataPath = csvDataPath;
+        }
+
+        public string CsvDataPath
+        {
+            get
+            {
+                return csvDataPath;
+            }
+        }
+
         public override string GetCsvDataPath()
         {
+            if (csvDataPath != null)
+                return csvDataPath;
             return @"E:\FUTURES\MOCKDATA\";
         }
     }

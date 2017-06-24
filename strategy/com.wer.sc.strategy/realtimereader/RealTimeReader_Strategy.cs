@@ -2,16 +2,16 @@
 using System;
 using System.Collections.Generic;
 using com.wer.sc.data;
+using com.wer.sc.data.realtime;
 
 namespace com.wer.sc.strategy.realtimereader
 {
     /// <summary>
     /// 实时数据读取器，用作策略的历史数据回测
-    /// 该读取器使用方法：
-    /// 1.设置前进周期
     /// </summary>
     public class RealTimeReader_Strategy : IRealTimeDataReader
     {
+
         private IDataReader dataReader;
 
         private string code;
@@ -20,21 +20,9 @@ namespace com.wer.sc.strategy.realtimereader
 
         private int endDate;
 
-        private IList<int> tradingDays;
+        private StrategyReferedPeriods referedPeriods;
 
-        private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
-
-        private ITickData lastTickData;
-
-        private ITickData currentTickData;
-
-        private ITimeLineData timeLineData;
-
-        private double time;
-
-        private bool isTickForward;
-
-        private KLinePeriod forwardPeriod;
+        private IKLineDataForward klineDataForward;
 
         public RealTimeReader_Strategy(IDataReader dataReader, string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods)
         {
@@ -42,26 +30,12 @@ namespace com.wer.sc.strategy.realtimereader
             this.code = code;
             this.startDate = startDate;
             this.endDate = endDate;
+            this.referedPeriods = referedPeriods;
+        }
 
-            List<KLinePeriod> klinePeriods = referedPeriods.UsedKLinePeriods;
-            for (int i = 0; i < klinePeriods.Count; i++)
-            {
-                KLinePeriod klinePeriod = klinePeriods[i];
-                IKLineData klineData = dataReader.KLineDataReader.GetData(code, startDate, endDate, klinePeriod);
-                dic_Period_KLineData.Add(klinePeriod, klineData);
-            }
+        public void SetForwardPeriod(bool isTickForward, KLinePeriod forwardKLinePeriod)
+        {
 
-            if (referedPeriods.UseTickData)
-            {
-                this.tradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
-                currentTickData = dataReader.TickDataReader.GetTickData(code, tradingDays[0]);
-            }
-
-            if (referedPeriods.isReferTimeLineData)
-            {
-                //TODO
-                timeLineData = null;
-            }
         }
 
         public double Time
@@ -79,35 +53,37 @@ namespace com.wer.sc.strategy.realtimereader
 
         public IKLineData GetKLineData(KLinePeriod period)
         {
-            return dic_Period_KLineData[period];
+            return null;
         }
 
         public ITickData GetTickData()
         {
-            return currentTickData;
+            return null;
         }
 
         public ITimeLineData GetTimeLineData()
         {
-            return timeLineData;
+            return null;
         }
 
-        #region 前进
-
-        public void SetForwardPeriod(bool isTickForward, KLinePeriod forwardKLinePeriod)
+        public bool Forward()
         {
-            this.isTickForward = isTickForward;
-            this.forwardPeriod = forwardKLinePeriod;
-        }
-
-        public void Forward()
-        {
-
+            return true;
         }
 
         public bool IsEnd
         {
-            get { return false; }
+            get { return klineDataForward.IsEnd; }
+        }
+
+        public bool IsDayEnd
+        {
+            get { return klineDataForward.IsDayEnd; }
+        }
+
+        public bool IsPeriodEnd(KLinePeriod klinePeriod)
+        {
+            return klineDataForward.IsPeriodEnd(klinePeriod);
         }
 
         //void OnTick(IRealTimeDataReader currentData);
@@ -117,8 +93,6 @@ namespace com.wer.sc.strategy.realtimereader
         public event DelegateOnTick OnTick;
 
         public event DelegateOnBar OnBar;
-
-        #endregion
     }
 
     public delegate void DelegateOnTick(object sender, ITickData tickData, int index);

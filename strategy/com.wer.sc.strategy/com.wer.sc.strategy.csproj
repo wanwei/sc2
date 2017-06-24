@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,7 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IStrategyRunner.cs" />
+    <Compile Include="realtimereader\IKLineDataForward.cs" />
+    <Compile Include="realtimereader\KLineDataForward_TickPeriod.cs" />
+    <Compile Include="realtimereader\KLineDataCache_BigPeriod.cs" />
+    <Compile Include="realtimereader\KLineDataForward_BigPeriod.cs" />
+    <Compile Include="realtimereader\KLineData_DaySplitter.cs" />
+    <Compile Include="realtimereader\RealTimeReader_Strategy2.cs" />
     <Compile Include="realtimereader\RealTimeReader_Strategy.cs" />
+    <Compile Include="realtimereader\TickDataCache.cs" />
     <Compile Include="StrategyRunner_History.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

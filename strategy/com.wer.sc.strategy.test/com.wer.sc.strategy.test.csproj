@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,6 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CommonData.cs" />
+    <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_bigperiod" />
+    <Compile Include="realtimereader\TestKLineDataForward_TickPeriod.cs" />
+    <Compile Include="realtimereader\TestKLineDataForward_BigPeriod.cs" />
     <Compile Include="realtimereader\TestRealTimeReader_Strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +61,10 @@
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
       <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
       <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.mockdata\com.wer.sc.mockdata.csproj">
+      <Project>{4645ED74-ABF5-449E-8C75-16A2C8CE5612}</Project>
+      <Name>com.wer.sc.mockdata</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{B8955457-F108-4060-A35B-69B482A19AB6}</Project>
@@ -88,6 +96,10 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)TestCase\
+xcopy $(ProjectDir)TestCase\* $(TargetDir)TestCase\ /s /e /y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

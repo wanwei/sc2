@@ -15,9 +15,9 @@ namespace com.wer.sc.strategy.cnfutures.test
             int startDate = 20100101;
             //int end
 
-            StrategyRunner_History runner = new StrategyRunner_History();
-            runner.SetStrategy(strategy);            
-            runner.Run();
+            //StrategyRunner_History runner = new StrategyRunner_History();
+            //runner.SetStrategy(strategy);            
+            //runner.Run();
         }
     }
 }
