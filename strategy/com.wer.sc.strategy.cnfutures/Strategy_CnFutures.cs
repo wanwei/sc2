@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy.cnfutures
             int lastBarPos = currentBarPos - 5;
             if (lastBarPos < 0)
                 return;
-
+            
             //float endPrice = klineData.End;
             //float startPrice = klineData.GetBar(lastBarPos).Start;
 

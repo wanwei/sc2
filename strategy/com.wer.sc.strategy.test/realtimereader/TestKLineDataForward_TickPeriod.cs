@@ -64,10 +64,10 @@ namespace com.wer.sc.strategy.realtimereader
 
             KLineData_RealTime klineData_1 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             Console.WriteLine("tick:" + klineDataForward.GetTickData());
-            klineData_1 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             Console.WriteLine("1minute:" + klineData_1);
             Console.WriteLine("1minute_" + klineData_1.GetCurrentRealBar());
-
+            KLineData_RealTime klineData_1Day = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Day);
+            Console.WriteLine("1day:" + klineData_1Day);
             //
             //Console.WriteLine("DayEnd:" + klineDataForward.IsDayEnd
             //      + "|1MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_1Minute)

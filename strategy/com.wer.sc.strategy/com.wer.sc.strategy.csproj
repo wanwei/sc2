@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IImportStrategy.cs" />
     <Compile Include="IStrategyRunner.cs" />
     <Compile Include="realtimereader\IKLineDataForward.cs" />
     <Compile Include="realtimereader\KLineDataForward_TickPeriod.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="realtimereader\TickDataCache.cs" />
     <Compile Include="StrategyRunner_History.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy_ComplexAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">

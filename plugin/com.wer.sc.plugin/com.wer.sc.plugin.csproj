@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\KLinePriceType.cs" />
     <Compile Include="data\market\account\HoldInfo.cs" />
     <Compile Include="data\market\ConnectionStatus.cs" />
     <Compile Include="data\market\InstLifePhaseType.cs" />
