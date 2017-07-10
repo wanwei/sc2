@@ -28,6 +28,14 @@ namespace com.wer.sc.data.receiver
 
         private Dictionary<KLinePeriod, KLineData_Present> dicKLineData = new Dictionary<KLinePeriod, KLineData_Present>();
 
+        public string Code
+        {
+            get
+            {
+                return code;
+            }
+        }
+
         public double Time
         {
             get
@@ -46,7 +54,7 @@ namespace com.wer.sc.data.receiver
                 KLinePeriod period = periods[i];
                 dicKLineData.Add(period, new KLineData_Present(recentKLineDataLoader.GetRecentKLineData(code, lastOpenDate, period), KLineTimeListUtils.GetKLineTimeList(date, lastOpenDate, openTime, period), period));
             }
-        }        
+        }
 
         public void Receive(ITickData tickData, ITickBar tickBar)
         {
@@ -77,9 +85,5 @@ namespace com.wer.sc.data.receiver
             return timeLineData;
         }
 
-        public string GetCode()
-        {
-            return code;
-        }
     }
 }

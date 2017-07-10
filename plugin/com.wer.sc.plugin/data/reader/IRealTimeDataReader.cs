@@ -21,7 +21,12 @@ namespace com.wer.sc.data.reader
         /// 得到代码
         /// </summary>
         /// <returns></returns>
-        string GetCode();
+        string Code { get; }
+
+        /// <summary>
+        /// 得到当前时间
+        /// </summary>
+        double Time { get; }
 
         /// <summary>
         /// 得到指定周期的K线
@@ -41,10 +46,5 @@ namespace com.wer.sc.data.reader
         /// </summary>
         /// <returns></returns>
         ITickData GetTickData();
-
-        /// <summary>
-        /// 得到当前时间
-        /// </summary>
-        double Time { get; }
     }
 }

@@ -47,5 +47,10 @@ namespace com.wer.sc.data.store.file
         {
             return new TickDataStore_File(dataPathUtils);
         }
+
+        public IAccountStore CreateAccountStore()
+        {
+            return new AccountStore_File(dataPathUtils);
+        }
     }
 }

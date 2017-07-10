@@ -8,17 +8,95 @@ using com.wer.sc.utils;
 
 namespace com.wer.sc.data.market.impl
 {
-    public class MarketTrader : IMarketTrader
+    public class MarketTrader : IPlugin_MarketTrader
     {
-        private MarketPluginMgr marketPluginMgr;
+        //private MarketPluginMgr marketPluginMgr;
 
         private IPlugin_MarketTrader currentPlugin_MarketTrader;
 
         private ConnectionInfo currentConnectionInfo;
 
-        public MarketTrader(MarketPluginMgr marketPluginMgr)
+        DelegateOnConnectionStatus IPlugin_MarketTrader.OnConnectionStatus
         {
-            this.marketPluginMgr = marketPluginMgr;
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public DelegateOnReturnInstrument OnReturnInstruments
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        DelegateOnReturnOrder IPlugin_MarketTrader.OnReturnOrder
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        DelegateOnReturnTrade IPlugin_MarketTrader.OnReturnTrade
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        DelegateOnReturnInvestorPosition IPlugin_MarketTrader.OnReturnInvestorPosition
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        DelegateOnReturnAccount IPlugin_MarketTrader.OnReturnAccount
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public MarketTrader()
+        {
+            
         }
 
         /// <summary>
@@ -173,6 +251,11 @@ namespace com.wer.sc.data.market.impl
         public void QueryAccount()
         {
             this.currentPlugin_MarketTrader.QueryAccount();
+        }
+
+        public List<ConnectionInfo> GetAllConnections()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

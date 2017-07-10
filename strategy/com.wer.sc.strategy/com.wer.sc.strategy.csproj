@@ -40,21 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImportStrategy.cs" />
     <Compile Include="IStrategyRunner.cs" />
-    <Compile Include="realtimereader\IKLineDataForward.cs" />
-    <Compile Include="realtimereader\KLineDataForward_TickPeriod.cs" />
-    <Compile Include="realtimereader\KLineDataCache_BigPeriod.cs" />
-    <Compile Include="realtimereader\KLineDataForward_BigPeriod.cs" />
-    <Compile Include="realtimereader\KLineData_DaySplitter.cs" />
-    <Compile Include="realtimereader\RealTimeReader_Strategy2.cs" />
     <Compile Include="realtimereader\RealTimeReader_Strategy.cs" />
-    <Compile Include="realtimereader\TickDataCache.cs" />
+    <Compile Include="realtimereader\RealTimeReader_StrategyArguments.cs" />
+    <Compile Include="StrategyRunnerArguments.cs" />
     <Compile Include="StrategyRunner_History.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategy_ComplexAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
       <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
       <Name>com.wer.sc.data</Name>

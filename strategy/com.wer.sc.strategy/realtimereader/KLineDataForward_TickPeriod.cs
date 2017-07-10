@@ -29,17 +29,22 @@ namespace com.wer.sc.strategy.realtimereader
 
         private Dictionary<KLinePeriod, KLineData_DaySplitter> dic_Period_DaySplitter = new Dictionary<KLinePeriod, KLineData_DaySplitter>();
 
+        private KLinePeriod forwardPeriod;
+
+        private KLineData_RealTime mainKlineData;
+
         /// <summary>
         /// 创建
         /// </summary>
         /// <param name="mainKLineData"></param>
         /// <param name="allKLineData"></param>
-        public KLineDataForward_TickPeriod(Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IDataReader dataReader, string code, IList<int> tradingDays)
+        public KLineDataForward_TickPeriod(Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IDataReader dataReader, string code, IList<int> tradingDays, KLinePeriod forwardPeriod)
         {
             this.dic_Period_KLineData = allKLineData;
             this.dataReader = dataReader;
             this.code = code;
             this.tradingDays = tradingDays;
+            this.forwardPeriod = forwardPeriod;
 
             InitDaySplitter(dataReader, code);
             InitKLine();
@@ -64,6 +69,8 @@ namespace com.wer.sc.strategy.realtimereader
             {
                 KLineData_RealTime klineData = dic_Period_KLineData[period];
                 klineData.SetRealTimeData(GetKLineBar(currentTickData));
+                if (period == forwardPeriod)
+                    mainKlineData = klineData;
             }
         }
 
@@ -93,6 +100,14 @@ namespace com.wer.sc.strategy.realtimereader
             bar.Mount = klineBar.Mount + tickBar.Mount;
             bar.Hold = tickBar.Hold;
             return bar;
+        }
+
+        public double Time
+        {
+            get
+            {
+                return currentTickData.Time;
+            }
         }
 
         public ITickData GetTickData()
@@ -139,6 +154,7 @@ namespace com.wer.sc.strategy.realtimereader
                         isDayEnd = false;
                     }
                 }
+                DealEvents();
                 return forwardNextDay;
             }
 
@@ -158,8 +174,20 @@ namespace com.wer.sc.strategy.realtimereader
             }
             else
                 isDayEnd = false;
-
+            DealEvents();
             return true;
+        }
+
+        private void DealEvents()
+        {
+            if (OnTick != null)
+                OnTick(this, currentTickData, currentTickData.BarPos);
+            if (OnBar != null)
+            {
+                bool isForwardPeriodEnd = dic_KLinePeriod_IsEnd[forwardPeriod];
+                if (isForwardPeriodEnd)
+                    OnBar(this, mainKlineData, mainKlineData.BarPos);
+            }
         }
 
         private bool ForwardNextDay()
@@ -223,6 +251,7 @@ namespace com.wer.sc.strategy.realtimereader
                 ForwardToday_KLineData(klineData, period);
             }
             currentTickData.BarPos++;
+
         }
 
         private void ForwardToday_KLineData(KLineData_RealTime klineData, KLinePeriod period)
@@ -279,6 +308,11 @@ namespace com.wer.sc.strategy.realtimereader
             return barPos < 0 ? 0 : barPos;
         }
 
+        //private void SetPeriodEnd(KLinePeriod period, bool isEnd)
+        //{
+        //    dic_KLinePeriod_IsEnd[period] = isEnd;            
+        //}
+
         public ITimeLineData GetTimeLineData()
         {
             return null;
@@ -297,5 +331,15 @@ namespace com.wer.sc.strategy.realtimereader
             dic_KLinePeriod_IsEnd.TryGetValue(klinePeriod, out isPeriodEnd);
             return isPeriodEnd;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event DelegateOnTick OnTick;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event DelegateOnBar OnBar;
     }
 }

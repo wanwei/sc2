@@ -46,5 +46,11 @@ namespace com.wer.sc.data.store
         /// </summary>
         /// <returns></returns>
         ITradingSessionStore CreateTradingSessionStore();
+
+        /// <summary>
+        /// 创建一个账号保存接口
+        /// </summary>
+        /// <returns></returns>
+        IAccountStore CreateAccountStore();
     }
 }

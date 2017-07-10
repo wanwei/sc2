@@ -55,7 +55,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 //string path2 = dataUpdateHelper.GetPath_TradingSession(code);
                 //CsvUtils_TradingSession.Save(path2, result);
                 return code + "的开盘时间已经是最新的，不需要更新";
-            }                
+            }
             string path = dataUpdateHelper.GetPath_TradingSession(code);
             CsvUtils_TradingSession.Save(path, result);
             return "更新完成" + code + "的开盘时间";
@@ -104,13 +104,16 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             HashSet<int> set_TradingDay = new HashSet<int>();
             List<TradingSession> result = new List<TradingSession>();
-            for (int i = 0; i < updatedTradingSessionList.Count; i++)
+            if (updatedTradingSessionList != null)
             {
-                TradingSession session = updatedTradingSessionList[i];
-                if (set_TradingDay.Contains(session.TradingDay))
-                    continue;
-                set_TradingDay.Add(session.TradingDay);
-                result.Add(session);
+                for (int i = 0; i < updatedTradingSessionList.Count; i++)
+                {
+                    TradingSession session = updatedTradingSessionList[i];
+                    if (set_TradingDay.Contains(session.TradingDay))
+                        continue;
+                    set_TradingDay.Add(session.TradingDay);
+                    result.Add(session);
+                }
             }
             if (updateTradingSessionList == null)
                 return result;

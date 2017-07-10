@@ -79,6 +79,7 @@
     <Compile Include="SimpleDataCache.cs" />
     <Compile Include="StringUtils.cs" />
     <Compile Include="update\UpdateExecutor.cs" />
+    <Compile Include="XmlUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">

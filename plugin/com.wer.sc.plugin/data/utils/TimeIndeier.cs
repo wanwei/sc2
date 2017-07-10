@@ -81,9 +81,10 @@ namespace com.wer.sc.data.utils
                     return FindRepeatIndex(timeGetter, endIndex, findBackward, indexIfRepeat);
                 if (time > endTime)
                     return -1;
-                if (findBackward)
-                    return FindRepeatIndex(timeGetter, startIndex, findBackward, indexIfRepeat);
-                return FindRepeatIndex(timeGetter, endIndex, findBackward, indexIfRepeat);
+                return findBackward ? startIndex : endIndex;
+                //if (findBackward)
+                //    return FindRepeatIndex(timeGetter, startIndex, findBackward, indexIfRepeat);
+                //return FindRepeatIndex(timeGetter, endIndex, findBackward, indexIfRepeat);
             }
             int currentIndex = (endIndex + startIndex) / 2;
             double currentTime = timeGetter.GetTime(currentIndex);

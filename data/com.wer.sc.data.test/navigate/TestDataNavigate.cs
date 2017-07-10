@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.data.test.navigate
+namespace com.wer.sc.data.navigate
 {
     /// <summary>
     /// 测试数据导航
@@ -20,6 +20,13 @@ namespace com.wer.sc.data.test.navigate
         [TestMethod]
         public void TestNavigate()
         {
+            string code = "rb1705";
+            double time = 20170405.093001;
+            IDataNavigate_Code nav = DataNavigateFactory.CreateDataNavigate(@"e:\scdata\cnfutures\", code, time);
+            ITickData tickData = nav.GetTickData();
+            Console.WriteLine(tickData);
+            Console.WriteLine(nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
+            Console.WriteLine(nav.GetKLineData(KLinePeriod.KLinePeriod_1Day));
             //DataReaderFactory fac = new DataReaderFactory(@"d:\scdata\cnfutures\");
             //IDataNavigate2 navigate2 = fac.DataNavigateMgr.CreateNavigate("m05", 20141229.093100, 20150101, 20160101);
 

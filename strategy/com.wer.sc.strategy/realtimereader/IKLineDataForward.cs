@@ -9,6 +9,8 @@ namespace com.wer.sc.strategy.realtimereader
 {
     public interface IKLineDataForward
     {
+        double Time { get; }
+
         /// <summary>
         /// 得到前进时的主K线，如果是以tick前进，则返回空
         /// </summary>
@@ -56,5 +58,15 @@ namespace com.wer.sc.strategy.realtimereader
         /// <param name="klinePeriod"></param>
         /// <returns></returns>
         bool IsPeriodEnd(KLinePeriod klinePeriod);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event DelegateOnTick OnTick;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event DelegateOnBar OnBar;
     }
 }

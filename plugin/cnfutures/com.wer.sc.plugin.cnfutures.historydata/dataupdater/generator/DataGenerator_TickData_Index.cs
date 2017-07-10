@@ -116,7 +116,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator
             ITickData mainTick = GetMainTickData(tickData);
             int tradingDay = mainTick.TradingDay;
             int prevTradingDay = dataUpdateHelper.GetUpdatedTradingDayReader().GetPrevTradingDay(tradingDay);
-            List<double> times = KLineTimeListUtils.GetKLineTimeList(tradingDay, prevTradingDay, openTime, new KLinePeriod(KLinePeriod.TYPE_SECOND, 1));
+            List<double> times = KLineTimeListUtils.GetKLineTimeList(tradingDay, prevTradingDay, openTime, new KLinePeriod(KLineTimeType.SECOND, 1));
             List<double> timeArr = new List<double>(times.Count);
 
             int dateStart = (int)mainTick.Arr_Time[0];

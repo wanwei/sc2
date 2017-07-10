@@ -21,6 +21,23 @@ namespace com.wer.sc.strategy.realtimereader
             int start = 20170601;
             int endDate = 20170603;
 
+            KLineDataForward_BigPeriod klineDataForward = GetDataForward(code, start, endDate);
+            List<string> list = new List<string>();
+
+            //Print(klineDataForward);
+            AddToList(list, klineDataForward);
+
+            while (klineDataForward.Forward())
+            {
+                //Print(klineDataForward);
+                AddToList(list, klineDataForward);
+            }
+
+            AssertUtils.AssertEqual_List("forward_bigperiod", GetType(), list);
+        }
+
+        private static KLineDataForward_BigPeriod GetDataForward(string code, int start, int endDate)
+        {
             KLineData_RealTime klineData_1Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_1Minute);
             KLineData_RealTime klineData_5Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_5Minute);
             KLineData_RealTime klineData_15Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_15Minute);
@@ -31,19 +48,8 @@ namespace com.wer.sc.strategy.realtimereader
             dic.Add(KLinePeriod.KLinePeriod_15Minute, klineData_15Minute);
             dic.Add(KLinePeriod.KLinePeriod_1Day, klineData_1Day);
 
-            KLineDataForward_BigPeriod klineDataForward = new KLineDataForward_BigPeriod(klineData_1Minute, dic, CommonData.GetDataReader().CreateTradingSessionReader(code));            
-            List<string> list = new List<string>();
-
-            //Print(klineDataForward);
-            AddToList(list,klineDataForward);
-
-            while (klineDataForward.Forward())
-            {
-                //Print(klineDataForward);
-                AddToList(list, klineDataForward);              
-            }
-
-            AssertUtils.AssertEqual_List("forward_bigperiod", GetType(), list);
+            KLineDataForward_BigPeriod klineDataForward = new KLineDataForward_BigPeriod(klineData_1Minute, dic, CommonData.GetDataReader().CreateTradingSessionReader(code));
+            return klineDataForward;
         }
 
         private static void Print(KLineDataForward_BigPeriod klineDataForward)
@@ -72,6 +78,32 @@ namespace com.wer.sc.strategy.realtimereader
             KLineData_RealTime klineData_5 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
             list.Add("5minute:" + klineData_5);
             list.Add("5minute_" + klineData_5.GetCurrentRealBar());
+        }
+
+        private List<string> list_OnBar = new List<string>();
+
+        [TestMethod]
+        public void TestKLineDataForward_OnBar()
+        {
+            list_OnBar.Clear();
+            string code = "RB1710";
+            int start = 20170601;
+            int endDate = 20170603;
+
+            KLineDataForward_BigPeriod klineDataForward = GetDataForward(code, start, endDate);
+            klineDataForward.OnBar += KlineDataForward_OnBar;
+            AddToList(list_OnBar, klineDataForward);
+            while (klineDataForward.Forward())
+            {
+            }
+
+            AssertUtils.AssertEqual_List("forward_bigperiod", GetType(), list_OnBar);
+        }
+
+        private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
+        {
+            //Print((KLineDataForward_BigPeriod)sender);
+            AddToList(list_OnBar, (KLineDataForward_BigPeriod)sender);
         }
     }
 }

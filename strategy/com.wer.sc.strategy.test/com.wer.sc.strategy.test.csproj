@@ -51,11 +51,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
+    <Compile Include="TestStrategyRunner.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_bigperiod" />
-    <Compile Include="realtimereader\TestKLineDataForward_TickPeriod.cs" />
-    <Compile Include="realtimereader\TestKLineDataForward_BigPeriod.cs" />
-    <Compile Include="realtimereader\TestRealTimeReader_Strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_tickperiod" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
@@ -75,7 +74,9 @@
       <Name>com.wer.sc.strategy</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="realtimereader\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

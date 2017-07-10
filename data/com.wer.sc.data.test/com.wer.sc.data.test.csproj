@@ -54,10 +54,17 @@
     <Compile Include="datacenter\TestDataCenter.cs" />
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />
-    <Compile Include="market\data\TestKLineData_RealTime.cs" />
-    <Compile Include="market\data\TestTickData_RealTime.cs" />
-    <Compile Include="market\data\TestTimeLineData_RealTime.cs" />
-    <Compile Include="market\TestMarketData.cs" />
+    <Compile Include="forward\CommonData.cs" />
+    <Compile Include="forward\impl\TestHistoryDataForward_Code_KLinePeriod.cs" />
+    <Compile Include="forward\impl\TestHistoryDataForward_Code_TickPeriod.cs" />
+    <Compile Include="forward\impl\TestHistoryDataForward_Code.cs" />
+    <Compile Include="market\impl\TestAccountPosition.cs" />
+    <Compile Include="market\impl\TestAccountTodayOrder.cs" />
+    <Compile Include="market\impl\TestAccountTrade.cs" />
+    <Compile Include="market\TestAccount.cs" />
+    <Compile Include="market\TestMarketTrader_Code.cs" />
+    <Compile Include="navigate\TestDataNavigate.cs" />
+    <Compile Include="navigate\TestDataNavigate_Night.cs" />
     <Compile Include="reader\DataCenterUri.cs" />
     <Compile Include="reader\TestCodeReader.cs" />
     <Compile Include="reader\TestIKLineDataReader.cs" />
@@ -65,6 +72,7 @@
     <Compile Include="reader\TestTimeLineDataReader.cs" />
     <Compile Include="realtime\TestKLineData_RealTime.cs" />
     <Compile Include="receiver\TestDataReceiver.cs" />
+    <Compile Include="store\file\TestAccountFeeInfoStore_File.cs" />
     <Compile Include="store\file\TestGetBytes.cs" />
     <Compile Include="store\file\TestInstrumentStore_File.cs" />
     <Compile Include="store\file\TestKLineDataStore_File.cs" />
@@ -82,7 +90,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\store\file\Store_AccountFee" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\forward\impl\forward_bigperiod" />
+    <None Include="TestCase\com\wer\sc\data\forward\impl\forward_tickperiod" />
     <None Include="TestCase\com\wer\sc\data\market\data\KLineData_RealTime" />
     <None Include="TestCase\com\wer\sc\data\market\data\TimeLineData_RealTime" />
     <Compile Include="update\Plugin_History_MockUpdate.cs" />

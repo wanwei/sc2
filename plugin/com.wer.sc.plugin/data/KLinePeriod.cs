@@ -12,15 +12,17 @@ namespace com.wer.sc.data
     /// </summary>
     public class KLinePeriod : IComparable<KLinePeriod>
     {
-        public const int TYPE_SECOND = 0;
+        //public const int TYPE_SECOND = 0;
 
-        public const int TYPE_MINUTE = 1;
+        //public const int TYPE_MINUTE = 1;
 
-        public const int TYPE_HOUR = 2;
+        //public const int TYPE_HOUR = 2;
 
-        public const int TYPE_DAY = 3;
+        //public const int TYPE_DAY = 3;
 
-        public const int TYPE_WEEK = 4;
+        //public const int TYPE_WEEK = 4;
+
+        //public const int TYPE_MILESECOND = 5;
 
         private KLineTimeType periodType;
 

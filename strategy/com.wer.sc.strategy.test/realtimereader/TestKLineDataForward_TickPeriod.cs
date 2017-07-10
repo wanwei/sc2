@@ -20,6 +20,17 @@ namespace com.wer.sc.strategy.realtimereader
             int start = 20170601;
             int endDate = 20170603;
 
+            KLineDataForward_TickPeriod klineDataForward = GetKLineDataForward(code, start, endDate);
+            Print(klineDataForward);
+
+            while (klineDataForward.Forward())
+            {
+                Print(klineDataForward);
+            }
+        }
+
+        private static KLineDataForward_TickPeriod GetKLineDataForward(string code, int start, int endDate)
+        {
             KLineData_RealTime klineData_1Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_1Minute);
             KLineData_RealTime klineData_5Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_5Minute);
             KLineData_RealTime klineData_15Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_15Minute);
@@ -32,26 +43,8 @@ namespace com.wer.sc.strategy.realtimereader
             dic.Add(KLinePeriod.KLinePeriod_15Minute, klineData_15Minute);
             dic.Add(KLinePeriod.KLinePeriod_1Day, klineData_1Day);
 
-            KLineDataForward_TickPeriod klineDataForward = new KLineDataForward_TickPeriod(dic, CommonData.GetDataReader(), code, tradingDays);
-            Print(klineDataForward);
-            //Console.WriteLine("");
-            //Console.WriteLine("tick:" + klineDataForward.GetTickData());
-            //KLineData_RealTime klineData_1 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
-            //Console.WriteLine("1minute:" + klineData_1);
-            while (klineDataForward.Forward())
-            {
-                Print(klineDataForward);
-                //Console.WriteLine("tick:" + klineDataForward.GetTickData());
-                //klineData_1 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
-                //Console.WriteLine("1minute:" + klineData_1);
-                //Console.WriteLine("1minute_" + klineData_1.GetCurrentRealBar());
-                //IKLineData klineData_5 = klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
-                //Console.WriteLine("5minute:"+klineData_5);
-                //IKLineData klineData_15 = klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
-                //Console.WriteLine("15minute:" + klineData_15);
-                //IKLineData klineData_1D = klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
-                //Console.WriteLine("1day:" + klineData_1Day);
-            }
+            KLineDataForward_TickPeriod klineDataForward = new KLineDataForward_TickPeriod(dic, CommonData.GetDataReader(), code, tradingDays, KLinePeriod.KLinePeriod_1Minute);
+            return klineDataForward;
         }
 
         private static void Print(KLineDataForward_TickPeriod klineDataForward)
@@ -92,6 +85,26 @@ namespace com.wer.sc.strategy.realtimereader
             KLineData_RealTime klineData_5 = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
             list.Add("5minute:" + klineData_5);
             list.Add("5minute_" + klineData_5.GetCurrentRealBar());
+        }
+
+        [TestMethod]
+        public void TestKLineDataForward_Tick_OnBar()
+        {
+            string code = "RB1710";
+            int start = 20170601;
+            int endDate = 20170603;
+
+            KLineDataForward_TickPeriod klineDataForward = GetKLineDataForward(code, start, endDate);
+            Print(klineDataForward);
+            klineDataForward.OnBar += KlineDataForward_OnBar;
+            while (klineDataForward.Forward())
+            {
+            }
+        }
+
+        private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
+        {
+            Print((KLineDataForward_TickPeriod)sender);
         }
     }
 }

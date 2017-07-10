@@ -70,6 +70,21 @@ namespace com.wer.sc.data.store.file
             return realPath;
         }
 
+        public String GetAccountPath()
+        {
+            return dataPath + "\\TRADE\\ACCOUNT\\";
+        }
+
+        public String GetAccountPath(string accountID)
+        {
+            return dataPath + "\\TRADE\\ACCOUNT\\" + accountID + ".account";
+        }
+
+        public String GetAccountPath_Fee()
+        {
+            return dataPath + "\\TRADE\\account.fee";
+        }
+
         private String GetPeriodTypeName(KLineTimeType type)
         {
             switch (type)

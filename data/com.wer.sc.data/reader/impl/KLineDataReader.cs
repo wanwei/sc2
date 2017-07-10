@@ -15,9 +15,12 @@ namespace com.wer.sc.data.reader.impl
     {
         private IKLineDataStore klineDataStore;
 
-        public KLineDataReader(IDataStore dataStore)
+        private KLineDataReader_Extend dataReaderExtend;
+
+        public KLineDataReader(IDataStore dataStore,IDataReader dataReader)
         {
             this.klineDataStore = dataStore.CreateKLineDataStore();
+            this.dataReaderExtend = new KLineDataReader_Extend(dataReader);
         }
 
         public IKLineData GetAllData(string code, KLinePeriod period)
@@ -83,5 +86,12 @@ namespace com.wer.sc.data.reader.impl
         {
             return klineDataStore.GetLastTradingDay(code, period);
         }
+
+        public IKLineData GetData(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period)
+        {
+            return dataReaderExtend.GetData(code, startDate, endDate, minBeforeBarCount, minAfterBarCount, period);
+        }
+
+
     }
 }

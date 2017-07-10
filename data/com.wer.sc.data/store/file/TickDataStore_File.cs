@@ -44,6 +44,8 @@ namespace com.wer.sc.data.store.file
         {
             string path = dataPathUtils.GetTickPath(code, date);
             TickData tickData = new TickDataStore_File_Single(path).Load();
+            if (tickData == null)
+                return null;
             tickData.Code = code;
             return tickData;
         }

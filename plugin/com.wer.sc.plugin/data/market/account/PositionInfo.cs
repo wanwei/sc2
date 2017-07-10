@@ -9,8 +9,21 @@ namespace com.wer.sc.data.market
     /// <summary>
     /// 持仓信息
     /// </summary>
-    public struct PositionInfo
+    public class PositionInfo
     {
+        public PositionInfo()
+        {
+
+        }
+
+        public PositionInfo(string code, PositionSide positionSide, int position, double positionCost)
+        {
+            this.InstrumentID = code;
+            this.Side = positionSide;
+            this.Position = position;
+            this.PositionCost = positionCost;
+        }
+
         public string InstrumentName;
 
         public string Symbol;
@@ -24,10 +37,12 @@ namespace com.wer.sc.data.market
         public string AccountID;
 
         public PositionSide Side;
+
         /// <summary>
         /// 日期
         /// </summary>
         public int Date;
+
         /// <summary>
         /// 持仓成本
         /// </summary>
@@ -36,35 +51,38 @@ namespace com.wer.sc.data.market
         /// <summary>
         /// 总持仓
         /// </summary>
-        public double Position;
+        public int Position;
+
         /// <summary>
         /// 今日持仓
         /// </summary>
-        public double TodayPosition;
+        public int TodayPosition;
+
         /// <summary>
         /// 历史持仓
         /// </summary>
-        public double HistoryPosition;
+        public int HistoryPosition;
+
         /// <summary>
         /// 历史冻结持仓
         /// </summary>
-        public double HistoryFrozen;
+        public int HistoryFrozen;
 
         /// <summary>
         /// 今日买卖持仓
         /// </summary>
-        public double TodayBSPosition;
+        public int TodayBSPosition;
         /// <summary>
         /// 今日买卖持仓冻结
         /// </summary>
-        public double TodayBSFrozen;
+        public int TodayBSFrozen;
         /// <summary>
         /// 今日申赎持仓
         /// </summary>
-        public double TodayPRPosition;
+        public int TodayPRPosition;
         /// <summary>
         /// 今日申赎持仓冻结
         /// </summary>
-        public double TodayPRFrozen;
+        public int TodayPRFrozen;
     }
 }

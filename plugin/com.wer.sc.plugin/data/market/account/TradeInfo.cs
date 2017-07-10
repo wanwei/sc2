@@ -6,27 +6,41 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.market
 {
+    /// <summary>
+    /// 成交信息
+    /// </summary>
     public class TradeInfo
     {
+        /// <summary>
+        /// 成交ID，由服务器端生成
+        /// </summary>
         public string TradeID;
 
-        public string InstrumentName;
+        /// <summary>
+        /// 交易账号ID
+        /// </summary>
+        public String AccountID;
 
+        /// <summary>
+        /// 交易合约ID
+        /// </summary>
         public string InstrumentID;
 
-        public string AccountID;
         /// <summary>
         /// 交易时间
         /// </summary>
         public double Time;
+
         /// <summary>
-        /// 方向
+        /// 交易方向
         /// </summary>
         public OrderSide Side;
+
         /// <summary>
         /// 成交量
         /// </summary>
         public double Qty;
+
         /// <summary>
         /// 成交价格
         /// </summary>

@@ -54,6 +54,14 @@ namespace com.wer.sc.strategy.realtimereader
             }
         }
 
+        public double Time
+        {
+            get
+            {
+                return mainKLineData.Time;
+            }
+        }
+
         public IKLineData GetKLineData()
         {
             return mainKLineData;
@@ -152,7 +160,8 @@ namespace com.wer.sc.strategy.realtimereader
                     isDayEnd = isEnd;
                 }
             }
-
+            if (OnBar != null)
+                OnBar(this, mainKLineData, mainKLineData.BarPos);
             return true;
         }
 
@@ -217,5 +226,16 @@ namespace com.wer.sc.strategy.realtimereader
             dic_KLinePeriod_IsEnd.TryGetValue(klinePeriod, out isPeriodEnd);
             return isPeriodEnd;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event DelegateOnTick OnTick;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event DelegateOnBar OnBar;
     }
 }

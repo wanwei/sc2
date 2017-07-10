@@ -140,7 +140,7 @@ namespace com.wer.sc.plugin.cnfutures.market
             TradeInfo tradeInfo = new TradeInfo();
             tradeInfo.AccountID = trade.AccountID;
             tradeInfo.InstrumentID = trade.InstrumentID;
-            tradeInfo.InstrumentName = GetStringFromByte(trade.InstrumentName);
+            //tradeInfo.InstrumentName = GetStringFromByte(trade.InstrumentName);
             tradeInfo.OpenClose = EnumTransfer.TransferOpenCloseType(trade.OpenClose);
             tradeInfo.Price = trade.Price;
             tradeInfo.Qty = trade.Qty;
@@ -157,19 +157,19 @@ namespace com.wer.sc.plugin.cnfutures.market
             positionInfo.ClientID = position.ClientID;
             positionInfo.Date = position.Date;
             positionInfo.ExchangeID = position.ExchangeID;
-            positionInfo.HistoryFrozen = position.HistoryFrozen;
-            positionInfo.HistoryPosition = position.HistoryPosition;
+            positionInfo.HistoryFrozen = (int)position.HistoryFrozen;
+            positionInfo.HistoryPosition = (int)position.HistoryPosition;
             positionInfo.InstrumentID = position.InstrumentID;
             positionInfo.InstrumentName = GetStringFromByte(position.InstrumentName);
-            positionInfo.Position = position.Position;
+            positionInfo.Position = (int)position.Position;
             positionInfo.PositionCost = position.PositionCost;
             positionInfo.Side = EnumTransfer.TransferPositionSide(position.Side);
             positionInfo.Symbol = position.Symbol;
-            positionInfo.TodayBSFrozen = position.TodayBSFrozen;
-            positionInfo.TodayBSPosition = position.TodayBSPosition;
-            positionInfo.TodayPosition = position.TodayPosition;
-            positionInfo.TodayPRFrozen = position.TodayPRFrozen;
-            positionInfo.TodayPRPosition = position.TodayPRPosition;
+            positionInfo.TodayBSFrozen = (int)position.TodayBSFrozen;
+            positionInfo.TodayBSPosition = (int)position.TodayBSPosition;
+            positionInfo.TodayPosition = (int)position.TodayPosition;
+            positionInfo.TodayPRFrozen = (int)position.TodayPRFrozen;
+            positionInfo.TodayPRPosition = (int)position.TodayPRPosition;
             return positionInfo;
         }
     }

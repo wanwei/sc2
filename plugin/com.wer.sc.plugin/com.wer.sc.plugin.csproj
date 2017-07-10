@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\market\AccountFeeInfo.cs" />
     <Compile Include="data\KLinePriceType.cs" />
-    <Compile Include="data\market\account\HoldInfo.cs" />
     <Compile Include="data\market\ConnectionStatus.cs" />
     <Compile Include="data\market\InstLifePhaseType.cs" />
     <Compile Include="data\market\InstrumentInfo.cs" />
@@ -63,8 +63,6 @@
     <Compile Include="IPlugin_DataUpdater.cs" />
     <Compile Include="historydata\utils\TradingSessionDetailUtils.cs" />
     <Compile Include="MarketType.cs" />
-    <Compile Include="data\market\account\IAccount.cs" />
-    <Compile Include="data\market\account\IAccountDataProvider.cs" />
     <Compile Include="market\IPlugin_MarketUtils.cs" />
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginScan.cs" />

@@ -23,6 +23,8 @@
         /// <returns></returns>
         IKLineData GetData(string code, int startDate, int endDate, KLinePeriod period);
 
+        IKLineData GetData(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period);
+
         /// <summary>
         /// 得到历史数据里的第一个日子
         /// </summary>
