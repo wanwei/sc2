@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace com.wer.sc.comp.graphic
 {
-    public class GraphicDrawer_Candle : GraphicDrawer_Compound
+    public class GraphicDrawer_Candle : GraphicDrawer_Compound, ICrossHairAttachable
     {
-        private IGraphicDrawer_Chart_Candle dataProvider;
+        private IGraphicData_Candle dataProvider;
 
-        public IGraphicDrawer_Chart_Candle DataProvider
+        public IGraphicData_Candle DataProvider
         {
             get
             {
@@ -27,20 +27,6 @@ namespace com.wer.sc.comp.graphic
                 dataProvider = value;
                 drawer_chart.DataProvider = value;
                 drawer_mount.DataProvider = value;
-            }
-        }
-
-        public override bool IsEnable
-        {
-            get
-            {
-                return base.IsEnable;
-            }
-
-            set
-            {
-                base.IsEnable = value;
-                crossHairDrawer.Enable = value;
             }
         }
 
@@ -60,7 +46,7 @@ namespace com.wer.sc.comp.graphic
 
         public GraphicDrawer_CandleChart drawer_chart;
 
-        internal GraphicDrawer_CandleMount drawer_mount;
+        private GraphicDrawer_CandleMount drawer_mount;
 
         public GraphicDrawer_Candle()
         {
@@ -75,61 +61,110 @@ namespace com.wer.sc.comp.graphic
             this.drawer_mount.Padding = new GraphicPaddingInfo(0, 0, 50, 0);
             this.AddGraph(drawer_chart, 0.7f);
             this.AddGraph(drawer_mount, 0.3f);
-
-            crossHairDrawer = new CrossHairDrawer();
+            this.crossHairDataPrivider = new CrossHairDataPrivider_Candle(this);
         }
 
-        CrossHairDrawer crossHairDrawer;
+        private CrossHairDataProvider crossHairDataPrivider;
 
-        public CrossHairDrawer CrossHairDrawer
+        public CrossHairDataProvider GetCrossHairDataProvider()
+        {
+            return crossHairDataPrivider;
+        }
+
+        //public override void BindControl(Control control)
+        //{
+        //    base.BindControl(control);         
+        //}
+
+        //public override void UnBindControl()
+        //{
+        //    base.UnBindControl();
+        //}
+
+        //public override void Paint(Graphics graphic)
+        //{
+        //    if (!IsEnable)
+        //        return;
+        //    //crossHairDrawer.DrawGraphic(graphic);
+        //    base.Paint(graphic);
+        //    //DrawSelectBlock(graphic);
+        //    //crossHairDrawer.DrawGraphic(graphic);
+        //}
+
+    }
+
+    public class CrossHairDataPrivider_Candle : CrossHairDataProvider
+    {
+        private GraphicDrawer_Candle drawer;
+        private CrossHairDrawer crossDrawer;
+
+        public CrossHairDataPrivider_Candle(GraphicDrawer_Candle drawer)
+        {
+            this.drawer = drawer;
+            this.drawer.AfterGraphicPaint += Drawer_AfterGraphicDraw;
+        }
+
+        private void Drawer_AfterGraphicDraw(object sender, GraphicRefreshArgs e)
+        {
+            if (this.AfterGraphicPaint != null)
+                this.AfterGraphicPaint(sender, e);
+        }
+
+        public CrossHairDrawer CrossDrawer
         {
             get
             {
-                return crossHairDrawer;
+                return crossDrawer;
+            }
+
+            set
+            {
+                this.crossDrawer = value;
             }
         }
 
-        public override void BindControl(Control control)
+        public Control Control
         {
-            base.BindControl(control);
-            BindOthers(control);
+            get
+            {
+                return drawer.Control;
+            }
         }
 
-        public void BindOthers(Control control)
+        public Rectangle DrawRect
         {
-            this.control = control;
-            CrossHairDataPrivider_Candle crossHairProvider = new CrossHairDataPrivider_Candle(this);
-            crossHairDrawer.Bind(crossHairProvider);
+            get
+            {
+                return drawer.DisplayRect;
+            }
         }
 
-        public override void UnBindControl()
+        public Pen GetPen()
         {
-            base.UnBindControl();
+            return drawer.drawer_chart.ColorConfig.Pen_CrossHair;
         }
 
-        public override void DrawGraph(Graphics graphic)
+        public PriceGraphicMapping PriceMapping
         {
-            if (!IsEnable)
-                return;
-            //crossHairDrawer.DrawGraphic(graphic);
-            base.DrawGraph(graphic);
-            DrawSelectBlock(graphic);
-            crossHairDrawer.DrawGraphic(graphic);
+            get
+            {
+                return drawer.drawer_chart.PriceMapping;
+            }
         }
 
         public void DrawSelectBlock(Graphics g)
         {
-            if (selectIndex < 0)
+            if (drawer.SelectIndex < 0)
                 return;
-            SelectedPointInfo blockInfo = GetBlockInfo(selectIndex);
+            SelectedPointInfo blockInfo = GetBlockInfo(drawer.SelectIndex);
             if (blockInfo == null)
                 return;
-            blockInfo.DrawGraph(g, ColorConfig);
+            blockInfo.DrawGraph(g, drawer.ColorConfig);
         }
 
         public SelectedPointInfo GetBlockInfo(int index)
         {
-            IKLineData data = dataProvider.GetKLineData();
+            IKLineData data = drawer.DataProvider.GetKLineData();
             KLineBar_KLineData chart = new KLineBar_KLineData(data, index);
             KLineBar_KLineData lastChart;
             if (index == 0)
@@ -144,7 +179,7 @@ namespace com.wer.sc.comp.graphic
             SelectedPointInfo b = new SelectedPointInfo();
             b.LineHeight = 20;
             b.Width = 58;
-            b.StartPoint = new Point(DisplayRect.X - b.Width, DisplayRect.Y);
+            b.StartPoint = new Point(drawer.DisplayRect.X - b.Width, drawer.DisplayRect.Y);
 
             double lastEndPrice = lastChart != null ? lastChart.End : chart.Start;
             Pen pen = new Pen(Color.White);
@@ -171,76 +206,15 @@ namespace com.wer.sc.comp.graphic
             b.Lines.Add(new BlockLineInfo(uppercent.ToString(), GetPriceBrush(uppercent, 0), font));
             return b;
         }
+
         private Brush GetPriceBrush(double price, double referPrice)
         {
             Brush brushEarn = new SolidBrush(ColorUtils.GetColor("#CC0000"));
             Brush brushLose = new SolidBrush(ColorUtils.GetColor("#00CC00"));
             return price >= referPrice ? brushEarn : brushLose;
         }
-    }
 
-    public class CrossHairDataPrivider_Candle : CrossHairDataPrivider
-    {
-        private GraphicDrawer_Candle drawer;
-        private CrossHairDrawer crossDrawer;
-
-        public CrossHairDataPrivider_Candle(GraphicDrawer_Candle drawer)
-        {
-            this.drawer = drawer;
-            drawer.AfterGraphicDraw += Drawer_AfterGraphicDraw;
-        }
-
-        private void Drawer_AfterGraphicDraw(object sender, GraphicRefreshArgs e)
-        {
-            if (this.AfterGraphicDraw != null)
-                this.AfterGraphicDraw(sender, e);
-        }
-        
-        public CrossHairDrawer CrossDrawer
-        {
-            get
-            {
-                return crossDrawer;
-            }
-
-            set
-            {
-                this.crossDrawer = value;
-            }
-        }
-        public Control Control
-        {
-            get
-            {
-                return drawer.control;
-            }
-        }
-
-        public Rectangle DrawRect
-        {
-            get
-            {
-                return drawer.DisplayRect;
-            }
-        }
-
-        public Pen Pen
-        {
-            get
-            {
-                return drawer.drawer_chart.ColorConfig.Pen_CrossHair;
-            }
-        }
-
-        public PriceGraphicMapping PriceMapping
-        {
-            get
-            {
-                return drawer.drawer_chart.PriceMapping;
-            }
-        }
-
-        public event AfterGraphicDrawHandler AfterGraphicDraw;
+        public event AfterGraphicPaintHandler AfterGraphicPaint;
 
         public bool DoMoveNext()
         {
@@ -261,7 +235,7 @@ namespace com.wer.sc.comp.graphic
 
         public void DoRedraw()
         {
-            this.drawer.DrawGraph();
+            this.drawer.Paint();
         }
 
         public void DoRedraw(Graphics g, Rectangle rect)
@@ -282,7 +256,7 @@ namespace com.wer.sc.comp.graphic
             return new Point((int)x, (int)y);
         }
 
-        public IGraphicDrawer_Chart_Candle GetDataProvider()
+        public IGraphicData_Candle GetDataProvider()
         {
             return this.drawer.DataProvider;
         }
@@ -294,6 +268,5 @@ namespace com.wer.sc.comp.graphic
                 return new int[] { drawer.DataProvider.StartIndex, drawer.DataProvider.EndIndex };
             }
         }
-
     }
 }

@@ -1,8 +1,8 @@
 ﻿using com.wer.sc.comp.graphic;
 using com.wer.sc.comp.graphic.main;
-using com.wer.sc.comp.graphic.real;
 using com.wer.sc.comp.graphic.utils;
 using com.wer.sc.data;
+using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,14 +21,15 @@ namespace com.wer.sc.comp.test
         {
             InitializeComponent();
 
-            GraphicDrawer_Switch_CandleReal drawer = new GraphicDrawer_Switch_CandleReal();
-            DataReaderFactory fac = new DataReaderFactory(@"D:\SCDATA\CNFUTURES");
-            GraphicDataProvider_Main dataProvider = new GraphicDataProvider_Main(fac);
+            //GraphicDrawer_Switch_CandleReal drawer = new GraphicDrawer_Switch_CandleReal();
+            //data.reader.IDataReader fac = DataReaderFactory.CreateDataReader(@"D:\SCDATA\CNFUTURES");
+            //    //datareaderfactory (@"D:\SCDATA\CNFUTURES");
+            //GraphicDataProvider_Main dataProvider = new GraphicDataProvider_Main(fac);
 
-            dataProvider.DataNavigate.Change("m13", 20150106.094510, new KLinePeriod(KLinePeriod.TYPE_MINUTE, 1));
+            //dataProvider.DataNavigate.Change("m13", 20150106.094510, new KLinePeriod(KLinePeriod.TYPE_MINUTE, 1));
 
-            drawer.DataProvider = dataProvider;
-            drawer.BindControl(this);
+            //drawer.DataProvider = dataProvider;
+            //drawer.BindControl(this);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.comp.graphic;
+using com.wer.sc.comp.graphic.utils;
 using com.wer.sc.data;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,18 @@ namespace com.wer.sc.comp.test
             InitializeComponent();
             GraphicDrawer_Candle drawer = new GraphicDrawer_Candle();
 
-            MockGraphicDataProvider dataProvider = new MockGraphicDataProvider();
-            dataProvider.Code = "m05";
-            dataProvider.Period = new KLinePeriod(KLineTimeType.DAY, 1);
-            dataProvider.EndIndex = 710;
+            MockGraphicData_Candle dataProvider = new MockGraphicData_Candle("m1505", 20140601, 20150401, KLinePeriod.KLinePeriod_1Day);
+            dataProvider.BlockMount = 100;            
+            dataProvider.EndIndex = 200;
+            //dataProvider.Code = "m05";
+            //dataProvider.Period = new KLinePeriod(KLineTimeType.DAY, 1);
+            //dataProvider.EndIndex = 710;
 
             drawer.DataProvider = dataProvider;
-
             drawer.BindControl(this);
+
+            CrossHairDrawer cdrawer = new CrossHairDrawer();
+            cdrawer.Bind(drawer);
             //drawer.DrawGraph();
         }
     }

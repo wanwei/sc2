@@ -16,6 +16,7 @@ namespace com.wer.sc.comp.graphic.utils
     /// 3.点左右按钮可以移动十字线
     /// 4.如果在最右端，继续右移整个k线向右移动；向左同理
     /// 5.当十字线显示的时候鼠标移动，它会跟随移动
+    /// 6.当出现图形切换，如分时线切换成K线，十字线保持不动，并自动切换显示新图信息
     /// 
     /// 画图方法：
     /// 1.点击屏幕：
@@ -25,15 +26,15 @@ namespace com.wer.sc.comp.graphic.utils
     /// </summary>
     public class CrossHairDrawer
     {
-        private bool showCrossHair;
-
         private Control control;
 
-        private CrossHairDataPrivider provider;
+        private bool showCrossHair;
 
-        private Point crossPoint;
+        private CrossHairDataProvider provider;
 
-        private Point lastCrossPoint;
+        private Point crossHairPoint;
+
+        private Point lastCrossHairPoint;
 
         private bool enable = true;
 
@@ -60,36 +61,28 @@ namespace com.wer.sc.comp.graphic.utils
             set
             {
                 showCrossHair = value;
-                //ShowCursor(!value);
+                ShowCursor(!value);
             }
         }
 
-        public Point CrossPoint
+        public Point CrossHairPoint
         {
             get
             {
-                return crossPoint;
+                return crossHairPoint;
             }
         }
-
-        //public CrossHairDataPrivider Provider
-        //{
-        //    get
-        //    {
-        //        return provider;
-        //    }
-
-        //    set
-        //    {
-        //        provider = value;
-        //    }
-        //}
 
         public CrossHairDrawer()
         {
         }
 
-        public void Bind(CrossHairDataPrivider provider)
+        public void Bind(ICrossHairAttachable crossHairAttachable)
+        {
+            Bind(crossHairAttachable.GetCrossHairDataProvider());
+        }
+
+        public void Bind(CrossHairDataProvider provider)
         {
             if (this.provider != null)
                 UnBind();
@@ -99,7 +92,19 @@ namespace com.wer.sc.comp.graphic.utils
             this.control.MouseUp += Control_MouseUp;
             this.control.MouseMove += Control_MouseMove;
             this.control.PreviewKeyDown += Control_PreviewKeyDown;
-            //this.provider.AfterGraphicDraw += Provider_AfterGraphicDraw;
+            this.provider.AfterGraphicPaint += Provider_AfterGraphicPaint;
+        }
+
+        private void Provider_AfterGraphicPaint(object sender, GraphicRefreshArgs e)
+        {
+            if (showCrossHair)
+            {
+                int index = (int)provider.PriceMapping.CalcPriceX(crossHairPoint.X);
+                if (index != selectIndex)
+                    provider.DoSelectIndexChange(index);
+            }
+            //ChangeCrossPoint(crossHairPoint);
+            DrawGraphic(e.Graphic);
         }
 
         private void Control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -139,14 +144,10 @@ namespace com.wer.sc.comp.graphic.utils
                     }
                 }
                 provider.DoSelectIndexChange(this.selectIndex);
-                crossPoint = provider.GetCrossHairPoint(this.selectIndex);
+                crossHairPoint = provider.GetCrossHairPoint(this.selectIndex);
                 provider.DoRedraw();
+                //DrawGraphic();
             }
-        }
-
-        private void Provider_AfterGraphicDraw(object sender, GraphicRefreshArgs e)
-        {
-            //DrawGraphic(e.Graphic);
         }
 
         public void UnBind()
@@ -184,13 +185,12 @@ namespace com.wer.sc.comp.graphic.utils
                 {
                     this.selectIndex = -1;
                     provider.DoSelectIndexChange(selectIndex);
-                    //provider.DoRedraw()
-                    //RemoveLastCrossPoint()
                     RemoveLastCrossPoint();
+                    provider.DoRedraw();
                     return;
                 }
-                //provider.DoRedraw();
-                DrawGraphic();
+                ChangeCrossPoint(GetMousePosition());
+                //DrawGraphic();
             }
         }
 
@@ -209,7 +209,6 @@ namespace com.wer.sc.comp.graphic.utils
 
         private DateTime lastMouseMoveTime = DateTime.Now;
         private int selectIndex;
-
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
         {
@@ -231,7 +230,7 @@ namespace com.wer.sc.comp.graphic.utils
 
         public void ChangeCrossPoint(Point point)
         {
-            this.crossPoint = point;
+            this.crossHairPoint = point;
             if (!provider.DrawRect.Contains(point.X, point.Y))
             {
                 ShowCrossHair = false;
@@ -256,6 +255,8 @@ namespace com.wer.sc.comp.graphic.utils
                 ShowCrossHair = false;
             lastMouseMoveTime = DateTime.Now;
             provider.DoRedraw();
+            //DrawGraphic(g);      
+            DrawGraphic();
         }
 
         private Point GetMousePosition()
@@ -272,23 +273,29 @@ namespace com.wer.sc.comp.graphic.utils
 
         public void DrawGraphic(Graphics g)
         {
+            if (provider == null)
+                return;
             if (!enable)
                 return;
             if (ShowCrossHair)
             {
-                Pen pen = provider.Pen;
+                Pen pen = provider.GetPen();
+                if (pen == null)
+                    return;
                 Rectangle rec = provider.DrawRect;
-                g.DrawLine(pen, new Point(crossPoint.X, rec.Top), new Point(crossPoint.X, rec.Bottom));
-                g.DrawLine(pen, new Point(rec.X, crossPoint.Y), new Point(rec.Right, crossPoint.Y));
+                g.DrawLine(pen, new Point(crossHairPoint.X, rec.Top), new Point(crossHairPoint.X, rec.Bottom));
+                g.DrawLine(pen, new Point(rec.X, crossHairPoint.Y), new Point(rec.Right, crossHairPoint.Y));
 
-                lastCrossPoint = crossPoint;
-                DrawCrossHairsPrice(g, crossPoint, rec);
+                lastCrossHairPoint = crossHairPoint;
+                DrawCrossHairsPrice(g, crossHairPoint, rec);
+
+                provider.DrawSelectBlock(g);
             }
         }
 
         private void DrawCross()
         {
-            if (lastCrossPoint.X >= 0)
+            if (lastCrossHairPoint.X >= 0)
                 RemoveLastCrossPoint();
             Graphics g = control.CreateGraphics();
             DrawCross(g);
@@ -300,16 +307,16 @@ namespace com.wer.sc.comp.graphic.utils
                 return;
             Rectangle rect = provider.DrawRect;
             Pen pen = new Pen(Color.White);
-            g.DrawLine(pen, new Point(rect.X, crossPoint.Y), new Point(rect.Right / 2 - 2, crossPoint.Y));
-            g.DrawLine(pen, new Point(crossPoint.X, rect.Top), new Point(crossPoint.X, rect.Bottom));
-            lastCrossPoint = crossPoint;
+            g.DrawLine(pen, new Point(rect.X, crossHairPoint.Y), new Point(rect.Right / 2 - 2, crossHairPoint.Y));
+            g.DrawLine(pen, new Point(crossHairPoint.X, rect.Top), new Point(crossHairPoint.X, rect.Bottom));
+            lastCrossHairPoint = crossHairPoint;
         }
 
         private void RemoveLastCrossPoint()
         {
-            RemoveLastCrossPoint(control.CreateGraphics(), lastCrossPoint);
-            lastCrossPoint.X = -1;
-            lastCrossPoint.Y = -1;
+            RemoveLastCrossPoint(control.CreateGraphics(), lastCrossHairPoint);
+            lastCrossHairPoint.X = -1;
+            lastCrossHairPoint.Y = -1;
         }
 
         private void RemoveLastCrossPoint(Graphics g, Point p)
@@ -352,9 +359,20 @@ namespace com.wer.sc.comp.graphic.utils
 
         private void DrawCrossHairsPrice(Graphics g, Point point, Rectangle rec)
         {
-            //rec.Right
 
         }
+    }
+
+    /// <summary>
+    /// 能画十字线的控件
+    /// </summary>
+    public interface ICrossHairAttachable
+    {
+        /// <summary>
+        /// 得到十字线获取器
+        /// </summary>
+        /// <returns></returns>
+        CrossHairDataProvider GetCrossHairDataProvider();
     }
 
     /// <summary>
@@ -362,35 +380,37 @@ namespace com.wer.sc.comp.graphic.utils
     /// 1.能够
     /// 2.
     /// </summary>
-    public interface CrossHairDataPrivider
+    public interface CrossHairDataProvider
     {
         /// <summary>
-        /// 设置和得到十字线画线控件，在CrossHairDrawer的Bind方法里会进行设置
+        /// 设置和得到十字线画线控件
+        /// 该属性的目的是将十字线绑定到目标控件上
         /// </summary>
         CrossHairDrawer CrossDrawer { get; set; }
 
         /// <summary>
-        /// 得到要画的控件
+        /// 得到要绘制十字线的控件
         /// </summary>
         Control Control { get; }
 
         /// <summary>
-        /// 得到画十字线的边界
+        /// 得到绘制十字线的边界
         /// </summary>
         Rectangle DrawRect { get; }
 
         /// <summary>
-        /// 得到十字线的画笔
+        /// 得到绘制十字线的画笔
         /// </summary>
-        Pen Pen { get; }
+        Pen GetPen();
 
         /// <summary>
-        /// 画图事件，十字线画图器可以侦听画图，画完图后再画十字线
+        /// 画图事件
+        /// 十字线画图器会侦听该事件，在画完控件后再画十字线
         /// </summary>
-        //event AfterGraphicDrawHandler AfterGraphicDraw;
+        event AfterGraphicPaintHandler AfterGraphicPaint;
 
         /// <summary>
-        /// 获得
+        /// 获得图形价格和图形的映射类
         /// </summary>
         PriceGraphicMapping PriceMapping { get; }
 
@@ -400,6 +420,12 @@ namespace com.wer.sc.comp.graphic.utils
         /// <param name="selectIndex"></param>
         /// <returns></returns>
         Point GetCrossHairPoint(int selectIndex);
+
+        /// <summary>
+        /// 绘制选中K线块
+        /// </summary>
+        /// <param name="g"></param>
+        void DrawSelectBlock(Graphics g);
 
         /// <summary>
         /// 执行事件
@@ -422,7 +448,6 @@ namespace com.wer.sc.comp.graphic.utils
 
         bool DoMovePrev();
 
-        //GraphicDataProvider_Candle GetDataProvider();
         int[] IndexRange { get; }
     }
 }

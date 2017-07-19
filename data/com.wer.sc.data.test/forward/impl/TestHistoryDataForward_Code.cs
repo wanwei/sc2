@@ -36,6 +36,7 @@ namespace com.wer.sc.data.forward.impl
             while (!realTimeReader.IsEnd)
             {
                 realTimeReader.Forward();
+                Console.WriteLine("timeline:" + realTimeReader.GetTimeLineData());
             }
         }
 

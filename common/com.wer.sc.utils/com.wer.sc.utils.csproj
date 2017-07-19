@@ -47,9 +47,14 @@
   <ItemGroup>
     <Compile Include="attr\RemarkAttribute.cs" />
     <Compile Include="ByteUtils.cs" />
+    <Compile Include="CharUtils.cs" />
     <Compile Include="ColorUtils.cs" />
     <Compile Include="ItemObject.cs" />
     <Compile Include="MathUtils.cs" />
+    <Compile Include="Parameter.cs" />
+    <Compile Include="param\KeyValue.cs" />
+    <Compile Include="param\ParameterMeta.cs" />
+    <Compile Include="TextExchange.cs" />
     <Compile Include="update\IUpdateHelper.cs" />
     <Compile Include="OpenTimeUtil.cs" />
     <Compile Include="FileUtils.cs" />

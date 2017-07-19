@@ -44,14 +44,14 @@ namespace com.wer.sc.comp.test
 
         private void btReal_Click(object sender, EventArgs e)
         {
-            //FrmGraphicDrawer_Real frm = new FrmGraphicDrawer_Real();
-            //frm.ShowDialog();
+            FrmGraphicDrawer_Real frm = new FrmGraphicDrawer_Real();
+            frm.ShowDialog();
         }
 
         private void btReal2_Click(object sender, EventArgs e)
         {
-            //FrmGraphicDrawer_Real2 frm = new FrmGraphicDrawer_Real2();
-            //frm.ShowDialog();
+            FrmGraphicDrawer_Real2 frm = new FrmGraphicDrawer_Real2();
+            frm.ShowDialog();
         }
 
         private void btModel_Click(object sender, EventArgs e)
@@ -86,8 +86,8 @@ namespace com.wer.sc.comp.test
 
         private void btSwitch_Click(object sender, EventArgs e)
         {
-            //FrmGraphicDrawer_Switch frm = new FrmGraphicDrawer_Switch();
-            //frm.ShowDialog();
+            FrmGraphicDrawer_Switch frm = new FrmGraphicDrawer_Switch();
+            frm.ShowDialog();
         }
 
         private void btSwitch2_Click(object sender, EventArgs e)
@@ -110,14 +110,14 @@ namespace com.wer.sc.comp.test
 
         private void btTestRegion_Click(object sender, EventArgs e)
         {
-            //FrmTestRegion frm = new FrmTestRegion();
-            //frm.ShowDialog();
+            FrmTestRegion frm = new FrmTestRegion();
+            frm.ShowDialog();
         }
 
         private void btCross_Click(object sender, EventArgs e)
         {
-            //FrmTestCross frm = new FrmTestCross();
-            //frm.ShowDialog();
+            FrmTestCross frm = new FrmTestCross();
+            frm.ShowDialog();
         }
 
         private void btNavigate2_Click(object sender, EventArgs e)

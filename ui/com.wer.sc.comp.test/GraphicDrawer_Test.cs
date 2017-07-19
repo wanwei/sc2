@@ -10,7 +10,7 @@ namespace com.wer.sc.comp.test
 {
     public class GraphicDrawer_Test : GraphicDrawer_Abstract
     {
-        public override void DrawGraph(Graphics graphic)
+        public override void Paint(Graphics graphic)
         {
             
         }

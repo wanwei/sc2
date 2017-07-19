@@ -54,6 +54,7 @@
     <Compile Include="forward\impl\KLineData_DaySplitter.cs" />
     <Compile Include="forward\impl\HistoryDataForward_Code.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
+    <Compile Include="utils\TimeLineUtils.cs" />
     <Compile Include="utils\KLineUtils.cs" />
     <Compile Include="market\AccountFactory.cs" />
     <Compile Include="market\IAccount.cs" />

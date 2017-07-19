@@ -21,17 +21,16 @@ namespace com.wer.sc.comp.test
         public FrmGraphicDrawer_Candle()
         {
             InitializeComponent();
+            //this.FormBorderStyle = FormBorderStyle.None;
+
             drawer = new GraphicDrawer_CandleChart();
-            drawer.MarginInfo.MarginTop = 20;
-            drawer.MarginInfo.MarginLeft = 60;
-            drawer.MarginInfo.MarginRight = 20;
-            drawer.MarginInfo.MarginBottom = 1;
+            drawer.MarginInfo = new GraphicMarginInfo(60, 20, 20, 1);
             drawer.Padding = new GraphicPaddingInfo(0, 20, 50, 0);
 
-            MockGraphicDataProvider dataProvider = new MockGraphicDataProvider();
-            dataProvider.Code = "m05";
-            dataProvider.Period = new KLinePeriod(KLineTimeType.DAY, 1);
-            dataProvider.EndIndex = 210;
+            MockGraphicData_Candle dataProvider = new MockGraphicData_Candle("m1505", 20150101, 20150110, KLinePeriod.KLinePeriod_1Minute);
+            //dataProvider.Code = "m05";
+            //dataProvider.Period = new KLinePeriod(KLineTimeType.DAY, 1);
+            //dataProvider.EndIndex = 210;
 
             drawer.DataProvider = dataProvider;
 
@@ -49,7 +48,7 @@ namespace com.wer.sc.comp.test
             drawer_mount.BindControl(panel2);
         }
 
-        private void DrawOthers(MockGraphicDataProvider dataProvider)
+        private void DrawOthers(MockGraphicData_Candle dataProvider)
         {
             //IKLineData data = dataProvider.GetKLineData();
             //float[] ma = new float[data.Length];
@@ -82,15 +81,27 @@ namespace com.wer.sc.comp.test
         private void btPrev_Click(object sender, EventArgs e)
         {
             drawer.DataProvider.EndIndex -= 20;
-            drawer.DrawGraph();
-            drawer_mount.DrawGraph();
+            drawer.Paint();
+            drawer_mount.Paint();
         }
 
         private void btForward_Click(object sender, EventArgs e)
         {
             drawer.DataProvider.EndIndex += 20;
-            drawer.DrawGraph();
-            drawer_mount.DrawGraph();
+            drawer.Paint();
+            drawer_mount.Paint();
+        }
+
+        private void FrmGraphicDrawer_Candle_Paint(object sender, PaintEventArgs e)
+        {
+            //Rectangle myRectangle = new Rectangle(0, 0, this.Width, this.Height);
+            ////ControlPaint.DrawBorder(e.Graphics, myRectangle, Color.Blue, ButtonBorderStyle.Solid);//画个边框 
+            //ControlPaint.DrawBorder(e.Graphics, myRectangle,
+            //    Color.Black, 3, ButtonBorderStyle.Solid,
+            //    Color.Black, 3, ButtonBorderStyle.Solid,
+            //    Color.Black, 3, ButtonBorderStyle.Solid,
+            //    Color.Blue, 3, ButtonBorderStyle.Solid
+            //);
         }
     }
 }

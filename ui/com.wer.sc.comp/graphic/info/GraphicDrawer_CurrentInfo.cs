@@ -12,9 +12,9 @@ namespace com.wer.sc.comp.graphic.info
     public class GraphicDrawer_CurrentInfo : GraphicDrawer_Abstract
     {
         private String fontStr = "宋体";
-        private IGraphicChartRight dataProvider;
+        private IGraphicData_CurrentInfo dataProvider;
 
-        public IGraphicChartRight DataProvider
+        public IGraphicData_CurrentInfo DataProvider
         {
             get
             {
@@ -27,7 +27,7 @@ namespace com.wer.sc.comp.graphic.info
             }
         }
 
-        public override void DrawGraph(Graphics g)
+        public override void Paint(Graphics g)
         {            
             if (dataProvider == null)
                 return;

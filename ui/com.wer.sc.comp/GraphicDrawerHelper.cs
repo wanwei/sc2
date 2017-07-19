@@ -14,7 +14,7 @@ namespace com.wer.sc.comp
         /// <summary>
         /// 
         /// </summary>
-        IGraphicDrawer_Chart_Candle DataProvider { get; }
+        IGraphicData_Candle DataProvider { get; }
 
         /// <summary>
         /// 
@@ -80,7 +80,7 @@ namespace com.wer.sc.comp
         /// <summary>
         /// 
         /// </summary>
-        IGraphicDrawer_Chart_Candle DataProvider { get { return null; } }
+        IGraphicData_Candle DataProvider { get { return null; } }
 
         /// <summary>
         /// 显示

@@ -11,6 +11,7 @@ namespace com.wer.sc.strategy.cnfutures.import
     /// <summary>
     /// 
     /// </summary>
+    [Strategy("STRATEGY.MA", "MA指标", "MA指标", "指标")]
     public class Strategy_Ma : IStrategy
     {
         private int length;

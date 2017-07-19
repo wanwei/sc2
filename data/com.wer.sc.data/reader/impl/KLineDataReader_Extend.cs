@@ -48,7 +48,7 @@ namespace com.wer.sc.data.reader.impl
             else if (period.PeriodType == KLineTimeType.HOUR)
             {
                 //一天按4个小时算
-                int beforeDays = period.Period * minAfterBarCount / 4 + 1;
+                int beforeDays = period.Period * minBeforeBarCount / 4 + 1;
                 realStartDateIndex = GetRealStartDateIndex(startDate, beforeDays);
                 int afterDays = period.Period * minAfterBarCount / 4 + 1;
                 realEndDateIndex = GetRealEndDateIndex(endDate, afterDays);
@@ -56,7 +56,7 @@ namespace com.wer.sc.data.reader.impl
             else if (period.PeriodType == KLineTimeType.MINUTE)
             {
                 //一天按240分钟算
-                int beforeDays = period.Period * minAfterBarCount / 240 + 1;
+                int beforeDays = period.Period * minBeforeBarCount / 240 + 1;
                 realStartDateIndex = GetRealStartDateIndex(startDate, beforeDays);
                 int afterDays = period.Period * minAfterBarCount / 240 + 1;
                 realEndDateIndex = GetRealEndDateIndex(endDate, afterDays);
@@ -67,7 +67,8 @@ namespace com.wer.sc.data.reader.impl
             }
             int realStartDate = dataReader.TradingDayReader.GetTradingDay(realStartDateIndex);
             int realEndDate = dataReader.TradingDayReader.GetTradingDay(realEndDateIndex);
-            return dataReader.KLineDataReader.GetData(code, realStartDate, realEndDate, period);
+            IKLineData klineData = dataReader.KLineDataReader.GetData(code, realStartDate, realEndDate, period);            
+            return klineData;
         }
 
         private int GetRealEndDateIndex(int endDate, int afterDays)
@@ -98,6 +99,24 @@ namespace com.wer.sc.data.reader.impl
             // timeListGetter = new KLineTimeListGetter(openDateReader, openTimeReader);
             //List<double> klineTimeList = klineTimeListGetter.GetKLineTimeList(code, date, period);
             return null;
+        }
+
+        public float GetLastEndPrice(string code, int date)
+        {
+            int lastTradingDay = dataReader.TradingDayReader.GetPrevTradingDay(date);
+            if (lastTradingDay < 0)
+            {
+                if (dataReader.TradingDayReader.IsTrade(date))
+                {
+                    IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, KLinePeriod.KLinePeriod_1Day);
+                    return klineData.Start;
+                }
+                else
+                    return -1;
+            }
+
+            IKLineData lastDayklineData = dataReader.KLineDataReader.GetData(code, lastTradingDay, lastTradingDay, KLinePeriod.KLinePeriod_1Day);
+            return lastDayklineData.End;
         }
     }
 }

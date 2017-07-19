@@ -34,12 +34,16 @@ namespace com.wer.sc.data.forward.impl
 
         private KLineData_RealTime mainKlineData;
 
+        private TimeLineData_RealTime currentTimeLineData;
+
+        private float lastEndPrice;
+
         /// <summary>
         /// 创建
         /// </summary>
         /// <param name="mainKLineData"></param>
         /// <param name="allKLineData"></param>
-        public HistoryDataForward_Code_TickPeriod(string code, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IDataReader dataReader, IList<int> tradingDays, KLinePeriod forwardPeriod)
+        public HistoryDataForward_Code_TickPeriod(IDataReader dataReader, string code, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IList<int> tradingDays, KLinePeriod forwardPeriod)
         {
             this.dic_Period_KLineData = allKLineData;
             this.dataReader = dataReader;
@@ -48,7 +52,7 @@ namespace com.wer.sc.data.forward.impl
             this.forwardPeriod = new ForwardPeriod(true, forwardPeriod);
 
             InitDaySplitter(dataReader, code);
-            InitKLine();
+            InitData();
         }
 
         private void InitDaySplitter(IDataReader dataReader, string code)
@@ -63,9 +67,10 @@ namespace com.wer.sc.data.forward.impl
             }
         }
 
-        private void InitKLine()
+        private void InitData()
         {
-            currentTickData = dataReader.TickDataReader.GetTickData(code, tradingDays[0]);
+            int currentTradingDay = tradingDays[0];
+            this.currentTickData = dataReader.TickDataReader.GetTickData(code, currentTradingDay);
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
                 KLineData_RealTime klineData = dic_Period_KLineData[period];
@@ -73,6 +78,18 @@ namespace com.wer.sc.data.forward.impl
                 if (period == forwardPeriod.KlineForwardPeriod)
                     mainKlineData = klineData;
             }
+
+            //初始化分时线
+            //int lastTradingDay = dataReader.TradingDayReader.GetPrevTradingDay(currentTradingDay);
+            //IKLineData lastDayklineData = dataReader.KLineDataReader.GetData(code, lastTradingDay, lastTradingDay, KLinePeriod.KLinePeriod_1Day);
+            //if (lastDayklineData.Length == 0)
+            //    lastEndPrice = currentTickData.Arr_Price[0];
+            //else
+            //    lastEndPrice = lastDayklineData.End;
+            this.lastEndPrice = dataReader.KLineDataReader.GetLastEndPrice(code, currentTradingDay);
+            ITimeLineData timeLineData = dataReader.TimeLineDataReader.GetData(code, currentTradingDay);
+            this.currentTimeLineData = new TimeLineData_RealTime(timeLineData);
+            this.currentTimeLineData.SetRealTimeData(GetTimeLineBar(currentTickData, lastEndPrice));
         }
 
         private static KLineBar GetKLineBar(ITickBar tickBar)
@@ -83,6 +100,16 @@ namespace com.wer.sc.data.forward.impl
         private static KLineBar GetKLineBar(IKLineBar klineBar, ITickBar tickBar)
         {
             return KLineUtils.GetKLineBar(klineBar, tickBar);
+        }
+
+        private static TimeLineBar GetTimeLineBar(ITickBar tickBar, float lastEndPrice)
+        {
+            return TimeLineUtils.GetTimeLineBar(tickBar, lastEndPrice);
+        }
+
+        private static TimeLineBar GetTimeLineBar(ITimeLineBar klineBar, ITickBar tickBar, float lastEndPricce)
+        {
+            return TimeLineUtils.GetTimeLineBar(klineBar, tickBar, lastEndPricce);
         }
 
         public string Code
@@ -197,7 +224,9 @@ namespace com.wer.sc.data.forward.impl
                 isEnd = true;
                 return false;
             }
-            currentTickData = tickData;
+            this.lastEndPrice = currentTickData.Arr_Price[currentTickData.Length - 1];
+            this.currentTickData = tickData;
+            this.currentTimeLineData = GetTodayTimeLineData();
 
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
@@ -214,6 +243,13 @@ namespace com.wer.sc.data.forward.impl
                 return null;
             int currentTradingDay = tradingDays[currentTradingDayIndex];
             return dataReader.TickDataReader.GetTickData(code, currentTradingDay);
+        }
+
+        private TimeLineData_RealTime GetTodayTimeLineData()
+        {
+            int currentTradingDay = tradingDays[currentTradingDayIndex];
+            TimeLineData timeLineData = (TimeLineData)dataReader.TimeLineDataReader.GetData(code, currentTradingDay);
+            return new TimeLineData_RealTime(timeLineData);
         }
 
         private void ForwardNextDay_KLine(KLineData_RealTime klineData, KLinePeriod period)
@@ -249,8 +285,8 @@ namespace com.wer.sc.data.forward.impl
                 KLineData_RealTime klineData = dic_Period_KLineData[period];
                 ForwardToday_KLineData(klineData, period);
             }
+            ForwardToday_TimeLineData(currentTimeLineData);
             currentTickData.BarPos++;
-
         }
 
         private void ForwardToday_KLineData(KLineData_RealTime klineData, KLinePeriod period)
@@ -307,14 +343,36 @@ namespace com.wer.sc.data.forward.impl
             return barPos < 0 ? 0 : barPos;
         }
 
-        //private void SetPeriodEnd(KLinePeriod period, bool isEnd)
-        //{
-        //    dic_KLinePeriod_IsEnd[period] = isEnd;            
-        //}
+        private void ForwardToday_TimeLineData(TimeLineData_RealTime timeLineData)
+        {
+            ITickBar nextTickBar = currentTickData.GetBar(currentTickData.BarPos + 1);
+            int nextTimeLineBarPos = timeLineData.BarPos + 1;
+            if (nextTimeLineBarPos >= timeLineData.Length)
+            {
+                TimeLineBar timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, lastEndPrice);
+                timeLineData.SetRealTimeData(timeLineBar, timeLineData.BarPos);
+                return;
+            }
+            else
+            {
+                double nextTime = timeLineData.Arr_Time[nextTimeLineBarPos];
+                TimeLineBar timeLineBar;
+                if (nextTickBar.Time >= nextTime)
+                {
+                    timeLineBar = GetTimeLineBar(nextTickBar, lastEndPrice);
+                    timeLineData.SetRealTimeData(timeLineBar, nextTimeLineBarPos);
+                }
+                else
+                {
+                    timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, lastEndPrice);
+                    timeLineData.SetRealTimeData(timeLineBar, timeLineData.BarPos);
+                }
+            }
+        }
 
         public ITimeLineData GetTimeLineData()
         {
-            return null;
+            return currentTimeLineData;
         }
 
         public IKLineData GetKLineData()

@@ -51,13 +51,13 @@ namespace com.wer.sc.strategy.realtimereader
             IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
             if (args.IsTickForward)
             {
-                this.klineDataForward = new HistoryDataForward_Code_TickPeriod(code, allKLineData, dataReader, allTradingDays, args.ForwardKLinePeriod);
+                this.klineDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
             }
             else
             {
                 KLinePeriod mainPeriod = args.ForwardKLinePeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-                this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
+                this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
             }
 
             this.klineDataForward.OnTick += KlineDataForward_OnTick;

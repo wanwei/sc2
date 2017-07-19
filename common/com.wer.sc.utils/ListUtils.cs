@@ -8,6 +8,12 @@ namespace com.wer.sc.utils
 {
     public class ListUtils
     {
-        public static List<int> EmptyIntList = new List<int>();  
+        public static List<int> EmptyIntList = new List<int>();
+
+
+        public static String[] list2Arr(List<String> list)
+        {
+            return list.ToArray();
+        }
     }
 }

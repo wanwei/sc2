@@ -12,6 +12,7 @@ namespace com.wer.sc.strategy.cnfutures
     /// <summary>
     /// 
     /// </summary>
+    [Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
     public class Strategy_Zigzag : IStrategy
     {
         private KLinePeriod klinePeriod;

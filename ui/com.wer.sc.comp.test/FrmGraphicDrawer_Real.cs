@@ -1,4 +1,4 @@
-﻿using com.wer.sc.comp.graphic.real;
+﻿using com.wer.sc.comp.graphic.timeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,26 +13,18 @@ namespace com.wer.sc.comp.test
 {
     public partial class FrmGraphicDrawer_Real : Form
     {
-        private GraphicDrawer_RealChart drawer;
+        private GraphicDrawer_TimeLineChart drawer;
 
-        private GraphicDrawer_RealMount drawer_mount;
+        private GraphicDrawer_TimeLineMount drawer_mount;
 
         public FrmGraphicDrawer_Real()
         {
             InitializeComponent();
 
-            drawer = new GraphicDrawer_RealChart();
-            drawer.MarginInfo.MarginTop = 20;
-            drawer.MarginInfo.MarginLeft = 60;
-            drawer.MarginInfo.MarginRight = 50;
-            drawer.MarginInfo.MarginBottom = 20;
+            drawer = new GraphicDrawer_TimeLineChart();
+            drawer.MarginInfo = new GraphicMarginInfo(60, 20, 50, 20);
             drawer.Padding = new GraphicPaddingInfo(0, 0, 0, 0);
-
-            MockGraphicDataProvider_Real dataProvider = new MockGraphicDataProvider_Real();
-            //dataProvider.Code = "m05";
-            //dataProvider.Period = new KLinePeriod(KLinePeriod.TYPE_DAY, 1);
-            //dataProvider.EndIndex = 210;
-
+            MockGraphicData_Real dataProvider = new MockGraphicData_Real();
             drawer.DataProvider = dataProvider;
 
             drawer.BindControl(this);

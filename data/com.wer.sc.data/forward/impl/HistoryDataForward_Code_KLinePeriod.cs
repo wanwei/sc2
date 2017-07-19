@@ -14,11 +14,15 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code_KLinePeriod : IHistoryDataForward_Code
     {
+        private IDataReader dataReader;
+
         private string code;
 
         private KLineData_RealTime mainKLineData;
 
         private Dictionary<KLinePeriod, KLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
+
+        private TimeLineData_RealTime timeLineData;
 
         private KLineData_DaySplitter daySplitter;
 
@@ -29,16 +33,18 @@ namespace com.wer.sc.data.forward.impl
         /// </summary>
         /// <param name="mainKLineData"></param>
         /// <param name="allKLineData"></param>
-        public HistoryDataForward_Code_KLinePeriod(string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
+        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
         {
+            this.dataReader = dataReader;
             this.code = code;
             this.mainKLineData = mainKLineData;
             this.dic_Period_KLineData = allKLineData;
             this.forwardPeriod = new ForwardPeriod(false, mainKLineData.Period);
             InitKLine();
+            InitTimeLine();
         }
 
-        public HistoryDataForward_Code_KLinePeriod(string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Instrument tradingSessionReader) : this(code, mainKLineData, allKLineData)
+        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Instrument tradingSessionReader) : this(dataReader, code, mainKLineData, allKLineData)
         {
             this.daySplitter = new KLineData_DaySplitter(mainKLineData, tradingSessionReader);
             this.daySplitter.NextDay();
@@ -55,6 +61,11 @@ namespace com.wer.sc.data.forward.impl
                     continue;
                 klineData.SetRealTimeData(mainKLineData);
             }
+        }
+
+        private void InitTimeLine()
+        {
+            // this.timeLineData = timeLineData;
         }
 
         public string Code
@@ -229,7 +240,7 @@ namespace com.wer.sc.data.forward.impl
 
         public ITimeLineData GetTimeLineData()
         {
-            return null;
+            return timeLineData;
         }
 
         public ITickData GetTickData()

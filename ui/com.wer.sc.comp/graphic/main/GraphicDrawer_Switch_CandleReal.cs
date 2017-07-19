@@ -11,12 +11,12 @@ namespace com.wer.sc.comp.graphic.main
 {
     public class GraphicDrawer_Switch_CandleReal : GraphicDrawer_Switch
     {
-        private IGraphicController_Chart dataProvider;
+        private IGraphicData_Chart dataProvider;
 
         private GraphicDrawer_Candle drawer_Candle;
-        private GraphicDrawer_Real drawer_Real;
+        private GraphicDrawer_TimeLine drawer_Real;
 
-        public IGraphicController_Chart DataProvider
+        public IGraphicData_Chart DataProvider
         {
             get
             {
@@ -34,7 +34,7 @@ namespace com.wer.sc.comp.graphic.main
         public GraphicDrawer_Switch_CandleReal()
         {
             drawer_Candle = new GraphicDrawer_Candle();
-            drawer_Real = new GraphicDrawer_Real();
+            drawer_Real = new GraphicDrawer_TimeLine();
 
             this.Drawers.Add(drawer_Candle);
             this.Drawers.Add(drawer_Real);
@@ -49,46 +49,46 @@ namespace com.wer.sc.comp.graphic.main
 
         public void BindOthers(Control control)
         {
-            drawer_Candle.BindOthers(control);
-            drawer_Real.BindOthers(control);
-            control.KeyUp += Control_KeyUp;
+            //drawer_Candle.BindOthers(control);
+            //drawer_Real.BindOthers(control);
+            //control.KeyUp += Control_KeyUp;
         }
 
         private void Control_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
-                if (this.CurrentIndex == 0)
-                {
-                    CrossHairDrawer currentdrawer = this.drawer_Candle.CrossHairDrawer;
-                    bool showCross = currentdrawer.ShowCrossHair;
-                    if (showCross)
-                    {
-                        this.drawer_Real.CrossHairDrawer.ShowCrossHair = true;
-                        this.drawer_Real.CrossHairDrawer.ChangeCrossPoint(currentdrawer.CrossPoint);
-                    }
-                    else
-                    {
-                        this.drawer_Real.CrossHairDrawer.ShowCrossHair = false;
-                    }
-                    this.Switch(1);
-                }
-                else
-                {
-                    CrossHairDrawer currentdrawer = this.drawer_Real.CrossHairDrawer;
-                    bool showCross = currentdrawer.ShowCrossHair;
-                    if (showCross)
-                    {
-                        this.drawer_Candle.CrossHairDrawer.ShowCrossHair = true;
-                        this.drawer_Candle.CrossHairDrawer.ChangeCrossPoint(currentdrawer.CrossPoint);
-                    }
-                    else
-                    {
-                        this.drawer_Candle.CrossHairDrawer.ShowCrossHair = false;
-                    }
-                    this.Switch(0);
-                }
-                this.DrawGraph();
+                //if (this.CurrentIndex == 0)
+                //{
+                //    CrossHairDrawer currentdrawer = this.drawer_Candle.CrossHairDrawer;
+                //    bool showCross = currentdrawer.ShowCrossHair;
+                //    if (showCross)
+                //    {
+                //        this.drawer_Real.CrossHairDrawer.ShowCrossHair = true;
+                //        this.drawer_Real.CrossHairDrawer.ChangeCrossPoint(currentdrawer.CrossHairPoint);
+                //    }
+                //    else
+                //    {
+                //        this.drawer_Real.CrossHairDrawer.ShowCrossHair = false;
+                //    }
+                //    this.Switch(1);
+                //}
+                //else
+                //{
+                //    CrossHairDrawer currentdrawer = this.drawer_Real.CrossHairDrawer;
+                //    bool showCross = currentdrawer.ShowCrossHair;
+                //    if (showCross)
+                //    {
+                //        this.drawer_Candle.CrossHairDrawer.ShowCrossHair = true;
+                //        this.drawer_Candle.CrossHairDrawer.ChangeCrossPoint(currentdrawer.CrossHairPoint);
+                //    }
+                //    else
+                //    {
+                //        this.drawer_Candle.CrossHairDrawer.ShowCrossHair = false;
+                //    }
+                //    this.Switch(0);
+                //}
+                //this.Paint();
             }
         }
 

@@ -43,12 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DrawControl.Designer.cs">
-      <DependentUpon>DrawControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="DrawMainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -56,43 +50,53 @@
       <DependentUpon>DrawMainControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicDrawerHelper.cs" />
+    <Compile Include="graphic\GraphicDataFactory.cs" />
     <Compile Include="graphic\GraphicDrawerFactory.cs" />
-    <Compile Include="graphic\IGraphicDrawer_Chart_Tick.cs" />
+    <Compile Include="graphic\GraphicDrawer_PriceRect_Abstract.cs" />
+    <Compile Include="graphic\IGraphicData.cs" />
+    <Compile Include="graphic\IGraphicData_Tick.cs" />
     <Compile Include="graphic\IGraphicDrawer.cs" />
-    <Compile Include="graphic\IGraphicDrawer_FullChart.cs" />
-    <Compile Include="graphic\utils\PolyLineArray.cs" />
-    <Compile Include="graphic\utils\PricePoint.cs" />
-    <Compile Include="graphic\utils\PriceRectangle.cs" />
+    <Compile Include="graphic\IGraphicData_FullChart.cs" />
+    <Compile Include="graphic\IGraphicDrawer_Candle.cs" />
+    <Compile Include="graphic\IGraphicDrawer_PriceRect.cs" />
+    <Compile Include="graphic\PriceShape_Label.cs" />
+    <Compile Include="graphic\PriceShape_PolyLine.cs" />
+    <Compile Include="graphic\PriceShape_Line.cs" />
+    <Compile Include="graphic\PriceShape_Point.cs" />
+    <Compile Include="graphic\PriceRectangle.cs" />
     <Compile Include="graphic\ColorConfig.cs" />
     <Compile Include="graphic\candle\GraphicDrawer_Candle.cs" />
     <Compile Include="graphic\candle\GraphicDrawer_Candle_Abstract.cs" />
     <Compile Include="graphic\candle\GraphicDrawer_CandleMount.cs" />
-    <Compile Include="graphic\candle\GraphicController_CandleDefault.cs" />
+    <Compile Include="graphic\candle\GraphicData_Candle.cs" />
     <Compile Include="graphic\DetailInfo.cs" />
     <Compile Include="graphic\info\GraphicDataProvider_CurrentInfo.cs" />
-    <Compile Include="graphic\IGraphicDrawer_DetailInfo.cs" />
+    <Compile Include="graphic\IGraphicData_CurrentInfo.cs" />
     <Compile Include="graphic\info\GraphicDrawer_CurrentInfo.cs" />
     <Compile Include="graphic\main\GraphicDrawer_Switch_CandleReal.cs" />
-    <Compile Include="graphic\main\GraphicOperator_Main.cs" />
     <Compile Include="graphic\main\GraphicDataProvider.cs" />
     <Compile Include="graphic\GraphicDrawer_Compound.cs" />
     <Compile Include="graphic\main\GraphicDrawer_Main.cs" />
     <Compile Include="graphic\GraphicDrawer_Switch.cs" />
-    <Compile Include="graphic\IGraphicController_Chart.cs" />
-    <Compile Include="graphic\main\IGraphicOperator_Main.cs" />
-    <Compile Include="graphic\IGraphicDrawer_Chart_TimeLine.cs" />
-    <Compile Include="graphic\timeline\GraphicDrawer_Real.cs" />
-    <Compile Include="graphic\timeline\GraphicDrawer_RealChart.cs" />
-    <Compile Include="graphic\timeline\GraphicDrawer_RealMount.cs" />
-    <Compile Include="graphic\timeline\GraphicDrawer_Real_Abstract.cs" />
+    <Compile Include="graphic\IGraphicData_Chart.cs" />
+    <Compile Include="graphic\IGraphicData_TimeLine.cs" />
+    <Compile Include="graphic\PriceShape.cs" />
+    <Compile Include="graphic\PriceShapeType.cs" />
+    <Compile Include="graphic\PriceShape_Rect.cs" />
+    <Compile Include="graphic\PriceShapePainter.cs" />
+    <Compile Include="graphic\timeline\GraphicData_TimeLine.cs" />
+    <Compile Include="graphic\timeline\GraphicDrawer_TimeLine.cs" />
+    <Compile Include="graphic\timeline\GraphicDrawer_TimeLineChart.cs" />
+    <Compile Include="graphic\timeline\GraphicDrawer_TimeLineMount.cs" />
+    <Compile Include="graphic\timeline\GraphicDrawer_TimeLine_Abstract.cs" />
     <Compile Include="graphic\utils\CrossHairDrawer.cs" />
     <Compile Include="graphic\utils\PriceGraphicArgs.cs" />
     <Compile Include="graphic\GraphicDrawer_Abstract.cs" />
-    <Compile Include="graphic\IGraphicDrawer_Chart_Candle.cs" />
+    <Compile Include="graphic\IGraphicData_Candle.cs" />
     <Compile Include="graphic\candle\GraphicDrawer_CandleChart.cs" />
     <Compile Include="graphic\GraphicMarginInfo.cs" />
     <Compile Include="graphic\GraphicPaddingInfo.cs" />
-    <Compile Include="graphic\utils\PriceGraphicMapping.cs" />
+    <Compile Include="graphic\PriceGraphicMapping.cs" />
     <Compile Include="graphic\utils\SelectPointInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="graphic\StockGraph_Abstract.cs" />
@@ -116,9 +120,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DrawControl.resx">
-      <DependentUpon>DrawControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DrawMainControl.resx">
       <DependentUpon>DrawMainControl.cs</DependentUpon>
     </EmbeddedResource>

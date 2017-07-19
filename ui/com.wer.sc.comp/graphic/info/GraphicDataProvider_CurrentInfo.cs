@@ -4,7 +4,7 @@ using System;
 
 namespace com.wer.sc.comp.graphic.info
 {
-    public class GraphicDataProvider_CurrentInfo : IGraphicChartRight
+    public class GraphicDataProvider_CurrentInfo : IGraphicData_CurrentInfo
     {
         //private IDataNavigate navigate;
 

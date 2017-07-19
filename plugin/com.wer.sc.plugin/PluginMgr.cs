@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,6 +117,8 @@ namespace com.wer.sc.plugin
 
         public void Load()
         {
+            if (!Directory.Exists(path))
+                return;
             PluginScan scan = new PluginScan();
             this.pluginInfos.AddRange(scan.Scan(this.path));
             foreach (PluginInfo plugin in pluginInfos)

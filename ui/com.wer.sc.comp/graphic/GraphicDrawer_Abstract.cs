@@ -110,6 +110,14 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
+        public Control Control
+        {
+            get
+            {
+                return control;
+            }
+        }
+
         #endregion
 
         #region 绑定控件
@@ -153,7 +161,7 @@ namespace com.wer.sc.comp.graphic
                 return;
             Rectangle rect = control.DisplayRectangle;
             SetDrawRect(rect);
-            DrawGraph();
+            Paint();
         }
 
         #endregion
@@ -163,14 +171,14 @@ namespace com.wer.sc.comp.graphic
         private Object drawObj = new Object();
         private Boolean drawing = false;
 
-        public void DrawGraph()
+        public void Paint()
         {
             if (drawing)
                 return;
-            DrawGraphSync();
+            PaintSync();
         }
 
-        private void DrawGraphSync()
+        private void PaintSync()
         {
             lock (drawObj)
             {
@@ -181,18 +189,18 @@ namespace com.wer.sc.comp.graphic
                     BufferedGraphics myBuffer = currentContext.Allocate(control.CreateGraphics(), control.DisplayRectangle);
                     Graphics g = myBuffer.Graphics;
 
-                    DrawGraph(g);
-                    if (AfterGraphicDraw != null)
-                        AfterGraphicDraw(this, new GraphicRefreshArgs(g));
+                    Paint(g);
+                    if (AfterGraphicPaint != null)
+                        AfterGraphicPaint(this, new GraphicRefreshArgs(g));
 
                     myBuffer.Render();
                     myBuffer.Dispose();
                     drawing = false;
                 }
-                catch (Exception e)
-                {
-                    throw new ApplicationException(e.StackTrace, e);
-                }
+                //catch (Exception e)
+                //{
+                //    throw new ApplicationException(e.StackTrace, e);
+                //}
                 finally
                 {
                     drawing = false;
@@ -205,22 +213,178 @@ namespace com.wer.sc.comp.graphic
         /// 抽象方法
         /// </summary>
         /// <param name="graphic"></param>
-        public abstract void DrawGraph(Graphics graphic);
+        public abstract void Paint(Graphics graphic);
 
-        public event AfterGraphicDrawHandler AfterGraphicDraw;
+        public event AfterGraphicPaintHandler AfterGraphicPaint;
 
         #endregion
-    }
 
-    public delegate void AfterGraphicDrawHandler(object sender, GraphicRefreshArgs e);
+        #region 画附加图
 
-    public class GraphicRefreshArgs
-    {
-        public Graphics Graphic;
+        //private List<PricePolyLine> polyLines = new List<PricePolyLine>();
 
-        public GraphicRefreshArgs(Graphics Graphic)
-        {
-            this.Graphic = Graphic;
-        }
-    }
+        //public void AddPolyLine(PricePolyLine polyLine)
+        //{
+        //    this.polyLines.Add(polyLine);
+        //}
+
+        //public void AddPolyLines(List<PricePolyLine> polyLines)
+        //{
+        //    this.polyLines.AddRange(polyLines);
+        //}
+
+        //private List<PolyLineList> polyLineList = new List<PolyLineList>();
+
+        //public void AddPolyLine(PolyLineList polyLine)
+        //{
+        //    this.polyLineList.Add(polyLine);
+        //}
+
+        //public void AddPolyLines(List<PolyLineList> polyLines)
+        //{
+        //    this.polyLineList.AddRange(polyLines);
+        //}
+
+
+        //public void ClearPolyLine()
+        //{
+        //    polyLines.Clear();
+        //    polyLineList.Clear();
+        //}
+
+        //private void DrawPolyLine(Graphics g)
+        //{
+        //    for (int i = 0; i < polyLines.Count; i++)
+        //    {
+        //        DrawPolyLine(g, polyLines[i]);
+        //    }
+        //    for (int i = 0; i < polyLineList.Count; i++)
+        //    {
+        //        DrawPolyLine(g, polyLineList[i]);
+        //    }
+        //}
+
+        //private void DrawPolyLine(Graphics g, PolyLineList line)
+        //{
+        //    int startIndex = DataProvider.StartIndex;
+        //    int endIndex = DataProvider.EndIndex;
+
+        //    Pen pen = new Pen(line.color, line.Width);
+        //    List<PricePoint> data = line.Data;
+        //    for (int i = 1; i < data.Count; i++)
+        //    {
+        //        PricePoint lastpoint = data[i - 1];
+        //        PricePoint point = data[i];
+        //        if (lastpoint.X >= DataProvider.StartIndex && point.X <= DataProvider.EndIndex)
+        //        {
+
+        //            float x1 = PriceMapping.CalcX(lastpoint.X);
+        //            float y1 = PriceMapping.CalcY(lastpoint.Y);
+        //            float x2 = PriceMapping.CalcX(point.X);
+        //            float y2 = PriceMapping.CalcY(point.Y);
+        //            g.DrawLine(pen, x1, y1, x2, y2);
+        //        }
+        //    }
+        //}
+
+        //private void DrawPolyLine(Graphics g, PricePolyLine line)
+        //{
+        //    int startIndex = DataProvider.StartIndex;
+        //    int endIndex = DataProvider.EndIndex;
+
+        //    Pen pen = new Pen(line.color, line.Width);
+        //    float[] data = line.Data;
+        //    endIndex = endIndex >= data.Length ? data.Length - 1 : endIndex;
+        //    for (int i = startIndex + 1; i <= endIndex; i++)
+        //    {
+        //        float x1 = PriceMapping.CalcX(i - 1);
+        //        float y1 = PriceMapping.CalcY(data[i - 1]);
+        //        float x2 = PriceMapping.CalcX(i);
+        //        float y2 = PriceMapping.CalcY(data[i]);
+        //        g.DrawLine(pen, x1, y1, x2, y2);
+        //    }
+        //}
+
+        //private List<PointArray> points = new List<PointArray>();
+
+        //public void AddPoint(PointArray polyLine)
+        //{
+        //    points.Add(polyLine);
+        //}
+
+        //public void AddPoints(List<PointArray> polyLine)
+        //{
+        //    points.AddRange(polyLine);
+        //}
+
+        //private List<PointList> pointLists = new List<PointList>();
+
+        //public void AddPoint(PointList polyLine)
+        //{
+        //    pointLists.Add(polyLine);
+        //}
+
+        //public void AddPoints(List<PointList> polyLine)
+        //{
+        //    pointLists.AddRange(polyLine);
+        //}
+
+        //public void ClearPoints()
+        //{
+        //    points.Clear();
+        //    pointLists.Clear();
+        //}
+
+        //private void DrawPoint(Graphics g)
+        //{
+        //    for (int i = 0; i < points.Count; i++)
+        //    {
+        //        DrawPoint(g, points[i]);
+        //    }
+        //    for (int i = 0; i < pointLists.Count; i++)
+        //    {
+        //        DrawPoint(g, pointLists[i]);
+        //    }
+        //}
+
+        //private void DrawPoint(Graphics g, PointArray points)
+        //{
+        //    int startIndex = DataProvider.StartIndex;
+        //    int endIndex = DataProvider.EndIndex;
+
+        //    float[] data = points.Data;
+        //    endIndex = endIndex >= data.Length ? data.Length - 1 : endIndex;
+
+        //    Brush b = new SolidBrush(points.color);
+        //    float w = points.Width / 2;
+        //    for (int i = startIndex; i <= endIndex; i++)
+        //    {
+        //        if (data[i] <= 0)
+        //            continue;
+        //        float x1 = PriceMapping.CalcX(i);
+        //        float y1 = PriceMapping.CalcY(data[i]);
+        //        g.FillEllipse(b, x1 - w, y1 - w, points.Width, points.Width);
+        //    }
+        //}
+
+        //private void DrawPoint(Graphics g, PointList points)
+        //{
+        //    List<PricePoint> data = points.Data;
+        //    Brush b = new SolidBrush(points.color);
+        //    float w = points.Width / 2;
+        //    for (int i = 0; i < data.Count; i++)
+        //    {
+        //        PricePoint point = data[i];
+        //        if (point.X >= DataProvider.StartIndex && point.X <= DataProvider.EndIndex)
+        //        {
+        //            float x1 = PriceMapping.CalcX(point.X);
+        //            float y1 = PriceMapping.CalcY(point.Y);
+        //            g.FillEllipse(b, x1 - w, y1 - w, points.Width, points.Width);
+        //        }
+        //    }
+        //}
+
+        #endregion
+
+    }    
 }

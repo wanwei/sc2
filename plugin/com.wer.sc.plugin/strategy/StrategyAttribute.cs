@@ -15,11 +15,21 @@ namespace com.wer.sc.strategy
 
         private string desc;
 
+        private string path;
+
         public StrategyAttribute(string id, String name, string desc)
         {
             this.id = id;
             this.name = name;
             this.desc = desc;
+        }
+
+        public StrategyAttribute(string id, String name, string desc, string path)
+        {
+            this.id = id;
+            this.name = name;
+            this.desc = desc;
+            this.path = path;
         }
 
         public string ID
@@ -43,6 +53,14 @@ namespace com.wer.sc.strategy
             get
             {
                 return desc;
+            }
+        }
+
+        public string Path
+        {
+            get
+            {
+                return path;
             }
         }
     }

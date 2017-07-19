@@ -12,6 +12,7 @@ namespace com.wer.sc.strategy.cnfutures
     /// 策略：
     /// 看之前的趋势
     /// </summary>
+    [Strategy("STRATEGY.CNFUTURES", "MA指标", "MA指标")]
     public class Strategy_CnFutures : IStrategy
     {
         private StrategyReferedPeriods refered;
@@ -45,7 +46,7 @@ namespace com.wer.sc.strategy.cnfutures
             int lastBarPos = currentBarPos - 5;
             if (lastBarPos < 0)
                 return;
-            
+
             //float endPrice = klineData.End;
             //float startPrice = klineData.GetBar(lastBarPos).Start;
 

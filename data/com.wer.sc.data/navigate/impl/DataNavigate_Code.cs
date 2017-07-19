@@ -26,6 +26,7 @@ namespace com.wer.sc.data.navigate.impl
         //当前的k线数据
         private Dictionary<KLinePeriod, DataNavigate_Code_KLine> dicNavigateKLine = new Dictionary<KLinePeriod, DataNavigate_Code_KLine>();
 
+        //当前分时线数据
         private DataNavigate_Code_TimeLine navigate_TimeLine;
 
         public DataNavigate_Code(IDataReader dataReader, string code, double time)

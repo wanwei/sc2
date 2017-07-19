@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,13 @@ namespace com.wer.sc.comp.graphic
 {
     public class GraphicDrawerFactory
     {
-
+        public IGraphicDrawer_PriceRect CreateGraphicDrawer_PriceRect(IGraphicData graphicData)
+        {
+            if (graphicData is IGraphicData_Candle)
+            {
+                //return new GraphicDrawer_Candle()
+            }
+            return null;
+        }
     }
 }

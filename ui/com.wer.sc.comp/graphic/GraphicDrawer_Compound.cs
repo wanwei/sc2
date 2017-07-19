@@ -45,7 +45,7 @@ namespace com.wer.sc.comp.graphic
             isFixs.Add(isFix);
         }
 
-        public override void DrawGraph(Graphics graphic)
+        public override void Paint(Graphics graphic)
         {
             float sumPercent = 0;
             float sumFix = 0;
@@ -82,7 +82,7 @@ namespace com.wer.sc.comp.graphic
                     currentheight = (int)(percent / sumPercent * DisplayRect.Height);
                 drawer.SetDrawRect(new Rectangle(x, y, width, currentheight));
                 y += currentheight;
-                drawer.DrawGraph(graphic);
+                drawer.Paint(graphic);
             }
         }
 
@@ -104,7 +104,7 @@ namespace com.wer.sc.comp.graphic
                     currentWidth = (int)(percent / sumPercent * DisplayRect.Width);
                 drawer.SetDrawRect(new Rectangle(x, y, currentWidth, height));
                 x += currentWidth;
-                drawer.DrawGraph(graphic);
+                drawer.Paint(graphic);
             }
         }
     }

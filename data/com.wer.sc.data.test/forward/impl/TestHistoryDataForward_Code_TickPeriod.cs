@@ -21,11 +21,17 @@ namespace com.wer.sc.data.forward.impl
             int endDate = 20170603;
 
             HistoryDataForward_Code_TickPeriod klineDataForward = GetKLineDataForward(code, start, endDate);
-            Print(klineDataForward);
+            //Print(klineDataForward);
 
             while (klineDataForward.Forward())
             {
-                Print(klineDataForward);
+                //Print(klineDataForward);
+            }
+            ITimeLineData timeLineData = klineDataForward.GetTimeLineData();
+            for(int i = 0; i < timeLineData.Length; i++)
+            {
+                ITimeLineBar timeLineBar = timeLineData.GetBar(i);
+                Console.WriteLine(timeLineBar);
             }
         }
 
@@ -43,7 +49,7 @@ namespace com.wer.sc.data.forward.impl
             dic.Add(KLinePeriod.KLinePeriod_15Minute, klineData_15Minute);
             dic.Add(KLinePeriod.KLinePeriod_1Day, klineData_1Day);
 
-            HistoryDataForward_Code_TickPeriod klineDataForward = new HistoryDataForward_Code_TickPeriod(code, dic, CommonData.GetDataReader(), tradingDays, KLinePeriod.KLinePeriod_1Minute);
+            HistoryDataForward_Code_TickPeriod klineDataForward = new HistoryDataForward_Code_TickPeriod(CommonData.GetDataReader(), code, dic, tradingDays, KLinePeriod.KLinePeriod_1Minute);
             return klineDataForward;
         }
 
@@ -61,6 +67,13 @@ namespace com.wer.sc.data.forward.impl
             Console.WriteLine("1minute_" + klineData_1.GetCurrentRealBar());
             KLineData_RealTime klineData_1Day = (KLineData_RealTime)klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Day);
             Console.WriteLine("1day:" + klineData_1Day);
+            ITimeLineData timeLineData = klineDataForward.GetTimeLineData();
+            Console.WriteLine("timeline:" + timeLineData);
+
+            Assert.AreEqual(klineData_1.End, timeLineData.Price);
+            Assert.AreEqual(klineData_1.Mount, timeLineData.Mount);
+            Assert.AreEqual(klineData_1.Hold, timeLineData.Hold);
+
             //
             //Console.WriteLine("DayEnd:" + klineDataForward.IsDayEnd
             //      + "|1MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_1Minute)

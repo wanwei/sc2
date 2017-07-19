@@ -48,7 +48,7 @@ namespace com.wer.sc.data.forward.impl
             dic.Add(KLinePeriod.KLinePeriod_15Minute, klineData_15Minute);
             dic.Add(KLinePeriod.KLinePeriod_1Day, klineData_1Day);
 
-            HistoryDataForward_Code_KLinePeriod klineDataForward = new HistoryDataForward_Code_KLinePeriod(code,klineData_1Minute, dic, CommonData.GetDataReader().CreateTradingSessionReader(code));
+            HistoryDataForward_Code_KLinePeriod klineDataForward = new HistoryDataForward_Code_KLinePeriod(CommonData.GetDataReader(), code,klineData_1Minute, dic, CommonData.GetDataReader().CreateTradingSessionReader(code));
             return klineDataForward;
         }
 

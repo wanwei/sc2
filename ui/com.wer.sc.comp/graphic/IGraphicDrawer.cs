@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace com.wer.sc.comp.graphic
 {
+    /// <summary>
+    /// 绘图接口
+    /// </summary>
     public interface IGraphicDrawer
     {
         /// <summary>
@@ -49,13 +52,25 @@ namespace com.wer.sc.comp.graphic
         void UnBindControl();
 
         /// <summary>
-        /// 重绘图像
+        /// 将图像绘制到屏幕上
         /// </summary>
-        void DrawGraph();
+        void Paint();
 
         /// <summary>
         /// 图像绘制完事件
         /// </summary>
-        event AfterGraphicDrawHandler AfterGraphicDraw;
+        event AfterGraphicPaintHandler AfterGraphicPaint;
+    }
+
+    public delegate void AfterGraphicPaintHandler(object sender, GraphicRefreshArgs e);
+
+    public class GraphicRefreshArgs
+    {
+        public Graphics Graphic;
+
+        public GraphicRefreshArgs(Graphics Graphic)
+        {
+            this.Graphic = Graphic;
+        }
     }
 }

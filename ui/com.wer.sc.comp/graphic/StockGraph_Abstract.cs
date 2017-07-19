@@ -15,9 +15,9 @@ namespace com.wer.sc.comp.graphic
     public abstract class StockGraph_Abstract
     {
         protected ColorConfig config;
-        protected IGraphicDrawer_Chart_Candle data;
+        protected IGraphicData_Candle data;
 
-        public StockGraph_Abstract(IGraphicDrawer_Chart_Candle data, ColorConfig config)
+        public StockGraph_Abstract(IGraphicData_Candle data, ColorConfig config)
         {
             this.config = config;
             //this.displayRectangle = config.DisplayRectangle;
@@ -40,7 +40,7 @@ namespace com.wer.sc.comp.graphic
             get { return config; }
         }
 
-        public IGraphicDrawer_Chart_Candle DataProvider
+        public IGraphicData_Candle DataProvider
         {
             get { return data; }
         }
@@ -151,7 +151,7 @@ namespace com.wer.sc.comp.graphic
             {
                 GraphicDrawer_Abstract drawer = drawers[i];
                 //drawer.DrawFrame(g);
-                drawer.DrawGraph(g);
+                drawer.Paint(g);
             }
         }
 

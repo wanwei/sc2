@@ -51,5 +51,24 @@ namespace com.wer.sc.utils
             }
             return sb.ToString();
         }
+
+
+        /// <summary>
+        /// 将对象转换为字符串，如果对象为null，则返回defaultValue，否则，返回obj.toString()<br />
+        /// 例如：
+        /// 
+        /// StringUtils.obj2Str("a string", "")	= "a string"
+        /// StringUtils.obj2Str(new StringBuffer("a string"), null)	= "a string"
+        /// StringUtils.obj2Str(seasonList, null)	= ["spring", "summer", "autumn", "winter"] (seasonList是包含了四季的{@link ArrayList})
+        /// StringUtils.obj2Str(new StringBuffer(null, "")  = "
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static String obj2Str(Object obj, String defaultValue)
+        {
+            return obj == null ? defaultValue : obj.ToString();
+        }
+
     }
 }

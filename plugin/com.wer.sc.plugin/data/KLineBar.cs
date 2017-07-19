@@ -116,15 +116,5 @@ namespace com.wer.sc.data
             klineBar.hold = otherKlineBar.Hold;
             return klineBar;
         }
-
-        //public static void Merge(KLineBar originalBar, KLineBar mergeBar)
-        //{
-        //    if (mergeBar.high > originalBar.high)
-        //        originalBar.high = mergeBar.high;
-        //    if (mergeBar.low < originalBar.low)
-        //        originalBar.low = mergeBar.low;
-        //    originalBar.end = mergeBar.end;
-        //    originalBar.
-        //}
     }
 }

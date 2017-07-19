@@ -161,5 +161,16 @@ namespace com.wer.sc.data
             sb.Append(Hold);
             return sb.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (GetType() != obj.GetType())
+                return false;
+            KLineBar_Abstract klineBar = (KLineBar_Abstract)obj;
+            return this.Time == klineBar.Time && this.Start == klineBar.Time && this.High == klineBar.High && this.Low == klineBar.Low 
+                && this.End == klineBar.End && this.Mount == klineBar.Mount && this.Money == klineBar.Money && this.Hold == klineBar.Hold;
+        }
     }
 }

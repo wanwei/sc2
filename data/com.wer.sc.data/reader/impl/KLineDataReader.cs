@@ -92,6 +92,9 @@ namespace com.wer.sc.data.reader.impl
             return dataReaderExtend.GetData(code, startDate, endDate, minBeforeBarCount, minAfterBarCount, period);
         }
 
-
+        public float GetLastEndPrice(string code, int date)
+        {
+            return dataReaderExtend.GetLastEndPrice(code, date);
+        }
     }
 }

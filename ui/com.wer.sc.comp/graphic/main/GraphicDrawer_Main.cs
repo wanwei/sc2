@@ -16,9 +16,9 @@ namespace com.wer.sc.comp.graphic
     {
         private GraphicDrawer_Switch_CandleReal graphicDrawer_Left;
         private GraphicDrawer_CurrentInfo graphicDrawer_Right;
-        private IGraphicController_Chart dataProvider;
+        private IGraphicData_Chart dataProvider;
 
-        public IGraphicController_Chart DataProvider
+        public IGraphicData_Chart DataProvider
         {
             get
             {

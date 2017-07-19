@@ -7,7 +7,7 @@
     <ProjectGuid>{1576ABF4-6E4E-4ADA-8A88-8F4544BD9870}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.wer.sc.comp.test</RootNamespace>
+    <RootNamespace>com.wer.sc.comp</RootNamespace>
     <AssemblyName>com.wer.sc.comp.test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -68,15 +68,57 @@
     <Compile Include="FrmGraphicDrawer_Candle2.Designer.cs">
       <DependentUpon>FrmGraphicDrawer_Candle2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmGraphicDrawer_CurrentInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_CurrentInfo.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_CurrentInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Real.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Real.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_Real.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Real2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Real2.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_Real2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Switch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Switch.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_Switch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Switch2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_Switch2.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_Switch2.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmTest.Designer.cs">
       <DependentUpon>FrmTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTestCross.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTestCross.Designer.cs">
+      <DependentUpon>FrmTestCross.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTestRegion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTestRegion.Designer.cs">
+      <DependentUpon>FrmTestRegion.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphicDrawer_Test.cs" />
-    <Compile Include="MockGraphicDataProvider.cs" />
-    <Compile Include="MockGraphicDataProvider_Real.cs" />
+    <Compile Include="MockGraphicData_Candle.cs" />
+    <Compile Include="MockGraphicData_Real.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -88,8 +130,29 @@
     <EmbeddedResource Include="FrmGraphicDrawer_Candle2.resx">
       <DependentUpon>FrmGraphicDrawer_Candle2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_CurrentInfo.resx">
+      <DependentUpon>FrmGraphicDrawer_CurrentInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_Real.resx">
+      <DependentUpon>FrmGraphicDrawer_Real.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_Real2.resx">
+      <DependentUpon>FrmGraphicDrawer_Real2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_Switch.resx">
+      <DependentUpon>FrmGraphicDrawer_Switch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_Switch2.resx">
+      <DependentUpon>FrmGraphicDrawer_Switch2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTestCross.resx">
+      <DependentUpon>FrmTestCross.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTestRegion.resx">
+      <DependentUpon>FrmTestRegion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +162,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

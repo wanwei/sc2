@@ -16,26 +16,20 @@ namespace com.wer.sc.strategy
             return mgr;
         }
 
-        //private static IStrategyMgr CreateDefaultPluginMgr()
-        //{
+        private static IStrategyMgr CreateDefaultPluginMgr()
+        {
+            string path = ScConfig.Instance.ScPath + "\\strategy\\";
+            return CreatePluginMgr(path);
+        }
 
-        //    //string dllPath = Assembly.GetExecutingAssembly().Location;
-        //    //Console.WriteLine(dllPath);
-        //    //FileInfo f = new FileInfo(dllPath);
-        //    //string path = f.DirectoryName + "\\plugin\\";
-        //    string path = ScConfig.Instance.ScPath + "\\strategy\\";
-        //    //Console.WriteLine(path);
-        //    return CreatePluginMgr(path);
-        //}
+        private static IStrategyMgr pluginMgr = CreateDefaultPluginMgr();
 
-        //private static IStrategyMgr pluginMgr = CreateDefaultPluginMgr();
-
-        //public static IStrategyMgr DefaultPluginMgr
-        //{
-        //    get
-        //    {
-        //        return pluginMgr;
-        //    }
-        //}
+        public static IStrategyMgr DefaultPluginMgr
+        {
+            get
+            {
+                return pluginMgr;
+            }
+        }
     }
 }
