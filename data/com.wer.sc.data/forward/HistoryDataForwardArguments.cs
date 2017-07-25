@@ -19,6 +19,16 @@ namespace com.wer.sc.data.forward
 
         private KLinePeriod forwardKLinePeriod;
 
+        public HistoryDataForwardArguments()
+        {
+        }
+
+        public HistoryDataForwardArguments(int startDate, int endDate, StrategyReferedPeriods referedPeriods, bool isTickForward, KLinePeriod forwardKLinePeriod)
+        {
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+
         public int StartDate
         {
             get

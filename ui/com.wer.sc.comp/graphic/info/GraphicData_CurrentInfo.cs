@@ -4,57 +4,53 @@ using System;
 
 namespace com.wer.sc.comp.graphic.info
 {
-    public class GraphicDataProvider_CurrentInfo : IGraphicData_CurrentInfo
+    public class GraphicData_CurrentInfo : IGraphicData_CurrentInfo
     {
         //private IDataNavigate navigate;
 
         //private IGraphicOperator_CurrentInfo graphicOperator;
 
-        private DetailInfo currentInfo;
+        private CurrentInfo detailInfo = new CurrentInfo();
 
-        public int CurrentTickIndex
+        private ITickData tickData;
+
+        private CurrentInfo currentInfo;
+
+        public GraphicData_CurrentInfo(CurrentInfo currentInfo, ITickData tickData)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            this.ChangeData(currentInfo, tickData);
         }
 
-        public GraphicDataProvider_CurrentInfo()
+        public CurrentInfo GetCurrentInfo()
         {
-            //this.navigate = fac.DataNavigate;
-            //this.graphicOperator = new GraphicOperator_CurrentInfo_Nav(navigate);
-        }
-
-        public DetailInfo GetCurrentInfo()
-        {
+            //ITickData tick = null;
             //CurrentInfo chartinfo = new CurrentInfo();
-            //ITickData tick = navigate.CurrentTickData;
-
-            ////List<RealDataInfo> reals = currentInfo.GetReal();
-            ////List<ChartInfo> charts = currentInfo.GetChart(ChartPeriod.DAY, 1);
-            //ITickBar tickChart = tick.GetBar(navigate.CurrentTickIndex);
+            ////ITickData tick = navigate.CurrentTickData;
+            //ITickBar tickBar = tick.GetCurrentBar();
+            //////List<RealDataInfo> reals = currentInfo.GetReal();
+            //////List<ChartInfo> charts = currentInfo.GetChart(ChartPeriod.DAY, 1);
+            ////ITickBar tickChart = tick.GetBar(navigate.CurrentTickIndex);
             //chartinfo.currentPrice = Math.Round(tick.Price, 2);
-            //chartinfo.currentHand = tickChart.Mount;
-            //chartinfo.totalHand = tickChart.TotalMount;
-            //chartinfo.totalHold = tickChart.Hold;
+            //chartinfo.currentHand = tickBar.Mount;
+            //chartinfo.totalHand = tickBar.TotalMount;
+            //chartinfo.totalHold = tickBar.Hold;
             //chartinfo.dailyAdd = 0;
             //chartinfo.outMount = 0;
             //chartinfo.outPercent = 0.5;
             //chartinfo.inMount = 0;
             //chartinfo.inPercent = 0.5;
 
-            ////RealDataInfo r = reals[reals.Count - 1];
-            ////ChartInfo chart = charts[0];
-            //ITimeLineData realData = navigate.CurrentRealData;
+            //////RealDataInfo r = reals[reals.Count - 1];
+            //////ChartInfo chart = charts[0];
+            ////ITimeLineData realData = navigate.CurrentRealData;
 
             //ITimeLineBar realChart = realData.GetCurrentBar();
             //chartinfo.upRange = Math.Round(realChart.UpRange, 2);
             //chartinfo.upPercent = realChart.UpPercent;
             //chartinfo.upSpeed = 0;
-            ////chartinfo.open = realData.StartPrice;
-            ////chartinfo.high = chart.HighPrice;
-            ////chartinfo.low = chart.LowPrice;
+            //chartinfo.open = realData.StartPrice;
+            //chartinfo.high = chart.HighPrice;
+            //chartinfo.low = chart.LowPrice;
             ////chartinfo.jsPrice = 0;
             ////chartinfo.lastJsPrice = Math.Round(r.LastJs, 2);
             ////double maxUprange = (int)(r.LastJs * 0.04);
@@ -80,14 +76,17 @@ namespace com.wer.sc.comp.graphic.info
         //    return graphicOperator;
         //}
 
-        public void ChangeData(DetailInfo currentInfo)
+        public void ChangeData(CurrentInfo currentInfo, ITickData tickData)
         {
-            this.currentInfo = currentInfo; 
+            this.currentInfo = currentInfo;
+            this.tickData = tickData;
         }
 
         public ITickData GetCurrentTickData()
         {
-            throw new NotImplementedException();
+            return tickData;
         }
+
+
     }
 }

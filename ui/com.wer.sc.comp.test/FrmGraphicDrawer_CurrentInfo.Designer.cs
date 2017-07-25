@@ -32,9 +32,10 @@
             // 
             // FrmGraphicDrawer_CurrentInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 435);
+            this.ClientSize = new System.Drawing.Size(436, 600);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmGraphicDrawer_CurrentInfo";
             this.Text = "FrmGraphicDrawer_CurrentInfo";
             this.ResumeLayout(false);

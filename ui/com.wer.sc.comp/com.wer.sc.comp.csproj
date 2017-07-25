@@ -69,8 +69,8 @@
     <Compile Include="graphic\candle\GraphicDrawer_Candle_Abstract.cs" />
     <Compile Include="graphic\candle\GraphicDrawer_CandleMount.cs" />
     <Compile Include="graphic\candle\GraphicData_Candle.cs" />
-    <Compile Include="graphic\DetailInfo.cs" />
-    <Compile Include="graphic\info\GraphicDataProvider_CurrentInfo.cs" />
+    <Compile Include="graphic\CurrentInfo.cs" />
+    <Compile Include="graphic\info\GraphicData_CurrentInfo.cs" />
     <Compile Include="graphic\IGraphicData_CurrentInfo.cs" />
     <Compile Include="graphic\info\GraphicDrawer_CurrentInfo.cs" />
     <Compile Include="graphic\main\GraphicDrawer_Switch_CandleReal.cs" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using com.wer.sc.data;
 using com.wer.sc.data.realtime;
 using com.wer.sc.strategy;
+using System.Timers;
 
 namespace com.wer.sc.data.forward.impl
 {
@@ -21,10 +22,10 @@ namespace com.wer.sc.data.forward.impl
         private int endDate;
 
         private StrategyReferedPeriods referedPeriods;
-        
+
         private ForwardPeriod forwardPeriod;
 
-        private IHistoryDataForward_Code klineDataForward;
+        private IHistoryDataForward_Code historyDataForward;
 
         public HistoryDataForward_Code(IDataReader dataReader, string code, HistoryDataForwardArguments args)
         {
@@ -38,12 +39,11 @@ namespace com.wer.sc.data.forward.impl
             this.referedPeriods = args.ReferedPeriods;
             this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
 
-            Dictionary<KLinePeriod, KLineData_RealTime> allKLineData;
-            allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
+            Dictionary<KLinePeriod, KLineData_RealTime> allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
             for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
             {
                 KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
-                IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, period);
+                IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, 500, 100, period);
                 KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
                 allKLineData.Add(period, klineData_RealTime);
             }
@@ -54,17 +54,17 @@ namespace com.wer.sc.data.forward.impl
             IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
             if (args.IsTickForward)
             {
-                this.klineDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData,  allTradingDays, args.ForwardKLinePeriod);
+                this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
             }
             else
             {
                 KLinePeriod mainPeriod = args.ForwardKLinePeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-                this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
+                this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
             }
 
-            this.klineDataForward.OnTick += KlineDataForward_OnTick;
-            this.klineDataForward.OnBar += KlineDataForward_OnBar;
+            this.historyDataForward.OnTick += KlineDataForward_OnTick;
+            this.historyDataForward.OnBar += KlineDataForward_OnBar;
         }
 
         private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
@@ -83,7 +83,7 @@ namespace com.wer.sc.data.forward.impl
         {
             get
             {
-                return klineDataForward.Time;
+                return historyDataForward.Time;
             }
         }
 
@@ -100,37 +100,59 @@ namespace com.wer.sc.data.forward.impl
         public IKLineData GetKLineData(KLinePeriod period)
         {
             //return allKLineData[period];
-            return klineDataForward.GetKLineData(period);
+            return historyDataForward.GetKLineData(period);
         }
 
         public ITickData GetTickData()
         {
-            return klineDataForward.GetTickData();
+            return historyDataForward.GetTickData();
         }
 
         public ITimeLineData GetTimeLineData()
         {
-            return klineDataForward.GetTimeLineData();
+            return historyDataForward.GetTimeLineData();
         }
 
         public bool Forward()
         {
-            return klineDataForward.Forward();
+            return historyDataForward.Forward();
+        }
+
+        public void NavigateTo(double time)
+        {
+            this.historyDataForward.NavigateTo(time);
+        }
+
+        /// <summary>
+        /// 自动前进
+        /// </summary>
+        public void Play()
+        {
+            //只有按tick前进才能进入play模式
+            historyDataForward.Play();
+        }
+
+        /// <summary>
+        /// 停止自动前进
+        /// </summary>
+        public void Pause()
+        {
+            historyDataForward.Pause();
         }
 
         public bool IsEnd
         {
-            get { return klineDataForward.IsEnd; }
+            get { return historyDataForward.IsEnd; }
         }
 
         public bool IsDayEnd
         {
-            get { return klineDataForward.IsDayEnd; }
+            get { return historyDataForward.IsDayEnd; }
         }
 
         public bool IsPeriodEnd(KLinePeriod klinePeriod)
         {
-            return klineDataForward.IsPeriodEnd(klinePeriod);
+            return historyDataForward.IsPeriodEnd(klinePeriod);
         }
 
         public ForwardPeriod ForwardPeriod
@@ -138,6 +160,22 @@ namespace com.wer.sc.data.forward.impl
             get
             {
                 return forwardPeriod;
+            }
+        }
+
+        public int StartDate
+        {
+            get
+            {
+                return startDate;
+            }
+        }
+
+        public int EndDate
+        {
+            get
+            {
+                return endDate;
             }
         }
 

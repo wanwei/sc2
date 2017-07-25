@@ -26,7 +26,7 @@ namespace com.wer.sc.data.utils
 
             String timeFormat = timeStr.Substring(0, 4) + "-" + timeStr.Substring(4, 2) + "-" + timeStr.Substring(6, 2)
                 + " " + timeStr.Substring(9, 2) + ":" + timeStr.Substring(11, 2) + ":" + timeStr.Substring(13, 2);
-
+            
             return Convert.ToDateTime(timeFormat);
         }
 
@@ -34,6 +34,17 @@ namespace com.wer.sc.data.utils
         {
             return Double.Parse(string.Format("{0:yyyyMMdd.HHmmss}", dt));
         }
+
+        //public static double ConvertToDoubleTimeLong(DateTime dt)
+        //{
+        //    return Double.Parse(string.Format("{0:yyyyMMdd.HHmmssfff}", dt));
+        //}
+
+
+        //public static double AddMileSeconds(double time, int value)
+        //{
+        //    return ConvertToDoubleTimeLong(ConvertToDateTime(time).AddMilliseconds(value));
+        //}
 
         public static double AddSeconds(double time, int value)
         {

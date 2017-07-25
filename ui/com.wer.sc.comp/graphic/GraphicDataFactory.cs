@@ -1,4 +1,5 @@
-﻿using com.wer.sc.comp.graphic.timeline;
+﻿using com.wer.sc.comp.graphic.info;
+using com.wer.sc.comp.graphic.timeline;
 using com.wer.sc.data;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,9 @@ namespace com.wer.sc.comp.graphic
             return null;
         }
 
+        public static IGraphicData_CurrentInfo CreateGraphicData_CurrentInfo(CurrentInfo currentInfo, ITickData tickData)
+        {
+            return new GraphicData_CurrentInfo(currentInfo, tickData);
+        }
     }
 }

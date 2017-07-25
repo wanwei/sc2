@@ -10,6 +10,11 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigateFactory
     {
+        public static IDataNavigate_Code CreateDataNavigate(IDataReader dataReader, string code, double time, int startDate, int endDate)
+        {
+            return new DataNavigate_Code(dataReader, code, time, startDate, endDate);
+        }
+
         public static IDataNavigate_Code CreateDataNavigate(IDataReader dataReader, string code, double time)
         {
             return new DataNavigate_Code(dataReader, code, time);

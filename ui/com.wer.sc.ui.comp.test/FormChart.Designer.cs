@@ -45,6 +45,10 @@
             this.tb_KLineForward = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_ChangeTime = new System.Windows.Forms.ToolStripButton();
+            this.tb_ForwardSetting = new System.Windows.Forms.ToolStripButton();
+            this.tb_BackwordTime = new System.Windows.Forms.ToolStripButton();
+            this.tb_Play = new System.Windows.Forms.ToolStripButton();
+            this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
             this.compChart1 = new com.wer.sc.ui.comp.CompChart();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +74,11 @@
             this.tb_KLineBackward,
             this.tb_KLineForward,
             this.toolStripSeparator1,
-            this.tb_ChangeTime});
+            this.tb_ChangeTime,
+            this.tb_ForwardSetting,
+            this.tb_BackwordTime,
+            this.tb_Play,
+            this.tb_ForwordTime});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(906, 45);
@@ -114,9 +122,10 @@
             // 
             this.tb_Refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tb_Refresh.Image = ((System.Drawing.Image)(resources.GetObject("tb_Refresh.Image")));
+            this.tb_Refresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tb_Refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_Refresh.Name = "tb_Refresh";
-            this.tb_Refresh.Size = new System.Drawing.Size(24, 42);
+            this.tb_Refresh.Size = new System.Drawing.Size(28, 42);
             this.tb_Refresh.Text = "刷新";
             this.tb_Refresh.Click += new System.EventHandler(this.tb_Refresh_Click);
             // 
@@ -228,11 +237,56 @@
             // 
             this.tb_ChangeTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tb_ChangeTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_ChangeTime.Image")));
+            this.tb_ChangeTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tb_ChangeTime.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_ChangeTime.Name = "tb_ChangeTime";
-            this.tb_ChangeTime.Size = new System.Drawing.Size(24, 42);
+            this.tb_ChangeTime.Size = new System.Drawing.Size(28, 42);
             this.tb_ChangeTime.Text = "修改时间";
             this.tb_ChangeTime.Click += new System.EventHandler(this.tb_ChangeTime_Click);
+            // 
+            // tb_ForwardSetting
+            // 
+            this.tb_ForwardSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_ForwardSetting.Image = ((System.Drawing.Image)(resources.GetObject("tb_ForwardSetting.Image")));
+            this.tb_ForwardSetting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_ForwardSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_ForwardSetting.Name = "tb_ForwardSetting";
+            this.tb_ForwardSetting.Size = new System.Drawing.Size(28, 42);
+            this.tb_ForwardSetting.Text = "前进后退周期设定";
+            this.tb_ForwardSetting.Click += new System.EventHandler(this.tb_ForwardSetting_Click);
+            // 
+            // tb_BackwordTime
+            // 
+            this.tb_BackwordTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_BackwordTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_BackwordTime.Image")));
+            this.tb_BackwordTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_BackwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_BackwordTime.Name = "tb_BackwordTime";
+            this.tb_BackwordTime.Size = new System.Drawing.Size(28, 42);
+            this.tb_BackwordTime.Text = "指定周期后退";
+            this.tb_BackwordTime.Click += new System.EventHandler(this.tb_BackwordTime_Click);
+            // 
+            // tb_Play
+            // 
+            this.tb_Play.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_Play.Image = ((System.Drawing.Image)(resources.GetObject("tb_Play.Image")));
+            this.tb_Play.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_Play.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_Play.Name = "tb_Play";
+            this.tb_Play.Size = new System.Drawing.Size(28, 42);
+            this.tb_Play.Text = "播放";
+            this.tb_Play.Click += new System.EventHandler(this.tb_Play_Click);
+            // 
+            // tb_ForwordTime
+            // 
+            this.tb_ForwordTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_ForwordTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_ForwordTime.Image")));
+            this.tb_ForwordTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_ForwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_ForwordTime.Name = "tb_ForwordTime";
+            this.tb_ForwordTime.Size = new System.Drawing.Size(28, 42);
+            this.tb_ForwordTime.Text = "指定周期前进";
+            this.tb_ForwordTime.Click += new System.EventHandler(this.tb_ForwordTime_Click);
             // 
             // compChart1
             // 
@@ -280,6 +334,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tb_ChangeTime;
         private System.Windows.Forms.ToolStripButton tb_Refresh;
+        private System.Windows.Forms.ToolStripButton tb_BackwordTime;
+        private System.Windows.Forms.ToolStripButton tb_Play;
+        private System.Windows.Forms.ToolStripButton tb_ForwordTime;
+        private System.Windows.Forms.ToolStripButton tb_ForwardSetting;
     }
 }
 

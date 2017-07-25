@@ -98,8 +98,8 @@ namespace com.wer.sc.comp.test
 
         private void btCurrentInfo_Click(object sender, EventArgs e)
         {
-            //FrmGraphicDrawer_CurrentInfo frm = new FrmGraphicDrawer_CurrentInfo();
-            //frm.ShowDialog();
+            FrmGraphicDrawer_CurrentInfo frm = new FrmGraphicDrawer_CurrentInfo();
+            frm.ShowDialog();
         }
 
         private void btMain_Click(object sender, EventArgs e)

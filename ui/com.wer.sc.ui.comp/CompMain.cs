@@ -16,6 +16,7 @@ namespace com.wer.sc.ui.comp
         public CompMain()
         {
             InitializeComponent();
+            this.compCurrentInfo1.CompChartData = CompChart1.CompChartData;
         }
 
         public CompChart CompChart1

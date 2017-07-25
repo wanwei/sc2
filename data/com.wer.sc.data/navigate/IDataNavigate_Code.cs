@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.forward;
+using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,19 @@ namespace com.wer.sc.data.navigate
         /// </summary>
         /// <param name="time"></param>
         void NavigateTo(double time);
+
+        /// <summary>
+        /// 前进
+        /// </summary>
+        /// <returns></returns>
+        bool Forward(KLinePeriod forwardPeriod);
+
+        /// <summary>
+        /// 后退
+        /// </summary>
+        /// <param name="forwardPeriod"></param>
+        /// <returns></returns>
+        bool Backward(KLinePeriod forwardPeriod);
 
         /// <summary>
         /// 导航到

@@ -13,42 +13,34 @@ using com.wer.sc.data.utils;
 using com.wer.sc.utils;
 using com.wer.sc.comp.graphic.utils;
 using com.wer.sc.comp.graphic.timeline;
+using com.wer.sc.data.navigate;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.ui.comp
 {
     public partial class CompChart : UserControl
     {
+        private CompChartData compChartData;
+
+        public CompChartData CompChartData
+        {
+            get { return compChartData; }
+        }
+
+        //private IDataNavigate_Code dataNavigate_Code;
+
+        //private IHistoryDataForward_Code historyDataForward_Code;
+
+        //private IRealTimeDataReader currentRealTimeDataReader;
+
         //chart是否完成初始化
         private bool Inited = false;
 
         //是否需要刷新图像，如果修改了参数，则会刷新
-        private bool RePaintGraphic = false;
-
-        //数据中心地址
-        private string dataCenterUri;
-
-        //合约或股票代码
-        private string code;
-
-        //当前时间
-        private double time;
-
-        //显示的图表，默认是K线，可以切换成分时线或闪电线
-        private ChartType chartType = ChartType.KLine;
-
-        //K线每个柱子的宽度
-        private float kLineBlockWidth = 5;
-
-        //K线的周期
-        private int klinePeriod = 1;
-        //K线的周期
-        private KLineTimeType klineTimeType = KLineTimeType.MINUTE;
-
-        //给chart提供数据的数据读取器
-        private IDataReader dataReader;
-
-        //单支合约的开盘时间获取类
-        private ITradingSessionReader_Instrument tradingSessionReader;
+        public bool RePaintGraphic
+        {
+            get { return this.compChartData.IsDataRefresh; }
+        }
 
         //控件的画图器
         private GraphicDrawer_Switch graphicDrawer;
@@ -67,6 +59,16 @@ namespace com.wer.sc.ui.comp
         public CompChart()
         {
             InitializeComponent();
+            this.compChartData = new CompChartData();
+            this.compChartData.OnDataRefresh += CompChartData_OnDataRefresh;
+        }
+
+        public event DelegateOnDataRefresh OnDataRefresh;
+
+        private void CompChartData_OnDataRefresh(object sender, DataRefreshArgument arg)
+        {
+            if (OnDataRefresh != null)
+                OnDataRefresh(this, arg);
         }
 
         [Browsable(true), DisplayName("数据中心"), Description("数据中心"), Category("自定义属性"), DefaultValue(null)]
@@ -74,26 +76,27 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return dataCenterUri;
+                return this.compChartData.DataCenterUri;
             }
 
             set
             {
-                if (dataCenterUri == value)
-                    return;
-                try
-                {
-                    this.dataCenterUri = value;
-                    this.dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
-                    this.tradingSessionReader = null;
-                }
-                catch (Exception e)
-                {
-                    this.dataCenterUri = null;
-                    this.dataReader = null;
-                    MessageBox.Show("数据中心'" + dataCenterUri + "'创建失败");
-                }
-                this.RePaintGraphic = true;
+                this.compChartData.DataCenterUri = value;
+                //if (dataCenterUri == value)
+                //    return;
+                //try
+                //{
+                //    this.dataCenterUri = value;
+                //    this.dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
+                //    this.tradingSessionReader = null;
+                //}
+                //catch (Exception e)
+                //{
+                //    this.dataCenterUri = null;
+                //    this.dataReader = null;
+                //    MessageBox.Show("数据中心'" + dataCenterUri + "'创建失败");
+                //}
+                //this.RePaintGraphic = true;
             }
         }
 
@@ -102,15 +105,12 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return code;
+                return compChartData.Code;
             }
 
             set
             {
-                if (code == value)
-                    return;
-                code = value;
-                this.RePaintGraphic = true;
+                this.compChartData.Code = value;
             }
         }
 
@@ -119,15 +119,12 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return chartType;
+                return compChartData.ChartType;
             }
 
             set
             {
-                if (chartType == value)
-                    return;
-                chartType = value;
-                this.RePaintGraphic = true;
+                this.compChartData.ChartType = value;
             }
         }
 
@@ -136,15 +133,12 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return time;
+                return compChartData.Time;
             }
 
             set
             {
-                if (time == value)
-                    return;
-                time = value;
-                this.RePaintGraphic = true;
+                this.compChartData.Time = value;
             }
         }
 
@@ -153,32 +147,26 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return kLineBlockWidth;
+                return this.compChartData.KLineBlockWidth;
             }
 
             set
             {
-                if (kLineBlockWidth == value)
-                    return;
-                kLineBlockWidth = value;
-                this.RePaintGraphic = true;
+                this.compChartData.KLineBlockWidth = value;
             }
         }
 
-        [Browsable(true), DisplayName("K线周期"), Description("K线周期"), Category("自定义属性"), DefaultValue(1)]
+        [Browsable(true), DisplayName("K线周期"), Description("K线周期"), Category("自定义属性")]
         public int KlinePeriod
         {
             get
             {
-                return klinePeriod;
+                return this.compChartData.KlinePeriod;
             }
 
             set
             {
-                if (klinePeriod == value)
-                    return;
-                klinePeriod = value;
-                this.RePaintGraphic = true;
+                this.compChartData.KlinePeriod = value;
             }
         }
 
@@ -187,37 +175,33 @@ namespace com.wer.sc.ui.comp
         {
             get
             {
-                return klineTimeType;
+                return this.compChartData.KlineTimeType;
             }
 
             set
             {
-                if (klineTimeType == value)
-                    return;
-                klineTimeType = value;
-                this.RePaintGraphic = true;
+                this.compChartData.KlineTimeType = value;
             }
         }
 
-        public ITradingSessionReader_Instrument TradingSessionReader
+        public ForwardPeriod ForwardPeriod
         {
             get
             {
-                if (dataReader == null)
-                    return null;
-                if (tradingSessionReader != null)
-                {
-                    if (tradingSessionReader.GetInstrument() == code)
-                        return tradingSessionReader;
-                }
-                this.tradingSessionReader = dataReader.CreateTradingSessionReader(code);
-                return tradingSessionReader;
+                return this.compChartData.ForwardPeriod;
+            }
+
+            set
+            {
+                this.compChartData.ForwardPeriod = value;
             }
         }
 
         public void Forward(int length)
         {
-            if (this.chartType != ChartType.KLine)
+            if (this.ChartType != ChartType.KLine)
+                return;
+            if (this.graphicData_Candle == null)
                 return;
             IKLineData klineData = this.graphicData_Candle.GetKLineData();
             int endIndex = klineData.BarPos;
@@ -231,13 +215,25 @@ namespace com.wer.sc.ui.comp
 
         public void Backward(int length)
         {
-            if (this.chartType != ChartType.KLine)
+            if (this.ChartType != ChartType.KLine)
+                return;
+            if (this.graphicData_Candle == null)
                 return;
             int realLength = this.graphicData_Candle.StartIndex > length ? length : 0;
             if (realLength == 0)
                 return;
             this.graphicData_Candle.EndIndex -= realLength;
             this.graphicDrawer.Paint();
+        }
+
+        public void ForwardTime()
+        {
+            this.compChartData.ForwardTime();
+        }
+
+        public void BackwardTime()
+        {
+            this.compChartData.BackwardTime();
         }
 
         public void PaintChart()
@@ -247,7 +243,7 @@ namespace com.wer.sc.ui.comp
 
         private void CompChart_Paint(object sender, PaintEventArgs e)
         {
-            if (!CheckData())
+            if (!this.compChartData.CheckData())
             {
                 PaintEmpty();
                 return;
@@ -264,23 +260,23 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        private bool CheckData()
-        {
-            if (dataCenterUri == null)
-                return false;
-            if (time == 0)
-                return false;
-            if (code == null)
-                return false;
-            if (klinePeriod <= 0)
-                return false;
-            return true;
-        }
+        //private bool CheckData()
+        //{
+        //    if (dataCenterUri == null)
+        //        return false;
+        //    if (time == 0)
+        //        return false;
+        //    if (code == null)
+        //        return false;
+        //    if (klinePeriod <= 0)
+        //        return false;
+        //    return true;
+        //}
 
         private void PaintEmpty()
         {
             Graphics g = this.CreateGraphics();
-            Rectangle rect = this.DisplayRectangle;            
+            Rectangle rect = this.DisplayRectangle;
             g.FillRectangle(new SolidBrush(Color.Black), rect);
             SolidBrush brush = new SolidBrush(Color.White);
             SolidBrush redbrush = new SolidBrush(Color.Red);
@@ -292,15 +288,15 @@ namespace com.wer.sc.ui.comp
             g.DrawString("数据无法正常显示，参数：", MyFontTitle, redbrush, new PointF(x, y));
             y += 30;
             int between = 25;
-            g.DrawString("数据中心地址: " + GetObjectStr(dataCenterUri), MyFont1, brush, new PointF(x, y));
+            g.DrawString("数据中心地址: " + GetObjectStr(DataCenterUri), MyFont1, brush, new PointF(x, y));
             y += between;
-            g.DrawString("合约或股票ID: " + GetObjectStr(code), MyFont1, brush, new PointF(x, y));
+            g.DrawString("合约或股票ID: " + GetObjectStr(Code), MyFont1, brush, new PointF(x, y));
             y += between;
-            g.DrawString("时间: " + GetObjectStr(time), MyFont1, brush, new PointF(x, y));
+            g.DrawString("时间: " + GetObjectStr(Time), MyFont1, brush, new PointF(x, y));
             y += between;
             g.DrawString("图表类型: " + GetObjectStr(ChartType), MyFont1, brush, new PointF(x, y));
             y += between;
-            g.DrawString("K线周期: " + GetObjectStr(new KLinePeriod(klineTimeType, klinePeriod)), MyFont1, brush, new PointF(x, y));
+            g.DrawString("K线周期: " + GetObjectStr(new KLinePeriod(KlineTimeType, KlinePeriod)), MyFont1, brush, new PointF(x, y));
         }
 
         private string GetObjectStr(Object obj)
@@ -316,20 +312,20 @@ namespace com.wer.sc.ui.comp
                     return;
                 try
                 {
-                    if (this.dataReader == null)
-                        return;
+                    //if (this.dataReader == null)
+                    //    return;
 
                     this.graphicDrawer = new GraphicDrawer_Switch();
-                    if (this.TradingSessionReader == null)
-                        return;
-                    int date = TradingSessionReader.GetTradingDay(time);
-                    if (date < 0)
-                        return;
+                    //if (this.TradingSessionReader == null)
+                    //    return;
+                    //int date = TradingSessionReader.GetTradingDay(time);
+                    //if (date < 0)
+                    //    return;
 
-                    GraphicDrawer_Candle drawer_Candle = InitGraphicDrawer_Candle(date);
+                    GraphicDrawer_Candle drawer_Candle = InitGraphicDrawer_Candle();
                     if (drawer_Candle == null)
                         return;
-                    GraphicDrawer_TimeLine drawer_TimeLine = InitGraphicDrawer_TimeLine(date);
+                    GraphicDrawer_TimeLine drawer_TimeLine = InitGraphicDrawer_TimeLine();
                     if (drawer_TimeLine == null)
                         return;
 
@@ -359,27 +355,22 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        private GraphicDrawer_Candle InitGraphicDrawer_Candle(int date)
+        private GraphicDrawer_Candle InitGraphicDrawer_Candle()
         {
             this.drawer_Candle = new GraphicDrawer_Candle();
-            KLinePeriod period = new KLinePeriod(this.klineTimeType, this.klinePeriod);
-            IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
-            if (klineData == null)
-                return null;
-            int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, time);
-            klineData.BarPos = barPos;
-
+            KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
+            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
             this.graphicData_Candle = GraphicDataFactory.CreateGraphicData_Candle(klineData, 0, klineData.BarPos);
             drawer_Candle.DataProvider = graphicData_Candle;
             return this.drawer_Candle;
         }
 
-        private GraphicDrawer_TimeLine InitGraphicDrawer_TimeLine(int date)
+        private GraphicDrawer_TimeLine InitGraphicDrawer_TimeLine()
         {
             this.drawer_TimeLine = new GraphicDrawer_TimeLine();
-            ITimeLineData timeLineData = dataReader.TimeLineDataReader.GetData(code, date);
+            ITimeLineData timeLineData = compChartData.CurrentRealTimeDataReader.GetTimeLineData();
 
-            int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
+            int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, Time);
             timeLineData.BarPos = barPos;
 
             this.graphicData_TimeLine = GraphicDataFactory.CreateGraphicData_TimeLine(timeLineData);
@@ -389,46 +380,58 @@ namespace com.wer.sc.ui.comp
 
         private void RefreshData()
         {
-            int date = this.tradingSessionReader.GetTradingDay(time);
-            if (date < 0)
-                return;
-            if (this.chartType == ChartType.KLine)
+            //int date = this.tradingSessionReader.GetTradingDay(time);
+            //if (date < 0)
+            //    return;
+            if (this.ChartType == ChartType.KLine)
                 RefreshCandleDrawer();
-            else if (this.chartType == ChartType.TimeLine)
+            else if (this.ChartType == ChartType.TimeLine)
                 RefreshTimeLineDrawer();
-            else if (this.chartType == ChartType.Tick)
+            else if (this.ChartType == ChartType.Tick)
                 RefreshTickDrawer();
 
             this.graphicDrawer.Paint();
-            this.RePaintGraphic = false;
+            //this.RePaintGraphic = false;
         }
 
         private void RefreshCandleDrawer()
         {
-            int date = TradingSessionReader.GetTradingDay(time);
-            KLinePeriod period = new KLinePeriod(this.klineTimeType, this.klinePeriod);
-            IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
-            if (klineData == null)
+            try
             {
-                MessageBox.Show("未能找到" + code + " -" + date + "的" + period + "周期K线数据");
-                return;
-            }
+                KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
+                IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
+                //int date = TradingSessionReader.GetTradingDay(time);            
+                //IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
+                if (klineData == null)
+                {
+                    MessageBox.Show("未能找到" + Code + " -" + Time + "的" + period + "周期K线数据");
+                    return;
+                }
 
-            int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, time);
-            klineData.BarPos = barPos;
-            graphicData_Candle.ChangeData(klineData);
-            graphicData_Candle.EndIndex = klineData.BarPos;
-            this.graphicDrawer.Switch(0);
+                //int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, Time);
+                //klineData.BarPos = barPos;
+                graphicData_Candle.ChangeData(klineData);
+                graphicData_Candle.EndIndex = klineData.BarPos;
+                this.graphicDrawer.Switch(0);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             //this.graphicDrawer.Paint();
         }
 
         private void RefreshTimeLineDrawer()
         {
-            int date = TradingSessionReader.GetTradingDay(time);
-            ITimeLineData timeLineData = dataReader.TimeLineDataReader.GetData(code, date);
+            //KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
+            //IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
 
-            int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
-            timeLineData.BarPos = barPos;
+            //int date = TradingSessionReader.GetTradingDay(time);
+            ITimeLineData timeLineData = compChartData.CurrentRealTimeDataReader.GetTimeLineData();
+            //  dataReader.TimeLineDataReader.GetData(code, date);
+
+            //int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
+            //timeLineData.BarPos = barPos;
 
             this.graphicData_TimeLine = GraphicDataFactory.CreateGraphicData_TimeLine(timeLineData);
             drawer_TimeLine.DataProvider = graphicData_TimeLine;
@@ -439,6 +442,16 @@ namespace com.wer.sc.ui.comp
         private void RefreshTickDrawer()
         {
 
+        }
+
+        public void Play()
+        {
+            this.compChartData.Play();
+        }
+
+        public void Pause()
+        {
+            this.compChartData.Pause();
         }
     }
 

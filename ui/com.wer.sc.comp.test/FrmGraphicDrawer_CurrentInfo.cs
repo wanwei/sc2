@@ -22,8 +22,9 @@ namespace com.wer.sc.comp.test
             GraphicDrawer_CurrentInfo drawer = new GraphicDrawer_CurrentInfo();
 
             IDataReader fac = DataReaderFactory.CreateDataReader(@"E:\SCDATA\CNFUTURES");
-            IGraphicData_CurrentInfo dataProvider = new GraphicDataProvider_CurrentInfo();
-            //dataProvider.GetOperator().Change("m13", 20150106.094510);
+            //GraphicData_CurrentInfo dataProvider = new GraphicData_CurrentInfo();
+            
+            ////dataProvider.GetOperator().Change("m13", 20150106.094510);
             //drawer.DataProvider = dataProvider;
             //drawer.BindControl(this);
             //IGraphicChartRight 

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data.reader.impl;
+using com.wer.sc.data.store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace com.wer.sc.data.reader
         /// <returns></returns>
         public static IDataReader CreateDataReader(string dataCenterUri)
         {
+            if (!DataStoreFactory.CheckDataStore(dataCenterUri))
+                return null;
             return new DataReader(dataCenterUri);
         }
 

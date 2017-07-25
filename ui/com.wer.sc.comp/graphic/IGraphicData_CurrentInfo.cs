@@ -9,12 +9,23 @@ namespace com.wer.sc.comp.graphic
 {
     public interface IGraphicData_CurrentInfo : IGraphicData
     {
-        DetailInfo GetCurrentInfo();
+        /// <summary>
+        /// 得到当前信息
+        /// </summary>
+        /// <returns></returns>
+        CurrentInfo GetCurrentInfo();
 
+        /// <summary>
+        /// 得到当前的tick数据
+        /// </summary>
+        /// <returns></returns>
         ITickData GetCurrentTickData();
 
-        int CurrentTickIndex { get; }
-
-        void ChangeData(DetailInfo currentInfo);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentInfo"></param>
+        /// <param name="tickData"></param>
+        void ChangeData(CurrentInfo currentInfo, ITickData tickData);
     }
 }

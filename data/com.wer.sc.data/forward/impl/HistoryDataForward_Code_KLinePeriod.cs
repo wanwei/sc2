@@ -121,6 +121,22 @@ namespace com.wer.sc.data.forward.impl
             }
         }
 
+        public int StartDate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int EndDate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public bool Forward()
         {
             if (isEnd)
@@ -236,6 +252,28 @@ namespace com.wer.sc.data.forward.impl
             bar.Hold = klineBar.Hold;
 
             klineData.SetRealTimeData(bar);
+        }
+
+        public void NavigateTo(double time)
+        {
+
+        }
+
+        /// <summary>
+        /// 自动前进
+        /// </summary>
+        public void Play()
+        {
+            //play模式只是为了还原当时场景
+            //所以按照K线周期前进不需要支持play
+        }
+
+        /// <summary>
+        /// 停止自动前进
+        /// </summary>
+        public void Pause()
+        {
+
         }
 
         public ITimeLineData GetTimeLineData()

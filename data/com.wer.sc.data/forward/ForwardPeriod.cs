@@ -42,5 +42,21 @@ namespace com.wer.sc.data.forward
                 return klineForwardPeriod;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if ((obj is ForwardPeriod))
+                return false;
+
+            ForwardPeriod fp = (ForwardPeriod)obj;
+            return this.isTickForward == fp.isTickForward && this.klineForwardPeriod == fp.klineForwardPeriod;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.klineForwardPeriod.GetHashCode() * 10 + isTickForward.GetHashCode();
+        }
     }
 }

@@ -51,5 +51,15 @@ namespace com.wer.sc.comp
             this.marginRight = marginRight;
             this.marginBottom = marginBottom;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(MarginLeft).Append(",");
+            sb.Append(MarginTop).Append(",");
+            sb.Append(MarginRight).Append(",");
+            sb.Append(MarginBottom);
+            return sb.ToString();
+        }
     }
 }

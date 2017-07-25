@@ -58,6 +58,12 @@
     <Compile Include="FormChart.Designer.cs">
       <DependentUpon>FormChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormForwardSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormForwardSetting.Designer.cs">
+      <DependentUpon>FormForwardSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <EmbeddedResource Include="FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormForwardSetting.resx">
+      <DependentUpon>FormForwardSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +110,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -116,6 +126,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1EE9E83B-FD37-42FA-A263-EEE93479AD45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
       <Name>com.wer.sc.plugin</Name>
@@ -128,6 +142,66 @@
       <Project>{9d4c7345-2142-4f0e-956b-e9d9528d8652}</Project>
       <Name>com.wer.sc.ui.comp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backword.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backwordtime.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\changetime.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forward.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forwardtime.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_1h.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_5.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_5s.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_15.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_15s.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kline_day.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switchkline.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switchtick.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switchtimeline.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forwardsetting.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forwardsetting1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

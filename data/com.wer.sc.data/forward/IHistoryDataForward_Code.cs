@@ -26,6 +26,22 @@ namespace com.wer.sc.data.forward
         bool Forward();
 
         /// <summary>
+        /// 导航
+        /// </summary>
+        /// <param name="time"></param>
+        void NavigateTo(double time);
+
+        /// <summary>
+        /// 自动前进
+        /// </summary>
+        void Play();
+
+        /// <summary>
+        /// 停止自动前进
+        /// </summary>
+        void Pause();
+
+        /// <summary>
         /// 每次前进的周期
         /// </summary>
         ForwardPeriod ForwardPeriod { get; }
@@ -46,6 +62,16 @@ namespace com.wer.sc.data.forward
         /// <param name="klinePeriod"></param>
         /// <returns></returns>
         bool IsPeriodEnd(KLinePeriod klinePeriod);
+
+        /// <summary>
+        /// 得到起始日期
+        /// </summary>
+        int StartDate { get; }
+
+        /// <summary>
+        /// 得到结束日期
+        /// </summary>
+        int EndDate { get; }
 
         /// <summary>
         /// 

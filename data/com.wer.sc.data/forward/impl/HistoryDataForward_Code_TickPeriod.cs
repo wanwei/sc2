@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.navigate;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
 using com.wer.sc.data.transfer;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace com.wer.sc.data.forward.impl
 {
@@ -53,6 +55,9 @@ namespace com.wer.sc.data.forward.impl
 
             InitDaySplitter(dataReader, code);
             InitData();
+
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
         }
 
         private void InitDaySplitter(IDataReader dataReader, string code)
@@ -165,6 +170,22 @@ namespace com.wer.sc.data.forward.impl
             }
         }
 
+        public int StartDate
+        {
+            get
+            {
+                return tradingDays[0];
+            }
+        }
+
+        public int EndDate
+        {
+            get
+            {
+                return tradingDays[tradingDays.Count - 1];
+            }
+        }
+
         public bool Forward()
         {
             if (isEnd)
@@ -208,7 +229,7 @@ namespace com.wer.sc.data.forward.impl
         {
             if (OnTick != null)
                 OnTick(this, currentTickData, currentTickData.BarPos);
-            if (OnBar != null)
+            if (OnBar != null && forwardPeriod.KlineForwardPeriod != null)
             {
                 bool isForwardPeriodEnd = dic_KLinePeriod_IsEnd[forwardPeriod.KlineForwardPeriod];
                 if (isForwardPeriodEnd)
@@ -368,6 +389,77 @@ namespace com.wer.sc.data.forward.impl
                     timeLineData.SetRealTimeData(timeLineBar, timeLineData.BarPos);
                 }
             }
+        }
+
+        public void NavigateTo(double time)
+        {
+            IDataNavigate_Code dataNav = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
+            this.currentTimeLineData = (TimeLineData_RealTime)dataNav.GetTimeLineData();
+            this.currentTickData = (TickData)dataNav.GetTickData();
+            KLinePeriod[] periods = this.dic_Period_KLineData.Keys.ToArray();
+            for (int i = 0; i < periods.Length; i++)
+            {
+                KLinePeriod period = periods[i];
+                this.dic_Period_KLineData[period] = (KLineData_RealTime)dataNav.GetKLineData(period);
+            }
+        }
+
+        private System.Timers.Timer timer = new System.Timers.Timer(250);
+
+        private double forwardTime;
+
+        private int mileSecondCount = 0;
+
+        /// <summary>
+        /// 自动前进
+        /// </summary>
+        public void Play()
+        {
+            //this.Forward();
+            this.forwardTime = GetTickData().Time;            
+            //this.NavigateTo(forwardTime);
+            this.timer.Enabled = true;
+            this.timer.Start();
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            bool canForward = true;
+            if (this.currentTickData == null)
+            {
+                this.Pause();
+                return;
+            }
+            int barPos = currentTickData.BarPos;
+            int nextBarPos = barPos + 1;
+            if (nextBarPos >= currentTickData.Length)
+            {
+                canForward = this.Forward();
+            }
+            else
+            {
+                mileSecondCount++;
+                if (mileSecondCount == 4)
+                {
+                    forwardTime = TimeUtils.AddSeconds(forwardTime, 1);
+                    mileSecondCount = 0;
+                }
+                if (forwardTime >= currentTickData.Arr_Time[nextBarPos])
+                {
+                    canForward = this.Forward();
+                }
+            }
+            if (!canForward)
+                this.Pause();
+        }
+
+        /// <summary>
+        /// 停止自动前进
+        /// </summary>
+        public void Pause()
+        {
+            this.timer.Enabled = false;
+            this.forwardTime = -1;
         }
 
         public ITimeLineData GetTimeLineData()

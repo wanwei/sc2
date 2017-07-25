@@ -56,8 +56,10 @@
     <Compile Include="datacenter\TestDataCenterManager.cs" />
     <Compile Include="forward\CommonData.cs" />
     <Compile Include="forward\impl\TestHistoryDataForward_Code_KLinePeriod.cs" />
+    <Compile Include="forward\impl\TestHistoryDataForward_Code_Play.cs" />
     <Compile Include="forward\impl\TestHistoryDataForward_Code_TickPeriod.cs" />
     <Compile Include="forward\impl\TestHistoryDataForward_Code.cs" />
+    <Compile Include="forward\impl\TestHistoryDataForward_Code_TickPeriod_Play.cs" />
     <Compile Include="market\impl\TestAccountPosition.cs" />
     <Compile Include="market\impl\TestAccountTodayOrder.cs" />
     <Compile Include="market\impl\TestAccountTrade.cs" />

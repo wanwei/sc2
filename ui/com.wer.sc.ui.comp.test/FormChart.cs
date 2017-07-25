@@ -108,7 +108,7 @@ namespace com.wer.sc.ui.comp.test
         {
             FormTime ft = new FormTime(this.compChart1.Time);
             ft.StartPosition = FormStartPosition.CenterParent;
-            
+
             DialogResult result = ft.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -121,6 +121,44 @@ namespace com.wer.sc.ui.comp.test
         {
             //if (this.compChart1.ChartType == ChartType.KLine)
             //    this.compChart1.kl
+        }
+
+        private bool isPlaying = false;
+
+        private void tb_Play_Click(object sender, EventArgs e)
+        {
+            if (isPlaying)
+            {
+                Image img = Image.FromHbitmap(Properties.Resources.play.ToBitmap().GetHbitmap());
+                tb_Play.Image = img;
+                this.isPlaying = false;
+            }
+            else
+            {
+                Image img = Image.FromHbitmap(Properties.Resources.pause.ToBitmap().GetHbitmap());
+                tb_Play.Image = img;
+                this.isPlaying = true;
+            }
+        }
+
+        private void tb_Pause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_ForwordTime_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_BackwordTime_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_ForwardSetting_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

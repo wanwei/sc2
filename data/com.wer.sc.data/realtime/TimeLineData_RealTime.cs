@@ -68,6 +68,31 @@ namespace com.wer.sc.data.realtime
             SetRealTimeData(chart, BarPos);
         }
 
+        public override string Code
+        {
+            get
+            {
+                return timeLineData.Code;
+            }
+
+            set
+            {
+                
+            }
+        }
+
+        public override float YesterdayEnd
+        {
+            get
+            {
+                return timeLineData.YesterdayEnd;
+            }
+
+            set
+            {
+                
+            }
+        }
 
         #region 完整数据信息
 

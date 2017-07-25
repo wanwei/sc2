@@ -68,7 +68,7 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
-        private GraphicMarginInfo margin = new GraphicMarginInfo(0, 20, 60, 0);
+        private GraphicMarginInfo margin = new GraphicMarginInfo(0, 0, 0, 0);
 
         public GraphicMarginInfo MarginInfo
         {

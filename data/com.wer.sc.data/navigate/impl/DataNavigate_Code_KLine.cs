@@ -11,6 +11,10 @@ namespace com.wer.sc.data.navigate.impl
 {
     public class DataNavigate_Code_KLine
     {
+        private int startDate;
+
+        private int endDate;
+
         private IDataReader dataReader;
 
         private string code;
@@ -29,12 +33,19 @@ namespace com.wer.sc.data.navigate.impl
 
         private ITradingSessionReader_Instrument sessionReader;
 
-        public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod)
+        public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod) : this(dataReader, code, time, klinePeriod, -1, -1)
+        {
+
+        }
+
+        public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod, int startDate, int endDate)
         {
             this.dataReader = dataReader;
             this.code = code;
             this.klinePeriod = klinePeriod;
             this.sessionReader = dataReader.CreateTradingSessionReader(code);
+            this.startDate = startDate;
+            this.endDate = endDate;
             this.ChangeTime(time);
         }
 

@@ -53,5 +53,15 @@ namespace com.wer.sc.comp
             this.paddingRight = paddingRight;
             this.paddingBottom = paddingBottom;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(PaddingLeft).Append(",");
+            sb.Append(PaddingTop).Append(",");
+            sb.Append(PaddingRight).Append(",");
+            sb.Append(PaddingBottom);
+            return sb.ToString();
+        }
     }
 }

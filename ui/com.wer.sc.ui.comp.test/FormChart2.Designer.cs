@@ -45,8 +45,21 @@
             this.tb_KLineForward = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_ChangeTime = new System.Windows.Forms.ToolStripButton();
+            this.tb_ForwardSetting = new System.Windows.Forms.ToolStripButton();
+            this.tb_BackwordTime = new System.Windows.Forms.ToolStripButton();
+            this.tb_Play = new System.Windows.Forms.ToolStripButton();
+            this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tb_CodeList = new System.Windows.Forms.ToolStripButton();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据中心ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lbTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.compMain1 = new com.wer.sc.ui.comp.CompMain();
             this.toolStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -70,8 +83,14 @@
             this.tb_KLineBackward,
             this.tb_KLineForward,
             this.toolStripSeparator1,
-            this.tb_ChangeTime});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.tb_ChangeTime,
+            this.tb_ForwardSetting,
+            this.tb_BackwordTime,
+            this.tb_Play,
+            this.tb_ForwordTime,
+            this.toolStripSeparator2,
+            this.tb_CodeList});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(906, 45);
             this.toolStrip1.TabIndex = 3;
@@ -114,9 +133,10 @@
             // 
             this.tb_Refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tb_Refresh.Image = ((System.Drawing.Image)(resources.GetObject("tb_Refresh.Image")));
+            this.tb_Refresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tb_Refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_Refresh.Name = "tb_Refresh";
-            this.tb_Refresh.Size = new System.Drawing.Size(24, 42);
+            this.tb_Refresh.Size = new System.Drawing.Size(28, 42);
             this.tb_Refresh.Text = "刷新";
             this.tb_Refresh.Click += new System.EventHandler(this.tb_Refresh_Click);
             // 
@@ -228,19 +248,127 @@
             // 
             this.tb_ChangeTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tb_ChangeTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_ChangeTime.Image")));
+            this.tb_ChangeTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tb_ChangeTime.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_ChangeTime.Name = "tb_ChangeTime";
-            this.tb_ChangeTime.Size = new System.Drawing.Size(24, 42);
+            this.tb_ChangeTime.Size = new System.Drawing.Size(28, 42);
             this.tb_ChangeTime.Text = "修改时间";
             this.tb_ChangeTime.Click += new System.EventHandler(this.tb_ChangeTime_Click);
             // 
+            // tb_ForwardSetting
+            // 
+            this.tb_ForwardSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_ForwardSetting.Image = ((System.Drawing.Image)(resources.GetObject("tb_ForwardSetting.Image")));
+            this.tb_ForwardSetting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_ForwardSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_ForwardSetting.Name = "tb_ForwardSetting";
+            this.tb_ForwardSetting.Size = new System.Drawing.Size(28, 42);
+            this.tb_ForwardSetting.Text = "前进后退周期设定";
+            this.tb_ForwardSetting.Click += new System.EventHandler(this.tb_ForwardSetting_Click);
+            // 
+            // tb_BackwordTime
+            // 
+            this.tb_BackwordTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_BackwordTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_BackwordTime.Image")));
+            this.tb_BackwordTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_BackwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_BackwordTime.Name = "tb_BackwordTime";
+            this.tb_BackwordTime.Size = new System.Drawing.Size(28, 42);
+            this.tb_BackwordTime.Text = "指定周期后退";
+            this.tb_BackwordTime.Click += new System.EventHandler(this.tb_BackwordTime_Click);
+            // 
+            // tb_Play
+            // 
+            this.tb_Play.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_Play.Image = ((System.Drawing.Image)(resources.GetObject("tb_Play.Image")));
+            this.tb_Play.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_Play.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_Play.Name = "tb_Play";
+            this.tb_Play.Size = new System.Drawing.Size(28, 42);
+            this.tb_Play.Text = "播放";
+            this.tb_Play.Click += new System.EventHandler(this.tb_Play_Click);
+            // 
+            // tb_ForwordTime
+            // 
+            this.tb_ForwordTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_ForwordTime.Image = ((System.Drawing.Image)(resources.GetObject("tb_ForwordTime.Image")));
+            this.tb_ForwordTime.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_ForwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_ForwordTime.Name = "tb_ForwordTime";
+            this.tb_ForwordTime.Size = new System.Drawing.Size(28, 42);
+            this.tb_ForwordTime.Text = "指定周期前进";
+            this.tb_ForwordTime.Click += new System.EventHandler(this.tb_ForwordTime_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 45);
+            // 
+            // tb_CodeList
+            // 
+            this.tb_CodeList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_CodeList.Image = ((System.Drawing.Image)(resources.GetObject("tb_CodeList.Image")));
+            this.tb_CodeList.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_CodeList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_CodeList.Name = "tb_CodeList";
+            this.tb_CodeList.Size = new System.Drawing.Size(28, 42);
+            this.tb_CodeList.Text = "股票列表";
+            this.tb_CodeList.Click += new System.EventHandler(this.tb_ForwardSetting_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.数据ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(906, 28);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 数据ToolStripMenuItem
+            // 
+            this.数据ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.数据中心ToolStripMenuItem});
+            this.数据ToolStripMenuItem.Name = "数据ToolStripMenuItem";
+            this.数据ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
+            this.数据ToolStripMenuItem.Text = "数据";
+            // 
+            // 数据中心ToolStripMenuItem
+            // 
+            this.数据中心ToolStripMenuItem.Name = "数据中心ToolStripMenuItem";
+            this.数据中心ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.数据中心ToolStripMenuItem.Text = "数据中心";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lbTime});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 599);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.statusStrip1.Size = new System.Drawing.Size(906, 25);
+            this.statusStrip1.TabIndex = 7;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lbTime
+            // 
+            this.lbTime.Name = "lbTime";
+            this.lbTime.Size = new System.Drawing.Size(45, 20);
+            this.lbTime.Text = "Time";
+            // 
             // compMain1
             // 
+            this.compMain1.Code = "m1601";
+            this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compMain1.Location = new System.Drawing.Point(0, 45);
+            this.compMain1.KLineBlockWidth = 5F;
+            this.compMain1.Location = new System.Drawing.Point(0, 73);
             this.compMain1.Name = "compMain1";
-            this.compMain1.Size = new System.Drawing.Size(906, 579);
-            this.compMain1.TabIndex = 5;
+            this.compMain1.Size = new System.Drawing.Size(906, 526);
+            this.compMain1.TabIndex = 8;
+            this.compMain1.Time = 20150626.093D;
             // 
             // FormChart2
             // 
@@ -248,12 +376,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 624);
             this.Controls.Add(this.compMain1);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormChart2";
             this.Text = "测试图表控件";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -275,7 +411,18 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tb_ChangeTime;
         private System.Windows.Forms.ToolStripButton tb_Refresh;
+        private System.Windows.Forms.ToolStripButton tb_CodeList;
+        private System.Windows.Forms.ToolStripButton tb_BackwordTime;
+        private System.Windows.Forms.ToolStripButton tb_Play;
+        private System.Windows.Forms.ToolStripButton tb_ForwordTime;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 数据ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据中心ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton tb_ForwardSetting;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
         private CompMain compMain1;
+        private System.Windows.Forms.ToolStripStatusLabel lbTime;
     }
 }
 

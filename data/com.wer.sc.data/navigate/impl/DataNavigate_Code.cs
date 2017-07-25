@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.forward;
+using com.wer.sc.data.reader;
 using com.wer.sc.data.utils;
 using com.wer.sc.utils;
 using System;
@@ -14,6 +15,10 @@ namespace com.wer.sc.data.navigate.impl
     /// </summary>
     public class DataNavigate_Code : IDataNavigate_Code
     {
+        private int startDate;
+
+        private int endDate;
+
         private IDataReader dataReader;
 
         private string code;
@@ -36,13 +41,53 @@ namespace com.wer.sc.data.navigate.impl
             this.NavigateTo(time);
         }
 
+        public DataNavigate_Code(IDataReader dataReader, string code, double time, int startDate, int endDate)
+        {
+            this.dataReader = dataReader;
+            this.code = code;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.NavigateTo(time);
+        }
+
         public void NavigateTo(double time)
         {
             double prevTime = this.time;
             bool timeChage = this.time == time;
             this.time = time;
-            if (timeChage)
+            if (timeChage && OnNavigateTo != null)
                 OnNavigateTo(this, new DataNavigateEventArgs(prevTime, time));
+        }
+
+        /// <summary>
+        /// 前进
+        /// </summary>
+        /// <returns></returns>
+        public bool Forward(KLinePeriod forwardPeriod)
+        {
+            IKLineData klineData = GetKLineData(forwardPeriod);
+            int nextBarPos = klineData.BarPos + 1;
+            if (nextBarPos >= klineData.Length)
+                return false;
+            double time = klineData.Arr_Time[nextBarPos];
+            NavigateTo(time);
+            return true;
+        }
+
+        /// <summary>
+        /// 后退
+        /// </summary>
+        /// <param name="forwardPeriod"></param>
+        /// <returns></returns>
+        public bool Backward(KLinePeriod forwardPeriod)
+        {
+            IKLineData klineData = GetKLineData(forwardPeriod);
+            int prevBarPos = klineData.BarPos - 1;
+            if (prevBarPos < 0)
+                return false;
+            double time = klineData.Arr_Time[prevBarPos];
+            NavigateTo(time);
+            return true;
         }
 
         public double Time

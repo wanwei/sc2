@@ -58,8 +58,8 @@ namespace com.wer.sc.comp.graphic.timeline
         internal GraphicDrawer_TimeLineMount drawer_mount;
         public GraphicDrawer_TimeLine()
         {
-            this.MarginInfo = new GraphicMarginInfo(0, 20, 20, 20);
-            this.Padding = new GraphicPaddingInfo(80, 0, 0, 0);
+            this.MarginInfo = new GraphicMarginInfo(0, 20, 0, 20);
+            this.Padding = new GraphicPaddingInfo(60, 0, 50, 0);
             this.drawer_chart = new GraphicDrawer_TimeLineChart();
             this.drawer_chart.MarginInfo = new GraphicMarginInfo(0, 0, 0, 1);
             this.drawer_chart.Padding = new GraphicPaddingInfo(0, 20, 0, 0);

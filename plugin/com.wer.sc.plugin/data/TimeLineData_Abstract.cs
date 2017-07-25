@@ -18,7 +18,7 @@ namespace com.wer.sc.data
         private float yesterdayEnd;
 
 
-        public String Code
+        public virtual String Code
         {
             get { return code; }
             set { code = value; }
@@ -36,7 +36,7 @@ namespace com.wer.sc.data
             this.BarPos = index;
         }
 
-        public float YesterdayEnd
+        public virtual float YesterdayEnd
         {
             get
             {
