@@ -41,7 +41,7 @@ namespace com.wer.sc.data.forward.impl
             for (int i = 0; i < codes.Count; i++)
             {
                 string code = codes[i];
-                HistoryDataForward_Code forward = new HistoryDataForward_Code(dataReader, code, args);
+                HistoryDataForward_Code forward = new HistoryDataForward_Code(dataReader, code, args);                
                 dic_Code_Forward.Add(code, forward);
                 forwardList.Add(forward);
                 forward.OnBar += Forward_OnBar;

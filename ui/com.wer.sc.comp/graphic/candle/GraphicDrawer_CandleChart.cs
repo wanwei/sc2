@@ -69,10 +69,13 @@ namespace com.wer.sc.comp.graphic
             {
                 return;
             }
+
             DataProvider.BlockMount = (int)(this.DisplayRect.Width / BlockWidth);
             if (DataProvider.BlockMount <= 0)
                 return;
             //LogHelper.Info(GetType(), "K线显示数量" + DataProvider.BlockMount.ToString());
+            if (priceMapping != null)
+                this.PriceRect = priceMapping.PriceRect;
             DrawFrame(graphic);
             DrawCandle(graphic);
             base.Paint(graphic);
@@ -131,7 +134,7 @@ namespace com.wer.sc.comp.graphic
         //#endregion
     }
 
-  
+
 
     class CandleFrameDrawer
     {

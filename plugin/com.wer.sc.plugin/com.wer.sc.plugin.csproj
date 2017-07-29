@@ -133,9 +133,11 @@
     <Compile Include="data\KLinePeriod.cs" />
     <Compile Include="data\utils\TimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="strategy\StrategyHelper.cs" />
     <Compile Include="strategy\StrategyInfo.cs" />
     <Compile Include="strategy\StrategyMgr.cs" />
     <Compile Include="strategy\StrategyMgrFactory.cs" />
+    <Compile Include="strategy\StrategyParameter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

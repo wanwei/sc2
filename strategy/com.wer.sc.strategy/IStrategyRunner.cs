@@ -17,6 +17,9 @@ namespace com.wer.sc.strategy
         /// <param name="strategy"></param>
         void SetStrategy(IStrategy strategy);
 
+        /// <summary>
+        /// 执行策略
+        /// </summary>
         void Run();
     }
 }

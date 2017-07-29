@@ -96,7 +96,7 @@ namespace com.wer.sc.strategy
                     break;
                 subPaths = dic_Parent_SubPath[rootPath];
                 cnt = subPaths.Count;
-            }            
+            }
             return rootPath;
         }
 
@@ -269,7 +269,7 @@ namespace com.wer.sc.strategy
                 return null;
 
             strategyAssembly.fullPath = path;
-            strategyAssembly.assemblyName = ass.GetName().Name;            
+            strategyAssembly.assemblyName = ass.GetName().Name;
             Type[] types = ass.GetTypes();
             for (int i = 0; i < types.Length; i++)
             {
@@ -291,7 +291,8 @@ namespace com.wer.sc.strategy
                         string id = (String)attribute.GetType().GetProperty("ID").GetValue(attribute);
                         String name = (String)attribute.GetType().GetProperty("Name").GetValue(attribute);
                         string desc = (String)attribute.GetType().GetProperty("Desc").GetValue(attribute);
-                        StrategyInfo strategyInfo = new StrategyInfo(strategyAssembly, classType, id, name, desc);
+                        string spath = (String)attribute.GetType().GetProperty("Path").GetValue(attribute);
+                        StrategyInfo strategyInfo = new StrategyInfo(strategyAssembly, classType, id, name, desc, spath);
                         strategyAssembly.AddStrategyInfo(strategyInfo);
                     }
                 }

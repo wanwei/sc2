@@ -9,15 +9,15 @@ namespace com.wer.sc.strategy
 {
     public class StrategyRunnerArguments
     {
-        string code;
+        private string code;
 
-        int startDate;
+        private int startDate;
 
-        int endDate;
+        private int endDate;
 
-        bool isTickForward;
+        private bool isTickForward;
 
-        KLinePeriod forwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
+        private KLinePeriod forwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
         public string Code
         {

@@ -12,7 +12,7 @@ namespace com.wer.sc.strategy.cnfutures
     /// 策略：
     /// 看之前的趋势
     /// </summary>
-    [Strategy("STRATEGY.CNFUTURES", "MA指标", "MA指标")]
+    [Strategy("STRATEGY.CNFUTURES", "期货策略", "期货策略", "策略")]
     public class Strategy_CnFutures : IStrategy
     {
         private StrategyReferedPeriods refered;

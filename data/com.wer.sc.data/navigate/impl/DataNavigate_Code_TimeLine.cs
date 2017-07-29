@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
 using com.wer.sc.data.utils;
 using System;
@@ -11,7 +12,8 @@ namespace com.wer.sc.data.navigate.impl
 {
     public class DataNavigate_Code_TimeLine
     {
-        private IDataReader dataReader;
+        private IDataPackage dataPackage;
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -26,10 +28,17 @@ namespace com.wer.sc.data.navigate.impl
         private TimeLineData_RealTime timeLineData_RealTime;
 
         private ITickData tickData;
+        public DataNavigate_Code_TimeLine(IDataPackage dataPackage, double time)
+        {
+            this.dataPackage = dataPackage;
+            //this.dataReader = dataReader;        
+            this.sessionReader = dataPackage.GetTradingSessionReader();
+            this.ChangeTime(time);
+        }
 
         public DataNavigate_Code_TimeLine(IDataReader dataReader, string code, double time)
         {
-            this.dataReader = dataReader;
+            //this.dataReader = dataReader;
             this.code = code;
             this.sessionReader = dataReader.CreateTradingSessionReader(code);
             this.ChangeTime(time);
@@ -62,7 +71,7 @@ namespace com.wer.sc.data.navigate.impl
         }
 
         private TimeLineData_RealTime GetTimeLineData_RealTime(TimeLineData timeLineData, ITickData tickData, double time)
-        {            
+        {
             this.timeLineData_RealTime = new TimeLineData_RealTime(this.timeLineData);
             int timeLineIndex = this.timeLineData_RealTime.IndexOfTime(time);
 
@@ -70,8 +79,8 @@ namespace com.wer.sc.data.navigate.impl
             double klineTime = timeLineData_RealTime.Arr_Time[timeLineIndex];
             int startTickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, klineTime);
 
-            IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 1, 0, KLinePeriod.KLinePeriod_1Day);
-            float lastEndPrice = dataReader.KLineDataReader.GetLastEndPrice(code, date);
+            //IKLineData klineData = dataPackage.GetKLineData(date, date, 1, 0, KLinePeriod.KLinePeriod_1Day);
+            float lastEndPrice = dataPackage.GetLastEndPrice(date);
             TimeLineBar klineBar = GetTimeLineBar(tickData, startTickIndex, tickIndex, lastEndPrice);
             timeLineData_RealTime.SetRealTimeData(klineBar, timeLineIndex);
             return timeLineData_RealTime;
@@ -79,8 +88,8 @@ namespace com.wer.sc.data.navigate.impl
 
         private TimeLineData_RealTime GetTimeLineData_RealTime(int date, double time)
         {
-            this.tickData = dataReader.TickDataReader.GetTickData(code, date);
-            this.timeLineData = (TimeLineData)dataReader.TimeLineDataReader.GetData(code, date);
+            this.tickData = dataPackage.GetTickData(date);
+            this.timeLineData = (TimeLineData)dataPackage.GetTimeLineData(date);
             return GetTimeLineData_RealTime(timeLineData, tickData, time);
         }
 

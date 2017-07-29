@@ -5,6 +5,7 @@ using com.wer.sc.data;
 using com.wer.sc.data.realtime;
 using com.wer.sc.strategy;
 using System.Timers;
+using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.data.forward.impl
 {
@@ -13,7 +14,7 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code : IHistoryDataForward_Code
     {
-        private IDataReader dataReader;
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -29,21 +30,72 @@ namespace com.wer.sc.data.forward.impl
 
         public HistoryDataForward_Code(IDataReader dataReader, string code, HistoryDataForwardArguments args)
         {
-            this.dataReader = dataReader;
-            this.code = code;
-            if (dataReader.TradingDayReader.IsTrade(args.StartDate))
-                this.startDate = args.StartDate;
-            else
-                this.startDate = dataReader.TradingDayReader.GetNextTradingDay(args.StartDate);
-            this.endDate = args.EndDate;
-            this.referedPeriods = args.ReferedPeriods;
-            this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
+            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, args.StartDate, args.EndDate);
+            StrategyReferedPeriods referedPeriods = args.ReferedPeriods;
+            ForwardPeriod forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
+            this.Init(dataPackage, referedPeriods, forwardPeriod);
+            //return new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+        }
+
+        //public HistoryDataForward_Code(IDataReader dataReader, string code, HistoryDataForwardArguments args)
+        //{
+        //    this.dataReader = dataReader;
+        //    this.code = code;
+        //    if (dataReader.TradingDayReader.IsTrade(args.StartDate))
+        //        this.startDate = args.StartDate;
+        //    else
+        //        this.startDate = dataReader.TradingDayReader.GetNextTradingDay(args.StartDate);
+        //    this.endDate = args.EndDate;
+        //    this.referedPeriods = args.ReferedPeriods;
+        //    this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
+
+        //    Dictionary<KLinePeriod, KLineData_RealTime> allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
+        //    for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
+        //    {
+        //        KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
+        //        IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, 500, 100, period);
+        //        KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
+        //        allKLineData.Add(period, klineData_RealTime);
+        //    }
+
+        //    //ITimeLineData timelineData = this.dataReader.TimeLineDataReader.GetData(code, startDate);
+        //    //this.timeLineData_RealTime = new TimeLineData_RealTime(timelineData);
+
+        //    IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
+        //    if (args.IsTickForward)
+        //    {
+        //        //this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
+        //        this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataPackage, allKLineData, allTradingDays, args.ForwardKLinePeriod);
+        //    }
+        //    else
+        //    {
+        //        KLinePeriod mainPeriod = args.ForwardKLinePeriod;
+        //        KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
+        //        this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
+        //    }
+
+        //    this.historyDataForward.OnTick += KlineDataForward_OnTick;
+        //    this.historyDataForward.OnBar += KlineDataForward_OnBar;
+        //}
+
+        private IDataPackage dataPackage;
+
+        public HistoryDataForward_Code(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            Init(dataPackage, referedPeriods, forwardPeriod);
+        }
+
+        private void Init(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            this.dataPackage = dataPackage;
+            this.referedPeriods = referedPeriods;
+            this.forwardPeriod = forwardPeriod;
 
             Dictionary<KLinePeriod, KLineData_RealTime> allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
             for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
             {
                 KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
-                IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, 500, 100, period);
+                IKLineData klineData = this.dataPackage.GetKLineData(period);
                 KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
                 allKLineData.Add(period, klineData_RealTime);
             }
@@ -51,16 +103,17 @@ namespace com.wer.sc.data.forward.impl
             //ITimeLineData timelineData = this.dataReader.TimeLineDataReader.GetData(code, startDate);
             //this.timeLineData_RealTime = new TimeLineData_RealTime(timelineData);
 
-            IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
-            if (args.IsTickForward)
+            IList<int> allTradingDays = dataPackage.GetTradingDays();
+            if (forwardPeriod.IsTickForward)
             {
-                this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
+                //this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, forwardPeriod.KlineForwardPeriod);
+                this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataPackage, allKLineData, allTradingDays, forwardPeriod.KlineForwardPeriod);
             }
             else
             {
-                KLinePeriod mainPeriod = args.ForwardKLinePeriod;
+                KLinePeriod mainPeriod = forwardPeriod.KlineForwardPeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-                this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
+                this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
             }
 
             this.historyDataForward.OnTick += KlineDataForward_OnTick;
@@ -167,7 +220,7 @@ namespace com.wer.sc.data.forward.impl
         {
             get
             {
-                return startDate;
+                return dataPackage.StartDate;
             }
         }
 
@@ -175,7 +228,15 @@ namespace com.wer.sc.data.forward.impl
         {
             get
             {
-                return endDate;
+                return dataPackage.EndDate;
+            }
+        }
+
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return this.dataPackage;
             }
         }
 

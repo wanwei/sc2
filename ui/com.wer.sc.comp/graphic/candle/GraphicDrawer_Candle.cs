@@ -44,9 +44,19 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
-        public GraphicDrawer_CandleChart drawer_chart;
+        private GraphicDrawer_CandleChart drawer_chart;
+
+        public GraphicDrawer_CandleChart Drawer_Chart
+        {
+            get { return drawer_chart; }
+        }
 
         private GraphicDrawer_CandleMount drawer_mount;
+
+        public GraphicDrawer_CandleMount Drawer_Mount
+        {
+            get { return drawer_mount; }
+        }
 
         public GraphicDrawer_Candle()
         {
@@ -141,14 +151,14 @@ namespace com.wer.sc.comp.graphic
 
         public Pen GetPen()
         {
-            return drawer.drawer_chart.ColorConfig.Pen_CrossHair;
+            return drawer.Drawer_Chart.ColorConfig.Pen_CrossHair;
         }
 
         public PriceGraphicMapping PriceMapping
         {
             get
             {
-                return drawer.drawer_chart.PriceMapping;
+                return drawer.Drawer_Chart.PriceMapping;
             }
         }
 
@@ -219,7 +229,7 @@ namespace com.wer.sc.comp.graphic
         public bool DoMoveNext()
         {
             int lastIndex = drawer.DataProvider.GetKLineData().Length - 1;
-            if (this.drawer.drawer_chart.PriceMapping.PriceRect.PriceRight + 1 > lastIndex)
+            if (this.drawer.Drawer_Chart.PriceMapping.PriceRect.PriceRight + 1 > lastIndex)
                 return false;
             this.drawer.DataProvider.EndIndex++;
             return true;
@@ -227,7 +237,7 @@ namespace com.wer.sc.comp.graphic
 
         public bool DoMovePrev()
         {
-            if (this.drawer.drawer_chart.PriceMapping.PriceRect.PriceLeft - 1 < 0)
+            if (this.drawer.Drawer_Chart.PriceMapping.PriceRect.PriceLeft - 1 < 0)
                 return false;
             this.drawer.DataProvider.EndIndex--;
             return true;
@@ -250,7 +260,7 @@ namespace com.wer.sc.comp.graphic
 
         public Point GetCrossHairPoint(int selectIndex)
         {
-            PriceGraphicMapping priceMapping = this.drawer.drawer_chart.PriceMapping;
+            PriceGraphicMapping priceMapping = this.drawer.Drawer_Chart.PriceMapping;
             float x = priceMapping.CalcX(selectIndex);
             float y = priceMapping.CalcY(drawer.DataProvider.GetKLineData().Arr_End[selectIndex]);
             return new Point((int)x, (int)y);

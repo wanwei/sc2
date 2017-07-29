@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.forward;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.utils;
 using com.wer.sc.utils;
@@ -15,11 +16,13 @@ namespace com.wer.sc.data.navigate.impl
     /// </summary>
     public class DataNavigate_Code : IDataNavigate_Code
     {
+        private IDataPackage dataPackage;
+
         private int startDate;
 
         private int endDate;
 
-        private IDataReader dataReader;
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -34,16 +37,35 @@ namespace com.wer.sc.data.navigate.impl
         //当前分时线数据
         private DataNavigate_Code_TimeLine navigate_TimeLine;
 
+        public DataNavigate_Code(IDataPackage dataPackage, double time)
+        {
+            this.dataPackage = dataPackage;
+            this.NavigateTo(time);
+        }
+
         public DataNavigate_Code(IDataReader dataReader, string code, double time)
         {
-            this.dataReader = dataReader;
-            this.code = code;
+            int openDate = dataReader.CreateTradingSessionReader(code).GetRecentTradingDay(time);
+            ITradingDayReader tradingDayReader = dataReader.TradingDayReader;
+
+            int index = dataReader.TradingDayReader.GetTradingDayIndex(openDate);
+            //默认取前100天，后50天数据
+            int startIndex = index - 100;
+            startIndex = startIndex < 0 ? 0 : startIndex;
+            int startDate = tradingDayReader.GetTradingDay(startIndex);
+
+            int endIndex = index + 50;
+            if (endIndex >= tradingDayReader.GetAllTradingDays().Count)
+                endIndex = tradingDayReader.GetAllTradingDays().Count - 1;
+            int endDate = tradingDayReader.GetTradingDay(endIndex);
+
+            this.dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, startDate, endDate);
             this.NavigateTo(time);
         }
 
         public DataNavigate_Code(IDataReader dataReader, string code, double time, int startDate, int endDate)
         {
-            this.dataReader = dataReader;
+            this.dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, startDate, endDate);
             this.code = code;
             this.startDate = startDate;
             this.endDate = endDate;
@@ -106,11 +128,19 @@ namespace com.wer.sc.data.navigate.impl
             }
         }
 
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return this.dataPackage;
+            }
+        }
+
         public IKLineData GetKLineData(KLinePeriod period)
         {
             if (!dicNavigateKLine.ContainsKey(period))
             {
-                DataNavigate_Code_KLine navigate = new DataNavigate_Code_KLine(dataReader, code, time, period);
+                DataNavigate_Code_KLine navigate = new DataNavigate_Code_KLine(dataPackage, time, period);
                 dicNavigateKLine.Add(period, navigate);
             }
             DataNavigate_Code_KLine navigate_KLine = dicNavigateKLine[period];
@@ -123,7 +153,7 @@ namespace com.wer.sc.data.navigate.impl
         {
             if (navigate_Tick == null)
             {
-                navigate_Tick = new DataNavigate_Code_Tick(dataReader, code, time);
+                navigate_Tick = new DataNavigate_Code_Tick(dataPackage, time);
                 return navigate_Tick.GetTickData();
             }
             if (time != navigate_Tick.Time)
@@ -135,7 +165,7 @@ namespace com.wer.sc.data.navigate.impl
         {
             if (navigate_TimeLine == null)
             {
-                navigate_TimeLine = new DataNavigate_Code_TimeLine(dataReader, code, time);
+                navigate_TimeLine = new DataNavigate_Code_TimeLine(dataPackage, time);
                 return navigate_TimeLine.GetTimeLineData();
             }
             if (time != navigate_TimeLine.Time)

@@ -7,10 +7,8 @@ using System.Xml;
 
 namespace com.wer.sc.utils.param
 {
-    public class ParameterMeta //: IXmlExchange
+    public class ParameterMeta : IXmlExchange
     {
-
-
         public const char TYPE_BOOLEAN = ObjectUtils.TYPE_BOOLEAN;
 
         public const char TYPE_INTEGER = ObjectUtils.TYPE_INTEGER;
@@ -99,6 +97,16 @@ namespace com.wer.sc.utils.param
         public Object getOption()
         {
             return option;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            
         }
 
         //public void setOption(Object option)

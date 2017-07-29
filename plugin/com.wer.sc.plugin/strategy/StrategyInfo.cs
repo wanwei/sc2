@@ -10,7 +10,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略信息类
     /// </summary>
-    public class StrategyInfo 
+    public class StrategyInfo
     {
         private IStrategyAssembly strategyAssembly;
 
@@ -22,13 +22,16 @@ namespace com.wer.sc.strategy
 
         private string strategyDesc;
 
-        public StrategyInfo(IStrategyAssembly pluginAssembly, Type pluginClassType, string pluginID, string pluginName, string pluginDesc)
+        private string strategyPath;
+
+        public StrategyInfo(IStrategyAssembly pluginAssembly, Type pluginClassType, string pluginID, string pluginName, string pluginDesc, string strategyPath)
         {
             this.strategyAssembly = pluginAssembly;
             this.strategyClassType = pluginClassType;
             this.strategyID = pluginID;
             this.strategyName = pluginName;
             this.strategyDesc = pluginDesc;
+            this.strategyPath = strategyPath;
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace com.wer.sc.strategy
         {
             get { return strategyClassType; }
         }
-        
+
         /// <summary>
         /// 插件ID
         /// </summary>
@@ -80,13 +83,25 @@ namespace com.wer.sc.strategy
             }
         }
 
+        public string StrategyPath
+        {
+            get { return strategyPath; }
+        }
+
+        public IStrategy CreateStrategy()
+        {
+            Object obj = Activator.CreateInstance(strategyClassType);
+            return (IStrategy)obj;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(strategyClassType.FullName).Append(",");
             sb.Append(StrategyID).Append(",");
             sb.Append(StrategyName).Append(",");
-            sb.Append(StrategyDesc);
+            sb.Append(StrategyDesc).Append(",");
+            sb.Append(StrategyPath);
             return sb.ToString();
         }
     }

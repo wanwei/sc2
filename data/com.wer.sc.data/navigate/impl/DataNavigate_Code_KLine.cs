@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
 using com.wer.sc.data.utils;
 using System;
@@ -11,13 +12,15 @@ namespace com.wer.sc.data.navigate.impl
 {
     public class DataNavigate_Code_KLine
     {
-        private int startDate;
+        private IDataPackage dataPackage;
 
-        private int endDate;
+        //private int startDate;
 
-        private IDataReader dataReader;
+        //private int endDate;
 
-        private string code;
+        //private IDataReader dataReader;
+
+        //private string code;
 
         private double time;
 
@@ -33,6 +36,14 @@ namespace com.wer.sc.data.navigate.impl
 
         private ITradingSessionReader_Instrument sessionReader;
 
+        public DataNavigate_Code_KLine(IDataPackage dataPackage, double time, KLinePeriod klinePeriod) 
+        {
+            this.dataPackage = dataPackage;
+            this.klinePeriod = klinePeriod;
+            this.sessionReader = dataPackage.GetTradingSessionReader();
+            this.ChangeTime(time);
+        }
+
         public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod) : this(dataReader, code, time, klinePeriod, -1, -1)
         {
 
@@ -40,13 +51,13 @@ namespace com.wer.sc.data.navigate.impl
 
         public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod, int startDate, int endDate)
         {
-            this.dataReader = dataReader;
-            this.code = code;
-            this.klinePeriod = klinePeriod;
-            this.sessionReader = dataReader.CreateTradingSessionReader(code);
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.ChangeTime(time);
+            //this.dataReader = dataReader;
+            //this.code = code;
+            //this.klinePeriod = klinePeriod;
+            //this.sessionReader = dataReader.CreateTradingSessionReader(code);
+            //this.startDate = startDate;
+            //this.endDate = endDate;
+            //this.ChangeTime(time);
         }
 
         public double Time
@@ -77,21 +88,9 @@ namespace com.wer.sc.data.navigate.impl
 
         private KLineData_RealTime GetKLineData_RealTime(int date, double time)
         {
-            this.tickData = dataReader.TickDataReader.GetTickData(code, date);
-            this.klineData = GetKLineData(date, time);
+            this.tickData = dataPackage.GetTickData(date);
+            this.klineData = dataPackage.GetKLineData(klinePeriod);
             return GetKLineData_RealTime(klineData, tickData, time);
-        }
-
-        private IKLineData GetKLineData(int date, double time)
-        {
-            if (this.klinePeriod.PeriodType == KLineTimeType.SECOND)
-            {
-                return dataReader.KLineDataReader.GetData(code, date, date, klinePeriod);
-            }
-            else
-            {
-                return dataReader.KLineDataReader.GetData(code, date, date, 1000, 0, klinePeriod);
-            }
         }
 
         private KLineData_RealTime GetKLineData_RealTime(IKLineData klineData, ITickData tickData, double time)

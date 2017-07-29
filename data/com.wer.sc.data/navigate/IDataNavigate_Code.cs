@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.forward;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace com.wer.sc.data.navigate
     /// <summary>
     /// 数据导航接口
     /// </summary>
-    public interface IDataNavigate_Code : IRealTimeDataReader
+    public interface IDataNavigate_Code : IRealTimeDataReader, IDataPackageOwner
     {
         /// <summary>
         /// 将当前时间指定到time

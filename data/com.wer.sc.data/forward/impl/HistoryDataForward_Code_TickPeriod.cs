@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
@@ -18,7 +19,9 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code_TickPeriod : IHistoryDataForward_Code
     {
-        private IDataReader dataReader;
+        private IDataPackage dataPackage;
+
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -45,24 +48,49 @@ namespace com.wer.sc.data.forward.impl
         /// </summary>
         /// <param name="mainKLineData"></param>
         /// <param name="allKLineData"></param>
+        //public HistoryDataForward_Code_TickPeriod(IDataReader dataReader, string code, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IList<int> tradingDays, KLinePeriod forwardPeriod)
+        //{
+        //    this.dic_Period_KLineData = allKLineData;
+        //    this.dataReader = dataReader;
+        //    this.code = code;
+        //    this.tradingDays = tradingDays;
+        //    this.forwardPeriod = new ForwardPeriod(true, forwardPeriod);
+
+        //    InitDaySplitter(dataReader, code);
+        //    InitData();
+
+        //    timer.Elapsed += Timer_Elapsed;
+        //    timer.AutoReset = true;
+        //}
+
         public HistoryDataForward_Code_TickPeriod(IDataReader dataReader, string code, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IList<int> tradingDays, KLinePeriod forwardPeriod)
         {
+            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, tradingDays[0], tradingDays[tradingDays.Count - 1]);
+            Init(dataPackage, allKLineData, tradingDays, forwardPeriod);
+        }
+
+        public HistoryDataForward_Code_TickPeriod(IDataPackage dataPackage, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IList<int> tradingDays, KLinePeriod forwardPeriod)
+        {
+            Init(dataPackage, allKLineData, tradingDays, forwardPeriod);
+        }
+
+        private void Init(IDataPackage dataPackage, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, IList<int> tradingDays, KLinePeriod forwardPeriod)
+        {
+            this.dataPackage = dataPackage;
             this.dic_Period_KLineData = allKLineData;
-            this.dataReader = dataReader;
-            this.code = code;
             this.tradingDays = tradingDays;
             this.forwardPeriod = new ForwardPeriod(true, forwardPeriod);
 
-            InitDaySplitter(dataReader, code);
+            InitDaySplitter(dataPackage, code);
             InitData();
 
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
         }
 
-        private void InitDaySplitter(IDataReader dataReader, string code)
+        private void InitDaySplitter(IDataPackage dataReader, string code)
         {
-            ITradingSessionReader_Instrument sessionReader = dataReader.CreateTradingSessionReader(code);
+            ITradingSessionReader_Instrument sessionReader = dataReader.GetTradingSessionReader();
             this.dic_Period_DaySplitter = new Dictionary<KLinePeriod, KLineData_DaySplitter>();
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
@@ -75,7 +103,7 @@ namespace com.wer.sc.data.forward.impl
         private void InitData()
         {
             int currentTradingDay = tradingDays[0];
-            this.currentTickData = dataReader.TickDataReader.GetTickData(code, currentTradingDay);
+            this.currentTickData = (TickData)dataPackage.GetTickData(currentTradingDay);
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
                 KLineData_RealTime klineData = dic_Period_KLineData[period];
@@ -91,8 +119,8 @@ namespace com.wer.sc.data.forward.impl
             //    lastEndPrice = currentTickData.Arr_Price[0];
             //else
             //    lastEndPrice = lastDayklineData.End;
-            this.lastEndPrice = dataReader.KLineDataReader.GetLastEndPrice(code, currentTradingDay);
-            ITimeLineData timeLineData = dataReader.TimeLineDataReader.GetData(code, currentTradingDay);
+            this.lastEndPrice = dataPackage.GetLastEndPrice(currentTradingDay);
+            ITimeLineData timeLineData = dataPackage.GetTimeLineData(currentTradingDay);
             this.currentTimeLineData = new TimeLineData_RealTime(timeLineData);
             this.currentTimeLineData.SetRealTimeData(GetTimeLineBar(currentTickData, lastEndPrice));
         }
@@ -186,6 +214,14 @@ namespace com.wer.sc.data.forward.impl
             }
         }
 
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return this.dataPackage;
+            }
+        }
+
         public bool Forward()
         {
             if (isEnd)
@@ -263,13 +299,13 @@ namespace com.wer.sc.data.forward.impl
             if (this.currentTradingDayIndex >= tradingDays.Count)
                 return null;
             int currentTradingDay = tradingDays[currentTradingDayIndex];
-            return dataReader.TickDataReader.GetTickData(code, currentTradingDay);
+            return (TickData)dataPackage.GetTickData(currentTradingDay);
         }
 
         private TimeLineData_RealTime GetTodayTimeLineData()
         {
             int currentTradingDay = tradingDays[currentTradingDayIndex];
-            TimeLineData timeLineData = (TimeLineData)dataReader.TimeLineDataReader.GetData(code, currentTradingDay);
+            TimeLineData timeLineData = (TimeLineData)dataPackage.GetTimeLineData(currentTradingDay);
             return new TimeLineData_RealTime(timeLineData);
         }
 
@@ -393,7 +429,7 @@ namespace com.wer.sc.data.forward.impl
 
         public void NavigateTo(double time)
         {
-            IDataNavigate_Code dataNav = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
+            IDataNavigate_Code dataNav = DataNavigateFactory.CreateDataNavigate(dataPackage, time);
             this.currentTimeLineData = (TimeLineData_RealTime)dataNav.GetTimeLineData();
             this.currentTickData = (TickData)dataNav.GetTickData();
             KLinePeriod[] periods = this.dic_Period_KLineData.Keys.ToArray();
@@ -416,7 +452,7 @@ namespace com.wer.sc.data.forward.impl
         public void Play()
         {
             //this.Forward();
-            this.forwardTime = GetTickData().Time;            
+            this.forwardTime = GetTickData().Time;
             //this.NavigateTo(forwardTime);
             this.timer.Enabled = true;
             this.timer.Start();

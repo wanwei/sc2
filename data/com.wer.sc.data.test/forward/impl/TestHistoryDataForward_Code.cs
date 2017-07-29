@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using com.wer.sc.data.reader;
 using com.wer.sc.strategy;
 using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.data.forward.impl
 {
@@ -66,7 +67,9 @@ namespace com.wer.sc.data.forward.impl
             args.IsTickForward = useTickData;
             args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
-            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
+            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            //HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
+            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(dataPackage, referedPeriods, new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute));
             return realTimeReader;
         }
     }

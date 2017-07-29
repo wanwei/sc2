@@ -31,12 +31,49 @@ namespace com.wer.sc.ui.comp
         private void AddSubNodesByAssembly(TreeNode treeNode, IStrategyAssembly ass)
         {
             List<StrategyInfo> strategies = ass.GetAllStrategies();
+            InitPathStrategies(strategies);
+
+
+            List<string> pathList = dic_Path_Strategies.Keys.ToList();
+            pathList.Sort();
+            for (int i = 0; i < pathList.Count; i++)
+            {
+                string path = pathList[i];
+                List<StrategyInfo> strategiesInPath = dic_Path_Strategies[path];
+                TreeNode subNode = treeNode.Nodes.Add(path);
+                AddStrategies(subNode, strategiesInPath);
+            }
+        }
+
+        private void AddStrategies(TreeNode parentNode, List<StrategyInfo> strategies)
+        {
             for (int i = 0; i < strategies.Count; i++)
             {
                 StrategyInfo strategy = strategies[i];
                 string name = strategy.StrategyName;
-                TreeNode subNode = treeNode.Nodes.Add(name);
+                TreeNode subNode = parentNode.Nodes.Add(name);
                 subNode.Tag = strategy;
+            }
+        }
+
+        private Dictionary<string, List<StrategyInfo>> dic_Path_Strategies = new Dictionary<string, List<StrategyInfo>>();
+
+        private void InitPathStrategies(List<StrategyInfo> strategies)
+        {
+            for (int i = 0; i < strategies.Count; i++)
+            {
+                StrategyInfo strategy = strategies[i];
+                string path = strategy.StrategyPath;
+                if (!dic_Path_Strategies.ContainsKey(path))
+                {
+                    List<StrategyInfo> strategiesInPath = new List<StrategyInfo>();
+                    dic_Path_Strategies.Add(path, strategiesInPath);
+                    strategiesInPath.Add(strategy);
+                }
+                else
+                {
+                    dic_Path_Strategies[path].Add(strategy);
+                }
             }
         }
 

@@ -1,8 +1,10 @@
 ﻿using com.wer.sc.comp.graphic;
 using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.reader;
+using com.wer.sc.strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,10 @@ namespace com.wer.sc.ui.comp
     /// <summary>
     /// 组件数据提供类
     /// </summary>
-    public class CompChartData
+    public class CompChartData:IDataPackageOwner
     {
+        private IDataPackage dataPackage;
+
         private IDataReader dataReader;
 
         private bool isDataRefresh;
@@ -188,6 +192,7 @@ namespace com.wer.sc.ui.comp
                     dataNavigate_Code = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
             }
             dataNavigate_Code.NavigateTo(time);
+            this.dataPackage = dataNavigate_Code.DataPackage;
             return dataNavigate_Code;
         }
 
@@ -197,18 +202,26 @@ namespace com.wer.sc.ui.comp
                 return null;
             if (historyDataForward_CodePlaying == null)
             {
-                HistoryDataForwardArguments args = new HistoryDataForwardArguments();
-                int date = dataReader.CreateTradingSessionReader(code).GetTradingDay(time);
-                args.StartDate = date;
-                args.EndDate = date;
-                args.IsTickForward = true;
-                args.ReferedPeriods = new strategy.StrategyReferedPeriods();
-                args.ReferedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-                args.ReferedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
+                StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+                referedPeriods.UseTickData = true;
+                referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
+                referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
 
-                this.historyDataForward_CodePlaying = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataReader, code, args);
+                ForwardPeriod fp = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+
+                this.historyDataForward_CodePlaying = HistoryDataForwardFactory.CreateHistoryDataForward_Code(this.DataPackage, referedPeriods, fp);
+                //HistoryDataForwardArguments args = new HistoryDataForwardArguments();
+                //int date = dataReader.CreateTradingSessionReader(code).GetTradingDay(time);
+                //args.StartDate = date;
+                //args.EndDate = date;
+                //args.IsTickForward = true;
+                //args.ReferedPeriods = new strategy.StrategyReferedPeriods();
+                //args.ReferedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
+                //args.ReferedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
+
+                //this.historyDataForward_CodePlaying = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataReader, code, args);
                 this.historyDataForward_CodePlaying.NavigateTo(time);
-                this.historyDataForward_CodePlaying.OnTick += HistoryDataForward_Code_OnTick;
+                this.historyDataForward_CodePlaying.OnTick += HistoryDataForward_Code_OnTick;                
             }
             else
             {
@@ -303,6 +316,14 @@ namespace com.wer.sc.ui.comp
         public IGraphicData_CurrentInfo CurrentInfo
         {
             get { return null; }
+        }
+
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return dataPackage;
+            }
         }
     }
 

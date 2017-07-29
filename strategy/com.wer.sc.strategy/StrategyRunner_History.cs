@@ -1,4 +1,6 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using com.wer.sc.strategy.realtimereader;
 using com.wer.sc.utils;
@@ -27,9 +29,22 @@ namespace com.wer.sc.strategy
 
         private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
 
-        private RealTimeReader_Strategy realTimeReader;
+        //private RealTimeReader_Strategy realTimeReader;
 
         private StrategyRunnerArguments runnerArgs;
+
+        private IDataPackage dataPackage;
+
+        //private StrategyReferedPeriods referedPeriods;
+
+        private ForwardPeriod forwardPeriod;
+
+        public StrategyRunner_History(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            this.dataPackage = dataPackage;
+            this.referedPeriods = referedPeriods;
+            this.forwardPeriod = forwardPeriod;
+        }
 
         public StrategyRunner_History(IDataReader dataReader, StrategyRunnerArguments args)
         {
@@ -50,8 +65,16 @@ namespace com.wer.sc.strategy
                 return;
             isRunning = true;
 
-            RealTimeReader_StrategyArguments args = GetRealTimeReaderArgs();
-            RealTimeReader_Strategy realTimeReader = new RealTimeReader_Strategy(dataReader, args);
+            RealTimeReader_Strategy realTimeReader;
+            if (dataPackage == null)
+            {
+                RealTimeReader_StrategyArguments args = GetRealTimeReaderArgs();
+                realTimeReader = new RealTimeReader_Strategy(dataReader, args);
+            }
+            else
+            {
+                realTimeReader = new RealTimeReader_Strategy(dataPackage, referedPeriods, forwardPeriod);
+            }
             realTimeReader.OnBar += RealTimeReader_OnBar;
             realTimeReader.OnTick += RealTimeReader_OnTick;
 

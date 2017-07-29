@@ -44,6 +44,12 @@ namespace com.wer.sc.strategy.cnfutures.import
             }
         }
 
+        public Strategy_Ma()
+        {
+            this.period = KLinePeriod.KLinePeriod_1Minute;
+            this.length = 5;
+        }
+
         public Strategy_Ma(KLinePeriod klinePeriod, int length)
         {
             this.period = klinePeriod;
@@ -64,7 +70,6 @@ namespace com.wer.sc.strategy.cnfutures.import
             }
             this.maPrice.Add(total / (barPos - startPos + 1));
         }
-
 
         public void OnTick(IRealTimeDataReader currentData)
         {

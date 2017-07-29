@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.data.forward.impl
 {
@@ -14,7 +15,7 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code_KLinePeriod : IHistoryDataForward_Code
     {
-        private IDataReader dataReader;
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -33,9 +34,9 @@ namespace com.wer.sc.data.forward.impl
         /// </summary>
         /// <param name="mainKLineData"></param>
         /// <param name="allKLineData"></param>
-        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
+        public HistoryDataForward_Code_KLinePeriod(string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
         {
-            this.dataReader = dataReader;
+            //this.dataReader = dataReader;
             this.code = code;
             this.mainKLineData = mainKLineData;
             this.dic_Period_KLineData = allKLineData;
@@ -44,7 +45,7 @@ namespace com.wer.sc.data.forward.impl
             InitTimeLine();
         }
 
-        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Instrument tradingSessionReader) : this(dataReader, code, mainKLineData, allKLineData)
+        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Instrument tradingSessionReader) : this(code, mainKLineData, allKLineData)
         {
             this.daySplitter = new KLineData_DaySplitter(mainKLineData, tradingSessionReader);
             this.daySplitter.NextDay();
@@ -134,6 +135,14 @@ namespace com.wer.sc.data.forward.impl
             get
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return null;
             }
         }
 

@@ -54,6 +54,8 @@
     <Compile Include="Parameter.cs" />
     <Compile Include="param\KeyValue.cs" />
     <Compile Include="param\ParameterMeta.cs" />
+    <Compile Include="param\ParameterObject.cs" />
+    <Compile Include="param\ParameterObject_AbstractImpl.cs" />
     <Compile Include="TextExchange.cs" />
     <Compile Include="update\IUpdateHelper.cs" />
     <Compile Include="OpenTimeUtil.cs" />

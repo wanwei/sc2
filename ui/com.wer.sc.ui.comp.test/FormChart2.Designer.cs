@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChart2));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tb_SwitchTimeLine = new System.Windows.Forms.ToolStripButton();
@@ -56,10 +57,22 @@
             this.数据中心ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemExecute = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemArguments = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.bt_DrawLine = new System.Windows.Forms.ToolStripButton();
+            this.compStrategyTree1 = new com.wer.sc.ui.comp.CompStrategyTree();
             this.compMain1 = new com.wer.sc.ui.comp.CompMain();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -89,10 +102,11 @@
             this.tb_Play,
             this.tb_ForwordTime,
             this.toolStripSeparator2,
-            this.tb_CodeList});
+            this.tb_CodeList,
+            this.bt_DrawLine});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(906, 45);
+            this.toolStrip1.Size = new System.Drawing.Size(1063, 45);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -313,7 +327,7 @@
             this.tb_CodeList.Name = "tb_CodeList";
             this.tb_CodeList.Size = new System.Drawing.Size(28, 42);
             this.tb_CodeList.Text = "股票列表";
-            this.tb_CodeList.Click += new System.EventHandler(this.tb_ForwardSetting_Click);
+            this.tb_CodeList.Click += new System.EventHandler(this.tb_CodeList_Click);
             // 
             // menuStrip1
             // 
@@ -322,7 +336,7 @@
             this.数据ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(906, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1063, 28);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -345,10 +359,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbTime});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 599);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 601);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.statusStrip1.Size = new System.Drawing.Size(906, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1063, 25);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -358,15 +372,88 @@
             this.lbTime.Size = new System.Drawing.Size(45, 20);
             this.lbTime.Text = "Time";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 73);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.compStrategyTree1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.compMain1);
+            this.splitContainer1.Size = new System.Drawing.Size(1063, 528);
+            this.splitContainer1.SplitterDistance = 271;
+            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.TabIndex = 9;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExecute,
+            this.menuItemArguments,
+            this.menuItemRefresh});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(115, 82);
+            // 
+            // menuItemExecute
+            // 
+            this.menuItemExecute.Name = "menuItemExecute";
+            this.menuItemExecute.Size = new System.Drawing.Size(114, 26);
+            this.menuItemExecute.Text = "执行";
+            // 
+            // menuItemArguments
+            // 
+            this.menuItemArguments.Name = "menuItemArguments";
+            this.menuItemArguments.Size = new System.Drawing.Size(114, 26);
+            this.menuItemArguments.Text = "参数";
+            // 
+            // menuItemRefresh
+            // 
+            this.menuItemRefresh.Name = "menuItemRefresh";
+            this.menuItemRefresh.Size = new System.Drawing.Size(114, 26);
+            this.menuItemRefresh.Text = "刷新";
+            // 
+            // bt_DrawLine
+            // 
+            this.bt_DrawLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bt_DrawLine.Image = ((System.Drawing.Image)(resources.GetObject("bt_DrawLine.Image")));
+            this.bt_DrawLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bt_DrawLine.Name = "bt_DrawLine";
+            this.bt_DrawLine.Size = new System.Drawing.Size(24, 42);
+            this.bt_DrawLine.Text = "toolStripButton1";
+            this.bt_DrawLine.Click += new System.EventHandler(this.bt_DrawLine_Click);
+            // 
+            // compStrategyTree1
+            // 
+            this.compStrategyTree1.ContextMenuStrip = this.contextMenuStrip1;
+            this.compStrategyTree1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compStrategyTree1.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.compStrategyTree1.ForeColor = System.Drawing.Color.Yellow;
+            this.compStrategyTree1.Location = new System.Drawing.Point(0, 0);
+            this.compStrategyTree1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.compStrategyTree1.Name = "compStrategyTree1";
+            this.compStrategyTree1.Size = new System.Drawing.Size(271, 528);
+            this.compStrategyTree1.TabIndex = 0;
+            this.compStrategyTree1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.compStrategyTree1_MouseDoubleClick);
+            // 
             // compMain1
             // 
             this.compMain1.Code = "m1601";
             this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compMain1.KLineBlockWidth = 5F;
-            this.compMain1.Location = new System.Drawing.Point(0, 73);
+            this.compMain1.KlinePeriod = 0;
+            this.compMain1.KlineTimeType = com.wer.sc.data.KLineTimeType.SECOND;
+            this.compMain1.Location = new System.Drawing.Point(0, 0);
             this.compMain1.Name = "compMain1";
-            this.compMain1.Size = new System.Drawing.Size(906, 526);
+            this.compMain1.Size = new System.Drawing.Size(791, 528);
             this.compMain1.TabIndex = 8;
             this.compMain1.Time = 20150626.093D;
             // 
@@ -374,20 +461,26 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 624);
-            this.Controls.Add(this.compMain1);
+            this.ClientSize = new System.Drawing.Size(1063, 626);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormChart2";
             this.Text = "测试图表控件";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,6 +516,13 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private CompMain compMain1;
         private System.Windows.Forms.ToolStripStatusLabel lbTime;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private CompStrategyTree compStrategyTree1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuItemExecute;
+        private System.Windows.Forms.ToolStripMenuItem menuItemArguments;
+        private System.Windows.Forms.ToolStripMenuItem menuItemRefresh;
+        private System.Windows.Forms.ToolStripButton bt_DrawLine;
     }
 }
 

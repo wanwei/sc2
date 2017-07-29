@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="datapackage\DataPackageFactory.cs" />
+    <Compile Include="datapackage\IDataPackage.cs" />
+    <Compile Include="datapackage\IDataPackageOwner.cs" />
+    <Compile Include="datapackage\impl\DataPackage.cs" />
     <Compile Include="forward\ForwardPeriod.cs" />
     <Compile Include="forward\HistoryDataForwardFactory.cs" />
     <Compile Include="forward\IHistoryDataForward.cs" />

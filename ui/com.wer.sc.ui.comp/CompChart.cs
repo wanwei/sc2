@@ -48,6 +48,11 @@ namespace com.wer.sc.ui.comp
         //蜡烛图画图器
         private GraphicDrawer_Candle drawer_Candle;
 
+        public GraphicDrawer_Candle Drawer_Candle
+        {
+            get { return drawer_Candle; }
+        }
+
         private IGraphicData_Candle graphicData_Candle;
 
         private GraphicDrawer_TimeLine drawer_TimeLine;
@@ -156,6 +161,11 @@ namespace com.wer.sc.ui.comp
             }
         }
 
+        public KLinePeriod GetKLinePeriod()
+        {
+            return new KLinePeriod(KlineTimeType, KlinePeriod);
+        }
+
         [Browsable(true), DisplayName("K线周期"), Description("K线周期"), Category("自定义属性")]
         public int KlinePeriod
         {
@@ -260,19 +270,6 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        //private bool CheckData()
-        //{
-        //    if (dataCenterUri == null)
-        //        return false;
-        //    if (time == 0)
-        //        return false;
-        //    if (code == null)
-        //        return false;
-        //    if (klinePeriod <= 0)
-        //        return false;
-        //    return true;
-        //}
-
         private void PaintEmpty()
         {
             Graphics g = this.CreateGraphics();
@@ -322,10 +319,10 @@ namespace com.wer.sc.ui.comp
                     //if (date < 0)
                     //    return;
 
-                    GraphicDrawer_Candle drawer_Candle = InitGraphicDrawer_Candle();
+                    drawer_Candle = InitGraphicDrawer_Candle();
                     if (drawer_Candle == null)
                         return;
-                    GraphicDrawer_TimeLine drawer_TimeLine = InitGraphicDrawer_TimeLine();
+                    drawer_TimeLine = InitGraphicDrawer_TimeLine();
                     if (drawer_TimeLine == null)
                         return;
 
@@ -453,6 +450,11 @@ namespace com.wer.sc.ui.comp
         {
             this.compChartData.Pause();
         }
+
+        //public CompChartData CompData
+        //{
+        //    get { return this.compChartData; }
+        //}
     }
 
     public enum ChartType

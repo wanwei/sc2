@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace com.wer.sc.data.forward
     /// <summary>
     /// 单支合约的历史数据前进器
     /// </summary>
-    public interface IHistoryDataForward_Code : IRealTimeDataReader
+    public interface IHistoryDataForward_Code : IRealTimeDataReader, IDataPackageOwner
     {
         /// <summary>
         /// 得到前进时的主K线，如果是以tick前进，则返回空

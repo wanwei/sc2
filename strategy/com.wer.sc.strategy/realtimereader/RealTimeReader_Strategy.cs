@@ -6,6 +6,7 @@ using com.wer.sc.data.realtime;
 using com.wer.sc.strategy;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.forward.impl;
+using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.strategy.realtimereader
 {
@@ -14,6 +15,8 @@ namespace com.wer.sc.strategy.realtimereader
     /// </summary>
     public class RealTimeReader_Strategy : IHistoryDataForward_Code
     {
+        private IDataPackage dataPackage;
+
         private IDataReader dataReader;
 
         private string code;
@@ -30,8 +33,16 @@ namespace com.wer.sc.strategy.realtimereader
 
         private ForwardPeriod forwardPeriod;
 
+        public RealTimeReader_Strategy(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            this.klineDataForward = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            this.klineDataForward.OnTick += KlineDataForward_OnTick;
+            this.klineDataForward.OnBar += KlineDataForward_OnBar;
+        }
+
         public RealTimeReader_Strategy(IDataReader dataReader, RealTimeReader_StrategyArguments args)
         {
+            //this.dataPackage = DataPackageFactory.CreateDataPackage(dataReader,)
             this.dataReader = dataReader;
             this.code = args.Code;
             this.startDate = args.StartDate;
@@ -57,7 +68,7 @@ namespace com.wer.sc.strategy.realtimereader
             {
                 KLinePeriod mainPeriod = args.ForwardKLinePeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-                this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
+                this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
             }
 
             this.klineDataForward.OnTick += KlineDataForward_OnTick;
@@ -129,11 +140,50 @@ namespace com.wer.sc.strategy.realtimereader
             return klineDataForward.IsPeriodEnd(klinePeriod);
         }
 
+        public void NavigateTo(double time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Play()
+        {
+
+        }
+
+        public void Pause()
+        {
+
+        }
+
         public ForwardPeriod ForwardPeriod
         {
             get
             {
                 return forwardPeriod;
+            }
+        }
+
+        public int StartDate
+        {
+            get
+            {
+                return startDate;
+            }
+        }
+
+        public int EndDate
+        {
+            get
+            {
+                return endDate;
+            }
+        }
+
+        public IDataPackage DataPackage
+        {
+            get
+            {
+                return dataPackage;
             }
         }
 

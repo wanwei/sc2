@@ -43,12 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompChart - 复制.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CompChart - 复制.Designer.cs">
-      <DependentUpon>CompChart - 复制.cs</DependentUpon>
-    </Compile>
     <Compile Include="CompChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,9 +89,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CompChart - 复制.resx">
-      <DependentUpon>CompChart - 复制.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CompChart.resx">
       <DependentUpon>CompChart.cs</DependentUpon>
     </EmbeddedResource>

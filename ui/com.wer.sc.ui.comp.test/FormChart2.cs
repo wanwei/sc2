@@ -1,4 +1,9 @@
-﻿using System;
+﻿using com.wer.sc.comp.graphic;
+using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
+using com.wer.sc.strategy;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +30,8 @@ namespace com.wer.sc.ui.comp.test
             this.compChart1.OnDataRefresh += CompChart1_OnDataRefresh;
             this.SetLbTime(this.compChart1.Time);
             this.compChart1.PaintChart();
+
+            this.compStrategyTree1.TreeStrategy.MouseDoubleClick += TreeStrategy_MouseDoubleClick;
         }
 
         private void CompChart1_OnDataRefresh(object sender, DataRefreshArgument arg)
@@ -73,7 +80,7 @@ namespace com.wer.sc.ui.comp.test
         {
             this.compChart1.KlinePeriod = 1;
             this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
-            this.compChart1.ChartType = ChartType.KLine;
+            this.compChart1.ChartType = ChartType.KLine;  
         }
 
         private void tb_KLine5_Click(object sender, EventArgs e)
@@ -183,6 +190,59 @@ namespace com.wer.sc.ui.comp.test
                 tb_BackwordTime.Enabled = false;
                 tb_ChangeTime.Enabled = false;
             }
+        }
+
+        private void tb_CodeList_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TreeStrategy_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeNode selectedNode = compStrategyTree1.TreeStrategy.SelectedNode;
+            Object obj = selectedNode.Tag;
+            if (obj == null)
+                return;
+            if (!(obj is StrategyInfo))
+                return;
+            StrategyInfo strategyInfo = (StrategyInfo)obj;
+            IDataPackage dataPackage = this.compChart1.CompChartData.DataPackage;
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            //compChart1.KlinePeriod
+            KLinePeriod period = compChart1.GetKLinePeriod();
+            referedPeriods.UsedKLinePeriods.Add(period);
+            //referedPeriods.UsedKLinePeriods.Add(this.n)
+            ForwardPeriod forwardPeriod = new ForwardPeriod(false,period);
+            IStrategyRunner strategyRunner = StrategyRunnerFactory.CreateStrategyRunner(dataPackage, referedPeriods, forwardPeriod);
+
+            IStrategy strategy = strategyInfo.CreateStrategy();
+            strategyRunner.SetStrategy(strategy);
+            strategyRunner.Run();
+
+        }
+
+        private void compStrategyTree1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            //strategyRunner.SetStrategy(strategy.)
+            //ForwardPeriod forwardPeriod = new ForwardPeriod(false, compChart1.KlinePeriod);
+        }
+
+        private void bt_DrawLine_Click(object sender, EventArgs e)
+        {
+            CompChartData chartData = this.compChart1.CompChartData;
+            IKLineData klineData = chartData.CurrentRealTimeDataReader.GetKLineData(new data.KLinePeriod(data.KLineTimeType.MINUTE, 1));
+            PriceShape_PolyLine polyLine = new PriceShape_PolyLine();
+            for (int i = 0; i < klineData.Length; i++)
+            {
+                PriceShape_Point point = new PriceShape_Point();
+                point.X = i;
+                point.Y = klineData.Arr_End[i];
+                polyLine.Points.Add(point);
+            }
+            polyLine.Color = Color.GreenYellow;
+            this.compChart1.Drawer_Candle.Drawer_Chart.DrawShape(polyLine);
+            this.compChart1.Drawer_Candle.Paint();
         }
     }
 }

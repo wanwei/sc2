@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.reader;
 using com.wer.sc.data.utils;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,9 @@ namespace com.wer.sc.data.navigate.impl
 {
     public class DataNavigate_Code_Tick
     {
-        private IDataReader dataReader;
+        private IDataPackage dataPackage;
+
+        //private IDataReader dataReader;
 
         private string code;
 
@@ -22,12 +25,19 @@ namespace com.wer.sc.data.navigate.impl
 
         private ITradingSessionReader_Instrument sessionReader;
 
+        public DataNavigate_Code_Tick(IDataPackage dataPackage, double time)
+        {
+            this.dataPackage = dataPackage;
+            this.sessionReader = dataPackage.GetTradingSessionReader();
+            this.ChangeTime(time);
+        }
+
         public DataNavigate_Code_Tick(IDataReader dataReader, string code, double time)
         {
-            this.dataReader = dataReader;
-            this.code = code;
-            this.sessionReader = dataReader.CreateTradingSessionReader(code);
-            this.ChangeTime(time);
+            //this.dataReader = dataReader;
+            //this.code = code;
+            //this.sessionReader = dataReader.CreateTradingSessionReader(code);
+            //this.ChangeTime(time);
         }
 
         public double Time
@@ -46,7 +56,7 @@ namespace com.wer.sc.data.navigate.impl
             if (this.date != date)
             {
                 this.date = date;
-                this.tickData = dataReader.TickDataReader.GetTickData(code, date);
+                this.tickData = (TickData)dataPackage.GetTickData(date);
             }
             int index = TimeIndeierUtils.IndexOfTime_Tick(tickData, time, true);
             tickData.BarPos = index < 0 ? 0 : index;
