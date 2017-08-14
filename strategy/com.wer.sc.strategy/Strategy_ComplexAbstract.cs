@@ -8,13 +8,13 @@ using com.wer.sc.data;
 
 namespace com.wer.sc.strategy
 {
-    public abstract class Strategy_ComplexAbstract : IStrategy
+    public abstract class Strategy_ComplexAbstract : StrategyAbstract, IStrategy
     {
         private StrategyReferedPeriods referedPeriods;
 
         public abstract List<IStrategy> ImportStrategies { get; }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             if (referedPeriods != null)
                 return referedPeriods;
@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy
 
         public abstract StrategyReferedPeriods GetStrategyPeriods_();
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
@@ -55,7 +55,7 @@ namespace com.wer.sc.strategy
 
         public abstract void OnBar_(IRealTimeDataReader currentData);
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
@@ -66,7 +66,7 @@ namespace com.wer.sc.strategy
         public abstract void OnTick_(IRealTimeDataReader currentData);
 
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
@@ -76,7 +76,7 @@ namespace com.wer.sc.strategy
 
         public abstract void StrategyEnd_();
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)

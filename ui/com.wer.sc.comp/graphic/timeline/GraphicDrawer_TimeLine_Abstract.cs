@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.comp.graphic.timeline
 {
-    public abstract class GraphicDrawer_TimeLine_Abstract : GraphicDrawer_Abstract
+    public abstract class GraphicDrawer_TimeLine_Abstract : GraphicDrawer_PriceRect_Abstract
     {
         private IGraphicData_TimeLine dataProvider;
 
@@ -27,6 +27,18 @@ namespace com.wer.sc.comp.graphic.timeline
             }
         }
 
+        public override IGraphicData GraphicData
+        {
+            get
+            {
+                return dataProvider;
+            }
+
+            set
+            {
+                dataProvider = (IGraphicData_TimeLine)value;
+            }
+        }
         public abstract PriceGraphicMapping PriceMapping { get; }
 
         private int blockWidth = 8;
@@ -83,7 +95,7 @@ namespace com.wer.sc.comp.graphic.timeline
             float x = PriceMapping.CalcX(index);
             float y1 = FrameRect.Y;
             float y2 = FrameRect.Y + FrameRect.Height;
-            g.DrawLine(pen, x, y1, x, y2);        
+            g.DrawLine(pen, x, y1, x, y2);
         }
     }
 }

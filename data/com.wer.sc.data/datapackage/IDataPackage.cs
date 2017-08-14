@@ -10,6 +10,8 @@ namespace com.wer.sc.data.datapackage
 {
     /// <summary>
     /// 一只股票或期货在一段时间内的数据包
+    /// 通过该接口可以获得该股票或期货在这段时间内的所有数据
+    /// 包括K线，分时线，tick等
     /// </summary>
     public interface IDataPackage
     {
@@ -59,6 +61,11 @@ namespace com.wer.sc.data.datapackage
         /// <returns></returns>
         ITradingSessionReader_Instrument GetTradingSessionReader();
 
+        /// <summary>
+        /// 得到昨日收盘价
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         float GetLastEndPrice(int date);
     }
 }

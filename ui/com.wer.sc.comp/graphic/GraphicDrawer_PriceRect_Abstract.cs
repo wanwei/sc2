@@ -52,5 +52,10 @@ namespace com.wer.sc.comp.graphic
         {
             this.shapes.Remove(shape);
         }
+
+        public void ClearShapes()
+        {
+            this.shapes.Clear();
+        }
     }
 }

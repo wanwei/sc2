@@ -10,7 +10,7 @@ using com.wer.sc.data.reader;
 namespace com.wer.sc.plugin.mock.strategy
 {
     [Strategy("MOCK.STRATEGY.TURNINGPOINT","转折点查找", "转折点查找")]
-    public class MockStrategy_TurningPoint : IStrategy
+    public class MockStrategy_TurningPoint : StrategyAbstract
     {
         public string Description
         {
@@ -28,27 +28,27 @@ namespace com.wer.sc.plugin.mock.strategy
             }
         }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
             throw new NotImplementedException();
         }
 
-        public void OnBar(IRealTimeDataReader dataReader)
+        public override void OnBar(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public void OnTick(IRealTimeDataReader dataReader)
+        public override void OnTick(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }

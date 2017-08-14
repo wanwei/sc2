@@ -22,8 +22,6 @@ namespace com.wer.sc.data.navigate.impl
 
         private int endDate;
 
-        //private IDataReader dataReader;
-
         private string code;
 
         private double time;
@@ -72,13 +70,15 @@ namespace com.wer.sc.data.navigate.impl
             this.NavigateTo(time);
         }
 
-        public void NavigateTo(double time)
+        public bool NavigateTo(double time)
         {
             double prevTime = this.time;
             bool timeChage = this.time == time;
             this.time = time;
             if (timeChage && OnNavigateTo != null)
                 OnNavigateTo(this, new DataNavigateEventArgs(prevTime, time));
+            int tradingDay = this.dataPackage.GetTradingSessionReader().GetRecentTradingDay(time);
+            return tradingDay >= dataPackage.StartDate && tradingDay <= dataPackage.EndDate;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace com.wer.sc.data.navigate.impl
         {
             get
             {
-                return code;
+                return this.dataPackage.Code;
             }
         }
 

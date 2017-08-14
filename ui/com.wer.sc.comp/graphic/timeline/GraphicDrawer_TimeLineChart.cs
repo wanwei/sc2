@@ -20,7 +20,7 @@ namespace com.wer.sc.comp.graphic.timeline
                     priceMapping.SetRect(DisplayRect, GetPriceRectangle());                
                 return priceMapping;
             }
-        }
+        }  
 
         private PriceRectangle GetPriceRectangle()
         {

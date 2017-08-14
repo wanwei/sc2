@@ -1,26 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
-namespace com.wer.sc.comp.graphic
+namespace com.wer.sc.strategy.draw
 {
-    public class PricePoint
+    /// <summary>
+    /// 价格点
+    /// </summary>
+    public class PricePoint 
     {
-        public float X;
+        public double Time;
 
-        public float Y;
+        public float Price;
 
-        public PricePoint()
-        {
+        public float Width;
 
-        }
-
-        public PricePoint(float x,float y)
-        {
-            X = x;
-            Y = y;
-        }
+        public Color Color;
     }
 }

@@ -43,7 +43,7 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
-        private int blockPadding = 1;
+        private int blockPadding = 2;
 
         public int BlockPadding
         {

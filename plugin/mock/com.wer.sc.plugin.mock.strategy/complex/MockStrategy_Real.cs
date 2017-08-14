@@ -10,30 +10,30 @@ using com.wer.sc.data.reader;
 namespace com.wer.sc.plugin.mock.strategy.complex
 {
     [Strategy("MOCK.STRATEGY.COMPLEX.REAL", "复杂策略", "复杂策略，测试专用")]
-    public class MockStrategy_Real : IStrategy
+    public class MockStrategy_Real : StrategyAbstract
     {
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
             throw new NotImplementedException();
         }
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
             throw new NotImplementedException();
         }
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
             throw new NotImplementedException();
         }

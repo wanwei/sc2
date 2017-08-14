@@ -15,10 +15,12 @@ namespace com.wer.sc.data.navigate
     public interface IDataNavigate_Code : IRealTimeDataReader, IDataPackageOwner
     {
         /// <summary>
-        /// 将当前时间指定到time
+        /// 跳转到指定时间
+        /// 执行该操作后，GetKLineData等获取数据的操作都会返回该时间上的数据
         /// </summary>
         /// <param name="time"></param>
-        void NavigateTo(double time);
+        /// <returns>如果不能够导航到该时间，则返回false</returns>
+        bool NavigateTo(double time);
 
         /// <summary>
         /// 前进

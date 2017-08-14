@@ -31,7 +31,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public static IDataPackage GetDataPackage(string code,int startDate,int endDate)
+        public static IDataPackage GetDataPackage(string code, int startDate, int endDate)
         {
             return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
         }
@@ -42,22 +42,17 @@ namespace com.wer.sc.data.forward
             return new KLineData_RealTime(klineData);
         }
 
-        public static HistoryDataForward_Code GetRealTimeReader(string code, int start, int endDate, bool useTickData)
+        public static HistoryDataForward_Code GetRealTimeReader(string code, int startDate, int endDate, bool useTickData)
         {
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.isReferTimeLineData = false;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 
-            HistoryDataForwardArguments args = new HistoryDataForwardArguments();
-            args.StartDate = start;
-            args.EndDate = endDate;
-            args.ReferedPeriods = referedPeriods;
-            args.IsTickForward = useTickData;
-            args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
+            ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute);
 
-            //HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
-            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
+            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             return realTimeReader;
         }
     }

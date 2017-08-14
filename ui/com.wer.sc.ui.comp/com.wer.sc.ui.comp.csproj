@@ -50,6 +50,7 @@
       <DependentUpon>CompChart.cs</DependentUpon>
     </Compile>
     <Compile Include="CompChartData.cs" />
+    <Compile Include="CompChart_DrawHelper.cs" />
     <Compile Include="CompCurrentInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>

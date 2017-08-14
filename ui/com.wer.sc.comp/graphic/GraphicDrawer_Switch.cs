@@ -53,10 +53,15 @@ namespace com.wer.sc.comp.graphic
         {
             for (int i = 0; i < drawers.Count; i++)
             {
+                GraphicDrawer_Abstract drawer = Drawers[i];
                 if (i == index)
-                    Drawers[i].IsEnable = true;
+                {
+                    drawer.IsEnable = true;
+                }
                 else
-                    Drawers[i].IsEnable = false;
+                {
+                    drawer.IsEnable = false;
+                }
             }
             this.CurrentIndex = index;
             this.Paint();
@@ -68,7 +73,7 @@ namespace com.wer.sc.comp.graphic
             Rectangle rect = this.DisplayRect;
             drawer.SetDrawRect(rect);
             if (drawer.Control == null)
-                drawer.control = this.Control;
+                drawer.SetControl(this.Control);
             drawer.Paint(graphic);
         }
 
@@ -77,12 +82,13 @@ namespace com.wer.sc.comp.graphic
             return crossHairDataPrivider;
         }
 
-        public override void BindControl(Control control)
-        {
-            base.BindControl(control);
-            //for (int i = 0; i < drawers.Count; i++)
-            //    drawers[i].BindControl(control);
-        }
+        //public override void BindControl(Control control)
+        //{
+        //    base.BindControl(control);
+        //    //this.Switch
+        //    //for (int i = 0; i < drawers.Count; i++)
+        //    //    drawers[i].BindControl(control);
+        //}
     }
 
     class CrossHairDataProvider_Switch : CrossHairDataProvider

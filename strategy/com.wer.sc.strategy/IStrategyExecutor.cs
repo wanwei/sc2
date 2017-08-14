@@ -9,7 +9,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略执行器
     /// </summary>
-    public interface IStrategyRunner
+    public interface IStrategyExecutor
     {
         /// <summary>
         /// 设置要执行的策略

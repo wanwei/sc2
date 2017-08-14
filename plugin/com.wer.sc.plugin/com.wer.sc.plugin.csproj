@@ -66,6 +66,13 @@
     <Compile Include="market\IPlugin_MarketUtils.cs" />
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginScan.cs" />
+    <Compile Include="strategy\draw\IDrawHelper.cs" />
+    <Compile Include="strategy\draw\PriceLabel.cs" />
+    <Compile Include="strategy\draw\PriceLine.cs" />
+    <Compile Include="strategy\draw\PricePoint.cs" />
+    <Compile Include="strategy\draw\PricePolyLine.cs" />
+    <Compile Include="strategy\draw\PriceRect.cs" />
+    <Compile Include="strategy\StrategyAbstract.cs" />
     <Compile Include="strategy\StrategyAssembly.cs" />
     <Compile Include="strategy\StrategyAssemblyScan.cs" />
     <Compile Include="strategy\StrategyAttribute.cs" />
@@ -133,13 +140,16 @@
     <Compile Include="data\KLinePeriod.cs" />
     <Compile Include="data\utils\TimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="strategy\IStrategyHelper.cs" />
     <Compile Include="strategy\StrategyHelper.cs" />
     <Compile Include="strategy\StrategyInfo.cs" />
     <Compile Include="strategy\StrategyMgr.cs" />
     <Compile Include="strategy\StrategyMgrFactory.cs" />
     <Compile Include="strategy\StrategyParameter.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="draw\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
       <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>

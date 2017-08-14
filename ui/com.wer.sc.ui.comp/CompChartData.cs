@@ -16,7 +16,7 @@ namespace com.wer.sc.ui.comp
     /// <summary>
     /// 组件数据提供类
     /// </summary>
-    public class CompChartData:IDataPackageOwner
+    public class CompChartData : IDataPackageOwner
     {
         private IDataPackage dataPackage;
 
@@ -180,20 +180,25 @@ namespace com.wer.sc.ui.comp
             return true;
         }
 
+        private object lockObj = new object();
+
         private IDataNavigate_Code GetDataNavigate_Code()
         {
-            if (!CheckData())
-                return null;
-            if (dataNavigate_Code == null)
-                dataNavigate_Code = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
-            else
+            lock (lockObj)
             {
-                if (dataNavigate_Code.Code != code)
+                if (!CheckData())
+                    return null;
+                if (dataNavigate_Code == null)
                     dataNavigate_Code = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
+                else
+                {
+                    if (dataNavigate_Code.Code != code)
+                        dataNavigate_Code = DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
+                }
+                dataNavigate_Code.NavigateTo(time);
+                this.dataPackage = dataNavigate_Code.DataPackage;
+                return dataNavigate_Code;
             }
-            dataNavigate_Code.NavigateTo(time);
-            this.dataPackage = dataNavigate_Code.DataPackage;
-            return dataNavigate_Code;
         }
 
         private IHistoryDataForward_Code GetHistoryDataForward_Playing()
@@ -221,7 +226,7 @@ namespace com.wer.sc.ui.comp
 
                 //this.historyDataForward_CodePlaying = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataReader, code, args);
                 this.historyDataForward_CodePlaying.NavigateTo(time);
-                this.historyDataForward_CodePlaying.OnTick += HistoryDataForward_Code_OnTick;                
+                this.historyDataForward_CodePlaying.OnTick += HistoryDataForward_Code_OnTick;
             }
             else
             {

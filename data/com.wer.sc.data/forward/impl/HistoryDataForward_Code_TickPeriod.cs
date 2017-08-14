@@ -21,10 +21,6 @@ namespace com.wer.sc.data.forward.impl
     {
         private IDataPackage dataPackage;
 
-        //private IDataReader dataReader;
-
-        private string code;
-
         private IList<int> tradingDays;
 
         private Dictionary<KLinePeriod, KLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
@@ -81,7 +77,7 @@ namespace com.wer.sc.data.forward.impl
             this.tradingDays = tradingDays;
             this.forwardPeriod = new ForwardPeriod(true, forwardPeriod);
 
-            InitDaySplitter(dataPackage, code);
+            InitDaySplitter(dataPackage, dataPackage.Code);
             InitData();
 
             timer.Elapsed += Timer_Elapsed;
@@ -147,7 +143,7 @@ namespace com.wer.sc.data.forward.impl
 
         public string Code
         {
-            get { return code; }
+            get { return dataPackage.Code; }
         }
 
         public double Time

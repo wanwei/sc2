@@ -74,6 +74,12 @@
     <Compile Include="FrmGraphicDrawer_CurrentInfo.Designer.cs">
       <DependentUpon>FrmGraphicDrawer_CurrentInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmGraphicDrawer_PriceRect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGraphicDrawer_PriceRect.Designer.cs">
+      <DependentUpon>FrmGraphicDrawer_PriceRect.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGraphicDrawer_Real.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGraphicDrawer_CurrentInfo.resx">
       <DependentUpon>FrmGraphicDrawer_CurrentInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGraphicDrawer_PriceRect.resx">
+      <DependentUpon>FrmGraphicDrawer_PriceRect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGraphicDrawer_Real.resx">
       <DependentUpon>FrmGraphicDrawer_Real.cs</DependentUpon>

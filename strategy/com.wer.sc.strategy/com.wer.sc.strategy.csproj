@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStrategyRunner.cs" />
+    <Compile Include="IStrategyExecutor.cs" />
     <Compile Include="realtimereader\RealTimeReader_Strategy.cs" />
     <Compile Include="realtimereader\RealTimeReader_StrategyArguments.cs" />
     <Compile Include="StrategyData.cs" />
     <Compile Include="StrategyRunnerArguments.cs" />
-    <Compile Include="StrategyRunnerFactory.cs" />
-    <Compile Include="StrategyRunner_History.cs" />
+    <Compile Include="StrategyExecutorFactory.cs" />
+    <Compile Include="StrategyExecutor_History.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrategyRunner_KLineData.cs" />
     <Compile Include="Strategy_ComplexAbstract.cs" />

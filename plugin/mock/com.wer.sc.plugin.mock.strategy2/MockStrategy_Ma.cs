@@ -10,7 +10,7 @@ using com.wer.sc.data.reader;
 namespace com.wer.sc.plugin.mock.strategy
 {
     [Strategy("MOCK.STRATEGY.MA", "MA指标", "MA指标")]
-    public class MockStrategy_Ma : IStrategy
+    public class MockStrategy_Ma : StrategyAbstract
     {
         private StrategyReferedPeriods strategyPeriods;
 
@@ -23,27 +23,27 @@ namespace com.wer.sc.plugin.mock.strategy
             strategyPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             return strategyPeriods;
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
             throw new NotImplementedException();
         }
 
-        public void OnBar(IRealTimeDataReader dataReader)
+        public override void OnBar(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public void OnTick(IRealTimeDataReader dataReader)
+        public override void OnTick(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }

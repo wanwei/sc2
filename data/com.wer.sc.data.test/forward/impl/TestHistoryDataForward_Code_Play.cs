@@ -18,7 +18,7 @@ namespace com.wer.sc.data.forward.impl
             int start = 20170601;
             int endDate = 20170601;
 
-            HistoryDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, true);
+            HistoryDataForward_Code realTimeReader = CommonData.GetRealTimeReader(code, start, endDate, true);
             realTimeReader.OnTick += RealTimeReader_OnTick;
             realTimeReader.NavigateTo(20170531.210011);
             realTimeReader.Play();
@@ -32,24 +32,6 @@ namespace com.wer.sc.data.forward.impl
         private void RealTimeReader_OnTick(object sender, ITickData tickData, int index)
         {
             Console.WriteLine(tickData);
-        }
-
-        private static HistoryDataForward_Code GetRealTimeReader(string code, int start, int endDate, bool useTickData)
-        {
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
-            referedPeriods.isReferTimeLineData = false;
-            referedPeriods.UseTickData = useTickData;
-            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-
-            HistoryDataForwardArguments args = new HistoryDataForwardArguments();
-            args.StartDate = start;
-            args.EndDate = endDate;
-            args.ReferedPeriods = referedPeriods;
-            args.IsTickForward = useTickData;
-            args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
-
-            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
-            return realTimeReader;
-        }
+        }    
     }
 }

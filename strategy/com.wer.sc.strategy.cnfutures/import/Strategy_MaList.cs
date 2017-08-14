@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.reader;
 using com.wer.sc.data;
+using System.Drawing;
 
 namespace com.wer.sc.strategy.cnfutures.import
 {
@@ -12,15 +13,15 @@ namespace com.wer.sc.strategy.cnfutures.import
     /// 
     /// </summary>
     [Strategy("STRATEGY.MA", "MA指标", "MA指标", "指标")]
-    public class Strategy_Ma : IStrategy
+    public class Strategy_MaList : StrategyAbstract
     {
         private int length;
 
         private KLinePeriod period;
 
-        private List<double> maPrice = new List<double>();
+        private List<float> maPrice = new List<float>();        
 
-        public List<double> MaPrice
+        public List<float> MaPrice
         {
             get
             {
@@ -44,26 +45,26 @@ namespace com.wer.sc.strategy.cnfutures.import
             }
         }
 
-        public Strategy_Ma()
+        public Strategy_MaList()
         {
             this.period = KLinePeriod.KLinePeriod_1Minute;
             this.length = 5;
         }
 
-        public Strategy_Ma(KLinePeriod klinePeriod, int length)
+        public Strategy_MaList(KLinePeriod klinePeriod, int length)
         {
             this.period = klinePeriod;
             this.length = length;
         }
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
             IKLineData klineData = currentData.GetKLineData(period);
             int barPos = klineData.BarPos;
             int startPos = barPos - length;
             startPos = startPos < 0 ? 0 : startPos;
 
-            double total = 0;
+            float total = 0;
             for (int i = startPos; i <= barPos; i++)
             {
                 total += klineData.Arr_End[i];
@@ -71,24 +72,33 @@ namespace com.wer.sc.strategy.cnfutures.import
             this.maPrice.Add(total / (barPos - startPos + 1));
         }
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
 
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
 
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
+            StrategyHelper.DrawHelper.DrawPolyLine(maPrice, Color.Red);
 
+            //StrategyHelper.DrawPoint()
         }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             return null;
         }
+    }
+
+    class MaPeriod
+    {
+        KLinePeriod klinePeriod;
+
+        int length;
     }
 }

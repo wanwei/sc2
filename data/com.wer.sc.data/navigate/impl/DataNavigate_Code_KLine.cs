@@ -14,14 +14,6 @@ namespace com.wer.sc.data.navigate.impl
     {
         private IDataPackage dataPackage;
 
-        //private int startDate;
-
-        //private int endDate;
-
-        //private IDataReader dataReader;
-
-        //private string code;
-
         private double time;
 
         private int date;
@@ -42,22 +34,6 @@ namespace com.wer.sc.data.navigate.impl
             this.klinePeriod = klinePeriod;
             this.sessionReader = dataPackage.GetTradingSessionReader();
             this.ChangeTime(time);
-        }
-
-        public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod) : this(dataReader, code, time, klinePeriod, -1, -1)
-        {
-
-        }
-
-        public DataNavigate_Code_KLine(IDataReader dataReader, string code, double time, KLinePeriod klinePeriod, int startDate, int endDate)
-        {
-            //this.dataReader = dataReader;
-            //this.code = code;
-            //this.klinePeriod = klinePeriod;
-            //this.sessionReader = dataReader.CreateTradingSessionReader(code);
-            //this.startDate = startDate;
-            //this.endDate = endDate;
-            //this.ChangeTime(time);
         }
 
         public double Time

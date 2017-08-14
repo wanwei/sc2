@@ -15,8 +15,6 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code_KLinePeriod : IHistoryDataForward_Code
     {
-        //private IDataReader dataReader;
-
         private string code;
 
         private KLineData_RealTime mainKLineData;
@@ -36,7 +34,6 @@ namespace com.wer.sc.data.forward.impl
         /// <param name="allKLineData"></param>
         public HistoryDataForward_Code_KLinePeriod(string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
         {
-            //this.dataReader = dataReader;
             this.code = code;
             this.mainKLineData = mainKLineData;
             this.dic_Period_KLineData = allKLineData;

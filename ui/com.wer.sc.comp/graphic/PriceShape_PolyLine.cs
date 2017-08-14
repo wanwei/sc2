@@ -7,7 +7,7 @@ namespace com.wer.sc.comp.graphic
     {
         private List<PriceShape_Point> points = new List<PriceShape_Point>();
 
-        public float Width;
+        public float Width = 1;
 
         public Color Color;
 
@@ -19,7 +19,7 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
-        public void AddPricepoint(PriceShape_Point point)
+        public void AddPoint(PriceShape_Point point)
         {
             this.points.Add(point);
         }

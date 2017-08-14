@@ -35,5 +35,10 @@ namespace com.wer.sc.comp.graphic
         /// 
         /// </summary>
         IGraphicData GraphicData { get; set; }
+
+        /// <summary>
+        /// 清除所有图形
+        /// </summary>
+        void ClearShapes();
     }
 }

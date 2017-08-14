@@ -16,12 +16,6 @@ namespace com.wer.sc.comp.graphic
     /// </summary>
     public class GraphicDrawer_CandleChart : GraphicDrawer_Candle_Abstract
     {
-        //private IKLineData currentKLineData;
-
-        //private int startIndex;
-
-        //private int endIndex;
-
         private CandleFrameDrawer candleFrameDrawer;
 
         private CandleContentDrawer candleContentDrawer;
@@ -40,10 +34,34 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
+        private PriceRectangle priceRectangle;
+
         private PriceRectangle GetPriceRectangle()
         {
+            if (priceRectangle == null)
+            {
+                priceRectangle = GetPriceRectangleInternal();
+                return priceRectangle;
+            }
+
+            IKLineData klineData = DataProvider.GetKLineData();
+            if (priceRectangle.StartIndex == GetStartIndex() && priceRectangle.EndIndex == DataProvider.EndIndex)
+            {
+                return priceRectangle;
+            }
+            priceRectangle = GetPriceRectangleInternal();
+            return priceRectangle;
+        }
+
+        private int GetStartIndex()
+        {
+            return DataProvider.StartIndex < 0 ? 0 : DataProvider.StartIndex;
+        }
+
+        private PriceRectangle GetPriceRectangleInternal()
+        {
             IKLineData data = DataProvider.GetKLineData();
-            int startIndex = DataProvider.StartIndex < 0 ? 0 : DataProvider.StartIndex;
+            int startIndex = GetStartIndex();
             int endIndex = DataProvider.EndIndex;
             float priceBottom = data.Arr_Low[startIndex];
             float priceTop = data.Arr_High[startIndex];
@@ -99,39 +117,6 @@ namespace com.wer.sc.comp.graphic
             int endIndex = DataProvider.EndIndex;
             this.candleContentDrawer.DrawCandle(g, data, startIndex, endIndex, PriceMapping, BlockWidth, BlockPadding);
         }
-
-        //#region 画ma
-
-        //private String textColor = "#FFFF00";
-
-        //private String[] colors = new String[4] { "#E7E7E7", "#FFFF00", "#DB00B6", "#00F000" };
-
-        //private void DrawText(Graphics g, int[] periodArr, double[] currentValues)
-        //{
-        //    int x = DisplayRect.X;
-        //    int y = DisplayRect.Y;
-
-        //    Font font = new Font("宋体", 10, FontStyle.Regular);
-
-        //    StringBuilder sb = new StringBuilder();
-        //    sb.Append("MA组合(").Append(periodArr[0]);
-        //    for (int i = 1; i < periodArr.Length; i++)
-        //    {
-        //        sb.Append(",").Append(periodArr[i]);
-        //    }
-        //    sb.Append(")");
-        //    g.DrawString(sb.ToString(), font, new SolidBrush(ColorUtils.GetColor(textColor)), new Point(x, y));
-
-        //    x += sb.ToString().Length * 8 + 10;
-        //    for (int i = 0; i < periodArr.Length; i++)
-        //    {
-        //        String str = "MA" + periodArr[i] + " " + currentValues[i].ToString("0.00");
-        //        g.DrawString(str, font, new SolidBrush(ColorUtils.GetColor(colors[i])), new Point(x, y));
-        //        x += str.Length * 8 + 10;
-        //    }
-        //}
-
-        //#endregion
     }
 
 
@@ -227,19 +212,19 @@ namespace com.wer.sc.comp.graphic
             if (chart.End.Equals(chart.Start))
                 b = this.ColorConfig.Brush_CandleFlat;
             Pen p = new Pen(b);
-            double XMiddle = priceMapping.CalcX(index);
-            double YTop = priceMapping.CalcY(chart.High);
-            double YBottom = priceMapping.CalcY(chart.Low);
+            float XMiddle = priceMapping.CalcX(index);
+            float YTop = priceMapping.CalcY(chart.High);
+            float YBottom = priceMapping.CalcY(chart.Low);
             float YBlockTop = (float)priceMapping.CalcY(isRed ? chart.End : chart.Start);
             float YBlockBottom = (float)priceMapping.CalcY(isRed ? chart.Start : chart.End);
-            //画上影线和下影线
-            g.DrawLine(p, new Point((int)XMiddle, (int)YTop), new Point((int)XMiddle, (int)YBlockTop));
-            g.DrawLine(p, new Point((int)XMiddle, (int)YBottom), new Point((int)XMiddle, (int)YBlockBottom));
+            //画上影线和下影线            
+            g.DrawLine(p, new PointF(XMiddle, YTop), new PointF(XMiddle, YBlockTop));
+            g.DrawLine(p, new PointF(XMiddle, YBottom), new PointF(XMiddle, YBlockBottom));
 
-            float halfBlockWidth = (float)(blockWidth - blockPadding) / 2;
+            float halfBlockWidth = ((float)(blockWidth - blockPadding)) / 2;
 
-            float XLeft = (float)(XMiddle - halfBlockWidth);
-            float XRight = (float)(XMiddle + halfBlockWidth);
+            float XLeft = XMiddle - halfBlockWidth;
+            float XRight = XMiddle + halfBlockWidth;
             //画block
             if (chart.End == chart.Start)
                 g.DrawLine(p, XLeft, YBlockBottom, XRight, YBlockBottom);

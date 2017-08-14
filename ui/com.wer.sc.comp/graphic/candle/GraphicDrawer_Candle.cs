@@ -74,33 +74,72 @@ namespace com.wer.sc.comp.graphic
             this.crossHairDataPrivider = new CrossHairDataPrivider_Candle(this);
         }
 
+        internal override void SetControl(Control control)
+        {
+            base.SetControl(control);
+            control.PreviewKeyDown += Control_PreviewKeyDown;
+        }
+
+        private void Control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!this.IsEnable)
+                return;
+            if (e.KeyCode == Keys.Up)
+            {
+                int blockWidth = this.drawer_chart.BlockWidth;
+                int newWidth = (int)(blockWidth * 1.5);
+                if (newWidth == blockWidth)
+                    newWidth += 1;
+                if (newWidth >= 50)
+                    newWidth = 50;
+                this.drawer_chart.BlockWidth = newWidth;
+                this.drawer_mount.BlockWidth = newWidth;
+                //this.Control.Refresh();
+                this.Paint();                
+                //this.crossHairDataPrivider.DoRedraw();
+                //this.crossHairDataPrivider.CrossDrawer.DrawGraphic();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                int blockWidth = this.drawer_chart.BlockWidth;
+                int newWidth = (int)(blockWidth / 1.5);
+                if (newWidth == 0)
+                    newWidth = 1;
+                this.drawer_chart.BlockWidth = newWidth;
+                this.drawer_mount.BlockWidth = newWidth;
+                //this.Control.Refresh();
+                this.Paint();
+                //this.crossHairDataPrivider.CrossDrawer.DrawGraphic();
+                //this.crossHairDataPrivider.DoRedraw();
+            }
+        }
+
+        private void Control_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!this.IsEnable)
+                return;
+            if (e.KeyCode == Keys.Up)
+            {
+                int blockWidth = this.drawer_chart.BlockWidth;
+                int newWidth = (int)(blockWidth * 1.5);
+                this.drawer_chart.BlockWidth = newWidth;
+                this.drawer_mount.BlockWidth = newWidth;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                int blockWidth = this.drawer_chart.BlockWidth;
+                int newWidth = (int)(blockWidth / 1.5);
+                this.drawer_chart.BlockWidth = newWidth;
+                this.drawer_mount.BlockWidth = newWidth;
+            }
+        }
+
         private CrossHairDataProvider crossHairDataPrivider;
 
         public CrossHairDataProvider GetCrossHairDataProvider()
         {
             return crossHairDataPrivider;
         }
-
-        //public override void BindControl(Control control)
-        //{
-        //    base.BindControl(control);         
-        //}
-
-        //public override void UnBindControl()
-        //{
-        //    base.UnBindControl();
-        //}
-
-        //public override void Paint(Graphics graphic)
-        //{
-        //    if (!IsEnable)
-        //        return;
-        //    //crossHairDrawer.DrawGraphic(graphic);
-        //    base.Paint(graphic);
-        //    //DrawSelectBlock(graphic);
-        //    //crossHairDrawer.DrawGraphic(graphic);
-        //}
-
     }
 
     public class CrossHairDataPrivider_Candle : CrossHairDataProvider
@@ -197,8 +236,7 @@ namespace com.wer.sc.comp.graphic
             Brush brushNormal = new SolidBrush(Color.White);
             Font font = new Font("New Times Roman", 10, FontStyle.Regular);
 
-            //int len = chart.Time.Length;
-            b.Lines.Add(new BlockLineInfo(chart.Time.ToString(), brushNormal, font));
+            b.Lines.Add(new BlockLineInfo(FormatTime(chart.Time), brushNormal, font));
             b.Lines.Add(new BlockLineInfo("开盘", brushNormal, font));
             b.Lines.Add(new BlockLineInfo(chart.Start.ToString(), GetPriceBrush(chart.Start, lastEndPrice), font));
             b.Lines.Add(new BlockLineInfo("最高", brushNormal, font));
@@ -217,6 +255,33 @@ namespace com.wer.sc.comp.graphic
             return b;
         }
 
+        private string FormatTime(double time)
+        {
+            if (drawer.DataProvider.Period.PeriodType >= KLineTimeType.DAY)
+                return time.ToString();
+            int itime = (int)time;
+            int min = (int)Math.Round((time - itime) * 10000);
+            double mtime = (double)itime / 10000;
+            int date = (int)Math.Round((mtime - (int)mtime) * 100000000);
+            string str = (date + min).ToString();
+            return FillTimeStr(str);
+        }
+
+        private string FillTimeStr(string str)
+        {
+            if (str.Length < 8)
+            {
+                int fillLen = 8 - str.Length;
+                string fillStr = "";
+                for (int i = 0; i < fillLen; i++)
+                {
+                    fillStr += "0";
+                }
+                return fillStr + str;
+            }
+            return str;
+        }
+
         private Brush GetPriceBrush(double price, double referPrice)
         {
             Brush brushEarn = new SolidBrush(ColorUtils.GetColor("#CC0000"));
@@ -228,8 +293,8 @@ namespace com.wer.sc.comp.graphic
 
         public bool DoMoveNext()
         {
-            int lastIndex = drawer.DataProvider.GetKLineData().Length - 1;
-            if (this.drawer.Drawer_Chart.PriceMapping.PriceRect.PriceRight + 1 > lastIndex)
+            int lastIndex = drawer.DataProvider.GetKLineData().BarPos;
+            if (this.drawer.Drawer_Chart.PriceMapping.PriceRect.PriceRight >= lastIndex)
                 return false;
             this.drawer.DataProvider.EndIndex++;
             return true;

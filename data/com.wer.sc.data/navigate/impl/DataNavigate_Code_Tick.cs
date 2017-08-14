@@ -13,8 +13,6 @@ namespace com.wer.sc.data.navigate.impl
     {
         private IDataPackage dataPackage;
 
-        //private IDataReader dataReader;
-
         private string code;
 
         private double time;
@@ -30,14 +28,6 @@ namespace com.wer.sc.data.navigate.impl
             this.dataPackage = dataPackage;
             this.sessionReader = dataPackage.GetTradingSessionReader();
             this.ChangeTime(time);
-        }
-
-        public DataNavigate_Code_Tick(IDataReader dataReader, string code, double time)
-        {
-            //this.dataReader = dataReader;
-            //this.code = code;
-            //this.sessionReader = dataReader.CreateTradingSessionReader(code);
-            //this.ChangeTime(time);
         }
 
         public double Time

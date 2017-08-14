@@ -13,7 +13,7 @@ namespace com.wer.sc.strategy.cnfutures
     /// 看之前的趋势
     /// </summary>
     [Strategy("STRATEGY.CNFUTURES", "期货策略", "期货策略", "策略")]
-    public class Strategy_CnFutures : IStrategy
+    public class Strategy_CnFutures : StrategyAbstract, IStrategy
     {
         private StrategyReferedPeriods refered;
 
@@ -29,17 +29,17 @@ namespace com.wer.sc.strategy.cnfutures
             refered.UseTickData = false;
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
 
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
 
         }
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
             IKLineData klineData = currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             int currentBarPos = klineData.BarPos;
@@ -68,12 +68,12 @@ namespace com.wer.sc.strategy.cnfutures
             //currentData.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
 
         }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             return refered;
         }

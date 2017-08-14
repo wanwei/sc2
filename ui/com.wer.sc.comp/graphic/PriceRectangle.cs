@@ -1,4 +1,6 @@
-﻿namespace com.wer.sc.comp.graphic
+﻿using System.Text;
+
+namespace com.wer.sc.comp.graphic
 {
     public class PriceRectangle
     {
@@ -52,6 +54,36 @@
         public float PriceWidth
         {
             get { return PriceRight - PriceLeft; }
+        }
+
+        public int StartIndex
+        {
+            get
+            {
+                int start = (int)this.PriceLeft;
+                start = (start == this.PriceLeft) ? start : start + 1;
+                return start;
+            }
+        }
+
+        public int EndIndex
+        {
+            get
+            {
+                int end = (int)this.PriceRight;
+                end = (end == this.PriceRight) ? end : end - 1;
+                return end;
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(PriceLeft).Append(",");
+            sb.Append(PriceTop).Append(",");
+            sb.Append(PriceWidth).Append(",");
+            sb.Append(PriceHeight);
+            return sb.ToString();
         }
 
         public override bool Equals(object obj)

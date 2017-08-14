@@ -14,13 +14,7 @@ namespace com.wer.sc.data.forward.impl
     /// </summary>
     public class HistoryDataForward_Code : IHistoryDataForward_Code
     {
-        //private IDataReader dataReader;
-
-        private string code;
-
-        private int startDate;
-
-        private int endDate;
+        private IDataPackage dataPackage;
 
         private StrategyReferedPeriods referedPeriods;
 
@@ -34,51 +28,7 @@ namespace com.wer.sc.data.forward.impl
             StrategyReferedPeriods referedPeriods = args.ReferedPeriods;
             ForwardPeriod forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
             this.Init(dataPackage, referedPeriods, forwardPeriod);
-            //return new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
-        }
-
-        //public HistoryDataForward_Code(IDataReader dataReader, string code, HistoryDataForwardArguments args)
-        //{
-        //    this.dataReader = dataReader;
-        //    this.code = code;
-        //    if (dataReader.TradingDayReader.IsTrade(args.StartDate))
-        //        this.startDate = args.StartDate;
-        //    else
-        //        this.startDate = dataReader.TradingDayReader.GetNextTradingDay(args.StartDate);
-        //    this.endDate = args.EndDate;
-        //    this.referedPeriods = args.ReferedPeriods;
-        //    this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
-
-        //    Dictionary<KLinePeriod, KLineData_RealTime> allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
-        //    for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
-        //    {
-        //        KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
-        //        IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, 500, 100, period);
-        //        KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
-        //        allKLineData.Add(period, klineData_RealTime);
-        //    }
-
-        //    //ITimeLineData timelineData = this.dataReader.TimeLineDataReader.GetData(code, startDate);
-        //    //this.timeLineData_RealTime = new TimeLineData_RealTime(timelineData);
-
-        //    IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
-        //    if (args.IsTickForward)
-        //    {
-        //        //this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
-        //        this.historyDataForward = new HistoryDataForward_Code_TickPeriod(dataPackage, allKLineData, allTradingDays, args.ForwardKLinePeriod);
-        //    }
-        //    else
-        //    {
-        //        KLinePeriod mainPeriod = args.ForwardKLinePeriod;
-        //        KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-        //        this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(dataReader, code, mainKLineData, allKLineData);
-        //    }
-
-        //    this.historyDataForward.OnTick += KlineDataForward_OnTick;
-        //    this.historyDataForward.OnBar += KlineDataForward_OnBar;
-        //}
-
-        private IDataPackage dataPackage;
+        }        
 
         public HistoryDataForward_Code(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
@@ -113,7 +63,7 @@ namespace com.wer.sc.data.forward.impl
             {
                 KLinePeriod mainPeriod = forwardPeriod.KlineForwardPeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
-                this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
+                this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(Code, mainKLineData, allKLineData);
             }
 
             this.historyDataForward.OnTick += KlineDataForward_OnTick;
@@ -142,7 +92,7 @@ namespace com.wer.sc.data.forward.impl
 
         public string Code
         {
-            get { return code; }
+            get { return this.dataPackage.Code; }
         }
 
         public IKLineData GetKLineData()

@@ -80,7 +80,7 @@ namespace com.wer.sc.ui.comp.test
         {
             this.compChart1.KlinePeriod = 1;
             this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
-            this.compChart1.ChartType = ChartType.KLine;  
+            this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine5_Click(object sender, EventArgs e)
@@ -212,20 +212,13 @@ namespace com.wer.sc.ui.comp.test
             KLinePeriod period = compChart1.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);
             //referedPeriods.UsedKLinePeriods.Add(this.n)
-            ForwardPeriod forwardPeriod = new ForwardPeriod(false,period);
-            IStrategyRunner strategyRunner = StrategyRunnerFactory.CreateStrategyRunner(dataPackage, referedPeriods, forwardPeriod);
+            ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
+            IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
 
             IStrategy strategy = strategyInfo.CreateStrategy();
             strategyRunner.SetStrategy(strategy);
             strategyRunner.Run();
-
-        }
-
-        private void compStrategyTree1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-            //strategyRunner.SetStrategy(strategy.)
-            //ForwardPeriod forwardPeriod = new ForwardPeriod(false, compChart1.KlinePeriod);
+            compChart1.Refresh();
         }
 
         private void bt_DrawLine_Click(object sender, EventArgs e)

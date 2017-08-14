@@ -13,7 +13,7 @@ namespace com.wer.sc.strategy.cnfutures
     {
         private StrategyReferedPeriods referedPeriods;
 
-        private Strategy_Ma strategy_Ma_5Minute_5 = new Strategy_Ma(KLinePeriod.KLinePeriod_5Minute, 5);
+        private Strategy_MaList strategy_Ma_5Minute_5 = new Strategy_MaList(KLinePeriod.KLinePeriod_5Minute, 5);
 
         private List<IStrategy> importStrategies = new List<IStrategy>();
 

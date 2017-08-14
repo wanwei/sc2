@@ -111,11 +111,24 @@ namespace com.wer.sc.comp.graphic.utils
         {
             if (!enable)
                 return;
-            if (ShowCrossHair)
+            if (e.KeyCode == Keys.Escape)
             {
-                if (e.KeyCode != Keys.Left && e.KeyCode != Keys.Right)
-                    return;
-                if (e.KeyCode == Keys.Left)
+                this.ShowCrossHair = false;
+                provider.DoRedraw();
+                DrawGraphic();
+                return;
+            }
+
+            if (e.KeyCode != Keys.Left && e.KeyCode != Keys.Right)
+                return;
+            if (e.KeyCode == Keys.Left)
+            {
+                if (!ShowCrossHair)
+                {
+                    this.selectIndex = (int)provider.PriceMapping.PriceRect.PriceRight;
+                    this.ShowCrossHair = true;
+                }
+                else
                 {
                     if (this.selectIndex == 0)
                         return;
@@ -130,7 +143,15 @@ namespace com.wer.sc.comp.graphic.utils
                         }
                     }
                 }
-                if (e.KeyCode == Keys.Right)
+            }
+            if (e.KeyCode == Keys.Right)
+            {
+                if (!ShowCrossHair)
+                {
+                    this.selectIndex = (int)provider.PriceMapping.PriceRect.PriceLeft + 1;
+                    this.ShowCrossHair = true;
+                }
+                else
                 {
                     this.selectIndex++;
                     if (this.selectIndex > provider.PriceMapping.PriceRect.PriceRight)
@@ -143,11 +164,12 @@ namespace com.wer.sc.comp.graphic.utils
                         }
                     }
                 }
-                provider.DoSelectIndexChange(this.selectIndex);
-                crossHairPoint = provider.GetCrossHairPoint(this.selectIndex);
-                provider.DoRedraw();
-                //DrawGraphic();
             }
+            provider.DoSelectIndexChange(this.selectIndex);
+            crossHairPoint = provider.GetCrossHairPoint(this.selectIndex);
+            provider.DoRedraw();
+            DrawGraphic();
+            //}
         }
 
         public void UnBind()
@@ -239,11 +261,10 @@ namespace com.wer.sc.comp.graphic.utils
                 provider.DoRedraw();
                 return;
             }
-            int index = (int)provider.PriceMapping.CalcPriceX(point.X);
+            int index = (int)Math.Round(provider.PriceMapping.CalcPriceX(point.X));
             int[] range = provider.IndexRange;
             if (index >= range[0] && index <= range[1])
             {
-                //if(index>provider.)
                 if (this.selectIndex != index)
                 {
                     this.selectIndex = index;
@@ -255,7 +276,6 @@ namespace com.wer.sc.comp.graphic.utils
                 ShowCrossHair = false;
             lastMouseMoveTime = DateTime.Now;
             provider.DoRedraw();
-            //DrawGraphic(g);      
             DrawGraphic();
         }
 

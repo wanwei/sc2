@@ -17,8 +17,6 @@ namespace com.wer.sc.strategy.realtimereader
     {
         private IDataPackage dataPackage;
 
-        private IDataReader dataReader;
-
         private string code;
 
         private int startDate;
@@ -35,45 +33,76 @@ namespace com.wer.sc.strategy.realtimereader
 
         public RealTimeReader_Strategy(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
-            this.klineDataForward = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
-            this.klineDataForward.OnTick += KlineDataForward_OnTick;
-            this.klineDataForward.OnBar += KlineDataForward_OnBar;
-        }
-
-        public RealTimeReader_Strategy(IDataReader dataReader, RealTimeReader_StrategyArguments args)
-        {
-            //this.dataPackage = DataPackageFactory.CreateDataPackage(dataReader,)
-            this.dataReader = dataReader;
-            this.code = args.Code;
-            this.startDate = args.StartDate;
-            this.endDate = args.EndDate;
-            this.referedPeriods = args.ReferedPeriods;
-            this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
+            this.dataPackage = dataPackage;
+            this.code = dataPackage.Code;
+            this.startDate = dataPackage.StartDate;
+            this.endDate = dataPackage.EndDate;
+            this.referedPeriods = referedPeriods;
+            this.forwardPeriod = forwardPeriod;
 
             this.allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
             for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
             {
                 KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
-                IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, period);
+                IKLineData klineData = dataPackage.GetKLineData(period);
                 KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
                 allKLineData.Add(period, klineData_RealTime);
             }
 
-            IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
-            if (args.IsTickForward)
+            IList<int> allTradingDays = dataPackage.GetTradingDays();
+            if (forwardPeriod.IsTickForward)
             {
-                this.klineDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
+                this.klineDataForward = new HistoryDataForward_Code_TickPeriod(dataPackage, allKLineData, allTradingDays, forwardPeriod.KlineForwardPeriod);
             }
             else
             {
-                KLinePeriod mainPeriod = args.ForwardKLinePeriod;
+                KLinePeriod mainPeriod = forwardPeriod.KlineForwardPeriod;
                 KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
                 this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
             }
 
             this.klineDataForward.OnTick += KlineDataForward_OnTick;
             this.klineDataForward.OnBar += KlineDataForward_OnBar;
+
+            //this.klineDataForward = HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            //this.klineDataForward.OnTick += KlineDataForward_OnTick;
+            //this.klineDataForward.OnBar += KlineDataForward_OnBar;
         }
+
+        //public RealTimeReader_Strategy(IDataReader dataReader, RealTimeReader_StrategyArguments args)
+        //{
+        //    //this.dataPackage = DataPackageFactory.CreateDataPackage(dataReader,)
+        //    this.dataReader = dataReader;
+        //    this.code = args.Code;
+        //    this.startDate = args.StartDate;
+        //    this.endDate = args.EndDate;
+        //    this.referedPeriods = args.ReferedPeriods;
+        //    this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
+
+        //    this.allKLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
+        //    for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
+        //    {
+        //        KLinePeriod period = referedPeriods.UsedKLinePeriods[i];
+        //        IKLineData klineData = this.dataReader.KLineDataReader.GetData(code, startDate, endDate, period);
+        //        KLineData_RealTime klineData_RealTime = new KLineData_RealTime(klineData);
+        //        allKLineData.Add(period, klineData_RealTime);
+        //    }
+
+        //    IList<int> allTradingDays = dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
+        //    if (args.IsTickForward)
+        //    {
+        //        this.klineDataForward = new HistoryDataForward_Code_TickPeriod(dataReader, code, allKLineData, allTradingDays, args.ForwardKLinePeriod);
+        //    }
+        //    else
+        //    {
+        //        KLinePeriod mainPeriod = args.ForwardKLinePeriod;
+        //        KLineData_RealTime mainKLineData = allKLineData[mainPeriod];
+        //        this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
+        //    }
+
+        //    this.klineDataForward.OnTick += KlineDataForward_OnTick;
+        //    this.klineDataForward.OnBar += KlineDataForward_OnBar;
+        //}
 
         private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
         {

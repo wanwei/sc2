@@ -15,6 +15,7 @@ using com.wer.sc.comp.graphic.utils;
 using com.wer.sc.comp.graphic.timeline;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.forward;
+using com.wer.sc.strategy;
 
 namespace com.wer.sc.ui.comp
 {
@@ -65,16 +66,32 @@ namespace com.wer.sc.ui.comp
         {
             InitializeComponent();
             this.compChartData = new CompChartData();
+            this.drawHelper = new CompChart_DrawHelper(this);
+            this.strategyHelper = new StrategyHelper(drawHelper);
             this.compChartData.OnDataRefresh += CompChartData_OnDataRefresh;
+        }
+
+        private StrategyHelper strategyHelper;
+        private CompChart_DrawHelper drawHelper;
+
+        public StrategyHelper StrategyHelper
+        {
+            get { return strategyHelper; }
         }
 
         public event DelegateOnDataRefresh OnDataRefresh;
 
         private void CompChartData_OnDataRefresh(object sender, DataRefreshArgument arg)
         {
+            if (!Inited)
+                return;
             if (OnDataRefresh != null)
                 OnDataRefresh(this, arg);
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartRefreshArguments());
         }
+
+        public event DelegateOnChartRefresh OnChartRefresh;
 
         [Browsable(true), DisplayName("数据中心"), Description("数据中心"), Category("自定义属性"), DefaultValue(null)]
         public string DataCenterUri
@@ -220,6 +237,10 @@ namespace com.wer.sc.ui.comp
                 this.graphicData_Candle.EndIndex = endIndex;
             else
                 this.graphicData_Candle.EndIndex += length;
+
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartRefreshArguments());
+
             this.graphicDrawer.Paint();
         }
 
@@ -233,6 +254,10 @@ namespace com.wer.sc.ui.comp
             if (realLength == 0)
                 return;
             this.graphicData_Candle.EndIndex -= realLength;
+
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartRefreshArguments());
+
             this.graphicDrawer.Paint();
         }
 
@@ -393,8 +418,8 @@ namespace com.wer.sc.ui.comp
 
         private void RefreshCandleDrawer()
         {
-            try
-            {
+            //try
+            //{
                 KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
                 IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
                 //int date = TradingSessionReader.GetTradingDay(time);            
@@ -410,11 +435,11 @@ namespace com.wer.sc.ui.comp
                 graphicData_Candle.ChangeData(klineData);
                 graphicData_Candle.EndIndex = klineData.BarPos;
                 this.graphicDrawer.Switch(0);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.Message);
+            //}
             //this.graphicDrawer.Paint();
         }
 
@@ -455,6 +480,51 @@ namespace com.wer.sc.ui.comp
         //{
         //    get { return this.compChartData; }
         //}
+
+        public PriceGraphicMapping CurrentChartGraphicMapping
+        {
+            get
+            {
+                switch (this.ChartType)
+                {
+                    case ChartType.KLine:
+                        return drawer_Candle.Drawer_Chart.PriceMapping;
+                    case ChartType.TimeLine:
+                        return drawer_TimeLine.drawer_chart.PriceMapping;
+                    case ChartType.Tick:
+                        return null;
+                }
+                return null;
+            }
+        }
+
+        public IGraphicDrawer_PriceRect CurrentPriceRectDrawer
+        {
+            get
+            {
+                switch (this.ChartType)
+                {
+                    case ChartType.KLine:
+                        return drawer_Candle.Drawer_Chart;
+                    case ChartType.TimeLine:
+                        return drawer_TimeLine.drawer_chart;
+                    case ChartType.Tick:
+                        return null;
+                }
+                return null;
+            }
+        }
+
+        public IGraphicData CurrentGraphicData
+        {
+            get
+            {
+                IGraphicDrawer_PriceRect drawer = CurrentPriceRectDrawer;
+                if (drawer == null)
+                    return null;
+                return drawer.GraphicData;
+            }
+        }
     }
 
     public enum ChartType
@@ -465,5 +535,12 @@ namespace com.wer.sc.ui.comp
         TimeLine = 1,
 
         Tick = 2
+    }
+
+    public delegate void DelegateOnChartRefresh(object sender, ChartRefreshArguments arg);
+
+    public class ChartRefreshArguments
+    {
+
     }
 }

@@ -13,9 +13,6 @@ namespace com.wer.sc.data.navigate.impl
     public class DataNavigate_Code_TimeLine
     {
         private IDataPackage dataPackage;
-        //private IDataReader dataReader;
-
-        private string code;
 
         private double time;
 
@@ -28,19 +25,11 @@ namespace com.wer.sc.data.navigate.impl
         private TimeLineData_RealTime timeLineData_RealTime;
 
         private ITickData tickData;
+
         public DataNavigate_Code_TimeLine(IDataPackage dataPackage, double time)
         {
-            this.dataPackage = dataPackage;
-            //this.dataReader = dataReader;        
+            this.dataPackage = dataPackage;     
             this.sessionReader = dataPackage.GetTradingSessionReader();
-            this.ChangeTime(time);
-        }
-
-        public DataNavigate_Code_TimeLine(IDataReader dataReader, string code, double time)
-        {
-            //this.dataReader = dataReader;
-            this.code = code;
-            this.sessionReader = dataReader.CreateTradingSessionReader(code);
             this.ChangeTime(time);
         }
 

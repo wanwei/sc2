@@ -13,7 +13,7 @@ namespace com.wer.sc.strategy.cnfutures
     /// 
     /// </summary>
     [Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
-    public class Strategy_Zigzag : IStrategy
+    public class Strategy_Zigzag : StrategyAbstract, IStrategy
     {
         private KLinePeriod klinePeriod;
 
@@ -33,12 +33,12 @@ namespace com.wer.sc.strategy.cnfutures
 
         public List<float> Arr_RealGD = new List<float>();
 
-        public Strategy_Zigzag(KLinePeriod klinePeriod)
+        public Strategy_Zigzag()
         {
-            this.klinePeriod = klinePeriod;
+            this.klinePeriod = KLinePeriod.KLinePeriod_1Minute;
         }
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
             initTurnPoint(currentData);
         }
@@ -179,22 +179,22 @@ namespace com.wer.sc.strategy.cnfutures
             return POS_LASTDD < POS_LASTGD ? 1 : -1;
         }
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
 
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
 
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
 
         }
 
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             return null;
         }

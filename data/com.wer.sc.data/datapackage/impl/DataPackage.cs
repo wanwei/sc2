@@ -66,7 +66,7 @@ namespace com.wer.sc.data.datapackage.impl
 
         public IList<int> GetTradingDays()
         {
-            return allTradingDays;            
+            return allTradingDays;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace com.wer.sc.data.datapackage.impl
         /// </summary>
         /// <returns></returns>
         public ITickData GetTickData(int date)
-        {            
+        {
             return dataReader.TickDataReader.GetTickData(code, date);
         }
 
@@ -113,6 +113,9 @@ namespace com.wer.sc.data.datapackage.impl
             return dataReader.KLineDataReader.GetLastEndPrice(code, date);
         }
 
-        
+        public override string ToString()
+        {
+            return code + ":" + startDate + "-" + endDate + "|" + minBefore + "," + minAfter;
+        }
     }
 }

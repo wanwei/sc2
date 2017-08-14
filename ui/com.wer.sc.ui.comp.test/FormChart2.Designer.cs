@@ -441,7 +441,6 @@
             this.compStrategyTree1.Name = "compStrategyTree1";
             this.compStrategyTree1.Size = new System.Drawing.Size(271, 528);
             this.compStrategyTree1.TabIndex = 0;
-            this.compStrategyTree1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.compStrategyTree1_MouseDoubleClick);
             // 
             // compMain1
             // 

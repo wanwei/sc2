@@ -10,29 +10,29 @@ using com.wer.sc.data.reader;
 namespace com.wer.sc.plugin.mock.strategy
 {
     [Strategy("MOCK.STRATEGY.VOLUME","量能过滤", "量能过滤，测试专用")]
-    public class MockStrategy_Volume : IStrategy
-    {      
-        public StrategyReferedPeriods GetStrategyPeriods()
+    public class MockStrategy_Volume : StrategyAbstract
+    {
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
             throw new NotImplementedException();
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
             throw new NotImplementedException();
         }
 
-        public void OnBar(IRealTimeDataReader dataReader)
+        public override void OnBar(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public void OnTick(IRealTimeDataReader dataReader)
+        public override void OnTick(IRealTimeDataReader dataReader)
         {
             throw new NotImplementedException();
         }

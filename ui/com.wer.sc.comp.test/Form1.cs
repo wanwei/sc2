@@ -125,5 +125,11 @@ namespace com.wer.sc.comp.test
             //FrmGraphicDrawer_DataNavigate2 frm = new FrmGraphicDrawer_DataNavigate2();
             //frm.ShowDialog();
         }
+
+        private void btCandlePriceRect_Click(object sender, EventArgs e)
+        {
+            FrmGraphicDrawer_PriceRect frm = new FrmGraphicDrawer_PriceRect();
+            frm.ShowDialog();
+        }
     }
 }

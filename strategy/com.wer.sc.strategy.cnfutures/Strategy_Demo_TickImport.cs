@@ -9,29 +9,29 @@ using com.wer.sc.data.reader;
 namespace com.wer.sc.strategy.cnfutures
 {
     [TestClass]
-    public class Strategy_Demo_TickImport : IStrategy
+    public class Strategy_Demo_TickImport :StrategyAbstract, IStrategy
     {
-        public StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetStrategyPeriods()
         {
             return null;
         }
 
-        public void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader currentData)
         {
 
         }
 
-        public void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader currentData)
         {
 
         }
 
-        public void StrategyEnd()
+        public override void StrategyEnd()
         {
 
         }
 
-        public void StrategyStart()
+        public override void StrategyStart()
         {
 
         }
