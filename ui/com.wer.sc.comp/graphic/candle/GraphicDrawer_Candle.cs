@@ -64,14 +64,22 @@ namespace com.wer.sc.comp.graphic
             this.Padding = new GraphicPaddingInfo(60, 0, 0, 0);
             this.drawer_chart = new GraphicDrawer_CandleChart();
             this.drawer_chart.MarginInfo = new GraphicMarginInfo(0, 0, 0, 1);
-            this.drawer_chart.Padding = new GraphicPaddingInfo(0, 20, 50, 0);
+            this.drawer_chart.Padding = new GraphicPaddingInfo(0, 20, 50, 20);
 
             this.drawer_mount = new GraphicDrawer_CandleMount();
             this.drawer_mount.MarginInfo = new GraphicMarginInfo(0, 0, 0, 0);
-            this.drawer_mount.Padding = new GraphicPaddingInfo(0, 0, 50, 0);
+            this.drawer_mount.Padding = new GraphicPaddingInfo(0, 20, 50, 0);
             this.AddGraph(drawer_chart, 0.7f);
             this.AddGraph(drawer_mount, 0.3f);
             this.crossHairDataPrivider = new CrossHairDataPrivider_Candle(this);
+        }
+
+        public override void Paint(Graphics graphic)
+        {
+            base.Paint(graphic);
+            string txt = DataProvider.Code + "  " + dataProvider.GetKLineData().Period;
+            Font font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            graphic.DrawString(txt, font, new SolidBrush(Color.White), new PointF(3, 3));
         }
 
         internal override void SetControl(Control control)
@@ -94,10 +102,7 @@ namespace com.wer.sc.comp.graphic
                     newWidth = 50;
                 this.drawer_chart.BlockWidth = newWidth;
                 this.drawer_mount.BlockWidth = newWidth;
-                //this.Control.Refresh();
-                this.Paint();                
-                //this.crossHairDataPrivider.DoRedraw();
-                //this.crossHairDataPrivider.CrossDrawer.DrawGraphic();
+                this.Paint();
             }
             else if (e.KeyCode == Keys.Down)
             {
@@ -107,11 +112,8 @@ namespace com.wer.sc.comp.graphic
                     newWidth = 1;
                 this.drawer_chart.BlockWidth = newWidth;
                 this.drawer_mount.BlockWidth = newWidth;
-                //this.Control.Refresh();
                 this.Paint();
-                //this.crossHairDataPrivider.CrossDrawer.DrawGraphic();
-                //this.crossHairDataPrivider.DoRedraw();
-            }
+           }
         }
 
         private void Control_KeyDown(object sender, KeyEventArgs e)

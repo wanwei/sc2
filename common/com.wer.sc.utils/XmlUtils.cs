@@ -10,14 +10,19 @@ namespace com.wer.sc.utils
 {
     public class XmlUtils
     {
-        public static String ToString(IXmlExchange xmlexchange)
+        public static String ToString(IXmlExchange xmlexchange, string rootTag)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            XmlNode rootNode = xmlDoc.CreateElement("root");
+            XmlNode rootNode = xmlDoc.CreateElement(rootTag);
             xmlDoc.AppendChild(rootNode);
 
             xmlexchange.Save(xmlDoc.DocumentElement);
             return ToString(xmlDoc);
+        }
+
+        public static String ToString(IXmlExchange xmlexchange)
+        {
+            return ToString(xmlexchange, "root");
         }
 
         public static string ToString(XmlDocument xmlDoc)

@@ -47,7 +47,7 @@ namespace com.wer.sc.strategy.cnfutures.draw
 
         public override void OnBar(IRealTimeDataReader currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
             GenMa(klineData);
             GenPoint(klineData);
         }

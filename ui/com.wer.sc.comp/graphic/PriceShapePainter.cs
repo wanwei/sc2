@@ -64,7 +64,7 @@ namespace com.wer.sc.comp.graphic
             float x1 = priceGraphic.CalcX(point.X);
             float y1 = priceGraphic.CalcY(point.Y);
             float w = point.Width;
-            g.FillEllipse(new SolidBrush(point.Color), x1 - point.Width, y1 - point.Width, point.Width, point.Width);
+            g.FillEllipse(new SolidBrush(point.Color), x1 - point.Width/2, y1 - point.Width/2, point.Width, point.Width);
         }
     }
 

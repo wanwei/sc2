@@ -216,6 +216,10 @@ namespace com.wer.sc.ui.comp.test
             IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
 
             IStrategy strategy = strategyInfo.CreateStrategy();
+            if(strategy is StrategyAbstract)
+            {
+                ((StrategyAbstract)strategy).DefaultMainPeriod = period;
+            }
             strategyRunner.SetStrategy(strategy);
             strategyRunner.Run();
             compChart1.Refresh();

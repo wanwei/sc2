@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.reader;
+using com.wer.sc.data;
 
 namespace com.wer.sc.strategy
 {
     public abstract class StrategyAbstract : IStrategy
     {
+        private KLinePeriod defaultMainPeriod;
+
         private StrategyHelper strategyHelper;
 
         public abstract StrategyReferedPeriods GetStrategyPeriods();
@@ -26,6 +29,19 @@ namespace com.wer.sc.strategy
         {
             get { return strategyHelper; }
             set { strategyHelper = value; }
+        }
+
+        public KLinePeriod DefaultMainPeriod
+        {
+            get
+            {
+                return defaultMainPeriod;
+            }
+
+            set
+            {
+                defaultMainPeriod = value;
+            }
         }
     }
 }

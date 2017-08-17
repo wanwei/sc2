@@ -107,6 +107,19 @@ namespace com.wer.sc.data.realtime
             SetRealTimeData(chart, BarPos);
         }
 
+        public override string Code
+        {
+            get
+            {
+                return klineData.Code;
+            }
+
+            set
+            {
+               
+            }
+        }
+
         #region 得到完整数据
 
         public override IList<double> Arr_Time

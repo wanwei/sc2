@@ -33,11 +33,11 @@ namespace com.wer.sc.comp
 
             IKLineData klineData = dataProvider.GetKLineData();
 
-            for (int x = 100; x <= 110; x++)
+            for (int x = 50; x <= 110; x++)
             {
                 //int x = 150;
                 float y = klineData.Arr_High[x];
-                PriceShape_Point point = new PriceShape_Point(x, y, 2, Color.Red);
+                PriceShape_Point point = new PriceShape_Point(x, y, 5, Color.Red);
                 drawer.Drawer_Chart.DrawShape(point);
             }
             CrossHairDrawer cdrawer = new CrossHairDrawer();

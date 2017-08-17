@@ -79,6 +79,11 @@ namespace com.wer.sc.strategy
                     LogHelper.Warn(GetType(), e);
                 }
 
+                if (forwardPeriod.IsTickForward)
+                    RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
+                else
+                    RealTimeReader_OnBar(realTimeReader, realTimeReader.GetKLineData(), 0);
+
                 //执行策略
                 while (!realTimeReader.IsEnd)
                 {

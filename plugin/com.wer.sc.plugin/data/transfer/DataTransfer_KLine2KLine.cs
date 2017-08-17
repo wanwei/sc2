@@ -59,7 +59,7 @@ namespace com.wer.sc.data.transfer
                 charts.Add(GetChart_Day(data, startIndex, endIndex));
             }
 
-            return GetKLineData(charts);
+            return GetKLineData(data.Code, charts);
         }
 
         private static KLineBar GetChart_Day(IKLineData data, int startIndex, int endIndex)
@@ -68,7 +68,6 @@ namespace com.wer.sc.data.transfer
             chart.Time = (int)data.Arr_Time[endIndex];
             return chart;
         }
-
 
         private static IKLineData Transfer_SrcIs1Minute(IKLineData data, KLinePeriod targetPeriod, ITradingSessionReader_Instrument startTimeReader)
         {
@@ -92,7 +91,7 @@ namespace com.wer.sc.data.transfer
                 endIndex = FindRealLastIndex_1Minute(data, startIndex, endIndex);
             }
 
-            return GetKLineData(charts);
+            return GetKLineData(data.Code, charts);
         }
 
         private static int FindRealLastIndex_1Minute(IKLineData data, int startIndex, int endIndex)
@@ -142,9 +141,10 @@ namespace com.wer.sc.data.transfer
             return chart;
         }
 
-        private static KLineData GetKLineData(List<KLineBar> charts)
+        private static KLineData GetKLineData(string code, List<KLineBar> charts)
         {
             KLineData data = new KLineData(charts.Count);
+            data.Code = code;
             for (int i = 0; i < charts.Count; i++)
             {
                 KLineBar chart = charts[i];

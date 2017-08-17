@@ -177,6 +177,39 @@ namespace com.wer.sc.comp.graphic
             return arr;
         }
 
+        private float[] findScalePrices2(PriceGraphicMapping PriceMapping)
+        {
+            double height = PriceMapping.PriceRect.PriceHeight;
+            //最小比例是5，然后依次是10、20、40、100、500、1000、2000
+            int scalePriceInterval = 0;
+            for (int i = 0; i < ARR_SCALEPRICE.Length; i++)
+            {
+                int interval = ARR_SCALEPRICE[i];
+                if (height / interval < 5)
+                {
+                    
+                }
+                //if (height > interval && height < 3 * interval)
+                //{
+                //    scalePriceInterval = interval;
+                //    break;
+                //}
+                //if (height < interval)
+                //{
+                //    int index = i - 1;
+                //    index = index >= 0 ? index : 0;
+                //    scalePriceInterval = ARR_SCALEPRICE[index];
+                //    break;
+                //}
+            }
+            float lowPrice = ((int)(PriceMapping.PriceRect.PriceBottom / scalePriceInterval) + 1) * scalePriceInterval;
+
+            float[] arr = new float[2];
+            arr[0] = lowPrice;
+            arr[1] = lowPrice + scalePriceInterval;
+            return arr;
+        }
+
         private void drawScaleLine(Graphics g, double xLeft, double xRight, double y, double price)
         {
             ColorConfig config = colorConfig;
@@ -221,7 +254,7 @@ namespace com.wer.sc.comp.graphic
             g.DrawLine(p, new PointF(XMiddle, YTop), new PointF(XMiddle, YBlockTop));
             g.DrawLine(p, new PointF(XMiddle, YBottom), new PointF(XMiddle, YBlockBottom));
 
-            float halfBlockWidth = ((float)(blockWidth - blockPadding)) / 2;
+            float halfBlockWidth = (blockWidth - blockPadding) / 2;
 
             float XLeft = XMiddle - halfBlockWidth;
             float XRight = XMiddle + halfBlockWidth;

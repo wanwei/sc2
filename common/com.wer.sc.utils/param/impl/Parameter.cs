@@ -5,108 +5,119 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace com.wer.sc.utils.param
+namespace com.wer.sc.utils.param.impl
 {
-    public class ParameterMeta : IXmlExchange
+    public class Parameter : ParameterObject, IParameter
     {
-        public const char TYPE_BOOLEAN = ObjectUtils.TYPE_BOOLEAN;
-
-        public const char TYPE_INTEGER = ObjectUtils.TYPE_INTEGER;
-
-        public const char TYPE_DOUBLE = ObjectUtils.TYPE_DOUBLE;
-
-        public const char TYPE_STRING = ObjectUtils.TYPE_STRING;
-
-        public const char TYPE_FLOAT = ObjectUtils.TYPE_FLOAT;
-
-        public const char TYPE_LONG = ObjectUtils.TYPE_LONG;
-
         private String key;
 
         private String caption;
 
-        private char type;
+        private string description;
 
         private Object defaultValue;
 
-        private Object option;
+        private IParameterOptions options;
 
-        public ParameterMeta(String key, String caption, char type) : this(key, caption, type, null)
+        public string Key
+        {
+            get
+            {
+                return key;
+            }
+        }
+
+        public string Caption
+        {
+            get
+            {
+                return caption;
+            }
+        }
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+        }
+
+        public object DefaultValue
+        {
+            get
+            {
+                return defaultValue;
+            }
+        }
+
+        public IParameterOptions Options
+        {
+            get
+            {
+                return options;
+            }
+        }
+
+        protected Parameter()
         {
 
         }
 
-        public ParameterMeta(String key, String caption, char type, Object defaultValue) : this(key, caption, type, defaultValue, null)
+        public Parameter(String key, String caption, string description, ParameterType type) : this(key, caption, description, type, null)
         {
 
         }
 
-        public ParameterMeta(String key, String caption, char type, Object defaultValue, Object options)
+        public Parameter(String key, String caption, string description, ParameterType type, Object defaultValue) : this(key, caption, description, type, defaultValue, null)
+        {
+
+        }
+
+        public Parameter(String key, String caption, string description, ParameterType type, Object defaultValue, IParameterOptions options) : base(type)
         {
             this.key = key;
             this.caption = caption;
-            this.type = type;
+            this.description = description;
             this.defaultValue = defaultValue;
-            //setOption(options);
+            this.options = options;
         }
 
-        public String getKey()
+        public override void Save(XmlElement xmlElem)
         {
-            return key;
+            base.Save(xmlElem);
+            xmlElem.SetAttribute("key", key);
+            xmlElem.SetAttribute("caption", caption);
+            if (description != null)
+                xmlElem.SetAttribute("description", description);
+            xmlElem.SetAttribute("defaultValue", StringUtils.obj2Str(defaultValue, ""));
+            if (options != null)
+            {
+                XmlElement elemOption = xmlElem.OwnerDocument.CreateElement("option");
+                this.options.Save(elemOption);
+                xmlElem.AppendChild(elemOption);
+            }
         }
 
-        public void setKey(String key)
+        public override void Load(XmlElement xmlElem)
         {
-            this.key = key;
+            base.Load(xmlElem);
+            this.key = xmlElem.GetAttribute("key");
+            this.caption = xmlElem.GetAttribute("caption");
+            this.description = xmlElem.GetAttribute("description");
+            this.defaultValue = Parse(xmlElem.GetAttribute("defaultValue"), this.ParameterType);
+            if (options != null)
+            {
+                XmlElement elemOption = xmlElem.OwnerDocument.CreateElement("option");
+                this.options.Save(elemOption);
+                xmlElem.AppendChild(elemOption);
+            }
         }
 
-        public String getCaption()
+        public static Parameter CreateParam(XmlElement xmlElem)
         {
-            return caption;
-        }
-
-        public void setCaption(String caption)
-        {
-            this.caption = caption;
-        }
-
-        public char getType()
-        {
-            return type;
-        }
-
-        public void setType(char type)
-        {
-            this.type = type;
-        }
-
-        public Object getDefaultValue()
-        {
-            return defaultValue;
-        }
-
-        public void setDefaultValue(Object defaultValue)
-        {
-            this.defaultValue = defaultValue;
-        }
-
-        /**
-         * option对象
-         * @return
-         */
-        public Object getOption()
-        {
-            return option;
-        }
-
-        public void Save(XmlElement xmlElem)
-        {
-            
-        }
-
-        public void Load(XmlElement xmlElem)
-        {
-            
+            Parameter obj = new Parameter();
+            obj.Load(xmlElem);
+            return obj;
         }
 
         //public void setOption(Object option)
