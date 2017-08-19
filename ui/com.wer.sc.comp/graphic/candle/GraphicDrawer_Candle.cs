@@ -114,27 +114,7 @@ namespace com.wer.sc.comp.graphic
                 this.drawer_mount.BlockWidth = newWidth;
                 this.Paint();
            }
-        }
-
-        private void Control_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!this.IsEnable)
-                return;
-            if (e.KeyCode == Keys.Up)
-            {
-                int blockWidth = this.drawer_chart.BlockWidth;
-                int newWidth = (int)(blockWidth * 1.5);
-                this.drawer_chart.BlockWidth = newWidth;
-                this.drawer_mount.BlockWidth = newWidth;
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                int blockWidth = this.drawer_chart.BlockWidth;
-                int newWidth = (int)(blockWidth / 1.5);
-                this.drawer_chart.BlockWidth = newWidth;
-                this.drawer_mount.BlockWidth = newWidth;
-            }
-        }
+        }       
 
         private CrossHairDataProvider crossHairDataPrivider;
 

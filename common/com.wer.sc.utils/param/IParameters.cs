@@ -48,11 +48,15 @@ namespace com.wer.sc.utils.param
         /// <returns></returns>
         IParameter GetParameter(string key);
 
+        IParameter GetParameter(int index);
+
         /// <summary>
         /// 得到所有参数描述信息
         /// </summary>
         /// <returns></returns>
         List<IParameter> GetAllParameters();
+
+        int Count { get; }
 
         /// <summary>
         /// 设置参数

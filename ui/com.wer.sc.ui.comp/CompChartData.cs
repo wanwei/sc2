@@ -18,6 +18,10 @@ namespace com.wer.sc.ui.comp
     /// </summary>
     public class CompChartData : IDataPackageOwner
     {
+        private ChartDataState oldChartDataState;
+
+        private ChartDataState currentChartDataState;
+
         private IDataPackage dataPackage;
 
         private IDataReader dataReader;
@@ -49,6 +53,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (dataCenterUri == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 dataCenterUri = value;
                 this.dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
                 this.IsDataRefresh = true;
@@ -66,6 +71,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (code == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 code = value;
                 this.IsDataRefresh = true;
             }
@@ -82,6 +88,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (chartType == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 chartType = value;
                 this.IsDataRefresh = true;
             }
@@ -98,6 +105,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (time == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 time = value;
                 this.IsDataRefresh = true;
             }
@@ -114,6 +122,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (kLineBlockWidth == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 kLineBlockWidth = value;
                 this.IsDataRefresh = true;
             }
@@ -130,6 +139,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (klinePeriod == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 klinePeriod = value;
                 this.IsDataRefresh = true;
             }
@@ -146,6 +156,7 @@ namespace com.wer.sc.ui.comp
             {
                 if (klineTimeType == value)
                     return;
+                this.oldChartDataState = GetChartDataState();
                 klineTimeType = value;
                 this.IsDataRefresh = true;
             }
@@ -312,7 +323,10 @@ namespace com.wer.sc.ui.comp
             {
                 this.isDataRefresh = value;
                 if (this.isDataRefresh && OnDataRefresh != null)
-                    OnDataRefresh(this, new DataRefreshArgument());
+                {
+                    currentChartDataState = GetChartDataState();
+                    OnDataRefresh(this, new DataRefreshArgument(oldChartDataState, currentChartDataState));
+                }
             }
         }
 
@@ -330,12 +344,65 @@ namespace com.wer.sc.ui.comp
                 return dataPackage;
             }
         }
+
+        private ChartDataState GetChartDataState()
+        {
+            ChartDataState state = new ChartDataState();
+            state.code = this.code;
+            state.dataCenterUri = this.dataCenterUri;
+            state.chartType = this.chartType;
+            state.time = this.time;
+            state.kLineBlockWidth = this.kLineBlockWidth;
+            state.klinePeriod = this.klinePeriod;
+            state.klineTimeType = this.klineTimeType;
+            return state;
+        }
     }
 
     public delegate void DelegateOnDataRefresh(object sender, DataRefreshArgument arg);
 
     public class DataRefreshArgument
     {
+        private ChartDataState oldChartDataState;
 
+        private ChartDataState currentChartDataState;
+
+        public DataRefreshArgument(ChartDataState oldChartState, ChartDataState currentChartState)
+        {
+            this.oldChartDataState = oldChartState;
+            this.currentChartDataState = currentChartState;
+        }
+    }
+
+    public class ChartDataState
+    {
+        public string code;
+
+        public string dataCenterUri;
+
+        public ChartType chartType;
+
+        public double time;
+
+        public float kLineBlockWidth;
+
+        public int klinePeriod;
+
+        public KLineTimeType klineTimeType;
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ChartDataState))
+                return false;
+
+            ChartDataState dataState = (ChartDataState)obj;
+            return this.code == dataState.code && this.dataCenterUri == dataState.dataCenterUri && this.chartType == dataState.chartType && this.time == dataState.time
+                && this.kLineBlockWidth == dataState.kLineBlockWidth && this.klinePeriod == dataState.klinePeriod && this.klineTimeType == dataState.klineTimeType;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

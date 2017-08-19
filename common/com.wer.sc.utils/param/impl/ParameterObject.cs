@@ -22,7 +22,7 @@ namespace com.wer.sc.utils.param.impl
         }
 
 
-        public object Value
+        public virtual object Value
         {
             get
             {

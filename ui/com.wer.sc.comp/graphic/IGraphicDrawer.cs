@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.comp.graphic.shape;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -60,6 +61,8 @@ namespace com.wer.sc.comp.graphic
         /// 图像绘制完事件
         /// </summary>
         event AfterGraphicPaintHandler AfterGraphicPaint;
+
+        void DrawShape(IShape shape);
     }
 
     public delegate void AfterGraphicPaintHandler(object sender, GraphicRefreshArgs e);

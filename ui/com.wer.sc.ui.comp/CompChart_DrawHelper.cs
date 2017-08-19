@@ -9,6 +9,7 @@ using System.Drawing;
 using com.wer.sc.comp.graphic;
 using com.wer.sc.data;
 using com.wer.sc.data.utils;
+using com.wer.sc.comp.graphic.shape;
 
 namespace com.wer.sc.ui.comp
 {
@@ -28,7 +29,10 @@ namespace com.wer.sc.ui.comp
 
         private void CompChart_OnChartRefresh(object sender, ChartRefreshArguments arg)
         {
-            this.Refresh();
+            if (arg.DataRefreshed)
+                this.compChart.CurrentPriceRectDrawer.ClearShapes();
+            else
+                this.Refresh();
         }
 
         private void DrawStrategyShape(StrategyShape strategyShape)
@@ -54,6 +58,17 @@ namespace com.wer.sc.ui.comp
             return null;
         }
 
+        public void DrawTitle(int x, string text, Color color)
+        {
+            Shape_Label label = new Shape_Label();
+            label.X = x;
+            label.Y = -20;
+            label.Text = text;
+            label.Color = color;
+            label.Font = new Font("宋体", 10f, FontStyle.Regular);
+            compChart.CurrentPriceRectDrawer.DrawShape(label);
+        }
+
         public void DrawLabel(PriceLabel label)
         {
             PriceGraphicMapping mapping = compChart.CurrentChartGraphicMapping;
@@ -65,7 +80,7 @@ namespace com.wer.sc.ui.comp
             shape.Point = GetPoint(label.Time, label.Price);
             if (shape.Point == null)
                 return;
-            drawer.DrawShape(shape);
+            drawer.DrawPriceShape(shape);
         }
 
         public void DrawLabels(List<float> positions, List<string> txts, Color color)
@@ -78,7 +93,7 @@ namespace com.wer.sc.ui.comp
             //shape.Point = GetPoint(label.Time, label.Price);
             if (shape.Point == null)
                 return;
-            drawer.DrawShape(shape);
+            drawer.DrawPriceShape(shape);
         }
 
         public void DrawLine(PriceLine line)
@@ -182,7 +197,7 @@ namespace com.wer.sc.ui.comp
 
         private void DrawShape(PriceShape shape)
         {
-            this.compChart.CurrentPriceRectDrawer.DrawShape(shape);
+            this.compChart.CurrentPriceRectDrawer.DrawPriceShape(shape);
         }
 
         public void Refresh()

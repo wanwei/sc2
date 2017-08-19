@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.reader;
 using com.wer.sc.data;
+using com.wer.sc.utils.param;
 
 namespace com.wer.sc.strategy
 {
@@ -14,6 +15,8 @@ namespace com.wer.sc.strategy
         private KLinePeriod defaultMainPeriod;
 
         private StrategyHelper strategyHelper;
+
+        private IParameters parameters = ParameterFactory.CreateParameters();
 
         public abstract StrategyReferedPeriods GetStrategyPeriods();
 
@@ -41,6 +44,14 @@ namespace com.wer.sc.strategy
             set
             {
                 defaultMainPeriod = value;
+            }
+        }        
+
+        public virtual IParameters Parameters
+        {
+            get
+            {
+                return parameters;
             }
         }
     }

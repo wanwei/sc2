@@ -4,10 +4,10 @@ namespace com.wer.sc.comp.graphic
 {
     public class PriceRectangle
     {
-        private float priceBottom;
-        private float priceTop;
         private float priceLeft;
+        private float priceTop;
         private float priceRight;
+        private float priceBottom;
 
         public PriceRectangle(float priceLeft, float priceRight, float priceTop, float priceBottom)
         {

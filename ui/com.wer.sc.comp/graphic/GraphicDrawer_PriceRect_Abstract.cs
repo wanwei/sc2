@@ -29,6 +29,7 @@ namespace com.wer.sc.comp.graphic
 
         public override void Paint(Graphics graphic)
         {
+            base.Paint(graphic);
             if (priceRect == null)
                 return;
             PriceGraphicMapping mapping = new PriceGraphicMapping(DisplayRect, priceRect);
@@ -38,7 +39,7 @@ namespace com.wer.sc.comp.graphic
             }
         }
 
-        public void DrawShape(PriceShape priceShape)
+        public void DrawPriceShape(PriceShape priceShape)
         {
             this.shapes.Add(priceShape);
         }

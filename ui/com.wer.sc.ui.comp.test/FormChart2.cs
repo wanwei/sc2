@@ -3,6 +3,7 @@ using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.strategy;
+using com.wer.sc.utils.param;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,15 +28,24 @@ namespace com.wer.sc.ui.comp.test
             //this.compChart1.Time = 20170531.210011;
             this.compChart1.KlinePeriod = 1;
             this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
-            this.compChart1.OnDataRefresh += CompChart1_OnDataRefresh;
+            this.compChart1.OnChartRefresh += CompChart1_OnDataRefresh;
             this.SetLbTime(this.compChart1.Time);
             this.compChart1.PaintChart();
 
+            this.compStrategyTree1.TreeStrategy.MouseClick += TreeStrategy_MouseClick;
             this.compStrategyTree1.TreeStrategy.MouseDoubleClick += TreeStrategy_MouseDoubleClick;
         }
 
-        private void CompChart1_OnDataRefresh(object sender, DataRefreshArgument arg)
+        private void TreeStrategy_MouseClick(object sender, MouseEventArgs e)
         {
+            TreeNode tempNode = this.compStrategyTree1.TreeStrategy.GetNodeAt(e.X, e.Y);
+            compStrategyTree1.TreeStrategy.SelectedNode = tempNode;
+        }
+
+        private void CompChart1_OnDataRefresh(object sender, ChartRefreshArguments arg)
+        {
+            if (!arg.DataRefreshed)
+                return;
             this.compChart1.PaintChart();
             //等待异步    
             SetLbTime(this.compChart1.Time);
@@ -199,13 +209,25 @@ namespace com.wer.sc.ui.comp.test
 
         private void TreeStrategy_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            StrategyInfo strategyInfo = GetSelectedStrategy();
+            if (strategyInfo == null)
+                return;
+            RunStrategy(strategyInfo);
+        }
+
+        private StrategyInfo GetSelectedStrategy()
+        {
             TreeNode selectedNode = compStrategyTree1.TreeStrategy.SelectedNode;
             Object obj = selectedNode.Tag;
             if (obj == null)
-                return;
+                return null;
             if (!(obj is StrategyInfo))
-                return;
-            StrategyInfo strategyInfo = (StrategyInfo)obj;
+                return null;
+            return (StrategyInfo)obj;
+        }
+
+        private void RunStrategy(StrategyInfo strategyInfo)
+        {
             IDataPackage dataPackage = this.compChart1.CompChartData.DataPackage;
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             //compChart1.KlinePeriod
@@ -216,7 +238,7 @@ namespace com.wer.sc.ui.comp.test
             IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
 
             IStrategy strategy = strategyInfo.CreateStrategy();
-            if(strategy is StrategyAbstract)
+            if (strategy is StrategyAbstract)
             {
                 ((StrategyAbstract)strategy).DefaultMainPeriod = period;
             }
@@ -238,8 +260,17 @@ namespace com.wer.sc.ui.comp.test
                 polyLine.Points.Add(point);
             }
             polyLine.Color = Color.GreenYellow;
-            this.compChart1.Drawer_Candle.Drawer_Chart.DrawShape(polyLine);
+            this.compChart1.Drawer_Candle.Drawer_Chart.DrawPriceShape(polyLine);
             this.compChart1.Drawer_Candle.Paint();
+        }
+
+        private void menuItemParameters_Click(object sender, EventArgs e)
+        {
+            StrategyInfo strategyInfo = GetSelectedStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy();
+            IParameters parameters = strategy.Parameters;
+
+            //IStrategy strategy
         }
     }
 }

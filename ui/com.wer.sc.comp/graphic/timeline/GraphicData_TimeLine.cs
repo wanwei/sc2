@@ -54,6 +54,11 @@ namespace com.wer.sc.comp.graphic.timeline
         public void ChangeData(TimeLineData timeLineData)
         {
             this.data = timeLineData;
+            if (OnGraphicDataChange != null)
+                OnGraphicDataChange(this, new GraphicDataChangeArgument());
         }
+
+        public event DelegateOnGraphicDataChange OnGraphicDataChange;
+
     }
 }

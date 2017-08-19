@@ -79,16 +79,16 @@ namespace com.wer.sc.ui.comp
             get { return strategyHelper; }
         }
 
-        public event DelegateOnDataRefresh OnDataRefresh;
+        //public event DelegateOnDataRefresh OnDataRefresh;
 
         private void CompChartData_OnDataRefresh(object sender, DataRefreshArgument arg)
         {
             if (!Inited)
                 return;
-            if (OnDataRefresh != null)
-                OnDataRefresh(this, arg);
+            //if (OnDataRefresh != null)
+            //    OnDataRefresh(this, arg);
             if (OnChartRefresh != null)
-                OnChartRefresh(this, new ChartRefreshArguments());
+                OnChartRefresh(this, new ChartRefreshArguments(true));
         }
 
         public event DelegateOnChartRefresh OnChartRefresh;
@@ -237,10 +237,6 @@ namespace com.wer.sc.ui.comp
                 this.graphicData_Candle.EndIndex = endIndex;
             else
                 this.graphicData_Candle.EndIndex += length;
-
-            if (OnChartRefresh != null)
-                OnChartRefresh(this, new ChartRefreshArguments());
-
             this.graphicDrawer.Paint();
         }
 
@@ -254,10 +250,6 @@ namespace com.wer.sc.ui.comp
             if (realLength == 0)
                 return;
             this.graphicData_Candle.EndIndex -= realLength;
-
-            if (OnChartRefresh != null)
-                OnChartRefresh(this, new ChartRefreshArguments());
-
             this.graphicDrawer.Paint();
         }
 
@@ -383,8 +375,15 @@ namespace com.wer.sc.ui.comp
             KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
             IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
             this.graphicData_Candle = GraphicDataFactory.CreateGraphicData_Candle(klineData, 0, klineData.BarPos);
+            this.graphicData_Candle.OnGraphicDataChange += GraphicData_Candle_OnGraphicDataChange;
             drawer_Candle.DataProvider = graphicData_Candle;
             return this.drawer_Candle;
+        }
+
+        private void GraphicData_Candle_OnGraphicDataChange(object sender, GraphicDataChangeArgument arg)
+        {
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartRefreshArguments(false));
         }
 
         private GraphicDrawer_TimeLine InitGraphicDrawer_TimeLine()
@@ -420,21 +419,21 @@ namespace com.wer.sc.ui.comp
         {
             //try
             //{
-                KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
-                IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
-                //int date = TradingSessionReader.GetTradingDay(time);            
-                //IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
-                if (klineData == null)
-                {
-                    MessageBox.Show("未能找到" + Code + " -" + Time + "的" + period + "周期K线数据");
-                    return;
-                }
+            KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
+            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
+            //int date = TradingSessionReader.GetTradingDay(time);            
+            //IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
+            if (klineData == null)
+            {
+                MessageBox.Show("未能找到" + Code + " -" + Time + "的" + period + "周期K线数据");
+                return;
+            }
 
-                //int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, Time);
-                //klineData.BarPos = barPos;
-                graphicData_Candle.ChangeData(klineData);
-                graphicData_Candle.EndIndex = klineData.BarPos;
-                this.graphicDrawer.Switch(0);
+            //int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, Time);
+            //klineData.BarPos = barPos;
+            graphicData_Candle.ChangeData(klineData);
+            graphicData_Candle.EndIndex = klineData.BarPos;
+            this.graphicDrawer.Switch(0);
             //}
             //catch (Exception e)
             //{
@@ -541,6 +540,45 @@ namespace com.wer.sc.ui.comp
 
     public class ChartRefreshArguments
     {
+        private bool dataRefreshed;
 
+        public ChartRefreshArguments(bool dataRefreshed)
+        {
+            this.dataRefreshed = dataRefreshed;
+        }
+
+        public bool DataRefreshed
+        {
+            get
+            {
+                return dataRefreshed;
+            }
+        }
     }
+
+    //public class ChartState
+    //{
+    //    public string code;
+
+    //    public string dataCenterUri;
+
+    //    public ChartType chartType;
+
+    //    public double time;
+
+    //    public float kLineBlockWidth;
+
+    //    public int klinePeriod;
+
+    //    public KLineTimeType klineTimeType;
+
+    //    public override bool Equals(object obj)
+    //    {
+    //        if (!(obj is ChartState))
+    //        {
+
+    //        }
+    //        return false;
+    //    }
+    //}
 }

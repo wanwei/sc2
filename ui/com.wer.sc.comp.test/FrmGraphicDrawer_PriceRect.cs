@@ -38,7 +38,7 @@ namespace com.wer.sc.comp
                 //int x = 150;
                 float y = klineData.Arr_High[x];
                 PriceShape_Point point = new PriceShape_Point(x, y, 5, Color.Red);
-                drawer.Drawer_Chart.DrawShape(point);
+                drawer.Drawer_Chart.DrawPriceShape(point);
             }
             CrossHairDrawer cdrawer = new CrossHairDrawer();
             cdrawer.Bind(drawer);

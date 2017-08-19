@@ -80,6 +80,8 @@ namespace com.wer.sc.comp.graphic.info
         {
             this.currentInfo = currentInfo;
             this.tickData = tickData;
+            if (OnGraphicDataChange != null)
+                OnGraphicDataChange(this, new GraphicDataChangeArgument());
         }
 
         public ITickData GetCurrentTickData()
@@ -87,6 +89,6 @@ namespace com.wer.sc.comp.graphic.info
             return tickData;
         }
 
-
+        public event DelegateOnGraphicDataChange OnGraphicDataChange;
     }
 }

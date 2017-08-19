@@ -52,18 +52,18 @@
             this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_CodeList = new System.Windows.Forms.ToolStripButton();
+            this.bt_DrawLine = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.数据中心ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.compStrategyTree1 = new com.wer.sc.ui.comp.CompStrategyTree();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemExecute = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemArguments = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemParameters = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.bt_DrawLine = new System.Windows.Forms.ToolStripButton();
-            this.compStrategyTree1 = new com.wer.sc.ui.comp.CompStrategyTree();
             this.compMain1 = new com.wer.sc.ui.comp.CompMain();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -329,6 +329,16 @@
             this.tb_CodeList.Text = "股票列表";
             this.tb_CodeList.Click += new System.EventHandler(this.tb_CodeList_Click);
             // 
+            // bt_DrawLine
+            // 
+            this.bt_DrawLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bt_DrawLine.Image = ((System.Drawing.Image)(resources.GetObject("bt_DrawLine.Image")));
+            this.bt_DrawLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bt_DrawLine.Name = "bt_DrawLine";
+            this.bt_DrawLine.Size = new System.Drawing.Size(24, 42);
+            this.bt_DrawLine.Text = "toolStripButton1";
+            this.bt_DrawLine.Click += new System.EventHandler(this.bt_DrawLine_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -392,44 +402,6 @@
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 9;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExecute,
-            this.menuItemArguments,
-            this.menuItemRefresh});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(115, 82);
-            // 
-            // menuItemExecute
-            // 
-            this.menuItemExecute.Name = "menuItemExecute";
-            this.menuItemExecute.Size = new System.Drawing.Size(114, 26);
-            this.menuItemExecute.Text = "执行";
-            // 
-            // menuItemArguments
-            // 
-            this.menuItemArguments.Name = "menuItemArguments";
-            this.menuItemArguments.Size = new System.Drawing.Size(114, 26);
-            this.menuItemArguments.Text = "参数";
-            // 
-            // menuItemRefresh
-            // 
-            this.menuItemRefresh.Name = "menuItemRefresh";
-            this.menuItemRefresh.Size = new System.Drawing.Size(114, 26);
-            this.menuItemRefresh.Text = "刷新";
-            // 
-            // bt_DrawLine
-            // 
-            this.bt_DrawLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bt_DrawLine.Image = ((System.Drawing.Image)(resources.GetObject("bt_DrawLine.Image")));
-            this.bt_DrawLine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bt_DrawLine.Name = "bt_DrawLine";
-            this.bt_DrawLine.Size = new System.Drawing.Size(24, 42);
-            this.bt_DrawLine.Text = "toolStripButton1";
-            this.bt_DrawLine.Click += new System.EventHandler(this.bt_DrawLine_Click);
-            // 
             // compStrategyTree1
             // 
             this.compStrategyTree1.ContextMenuStrip = this.contextMenuStrip1;
@@ -441,6 +413,35 @@
             this.compStrategyTree1.Name = "compStrategyTree1";
             this.compStrategyTree1.Size = new System.Drawing.Size(271, 528);
             this.compStrategyTree1.TabIndex = 0;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExecute,
+            this.menuItemParameters,
+            this.menuItemRefresh});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 110);
+            // 
+            // menuItemExecute
+            // 
+            this.menuItemExecute.Name = "menuItemExecute";
+            this.menuItemExecute.Size = new System.Drawing.Size(181, 26);
+            this.menuItemExecute.Text = "执行";
+            // 
+            // menuItemParameters
+            // 
+            this.menuItemParameters.Name = "menuItemParameters";
+            this.menuItemParameters.Size = new System.Drawing.Size(181, 26);
+            this.menuItemParameters.Text = "参数";
+            this.menuItemParameters.Click += new System.EventHandler(this.menuItemParameters_Click);
+            // 
+            // menuItemRefresh
+            // 
+            this.menuItemRefresh.Name = "menuItemRefresh";
+            this.menuItemRefresh.Size = new System.Drawing.Size(181, 26);
+            this.menuItemRefresh.Text = "刷新";
             // 
             // compMain1
             // 
@@ -519,7 +520,7 @@
         private CompStrategyTree compStrategyTree1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuItemExecute;
-        private System.Windows.Forms.ToolStripMenuItem menuItemArguments;
+        private System.Windows.Forms.ToolStripMenuItem menuItemParameters;
         private System.Windows.Forms.ToolStripMenuItem menuItemRefresh;
         private System.Windows.Forms.ToolStripButton bt_DrawLine;
     }

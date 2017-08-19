@@ -42,13 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="draw\Strategy_DrawPoints.cs" />
+    <Compile Include="test\Strategy_DrawPoints.cs" />
     <Compile Include="Strategy_CnFutures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="import\Strategy_MaList.cs" />
     <Compile Include="import\Strategy_Zigzag.cs" />
     <Compile Include="Strategy_Demo_MinuteImport.cs" />
     <Compile Include="Strategy_Demo_TickImport.cs" />
+    <Compile Include="test\Strategy_Trade.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">

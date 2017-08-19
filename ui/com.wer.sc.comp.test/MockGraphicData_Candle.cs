@@ -178,5 +178,6 @@ namespace com.wer.sc.comp
         }
 
         public event DataChangeHandler DataChange;
+        public event DelegateOnGraphicDataChange OnGraphicDataChange;
     }
 }

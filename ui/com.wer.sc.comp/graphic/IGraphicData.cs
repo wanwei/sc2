@@ -8,5 +8,13 @@ namespace com.wer.sc.comp.graphic
 {
     public interface IGraphicData
     {
+        event DelegateOnGraphicDataChange OnGraphicDataChange;
+    }
+
+    public delegate void DelegateOnGraphicDataChange(object sender, GraphicDataChangeArgument arg);
+
+    public class GraphicDataChangeArgument
+    {
+
     }
 }

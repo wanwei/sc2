@@ -29,12 +29,6 @@ namespace com.wer.sc.utils.param
             parameters.SetParameterValue("ma4", 40);
             parameters.SetParameterValue("ma5", 60);
 
-            //List<IParameter> ps = parameters.GetAllParameters();
-            //for (int i = 0; i < ps.Count; i++)
-            //{
-            //    Console.WriteLine(ps[i]);
-            //}
-
             Console.WriteLine(parameters);
         }
     }

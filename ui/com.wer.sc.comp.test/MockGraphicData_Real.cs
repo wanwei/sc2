@@ -20,6 +20,8 @@ namespace com.wer.sc.comp
 
         private ITimeLineData data;
 
+        public event DelegateOnGraphicDataChange OnGraphicDataChange;
+
         public MockGraphicData_Real()
         {
             fac = DataReaderFactory.CreateDataReader(@"E:\SCDATA\CNFUTURES");

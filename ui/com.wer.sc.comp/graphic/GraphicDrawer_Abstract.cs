@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
+using com.wer.sc.comp.graphic.shape;
 
 namespace com.wer.sc.comp.graphic
 {
@@ -220,10 +221,30 @@ namespace com.wer.sc.comp.graphic
         /// 抽象方法
         /// </summary>
         /// <param name="graphic"></param>
-        public abstract void Paint(Graphics graphic);
+        public virtual void Paint(Graphics graphic)
+        {
+            PaintShapes(graphic, DisplayRect);
+        }
 
         public event AfterGraphicPaintHandler AfterGraphicPaint;
 
         #endregion
+
+        private ShapePainter shapePainter = new ShapePainter();
+
+        private void PaintShapes(Graphics g, Rectangle rect)
+        {
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                shapePainter.Paint(g, rect, shapes[i]);
+            }
+        }
+
+        private List<IShape> shapes = new List<IShape>();
+
+        public void DrawShape(IShape shape)
+        {
+            this.shapes.Add(shape);
+        }
     }
 }

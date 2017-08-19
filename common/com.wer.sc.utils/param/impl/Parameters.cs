@@ -55,6 +55,16 @@ namespace com.wer.sc.utils.param.impl
             return parameters;
         }
 
+        public int Count
+        {
+            get { return parameters.Count; }
+        }
+
+        public IParameter GetParameter(int index)
+        {
+            return this.parameters[index];
+        }
+
         public IParameter GetParameter(string key)
         {
             if (dic_Key_Parameter.ContainsKey(key))

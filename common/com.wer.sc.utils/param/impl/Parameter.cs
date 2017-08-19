@@ -82,6 +82,22 @@ namespace com.wer.sc.utils.param.impl
             this.options = options;
         }
 
+
+        public override object Value
+        {
+            get
+            {
+                object value = base.Value;
+                if (value == null)
+                    return DefaultValue;
+                return base.Value;
+            }
+
+            set
+            {
+                base.Value = value;
+            }
+        }
         public override void Save(XmlElement xmlElem)
         {
             base.Save(xmlElem);

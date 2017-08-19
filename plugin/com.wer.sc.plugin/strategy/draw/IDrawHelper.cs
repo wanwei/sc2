@@ -10,6 +10,13 @@ namespace com.wer.sc.strategy.draw
     public interface IDrawHelper
     {
         /// <summary>
+        /// 画文本
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        void DrawTitle(int x, string text, Color color);
+
+        /// <summary>
         /// 画折线，如MA等
         /// </summary>
         /// <param name="line"></param>

@@ -119,8 +119,6 @@ namespace com.wer.sc.comp.graphic
         }
     }
 
-
-
     class CandleFrameDrawer
     {
         private ColorConfig colorConfig;

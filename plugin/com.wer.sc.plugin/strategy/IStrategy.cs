@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
+using com.wer.sc.utils.param;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,11 @@ namespace com.wer.sc.strategy
         /// 得到执行策略帮助类，得到策略执行时用到的一些函数，还有绘图使用的一些方法。
         /// </summary>
         StrategyHelper StrategyHelper { get; set; }
+
+        /// <summary>
+        /// 得到该策略的参数
+        /// </summary>
+        IParameters Parameters { get; }
     }
 
     /// <summary>

@@ -17,7 +17,7 @@ namespace com.wer.sc.comp.graphic
         /// 绘制形状
         /// </summary>
         /// <param name="priceShape"></param>
-        void DrawShape(PriceShape priceShape);
+        void DrawPriceShape(PriceShape priceShape);
 
         /// <summary>
         /// 得到所有形状

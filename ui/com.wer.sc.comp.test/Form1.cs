@@ -1,4 +1,6 @@
-﻿using System;
+﻿using com.wer.sc.comp.param;
+using com.wer.sc.utils.param;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -130,6 +132,26 @@ namespace com.wer.sc.comp.test
         {
             FrmGraphicDrawer_PriceRect frm = new FrmGraphicDrawer_PriceRect();
             frm.ShowDialog();
+        }
+
+        private void btParameter_Click(object sender, EventArgs e)
+        {
+            IParameters parameters = ParameterFactory.CreateParameters();
+            parameters.AddParameter("ma1", "ma1", "ma1", ParameterType.INTEGER, 5);
+            parameters.AddParameter("ma2", "ma2", "ma2", ParameterType.FLOAT, 10);
+            parameters.AddParameter("ma3", "ma3", "ma3", ParameterType.BOOLEAN, false);
+            parameters.AddParameter("ma4", "ma4", "ma4", ParameterType.STRING, "40");
+            parameters.AddParameter("ma5", "ma5", "ma5", ParameterType.INTEGER, 60);
+
+            IParameterOptions options = ParameterFactory.CreateParameterOptions(ParameterType.INTEGER, new object[] { 5, 10, 20, 40, 60 });
+            parameters.AddParameter("test", "Option", "testd", ParameterType.INTEGER, 20, options);
+
+            FormParameters form = new FormParameters(parameters);
+            DialogResult result = form.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                MessageBox.Show(parameters.ToString());
+            }
         }
     }
 }

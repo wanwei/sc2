@@ -48,12 +48,13 @@
             this.btCross = new System.Windows.Forms.Button();
             this.btNavigate2 = new System.Windows.Forms.Button();
             this.btCandlePriceRect = new System.Windows.Forms.Button();
+            this.btParameter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btCandle
             // 
             this.btCandle.Location = new System.Drawing.Point(76, 51);
-            this.btCandle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btCandle.Margin = new System.Windows.Forms.Padding(4);
             this.btCandle.Name = "btCandle";
             this.btCandle.Size = new System.Drawing.Size(100, 29);
             this.btCandle.TabIndex = 0;
@@ -64,7 +65,7 @@
             // btTest
             // 
             this.btTest.Location = new System.Drawing.Point(76, 15);
-            this.btTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btTest.Margin = new System.Windows.Forms.Padding(4);
             this.btTest.Name = "btTest";
             this.btTest.Size = new System.Drawing.Size(100, 29);
             this.btTest.TabIndex = 1;
@@ -75,7 +76,7 @@
             // btCandle2
             // 
             this.btCandle2.Location = new System.Drawing.Point(184, 51);
-            this.btCandle2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btCandle2.Margin = new System.Windows.Forms.Padding(4);
             this.btCandle2.Name = "btCandle2";
             this.btCandle2.Size = new System.Drawing.Size(100, 29);
             this.btCandle2.TabIndex = 2;
@@ -86,7 +87,7 @@
             // btAna
             // 
             this.btAna.Location = new System.Drawing.Point(76, 169);
-            this.btAna.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAna.Margin = new System.Windows.Forms.Padding(4);
             this.btAna.Name = "btAna";
             this.btAna.Size = new System.Drawing.Size(100, 29);
             this.btAna.TabIndex = 3;
@@ -97,7 +98,7 @@
             // btReal
             // 
             this.btReal.Location = new System.Drawing.Point(76, 225);
-            this.btReal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btReal.Margin = new System.Windows.Forms.Padding(4);
             this.btReal.Name = "btReal";
             this.btReal.Size = new System.Drawing.Size(100, 29);
             this.btReal.TabIndex = 4;
@@ -108,7 +109,7 @@
             // btModel
             // 
             this.btModel.Location = new System.Drawing.Point(76, 418);
-            this.btModel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btModel.Margin = new System.Windows.Forms.Padding(4);
             this.btModel.Name = "btModel";
             this.btModel.Size = new System.Drawing.Size(100, 29);
             this.btModel.TabIndex = 5;
@@ -119,7 +120,7 @@
             // btAna2
             // 
             this.btAna2.Location = new System.Drawing.Point(184, 169);
-            this.btAna2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAna2.Margin = new System.Windows.Forms.Padding(4);
             this.btAna2.Name = "btAna2";
             this.btAna2.Size = new System.Drawing.Size(100, 29);
             this.btAna2.TabIndex = 6;
@@ -130,7 +131,7 @@
             // btAna3
             // 
             this.btAna3.Location = new System.Drawing.Point(292, 169);
-            this.btAna3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btAna3.Margin = new System.Windows.Forms.Padding(4);
             this.btAna3.Name = "btAna3";
             this.btAna3.Size = new System.Drawing.Size(100, 29);
             this.btAna3.TabIndex = 7;
@@ -141,7 +142,7 @@
             // btLoadData
             // 
             this.btLoadData.Location = new System.Drawing.Point(76, 100);
-            this.btLoadData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btLoadData.Margin = new System.Windows.Forms.Padding(4);
             this.btLoadData.Name = "btLoadData";
             this.btLoadData.Size = new System.Drawing.Size(100, 29);
             this.btLoadData.TabIndex = 8;
@@ -152,7 +153,7 @@
             // btDataNavigate
             // 
             this.btDataNavigate.Location = new System.Drawing.Point(184, 100);
-            this.btDataNavigate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btDataNavigate.Margin = new System.Windows.Forms.Padding(4);
             this.btDataNavigate.Name = "btDataNavigate";
             this.btDataNavigate.Size = new System.Drawing.Size(100, 29);
             this.btDataNavigate.TabIndex = 9;
@@ -163,7 +164,7 @@
             // btReal2
             // 
             this.btReal2.Location = new System.Drawing.Point(184, 225);
-            this.btReal2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btReal2.Margin = new System.Windows.Forms.Padding(4);
             this.btReal2.Name = "btReal2";
             this.btReal2.Size = new System.Drawing.Size(100, 29);
             this.btReal2.TabIndex = 10;
@@ -174,7 +175,7 @@
             // btSwitch
             // 
             this.btSwitch.Location = new System.Drawing.Point(76, 279);
-            this.btSwitch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSwitch.Margin = new System.Windows.Forms.Padding(4);
             this.btSwitch.Name = "btSwitch";
             this.btSwitch.Size = new System.Drawing.Size(100, 29);
             this.btSwitch.TabIndex = 11;
@@ -185,7 +186,7 @@
             // btSwitch2
             // 
             this.btSwitch2.Location = new System.Drawing.Point(184, 279);
-            this.btSwitch2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSwitch2.Margin = new System.Windows.Forms.Padding(4);
             this.btSwitch2.Name = "btSwitch2";
             this.btSwitch2.Size = new System.Drawing.Size(100, 29);
             this.btSwitch2.TabIndex = 12;
@@ -196,7 +197,7 @@
             // btCurrentInfo
             // 
             this.btCurrentInfo.Location = new System.Drawing.Point(76, 329);
-            this.btCurrentInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btCurrentInfo.Margin = new System.Windows.Forms.Padding(4);
             this.btCurrentInfo.Name = "btCurrentInfo";
             this.btCurrentInfo.Size = new System.Drawing.Size(100, 29);
             this.btCurrentInfo.TabIndex = 14;
@@ -207,7 +208,7 @@
             // btMain
             // 
             this.btMain.Location = new System.Drawing.Point(76, 375);
-            this.btMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btMain.Margin = new System.Windows.Forms.Padding(4);
             this.btMain.Name = "btMain";
             this.btMain.Size = new System.Drawing.Size(100, 29);
             this.btMain.TabIndex = 15;
@@ -218,7 +219,7 @@
             // btMain2
             // 
             this.btMain2.Location = new System.Drawing.Point(184, 375);
-            this.btMain2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btMain2.Margin = new System.Windows.Forms.Padding(4);
             this.btMain2.Name = "btMain2";
             this.btMain2.Size = new System.Drawing.Size(100, 29);
             this.btMain2.TabIndex = 16;
@@ -228,7 +229,7 @@
             // btTestRegion
             // 
             this.btTestRegion.Location = new System.Drawing.Point(184, 15);
-            this.btTestRegion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btTestRegion.Margin = new System.Windows.Forms.Padding(4);
             this.btTestRegion.Name = "btTestRegion";
             this.btTestRegion.Size = new System.Drawing.Size(125, 29);
             this.btTestRegion.TabIndex = 17;
@@ -239,7 +240,7 @@
             // btCross
             // 
             this.btCross.Location = new System.Drawing.Point(317, 15);
-            this.btCross.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btCross.Margin = new System.Windows.Forms.Padding(4);
             this.btCross.Name = "btCross";
             this.btCross.Size = new System.Drawing.Size(125, 29);
             this.btCross.TabIndex = 18;
@@ -250,7 +251,7 @@
             // btNavigate2
             // 
             this.btNavigate2.Location = new System.Drawing.Point(292, 100);
-            this.btNavigate2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btNavigate2.Margin = new System.Windows.Forms.Padding(4);
             this.btNavigate2.Name = "btNavigate2";
             this.btNavigate2.Size = new System.Drawing.Size(100, 29);
             this.btNavigate2.TabIndex = 19;
@@ -269,11 +270,23 @@
             this.btCandlePriceRect.UseVisualStyleBackColor = true;
             this.btCandlePriceRect.Click += new System.EventHandler(this.btCandlePriceRect_Click);
             // 
+            // btParameter
+            // 
+            this.btParameter.Location = new System.Drawing.Point(184, 418);
+            this.btParameter.Margin = new System.Windows.Forms.Padding(4);
+            this.btParameter.Name = "btParameter";
+            this.btParameter.Size = new System.Drawing.Size(100, 29);
+            this.btParameter.TabIndex = 21;
+            this.btParameter.Text = "参数";
+            this.btParameter.UseVisualStyleBackColor = true;
+            this.btParameter.Click += new System.EventHandler(this.btParameter_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(756, 472);
+            this.Controls.Add(this.btParameter);
             this.Controls.Add(this.btCandlePriceRect);
             this.Controls.Add(this.btNavigate2);
             this.Controls.Add(this.btCross);
@@ -294,7 +307,7 @@
             this.Controls.Add(this.btCandle2);
             this.Controls.Add(this.btTest);
             this.Controls.Add(this.btCandle);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -323,6 +336,7 @@
         private System.Windows.Forms.Button btCross;
         private System.Windows.Forms.Button btNavigate2;
         private System.Windows.Forms.Button btCandlePriceRect;
+        private System.Windows.Forms.Button btParameter;
     }
 }
 

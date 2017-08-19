@@ -52,7 +52,6 @@ namespace com.wer.sc.comp.graphic
             startIndex = startIndex < 0 ? 0 : startIndex;
         }
 
-
         public int StartIndex
         {
             get
@@ -72,6 +71,8 @@ namespace com.wer.sc.comp.graphic
                 this.endIndex = value;
                 this.endIndex = endIndex < 0 ? 0 : endIndex;
                 InitIndex();
+                if (OnGraphicDataChange != null)
+                    OnGraphicDataChange(this, new GraphicDataChangeArgument());
             }
         }
 
@@ -104,6 +105,8 @@ namespace com.wer.sc.comp.graphic
                     return;
                 blockMount = value;
                 InitIndex();
+                if (OnGraphicDataChange != null)
+                    OnGraphicDataChange(this, new GraphicDataChangeArgument());
             }
         }
 
@@ -116,6 +119,6 @@ namespace com.wer.sc.comp.graphic
         //}
 
         //public event DataChangeHandler DataChange;
-
+        public event DelegateOnGraphicDataChange OnGraphicDataChange;
     }
 }
