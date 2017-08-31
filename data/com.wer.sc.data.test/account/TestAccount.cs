@@ -24,15 +24,18 @@ namespace com.wer.sc.data.account
             account.OnReturnOrder += Account_OnReturnOrder;
             account.OnReturnTrade += Account_OnReturnTrade;
             account.Open(code, 3099, market.OrderSide.Buy, 10);
+            account.Open(code, 3095, market.OrderSide.Buy, 10);
             int index = 0;
-          
-            while (index < 1000)
+
+            while (index < 2000)
             {
                 historyDataForward.Forward();
                 index++;
                 if (isOpen && historyDataForward.GetTickData().SellPrice >= 3102) { 
                     account.Close(code, 3102, market.OrderSide.Sell, 10);
+                    account.Close(code, 3105, market.OrderSide.Sell, 10);
                 }
+                //Console.WriteLine(historyDataForward.GetTickData());
             }
             Console.WriteLine(account);
         }

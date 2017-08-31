@@ -308,6 +308,8 @@ namespace com.wer.sc.data.account
             TradeInfo tradeInfo = AddTradeInfo(orderInfo, tradeMount);
 
             PositionInfo positionInfo = GetPositionInfo_Close(orderInfo.Instrumentid, orderInfo.Direction);
+            if (positionInfo == null)
+                return false;
             double tradeMoney = CalcTradeMoney_Close(positionInfo, tradeInfo.Price, tradeMount);
             this.money += tradeMoney;
 
@@ -568,14 +570,33 @@ namespace com.wer.sc.data.account
         {
             if (mount <= 0)
                 return null;
-            OrderSide positionSide = orderSide == OrderSide.Buy ? OrderSide.Sell : OrderSide.Buy;
-            int position = GetPosition(code, positionSide);
-            if (position < mount)
+            //OrderSide positionSide = orderSide == OrderSide.Buy ? OrderSide.Sell : OrderSide.Buy;
+            //int position = GetPosition(code, positionSide);
+            //if (position < mount)
+            //    return null;
+            if (!CanClose(code, orderSide, mount))
                 return null;
             OrderInfo orderInfo = new OrderInfo(code, this.Time, OpenCloseType.Close, price, mount, orderSide, OrderType.Market);
             orderInfo.OrderID = Guid.NewGuid().ToString();
             this.waitingOrders.Add(orderInfo);
             return orderInfo;
+        }
+
+        private bool CanClose(string code, OrderSide orderSide, int mount)
+        {
+            OrderSide positionSide = orderSide == OrderSide.Buy ? OrderSide.Sell : OrderSide.Buy;
+            int position = GetPosition(code, positionSide);
+            if (position < mount)
+                return false;
+            int orderMount = 0;
+            for (int i = 0; i < waitingOrders.Count; i++)
+            {
+                if (waitingOrders[i].Instrumentid == code && waitingOrders[i].Direction == orderSide)
+                    orderMount += waitingOrders[i].LeavesQty;
+            }
+            if (position - orderMount < mount)
+                return false;
+            return true;
         }
 
         private int GetPosition(string code, OrderSide orderSide)
