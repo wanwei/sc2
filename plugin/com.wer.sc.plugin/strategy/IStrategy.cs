@@ -54,6 +54,11 @@ namespace com.wer.sc.strategy
         /// 得到该策略的参数
         /// </summary>
         IParameters Parameters { get; }
+
+        /// <summary>
+        /// 缺省主周期
+        /// </summary>
+        KLinePeriod DefaultMainPeriod { get; set; }
     }
 
     /// <summary>
@@ -65,6 +70,13 @@ namespace com.wer.sc.strategy
 
         public bool isReferTimeLineData = false;
 
-        public List<KLinePeriod> UsedKLinePeriods = new List<KLinePeriod>();
+        public List<KLinePeriod> UsedKLinePeriods = new List<KLinePeriod>(); 
+
+        public KLinePeriod GetMinPeriod()
+        {
+            if (UsedKLinePeriods == null)
+                return null;
+            return UsedKLinePeriods.Min();
+        }
     }
 }

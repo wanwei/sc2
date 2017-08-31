@@ -246,5 +246,10 @@ namespace com.wer.sc.comp.graphic
         {
             this.shapes.Add(shape);
         }
+
+        public void ClearShapes()
+        {
+            this.shapes.Clear();
+        }
     }
 }

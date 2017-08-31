@@ -12,7 +12,7 @@ namespace com.wer.sc.strategy
 {
     public abstract class StrategyAbstract : IStrategy
     {
-        private KLinePeriod defaultMainPeriod;
+        private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
 
         private StrategyHelper strategyHelper;
 

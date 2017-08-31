@@ -96,7 +96,7 @@ namespace com.wer.sc.ui.comp
         }
 
         [Browsable(true), DisplayName("K线周期"), Description("K线周期"), Category("自定义属性"), DefaultValue(1)]
-        public int KlinePeriod
+        public KLinePeriod KlinePeriod
         {
             get
             {
@@ -107,21 +107,6 @@ namespace com.wer.sc.ui.comp
             {
                 this.compChart1.KlinePeriod = value;
             }
-        }
-
-        [Browsable(true), DisplayName("K线种类"), Description("K线种类"), Category("自定义属性"), DefaultValue(KLineTimeType.MINUTE)]
-        public KLineTimeType KlineTimeType
-        {
-            get
-            {
-                return compChart1.KlineTimeType;
-            }
-
-            set
-            {
-                this.compChart1.KlineTimeType = value;
-            }
-        }
-
+        }      
     }
 }

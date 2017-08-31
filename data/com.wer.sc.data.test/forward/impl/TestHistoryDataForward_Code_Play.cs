@@ -18,7 +18,7 @@ namespace com.wer.sc.data.forward.impl
             int start = 20170601;
             int endDate = 20170601;
 
-            HistoryDataForward_Code realTimeReader = CommonData.GetRealTimeReader(code, start, endDate, true);
+            HistoryDataForward_Code realTimeReader = CommonData.GetHistoryDataForward_Code(code, start, endDate, true);
             realTimeReader.OnTick += RealTimeReader_OnTick;
             realTimeReader.NavigateTo(20170531.210011);
             realTimeReader.Play();

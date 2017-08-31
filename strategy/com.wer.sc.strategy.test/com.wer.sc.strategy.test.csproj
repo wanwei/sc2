@@ -51,7 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
-    <Compile Include="TestStrategyRunner.cs" />
+    <Compile Include="TestStrategyExecutor.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_bigperiod" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_tickperiod" />

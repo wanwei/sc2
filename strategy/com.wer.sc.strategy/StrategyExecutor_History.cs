@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
@@ -57,6 +58,12 @@ namespace com.wer.sc.strategy
 
         private object lockObj = new object();
 
+        public void Execute()
+        {
+            Thread thread = new Thread(new ThreadStart(Run));
+            thread.Start();
+        }
+
         public void Run()
         {
             lock (lockObj)
@@ -69,43 +76,58 @@ namespace com.wer.sc.strategy
                 realTimeReader.OnBar += RealTimeReader_OnBar;
                 realTimeReader.OnTick += RealTimeReader_OnTick;
 
-                //策略执行前操作
+                ExecuteStrategyStart();
+                ExecuteStrategy(realTimeReader);
+                ExecuteStrategyEnd();
+            }
+        }
+
+        private void ExecuteStrategyEnd()
+        {
+            //策略执行完毕
+            try
+            {
+                this.strategy.StrategyEnd();
+                if (ExecuteFinished != null)
+                    ExecuteFinished(this.strategy);
+            }
+            catch (Exception e)
+            {
+                LogHelper.Warn(GetType(), e);
+            }
+        }
+
+        private void ExecuteStrategy(RealTimeReader_Strategy realTimeReader)
+        {
+            if (forwardPeriod.IsTickForward)
+                RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
+            else
+                RealTimeReader_OnBar(realTimeReader, realTimeReader.GetKLineData(), 0);
+
+            //执行策略
+            while (!realTimeReader.IsEnd)
+            {
                 try
                 {
-                    this.strategy.StrategyStart();
+                    realTimeReader.Forward();
                 }
                 catch (Exception e)
                 {
                     LogHelper.Warn(GetType(), e);
                 }
+            }
+        }
 
-                if (forwardPeriod.IsTickForward)
-                    RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
-                else
-                    RealTimeReader_OnBar(realTimeReader, realTimeReader.GetKLineData(), 0);
-
-                //执行策略
-                while (!realTimeReader.IsEnd)
-                {
-                    try
-                    {
-                        realTimeReader.Forward();
-                    }
-                    catch (Exception e)
-                    {
-                        LogHelper.Warn(GetType(), e);
-                    }
-                }
-
-                //策略执行完毕
-                try
-                {
-                    this.strategy.StrategyEnd();
-                }
-                catch (Exception e)
-                {
-                    LogHelper.Warn(GetType(), e);
-                }
+        private void ExecuteStrategyStart()
+        {
+            //策略执行前操作
+            try
+            {
+                this.strategy.StrategyStart();
+            }
+            catch (Exception e)
+            {
+                LogHelper.Warn(GetType(), e);
             }
         }
 
@@ -118,5 +140,20 @@ namespace com.wer.sc.strategy
         {
             this.strategy.OnBar((IRealTimeDataReader)sender);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event StrategyExecuteBarFinished BarFinished;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event StrategyExecuteDayFinished DayFinished;
+
+        /// <summary>
+        /// 执行完
+        /// </summary>
+        public event StrategyExecuteFinished ExecuteFinished;
     }
 }

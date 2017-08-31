@@ -114,6 +114,7 @@
     <Compile Include="param\FormParameters.Designer.cs">
       <DependentUpon>FormParameters.cs</DependentUpon>
     </Compile>
+    <Compile Include="param\ParameterControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="graphic\StockGraph_Abstract.cs" />
   </ItemGroup>

@@ -28,12 +28,6 @@ namespace com.wer.sc.ui.comp
             get { return compChartData; }
         }
 
-        //private IDataNavigate_Code dataNavigate_Code;
-
-        //private IHistoryDataForward_Code historyDataForward_Code;
-
-        //private IRealTimeDataReader currentRealTimeDataReader;
-
         //chart是否完成初始化
         private bool Inited = false;
 
@@ -72,6 +66,7 @@ namespace com.wer.sc.ui.comp
         }
 
         private StrategyHelper strategyHelper;
+
         private CompChart_DrawHelper drawHelper;
 
         public StrategyHelper StrategyHelper
@@ -79,16 +74,12 @@ namespace com.wer.sc.ui.comp
             get { return strategyHelper; }
         }
 
-        //public event DelegateOnDataRefresh OnDataRefresh;
-
         private void CompChartData_OnDataRefresh(object sender, DataRefreshArgument arg)
         {
             if (!Inited)
                 return;
-            //if (OnDataRefresh != null)
-            //    OnDataRefresh(this, arg);
             if (OnChartRefresh != null)
-                OnChartRefresh(this, new ChartRefreshArguments(true));
+                OnChartRefresh(this, new ChartRefreshArguments(true, GetChartState(arg.OldChartDataState), GetChartState(arg.CurrentChartDataState)));
         }
 
         public event DelegateOnChartRefresh OnChartRefresh;
@@ -180,11 +171,11 @@ namespace com.wer.sc.ui.comp
 
         public KLinePeriod GetKLinePeriod()
         {
-            return new KLinePeriod(KlineTimeType, KlinePeriod);
+            return KlinePeriod;
         }
 
         [Browsable(true), DisplayName("K线周期"), Description("K线周期"), Category("自定义属性")]
-        public int KlinePeriod
+        public KLinePeriod KlinePeriod
         {
             get
             {
@@ -196,21 +187,6 @@ namespace com.wer.sc.ui.comp
                 this.compChartData.KlinePeriod = value;
             }
         }
-
-        [Browsable(true), DisplayName("K线种类"), Description("K线种类"), Category("自定义属性"), DefaultValue(KLineTimeType.MINUTE)]
-        public KLineTimeType KlineTimeType
-        {
-            get
-            {
-                return this.compChartData.KlineTimeType;
-            }
-
-            set
-            {
-                this.compChartData.KlineTimeType = value;
-            }
-        }
-
         public ForwardPeriod ForwardPeriod
         {
             get
@@ -310,7 +286,7 @@ namespace com.wer.sc.ui.comp
             y += between;
             g.DrawString("图表类型: " + GetObjectStr(ChartType), MyFont1, brush, new PointF(x, y));
             y += between;
-            g.DrawString("K线周期: " + GetObjectStr(new KLinePeriod(KlineTimeType, KlinePeriod)), MyFont1, brush, new PointF(x, y));
+            g.DrawString("K线周期: " + GetObjectStr(KlinePeriod), MyFont1, brush, new PointF(x, y));
         }
 
         private string GetObjectStr(Object obj)
@@ -326,15 +302,7 @@ namespace com.wer.sc.ui.comp
                     return;
                 try
                 {
-                    //if (this.dataReader == null)
-                    //    return;
-
                     this.graphicDrawer = new GraphicDrawer_Switch();
-                    //if (this.TradingSessionReader == null)
-                    //    return;
-                    //int date = TradingSessionReader.GetTradingDay(time);
-                    //if (date < 0)
-                    //    return;
 
                     drawer_Candle = InitGraphicDrawer_Candle();
                     if (drawer_Candle == null)
@@ -363,17 +331,16 @@ namespace com.wer.sc.ui.comp
             if (e.KeyCode == Keys.F5)
             {
                 if (this.graphicDrawer.CurrentIndex == 0)
-                    this.graphicDrawer.Switch(1);
+                    this.compChartData.ChartType = ChartType.TimeLine;
                 else
-                    this.graphicDrawer.Switch(0);
+                    this.compChartData.ChartType = ChartType.KLine;
             }
         }
 
         private GraphicDrawer_Candle InitGraphicDrawer_Candle()
         {
             this.drawer_Candle = new GraphicDrawer_Candle();
-            KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
-            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
+            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(KlinePeriod);
             this.graphicData_Candle = GraphicDataFactory.CreateGraphicData_Candle(klineData, 0, klineData.BarPos);
             this.graphicData_Candle.OnGraphicDataChange += GraphicData_Candle_OnGraphicDataChange;
             drawer_Candle.DataProvider = graphicData_Candle;
@@ -383,7 +350,22 @@ namespace com.wer.sc.ui.comp
         private void GraphicData_Candle_OnGraphicDataChange(object sender, GraphicDataChangeArgument arg)
         {
             if (OnChartRefresh != null)
-                OnChartRefresh(this, new ChartRefreshArguments(false));
+                OnChartRefresh(this, new ChartRefreshArguments(false, GetChartState(compChartData.GetChartDataState()), GetChartState(compChartData.GetChartDataState())));
+        }
+
+        private ChartState GetChartState(ChartDataState chartDataState)
+        {
+            ChartState state = new ChartState();
+            state.ChartDataState = chartDataState;
+
+            if (this.drawer_Candle != null)
+            {
+                IGraphicData_Candle graphicData = this.drawer_Candle.DataProvider;
+                state.CandleStartIndex = graphicData.StartIndex;
+                state.CandleEndIndex = graphicData.EndIndex;
+                state.CandleBlockMount = graphicData.BlockMount;
+            }
+            return state;
         }
 
         private GraphicDrawer_TimeLine InitGraphicDrawer_TimeLine()
@@ -419,20 +401,19 @@ namespace com.wer.sc.ui.comp
         {
             //try
             //{
-            KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
-            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
+            IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(KlinePeriod);
             //int date = TradingSessionReader.GetTradingDay(time);            
             //IKLineData klineData = dataReader.KLineDataReader.GetData(code, date, date, 500, 100, period);
             if (klineData == null)
             {
-                MessageBox.Show("未能找到" + Code + " -" + Time + "的" + period + "周期K线数据");
+                MessageBox.Show("未能找到" + Code + " -" + Time + "的" + KlinePeriod + "周期K线数据");
                 return;
             }
 
             //int barPos = TimeIndeierUtils.IndexOfTime_KLine(klineData, Time);
             //klineData.BarPos = barPos;
             graphicData_Candle.ChangeData(klineData);
-            graphicData_Candle.EndIndex = klineData.BarPos;
+            //graphicData_Candle.EndIndex = klineData.BarPos;
             this.graphicDrawer.Switch(0);
             //}
             //catch (Exception e)
@@ -444,20 +425,11 @@ namespace com.wer.sc.ui.comp
 
         private void RefreshTimeLineDrawer()
         {
-            //KLinePeriod period = new KLinePeriod(this.KlineTimeType, this.KlinePeriod);
-            //IKLineData klineData = compChartData.CurrentRealTimeDataReader.GetKLineData(period);
-
-            //int date = TradingSessionReader.GetTradingDay(time);
             ITimeLineData timeLineData = compChartData.CurrentRealTimeDataReader.GetTimeLineData();
-            //  dataReader.TimeLineDataReader.GetData(code, date);
-
-            //int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
-            //timeLineData.BarPos = barPos;
 
             this.graphicData_TimeLine = GraphicDataFactory.CreateGraphicData_TimeLine(timeLineData);
             drawer_TimeLine.DataProvider = graphicData_TimeLine;
             this.graphicDrawer.Switch(1);
-            //this.graphicDrawer.Paint();
         }
 
         private void RefreshTickDrawer()
@@ -542,9 +514,31 @@ namespace com.wer.sc.ui.comp
     {
         private bool dataRefreshed;
 
-        public ChartRefreshArguments(bool dataRefreshed)
+        private ChartState oldChartState;
+
+        private ChartState currentChartState;
+
+        public ChartRefreshArguments(bool dataRefreshed, ChartState oldChartState, ChartState chartState)
         {
             this.dataRefreshed = dataRefreshed;
+            this.oldChartState = oldChartState;
+            this.currentChartState = chartState;
+        }
+
+        public bool IsDataPackageChange
+        {
+            get
+            {
+                return !currentChartState.ChartDataState.DataPackageInfo.Equals(oldChartState.ChartDataState.DataPackageInfo);
+            }
+        }
+
+        public bool IsKLinePeriodChange
+        {
+            get
+            {
+                return currentChartState.ChartDataState.klinePeriod != oldChartState.ChartDataState.klinePeriod;
+            }
         }
 
         public bool DataRefreshed
@@ -554,31 +548,32 @@ namespace com.wer.sc.ui.comp
                 return dataRefreshed;
             }
         }
+
+        public ChartState OldChartState
+        {
+            get
+            {
+                return oldChartState;
+            }
+        }
+
+        public ChartState CurrentChartState
+        {
+            get
+            {
+                return currentChartState;
+            }
+        }
     }
 
-    //public class ChartState
-    //{
-    //    public string code;
+    public class ChartState
+    {
+        public int CandleStartIndex;
 
-    //    public string dataCenterUri;
+        public int CandleEndIndex;
 
-    //    public ChartType chartType;
+        public int CandleBlockMount;
 
-    //    public double time;
-
-    //    public float kLineBlockWidth;
-
-    //    public int klinePeriod;
-
-    //    public KLineTimeType klineTimeType;
-
-    //    public override bool Equals(object obj)
-    //    {
-    //        if (!(obj is ChartState))
-    //        {
-
-    //        }
-    //        return false;
-    //    }
-    //}
+        public ChartDataState ChartDataState;
+    }
 }

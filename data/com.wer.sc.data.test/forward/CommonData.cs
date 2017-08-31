@@ -42,7 +42,7 @@ namespace com.wer.sc.data.forward
             return new KLineData_RealTime(klineData);
         }
 
-        public static HistoryDataForward_Code GetRealTimeReader(string code, int startDate, int endDate, bool useTickData)
+        public static HistoryDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
         {
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.isReferTimeLineData = false;

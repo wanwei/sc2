@@ -47,6 +47,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UILogger.cs" />
     <Compile Include="update\ControlDataUpdate.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -84,7 +84,7 @@ namespace com.wer.sc.strategy.cnfutures.import
 
         public override void StrategyEnd()
         {
-            StrategyHelper.DrawHelper.DrawPolyLine(maPrice, Color.Red);
+            StrategyHelper.DrawHelper.GetDrawer_KLine(DefaultMainPeriod).DrawPolyLine(maPrice, Color.Red);
 
             //StrategyHelper.DrawPoint()
         }

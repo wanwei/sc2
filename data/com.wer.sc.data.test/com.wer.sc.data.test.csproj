@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="account\TestAccount.cs" />
     <Compile Include="datacenter\TestDataCenter.cs" />
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />

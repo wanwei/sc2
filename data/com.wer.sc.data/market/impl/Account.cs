@@ -16,7 +16,7 @@ namespace com.wer.sc.data.market.impl
     /// <summary>
     /// 针对历史数据的交易账户
     /// </summary>
-    public class Account : IAccount, IXmlExchange
+    public class Account : IXmlExchange
     {
         //账号ID
         private string accountId;

@@ -50,5 +50,18 @@ namespace com.wer.sc.data.market
         /// 开仓还是平仓
         /// </summary>
         public OpenCloseType OpenClose;
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(TradeID).Append(",");
+            sb.Append(InstrumentID).Append(",");
+            sb.Append(Time).Append(",");
+            sb.Append(Side).Append(",");
+            sb.Append(Qty).Append(",");
+            sb.Append(Price).Append(",");
+            sb.Append(OpenClose).Append(",");
+            return sb.ToString();
+        }
     }
 }

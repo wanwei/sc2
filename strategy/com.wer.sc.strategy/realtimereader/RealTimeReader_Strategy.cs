@@ -61,6 +61,7 @@ namespace com.wer.sc.strategy.realtimereader
                 this.klineDataForward = new HistoryDataForward_Code_KLinePeriod(code, mainKLineData, allKLineData);
             }
 
+            this.klineDataForward.OnRealTimeChanged += KlineDataForward_OnRealTimeChanged;
             this.klineDataForward.OnTick += KlineDataForward_OnTick;
             this.klineDataForward.OnBar += KlineDataForward_OnBar;
 
@@ -68,6 +69,7 @@ namespace com.wer.sc.strategy.realtimereader
             //this.klineDataForward.OnTick += KlineDataForward_OnTick;
             //this.klineDataForward.OnBar += KlineDataForward_OnBar;
         }
+
 
         //public RealTimeReader_Strategy(IDataReader dataReader, RealTimeReader_StrategyArguments args)
         //{
@@ -103,6 +105,12 @@ namespace com.wer.sc.strategy.realtimereader
         //    this.klineDataForward.OnTick += KlineDataForward_OnTick;
         //    this.klineDataForward.OnBar += KlineDataForward_OnBar;
         //}
+
+        private void KlineDataForward_OnRealTimeChanged(object sender, RealTimeChangedArgument e)
+        {
+            if (OnRealTimeChanged != null)
+                OnRealTimeChanged(this, e);
+        }
 
         private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
         {
@@ -219,5 +227,7 @@ namespace com.wer.sc.strategy.realtimereader
         public event DelegateOnTick OnTick;
 
         public event DelegateOnBar OnBar;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }

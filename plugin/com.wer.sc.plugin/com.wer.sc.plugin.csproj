@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\account\IAccount.cs" />
+    <Compile Include="data\account\TradeFee.cs" />
+    <Compile Include="data\account\TradeFee_Code.cs" />
     <Compile Include="data\market\AccountFeeInfo.cs" />
     <Compile Include="data\KLinePriceType.cs" />
     <Compile Include="data\market\ConnectionStatus.cs" />
@@ -66,12 +69,16 @@
     <Compile Include="market\IPlugin_MarketUtils.cs" />
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginScan.cs" />
+    <Compile Include="strategy\draw\IDrawer.cs" />
     <Compile Include="strategy\draw\IDrawHelper.cs" />
     <Compile Include="strategy\draw\PriceLabel.cs" />
     <Compile Include="strategy\draw\PriceLine.cs" />
     <Compile Include="strategy\draw\PricePoint.cs" />
     <Compile Include="strategy\draw\PricePolyLine.cs" />
     <Compile Include="strategy\draw\PriceRect.cs" />
+    <Compile Include="strategy\IStrategyTrader.cs" />
+    <Compile Include="strategy\IStrategyTrader_Code.cs" />
+    <Compile Include="strategy\IStrategyResult.cs" />
     <Compile Include="strategy\StrategyAbstract.cs" />
     <Compile Include="strategy\StrategyAssembly.cs" />
     <Compile Include="strategy\StrategyAssemblyScan.cs" />
@@ -146,6 +153,11 @@
     <Compile Include="strategy\StrategyMgr.cs" />
     <Compile Include="strategy\StrategyMgrFactory.cs" />
     <Compile Include="strategy\StrategyParameter.cs" />
+    <Compile Include="strategy\StrategyResult.cs" />
+    <Compile Include="strategy\StrategyTradeFee.cs" />
+    <Compile Include="strategy\StrategyTradeFee_Code.cs" />
+    <Compile Include="strategy\StrategyTrader_History_Code.cs" />
+    <Compile Include="strategy\StrategyTrader_History.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="draw\" />

@@ -30,6 +30,8 @@ namespace com.wer.sc.utils.param
 
         void AddParameter(string key, string caption, string desc, ParameterType parameterType, object defaultValue, IParameterOptions options);
 
+        void AddParameterRange(List<IParameter> parameters);
+
         /// <summary>
         /// 删除一个参数
         /// </summary>

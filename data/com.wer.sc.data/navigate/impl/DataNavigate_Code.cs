@@ -75,8 +75,13 @@ namespace com.wer.sc.data.navigate.impl
             double prevTime = this.time;
             bool timeChage = this.time == time;
             this.time = time;
-            if (timeChage && OnNavigateTo != null)
-                OnNavigateTo(this, new DataNavigateEventArgs(prevTime, time));
+            if (timeChage)
+            {
+                if (OnRealTimeChanged != null)
+                    OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, time, this));
+                if (OnNavigateTo != null)
+                    OnNavigateTo(this, new DataNavigateEventArgs(prevTime, time));
+            }
             int tradingDay = this.dataPackage.GetTradingSessionReader().GetRecentTradingDay(time);
             return tradingDay >= dataPackage.StartDate && tradingDay <= dataPackage.EndDate;
         }
@@ -174,5 +179,7 @@ namespace com.wer.sc.data.navigate.impl
         }
 
         public event DelegateOnNavigateTo OnNavigateTo;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }

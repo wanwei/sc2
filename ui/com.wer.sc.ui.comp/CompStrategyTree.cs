@@ -33,7 +33,6 @@ namespace com.wer.sc.ui.comp
             List<StrategyInfo> strategies = ass.GetAllStrategies();
             InitPathStrategies(strategies);
 
-
             List<string> pathList = dic_Path_Strategies.Keys.ToList();
             pathList.Sort();
             for (int i = 0; i < pathList.Count; i++)

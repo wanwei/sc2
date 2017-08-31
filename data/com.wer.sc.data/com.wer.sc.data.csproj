@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="account\Account.cs" />
+    <Compile Include="account\AccountOrders.cs" />
+    <Compile Include="account\AccountPosition.cs" />
+    <Compile Include="account\AccountTrades.cs" />
+    <Compile Include="account\StrategyTrader_History_Code.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
     <Compile Include="datapackage\IDataPackage.cs" />
     <Compile Include="datapackage\IDataPackageOwner.cs" />
@@ -60,8 +65,6 @@
     <Compile Include="navigate\DataNavigateFactory.cs" />
     <Compile Include="utils\TimeLineUtils.cs" />
     <Compile Include="utils\KLineUtils.cs" />
-    <Compile Include="market\AccountFactory.cs" />
-    <Compile Include="market\IAccount.cs" />
     <Compile Include="market\impl\AccountFee.cs" />
     <Compile Include="market\impl\AccountTodayOrder.cs" />
     <Compile Include="market\impl\AccountPosition.cs" />

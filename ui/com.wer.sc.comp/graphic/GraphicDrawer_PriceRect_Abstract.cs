@@ -54,7 +54,7 @@ namespace com.wer.sc.comp.graphic
             this.shapes.Remove(shape);
         }
 
-        public void ClearShapes()
+        public void ClearPriceShapes()
         {
             this.shapes.Clear();
         }

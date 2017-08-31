@@ -63,6 +63,8 @@ namespace com.wer.sc.comp.graphic
         event AfterGraphicPaintHandler AfterGraphicPaint;
 
         void DrawShape(IShape shape);
+
+        void ClearShapes();
     }
 
     public delegate void AfterGraphicPaintHandler(object sender, GraphicRefreshArgs e);

@@ -39,6 +39,6 @@ namespace com.wer.sc.comp.graphic
         /// <summary>
         /// 清除所有图形
         /// </summary>
-        void ClearShapes();
+        void ClearPriceShapes();
     }
 }

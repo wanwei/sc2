@@ -1,4 +1,5 @@
-﻿using com.wer.sc.strategy.draw;
+﻿using com.wer.sc.data;
+using com.wer.sc.strategy.draw;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,5 +15,14 @@ namespace com.wer.sc.strategy
         /// 得到
         /// </summary>
         IDrawHelper DrawHelper { get; }
+
+        IStrategyTrader_Code Trader { get; }
+
+        /// <summary>
+        /// 添加策略执行结果
+        /// </summary>
+        /// <param name="strategyResult"></param>
+        void AddStrategyResult(IStrategyResult strategyResult);
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace com.wer.sc.ui.comp.test
+﻿using com.wer.sc.data;
+
+namespace com.wer.sc.ui.comp.test
 {
     partial class FormChart2
     {
@@ -429,6 +431,7 @@
             this.menuItemExecute.Name = "menuItemExecute";
             this.menuItemExecute.Size = new System.Drawing.Size(181, 26);
             this.menuItemExecute.Text = "执行";
+            this.menuItemExecute.Click += new System.EventHandler(this.menuItemExecute_Click);
             // 
             // menuItemParameters
             // 
@@ -449,8 +452,7 @@
             this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compMain1.KLineBlockWidth = 5F;
-            this.compMain1.KlinePeriod = 0;
-            this.compMain1.KlineTimeType = com.wer.sc.data.KLineTimeType.SECOND;
+            this.compMain1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.compMain1.Location = new System.Drawing.Point(0, 0);
             this.compMain1.Name = "compMain1";
             this.compMain1.Size = new System.Drawing.Size(791, 528);

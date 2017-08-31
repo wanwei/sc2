@@ -64,11 +64,11 @@ namespace com.wer.sc.strategy.cnfutures
              * 2.该点和该点之前的点都高于之前的低点
              */
             float refLow = GetRefData(arr_LowPrice, barPos, zzLen);
-            bool con_dd = refLow == MathUtils.Lowest(arr_LowPrice, barPos, hlLen) && MathUtils.RefData(arr_LowPrice, barPos, 1) > refLow
+            bool con_dd = refLow == MathUtils.Lowest(arr_LowPrice, barPos, hlLen) && MathUtils.GetPreviousData(arr_LowPrice, barPos, 1) > refLow
                     && arr_LowPrice[barPos] > refLow;
 
-            float refHigh = MathUtils.RefData(arr_HighPrice, barPos, zzLen);
-            bool con_gd = refHigh == MathUtils.Highest(arr_HighPrice, barPos, hlLen) && MathUtils.RefData(arr_HighPrice, barPos, 1) < refHigh
+            float refHigh = MathUtils.GetPreviousData(arr_HighPrice, barPos, zzLen);
+            bool con_gd = refHigh == MathUtils.Highest(arr_HighPrice, barPos, hlLen) && MathUtils.GetPreviousData(arr_HighPrice, barPos, 1) < refHigh
                     && arr_HighPrice[barPos] < refHigh;
 
             if (!(con_gd || con_dd))
@@ -96,7 +96,7 @@ namespace com.wer.sc.strategy.cnfutures
                 if (con_gd)
                 {
                     float currentHighPrice = arr_HighPrice[pointPos];
-                    float lastHighPrice = MathUtils.RefData(Arr_RealGD, barPos, 0);
+                    float lastHighPrice = MathUtils.GetPreviousData(Arr_RealGD, barPos, 0);
                     if (currentHighPrice > lastHighPrice)
                     {
                         Arr_PosRealGD.RemoveAt(Arr_PosRealGD.Count - 1);
@@ -114,7 +114,7 @@ namespace com.wer.sc.strategy.cnfutures
                 if (con_dd)
                 {
                     float currentLowPrice = arr_LowPrice[pointPos];
-                    float lastLowPrice = MathUtils.RefData(Arr_RealDD, barPos, 0);
+                    float lastLowPrice = MathUtils.GetPreviousData(Arr_RealDD, barPos, 0);
                     if (currentLowPrice < lastLowPrice)
                     {
                         Arr_PosRealDD.RemoveAt(Arr_PosRealDD.Count - 1);
@@ -133,7 +133,7 @@ namespace com.wer.sc.strategy.cnfutures
 
         private float GetRefData(IList<float> arr, int currentIndex, int len)
         {
-            return MathUtils.RefData(arr, currentIndex, len);
+            return MathUtils.GetPreviousData(arr, currentIndex, len);
         }
 
         private void addRealDd(IList<float> arr_LowPrice, int pointPos)
@@ -174,8 +174,8 @@ namespace com.wer.sc.strategy.cnfutures
             else if (Arr_PosGD.Count == 0)
                 return -1;
 
-            int POS_LASTDD = MathUtils.RefData(Arr_PosDD, barPos, 0);
-            int POS_LASTGD = MathUtils.RefData(Arr_PosGD, barPos, 0);
+            int POS_LASTDD = MathUtils.GetPreviousData(Arr_PosDD, barPos, 0);
+            int POS_LASTGD = MathUtils.GetPreviousData(Arr_PosGD, barPos, 0);
             return POS_LASTDD < POS_LASTGD ? 1 : -1;
         }
 

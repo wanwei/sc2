@@ -11,7 +11,7 @@ using com.wer.sc.data.datapackage;
 namespace com.wer.sc.strategy
 {
     [TestClass]
-    public class TestStrategyRunner
+    public class TestStrategyExecutor
     {
         [TestMethod]
         public void TestRunStrategy_Minute()
@@ -61,6 +61,38 @@ namespace com.wer.sc.strategy
 
             runner.SetStrategy(new MockStrategy(referedPeriods));
             runner.Run();
+        }
+
+        [TestMethod]
+        public void TestExecuteStrategy()
+        {
+            string code = "RB1710";
+            int start = 20170601;
+            int endDate = 20170603;
+            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            referedPeriods.UseTickData = false;
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
+            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+
+            StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+
+            runner.SetStrategy(new MockStrategy(null));
+            runner.ExecuteFinished += Runner_ExecuteFinished;
+            runner.Execute();
+            while (!isFinished)
+            {
+
+            }
+        }
+
+        private bool isFinished = false;
+
+        private void Runner_ExecuteFinished(IStrategy strategy)
+        {
+            Console.WriteLine("ExecuteFinished:");
+            isFinished = true;
         }
     }
 

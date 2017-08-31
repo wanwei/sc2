@@ -124,5 +124,19 @@ namespace com.wer.sc.data.market
         /// 平均成交价格
         /// </summary>
         public double AvgPx;
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(OrderID).Append(",");
+            sb.Append(Instrumentid).Append(",");
+            sb.Append(OrderTime).Append(",");
+            sb.Append(OpenClose).Append(",");
+            sb.Append(Price).Append(",");
+            sb.Append(Volume).Append(",");
+            sb.Append(Direction).Append(",");
+            sb.Append(Type);
+            return sb.ToString();
+        }
     }
 }

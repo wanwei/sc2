@@ -104,6 +104,7 @@ namespace com.wer.sc.data
         }
 
         private static KLinePeriod period_5second = new KLinePeriod(KLineTimeType.SECOND, 5);
+        private static KLinePeriod period_15second = new KLinePeriod(KLineTimeType.SECOND, 15);
         private static KLinePeriod period_1minute = new KLinePeriod(KLineTimeType.MINUTE, 1);
         private static KLinePeriod period_5minute = new KLinePeriod(KLineTimeType.MINUTE, 5);
         private static KLinePeriod period_15minute = new KLinePeriod(KLineTimeType.MINUTE, 15);
@@ -113,6 +114,11 @@ namespace com.wer.sc.data
         public static KLinePeriod KLinePeriod_5Second
         {
             get { return period_5second; }
+        }
+
+        public static KLinePeriod KLinePeriod_15Second
+        {
+            get { return period_15second; }
         }
 
         public static KLinePeriod KLinePeriod_1Minute

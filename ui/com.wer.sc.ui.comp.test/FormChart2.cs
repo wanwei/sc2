@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.comp.graphic;
+using com.wer.sc.comp.param;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
@@ -26,8 +27,7 @@ namespace com.wer.sc.ui.comp.test
             this.compChart1 = compMain1.CompChart1;
             //this.compChart1.Code = "RB1710";
             //this.compChart1.Time = 20170531.210011;
-            this.compChart1.KlinePeriod = 1;
-            this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.compChart1.OnChartRefresh += CompChart1_OnDataRefresh;
             this.SetLbTime(this.compChart1.Time);
             this.compChart1.PaintChart();
@@ -88,50 +88,43 @@ namespace com.wer.sc.ui.comp.test
 
         private void tb_KLine1_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 1;
-            this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine5_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 5;
-            this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_5Minute;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine15_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 15;
-            this.compChart1.KlineTimeType = data.KLineTimeType.MINUTE;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_15Minute;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine1H_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 1;
-            this.compChart1.KlineTimeType = data.KLineTimeType.HOUR;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Hour;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine1Day_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 1;
-            this.compChart1.KlineTimeType = data.KLineTimeType.DAY;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Day;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine5S_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 5;
-            this.compChart1.KlineTimeType = data.KLineTimeType.SECOND;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_5Second;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine15S_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = 15;
-            this.compChart1.KlineTimeType = data.KLineTimeType.SECOND;
+            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_15Second;
             this.compChart1.ChartType = ChartType.KLine;
         }
 
@@ -228,6 +221,12 @@ namespace com.wer.sc.ui.comp.test
 
         private void RunStrategy(StrategyInfo strategyInfo)
         {
+            IStrategy strategy = strategyInfo.CreateStrategy();
+            RunStrategy(strategy);
+        }
+
+        private void RunStrategy(IStrategy strategy)
+        {
             IDataPackage dataPackage = this.compChart1.CompChartData.DataPackage;
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             //compChart1.KlinePeriod
@@ -236,8 +235,9 @@ namespace com.wer.sc.ui.comp.test
             //referedPeriods.UsedKLinePeriods.Add(this.n)
             ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
             IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
-
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            //compChart1.StrategyHelper.DrawHelper.ClearShapes();
+            //compChart1.CurrentPriceRectDrawer.cl
+            //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();
             if (strategy is StrategyAbstract)
             {
                 ((StrategyAbstract)strategy).DefaultMainPeriod = period;
@@ -271,6 +271,20 @@ namespace com.wer.sc.ui.comp.test
             IParameters parameters = strategy.Parameters;
 
             //IStrategy strategy
+        }
+
+        private void menuItemExecute_Click(object sender, EventArgs e)
+        {
+            StrategyInfo strategyInfo = GetSelectedStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy();
+            IParameters parameters = strategy.Parameters;
+
+            FormParameters frmParamSetting = new FormParameters(parameters);
+            DialogResult result = frmParamSetting.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                RunStrategy(strategy);
+            }
         }
     }
 }

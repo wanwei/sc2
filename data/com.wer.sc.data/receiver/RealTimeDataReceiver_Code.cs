@@ -28,6 +28,8 @@ namespace com.wer.sc.data.receiver
 
         private Dictionary<KLinePeriod, KLineData_Present> dicKLineData = new Dictionary<KLinePeriod, KLineData_Present>();
 
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
+
         public string Code
         {
             get
@@ -64,6 +66,8 @@ namespace com.wer.sc.data.receiver
                 klineData.Receive(tickBar);
             }
             timeLineData.Receive(tickBar);
+            if (this.OnRealTimeChanged != null)
+                this.OnRealTimeChanged(this, new RealTimeChangedArgument(-1, Time, this));
         }
 
         public IKLineData GetKLineData(KLinePeriod period)

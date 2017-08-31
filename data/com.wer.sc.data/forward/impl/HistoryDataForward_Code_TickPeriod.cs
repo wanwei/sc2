@@ -259,6 +259,8 @@ namespace com.wer.sc.data.forward.impl
 
         private void DealEvents()
         {
+            if (OnRealTimeChanged != null)
+                OnRealTimeChanged(this, new RealTimeChangedArgument(-1, Time, this));
             if (OnTick != null)
                 OnTick(this, currentTickData, currentTickData.BarPos);
             if (OnBar != null && forwardPeriod.KlineForwardPeriod != null)
@@ -522,5 +524,7 @@ namespace com.wer.sc.data.forward.impl
         /// 
         /// </summary>
         public event DelegateOnBar OnBar;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }

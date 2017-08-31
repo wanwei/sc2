@@ -38,9 +38,11 @@ namespace com.wer.sc.ui.comp
 
         private float kLineBlockWidth;
 
-        private int klinePeriod;
+        private KLinePeriod klinePeriod;
 
-        private KLineTimeType klineTimeType;
+        //private int klinePeriod;
+
+        //private KLineTimeType klineTimeType;
 
         public string DataCenterUri
         {
@@ -128,7 +130,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public int KlinePeriod
+        public KLinePeriod KlinePeriod
         {
             get
             {
@@ -141,23 +143,6 @@ namespace com.wer.sc.ui.comp
                     return;
                 this.oldChartDataState = GetChartDataState();
                 klinePeriod = value;
-                this.IsDataRefresh = true;
-            }
-        }
-
-        public KLineTimeType KlineTimeType
-        {
-            get
-            {
-                return klineTimeType;
-            }
-
-            set
-            {
-                if (klineTimeType == value)
-                    return;
-                this.oldChartDataState = GetChartDataState();
-                klineTimeType = value;
                 this.IsDataRefresh = true;
             }
         }
@@ -184,7 +169,7 @@ namespace com.wer.sc.ui.comp
                 return false;
             if (code == null)
                 return false;
-            if (klinePeriod <= 0)
+            if (klinePeriod == null)
                 return false;
             if (dataReader == null)
                 return false;
@@ -332,11 +317,6 @@ namespace com.wer.sc.ui.comp
 
         public event DelegateOnDataRefresh OnDataRefresh;
 
-        public IGraphicData_CurrentInfo CurrentInfo
-        {
-            get { return null; }
-        }
-
         public IDataPackage DataPackage
         {
             get
@@ -345,16 +325,22 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        private ChartDataState GetChartDataState()
+        public void ChangeDataPackage(IDataPackage dataPackage)
+        {
+            //TODO
+            this.dataPackage = dataPackage;
+        }
+
+        public ChartDataState GetChartDataState()
         {
             ChartDataState state = new ChartDataState();
-            state.code = this.code;
+            if (this.DataPackage != null)
+                state.DataPackageInfo = new DataPackageInfo(this.code, this.DataPackage.StartDate, this.DataPackage.EndDate);
             state.dataCenterUri = this.dataCenterUri;
             state.chartType = this.chartType;
             state.time = this.time;
             state.kLineBlockWidth = this.kLineBlockWidth;
             state.klinePeriod = this.klinePeriod;
-            state.klineTimeType = this.klineTimeType;
             return state;
         }
     }
@@ -367,6 +353,31 @@ namespace com.wer.sc.ui.comp
 
         private ChartDataState currentChartDataState;
 
+        public bool IsDataPackageChanged
+        {
+            get
+            {
+                return OldChartDataState.DataPackageInfo.Equals(currentChartDataState.DataPackageInfo);
+            }
+        }
+
+        public ChartDataState OldChartDataState
+        {
+            get
+            {
+                return oldChartDataState;
+            }
+
+        }
+
+        public ChartDataState CurrentChartDataState
+        {
+            get
+            {
+                return currentChartDataState;
+            }
+        }
+
         public DataRefreshArgument(ChartDataState oldChartState, ChartDataState currentChartState)
         {
             this.oldChartDataState = oldChartState;
@@ -374,9 +385,38 @@ namespace com.wer.sc.ui.comp
         }
     }
 
+    public class DataPackageInfo
+    {
+        public string Code;
+
+        public int StartDate;
+
+        public int EndDate;
+
+        public DataPackageInfo(string code, int startDate, int endDate)
+        {
+            this.Code = code;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is DataPackageInfo))
+                return false;
+            DataPackageInfo dp = (DataPackageInfo)obj;
+            return this.Code == dp.Code && this.StartDate == dp.StartDate && this.EndDate == dp.EndDate;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
     public class ChartDataState
     {
-        public string code;
+        public DataPackageInfo DataPackageInfo;
 
         public string dataCenterUri;
 
@@ -386,18 +426,29 @@ namespace com.wer.sc.ui.comp
 
         public float kLineBlockWidth;
 
-        public int klinePeriod;
-
-        public KLineTimeType klineTimeType;
+        public KLinePeriod klinePeriod;
 
         public override bool Equals(object obj)
         {
             if (!(obj is ChartDataState))
                 return false;
+            if (this.DataPackageInfo == null)
+                return false;
 
             ChartDataState dataState = (ChartDataState)obj;
-            return this.code == dataState.code && this.dataCenterUri == dataState.dataCenterUri && this.chartType == dataState.chartType && this.time == dataState.time
-                && this.kLineBlockWidth == dataState.kLineBlockWidth && this.klinePeriod == dataState.klinePeriod && this.klineTimeType == dataState.klineTimeType;
+            return this.DataPackageInfo.Equals(dataState.DataPackageInfo)
+                && this.dataCenterUri == dataState.dataCenterUri
+                && this.chartType == dataState.chartType
+                && this.time == dataState.time
+                && this.kLineBlockWidth == dataState.kLineBlockWidth
+                && ObjectEquals(klinePeriod, dataState.klinePeriod);
+        }
+
+        private bool ObjectEquals(object obj1, object obj2)
+        {
+            if (obj1 == null)
+                return obj2 == null;
+            return obj1.Equals(obj2);
         }
 
         public override int GetHashCode()

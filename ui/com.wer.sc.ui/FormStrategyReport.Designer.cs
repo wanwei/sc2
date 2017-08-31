@@ -1,6 +1,6 @@
-﻿namespace com.wer.sc.ui.comp.test
+﻿namespace com.wer.sc.ui
 {
-    partial class FormParameterSetting
+    partial class FormStrategyReport
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // FormParameterSetting
+            // FormStrategyReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 396);
-            this.Name = "FormParameterSetting";
-            this.Text = "参数设置";
+            this.ClientSize = new System.Drawing.Size(742, 558);
+            this.Name = "FormStrategyReport";
+            this.Text = "策略回测报告";
             this.ResumeLayout(false);
 
         }

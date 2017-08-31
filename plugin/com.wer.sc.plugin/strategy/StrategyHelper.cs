@@ -9,6 +9,8 @@ namespace com.wer.sc.strategy
 {
     public class StrategyHelper : IStrategyHelper
     {
+        private List<IStrategyResult> results = new List<IStrategyResult>();
+
         private IDrawHelper drawHelper;
 
         public StrategyHelper(IDrawHelper drawHelper)
@@ -25,6 +27,27 @@ namespace com.wer.sc.strategy
             {
                 return drawHelper;
             }
+        }
+
+        public IStrategyTrader_Code Trader
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public List<IStrategyResult> Results
+        {
+            get
+            {
+                return results;
+            }
+        }
+
+        public void AddStrategyResult(IStrategyResult strategyResult)
+        {
+            this.results.Add(strategyResult);
         }
     }
 }

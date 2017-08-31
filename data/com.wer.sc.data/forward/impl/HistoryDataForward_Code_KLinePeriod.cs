@@ -148,6 +148,7 @@ namespace com.wer.sc.data.forward.impl
             if (isEnd)
                 return false;
 
+            double prevTime = this.Time;
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
                 KLineData_RealTime klineData = dic_Period_KLineData[period];
@@ -214,6 +215,8 @@ namespace com.wer.sc.data.forward.impl
             }
             if (OnBar != null)
                 OnBar(this, mainKLineData, mainKLineData.BarPos);
+            if (OnRealTimeChanged != null)
+                OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
             return true;
         }
 
@@ -311,5 +314,7 @@ namespace com.wer.sc.data.forward.impl
         /// 
         /// </summary>
         public event DelegateOnBar OnBar;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }

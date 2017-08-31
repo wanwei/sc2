@@ -60,8 +60,7 @@
             // 
             this.compChart1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compChart1.KLineBlockWidth = 5F;
-            this.compChart1.KlinePeriod = 0;
-            this.compChart1.KlineTimeType = com.wer.sc.data.KLineTimeType.SECOND;
+            this.compChart1.KlinePeriod = new data.KLinePeriod(data.KLineTimeType.MINUTE,1);
             this.compChart1.Location = new System.Drawing.Point(0, 0);
             this.compChart1.Name = "compChart1";
             this.compChart1.Size = new System.Drawing.Size(441, 544);

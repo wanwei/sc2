@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.plugin;
+using com.wer.sc.utils.param;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,6 +93,15 @@ namespace com.wer.sc.strategy
         {
             Object obj = Activator.CreateInstance(strategyClassType);
             return (IStrategy)obj;
+        }
+
+        public static IStrategy CreateNewStrategyWithParameters(IStrategy strategy)
+        {
+            IParameters parameters = strategy.Parameters;
+            IStrategy newStrategy = (IStrategy)Activator.CreateInstance(strategy.GetType());
+            newStrategy.Parameters.SetParameterValue(parameters.GetParameterValues());
+            //newStrategy.Parameters.AddParameterRange(parameters.GetAllParameters());
+            return newStrategy;
         }
 
         public override string ToString()

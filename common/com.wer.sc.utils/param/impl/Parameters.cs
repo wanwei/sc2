@@ -39,6 +39,11 @@ namespace com.wer.sc.utils.param.impl
             AddParameter(pm);
         }
 
+        public void AddParameterRange(List<IParameter> parameters)
+        {
+            this.parameters.AddRange(parameters);
+        }
+
         public void ClearParameters()
         {
             this.parameters.Clear();
@@ -85,7 +90,7 @@ namespace com.wer.sc.utils.param.impl
             Dictionary<string, object> dic_Key_Value = new Dictionary<string, object>();
             foreach (string key in dic_Key_Parameter.Keys)
             {
-                dic_Key_Value.Add(key, dic_Key_Parameter[key]);
+                dic_Key_Value.Add(key, dic_Key_Parameter[key].Value);
             }
             return dic_Key_Value;
         }
@@ -110,7 +115,7 @@ namespace com.wer.sc.utils.param.impl
         public void SetParameterValue(string key, object parameterValue)
         {
             if (!this.dic_Key_Parameter.ContainsKey(key))
-                return;
+                return;            
             this.dic_Key_Parameter[key].Value = parameterValue;
         }
 

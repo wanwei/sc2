@@ -66,8 +66,15 @@ namespace com.wer.sc.data.forward.impl
                 this.historyDataForward = new HistoryDataForward_Code_KLinePeriod(Code, mainKLineData, allKLineData);
             }
 
+            this.historyDataForward.OnRealTimeChanged += HistoryDataForward_OnRealTimeChanged;
             this.historyDataForward.OnTick += KlineDataForward_OnTick;
             this.historyDataForward.OnBar += KlineDataForward_OnBar;
+        }
+
+        private void HistoryDataForward_OnRealTimeChanged(object sender, RealTimeChangedArgument e)
+        {
+            if (this.OnRealTimeChanged != null)
+                this.OnRealTimeChanged(this, e);
         }
 
         private void KlineDataForward_OnBar(object sender, IKLineData klineData, int index)
@@ -193,5 +200,7 @@ namespace com.wer.sc.data.forward.impl
         public event DelegateOnTick OnTick;
 
         public event DelegateOnBar OnBar;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }

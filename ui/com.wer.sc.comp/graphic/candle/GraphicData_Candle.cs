@@ -34,6 +34,8 @@ namespace com.wer.sc.comp.graphic
             this.data = klineData;
             this.code = klineData.Code;
             this.period = klineData.Period;
+            //this.ChangeEndIndex(klineData.BarPos);
+            this.EndIndex = klineData.BarPos;
         }
 
         public IKLineData GetKLineData()
@@ -68,12 +70,17 @@ namespace com.wer.sc.comp.graphic
             }
             set
             {
-                this.endIndex = value;
-                this.endIndex = endIndex < 0 ? 0 : endIndex;
-                InitIndex();
+                ChangeEndIndex(value);
                 if (OnGraphicDataChange != null)
                     OnGraphicDataChange(this, new GraphicDataChangeArgument());
             }
+        }
+
+        private void ChangeEndIndex(int value)
+        {
+            this.endIndex = value;
+            this.endIndex = endIndex < 0 ? 0 : endIndex;
+            InitIndex();
         }
 
         public string Code

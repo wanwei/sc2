@@ -105,7 +105,7 @@ namespace com.wer.sc.strategy.cnfutures.test
 
         public override void StrategyEnd()
         {
-            IDrawHelper drawHelper = StrategyHelper.DrawHelper;
+            IDrawer drawHelper = StrategyHelper.DrawHelper.GetDrawer_KLine(DefaultMainPeriod);
             drawHelper.DrawPolyLine(maPrice_1, color_1);
             drawHelper.DrawPolyLine(maPrice_2, color_2);
             drawHelper.DrawPolyLine(maPrice_3, color_3);

@@ -46,5 +46,59 @@ namespace com.wer.sc.data.reader
         /// </summary>
         /// <returns></returns>
         ITickData GetTickData();
+
+        event DelegateOnRealTimeChanged OnRealTimeChanged;
+    }
+
+    public delegate void DelegateOnRealTimeChanged(Object sender, RealTimeChangedArgument e);
+
+    public class RealTimeChangedArgument
+    {
+        private double prevTime;
+
+        private double time;
+
+        private bool tradingDayChanged;
+
+        private IRealTimeDataReader realTimeDataReader;
+
+        public RealTimeChangedArgument(double prevTime, double time, IRealTimeDataReader realTimeDataReader)
+        {
+            this.prevTime = prevTime;
+            this.time = time;
+            this.realTimeDataReader = realTimeDataReader;
+        }
+
+        public double PrevTime
+        {
+            get
+            {
+                return prevTime;
+            }
+        }
+
+        public double Time
+        {
+            get
+            {
+                return time;
+            }
+        }
+
+        public IRealTimeDataReader RealTimeDataReader
+        {
+            get
+            {
+                return realTimeDataReader;
+            }
+        }
+
+        public bool TradingDayChanged
+        {
+            get
+            {
+                return tradingDayChanged;
+            }            
+        }
     }
 }
