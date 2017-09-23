@@ -47,12 +47,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator
             if (tickDataList.Count == 0)
                 return null;
             List<double[]> openTime = this.dataUpdateHelper.GetUpdatedTradingSessionDetail(codes[0].Code, date);
-            return Generate(tickDataList, openTime);
+            return Generate(variety + "0000", tickDataList, openTime);
         }
 
-        public ITickData Generate(List<ITickData> tickData, List<double[]> openTime)
+        public ITickData Generate(string code, List<ITickData> tickData, List<double[]> openTime)
         {
-            List<double> times = GetTimeArr(tickData, openTime);
+            List<double[]> times = GetTimeArr(code, tickData, openTime);
 
             TickData data = new TickData(times.Count);
             int[] currentIndeies = new int[tickData.Count];
@@ -62,7 +62,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator
             int[] mounts = new int[tickData.Count];
             for (int i = 0; i < times.Count; i++)
             {
-                double time = times[i];
+                double time = times[i][0];
                 data.arr_time[i] = time;
                 CalcIndeies(tickData, time, currentIndeies, lastIndeies);
                 CalcMount(tickData, mounts, lastIndeies, currentIndeies);
@@ -111,39 +111,42 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator
             return mount;
         }
 
-        private List<double> GetTimeArr(List<ITickData> tickData, List<double[]> openTime)
+        private List<double[]> GetTimeArr(string code, List<ITickData> tickData, List<double[]> openTime)
         {
             ITickData mainTick = GetMainTickData(tickData);
             int tradingDay = mainTick.TradingDay;
-            int prevTradingDay = dataUpdateHelper.GetUpdatedTradingDayReader().GetPrevTradingDay(tradingDay);
-            List<double> times = KLineTimeListUtils.GetKLineTimeList(tradingDay, prevTradingDay, openTime, new KLinePeriod(KLineTimeType.SECOND, 1));
-            List<double> timeArr = new List<double>(times.Count);
+            List<double[]> tradingTime = dataUpdateHelper.GetTradingTime(code, tradingDay).TradingPeriods;//GetTradingSessionDetailReader().GetTradingTime(code, tradingDay);
+            return TradingTimeUtils.GetKLineTimeList_Full(tradingTime, new KLinePeriod(KLineTimeType.SECOND, 1));
+            //int prevTradingDay = dataUpdateHelper.GetUpdatedTradingDayReader().GetPrevTradingDay(tradingDay);
+            //List<double[]> tradingTime = dataUpdateHelper.GetTradingSessionDetailReader().GetTradingTime(mainTick.Code, tradingDay);
+            //List<double[]> times =TradingTimeUtils.GetKLineTimeList_Full(tradingTime, new KLinePeriod(KLineTimeType.SECOND, 1));
+            //List<double> timeArr = new List<double>(times.Count);
 
-            int dateStart = (int)mainTick.Arr_Time[0];
-            int dateEnd = (int)mainTick.Arr_Time[mainTick.Length - 1];
-            if (dateStart == dateEnd)
-            {
-                for (int i = 0; i < times.Count; i++)
-                {
-                    //times[i] = dateStart + times[i];
-                    timeArr.Add(times[i]);
-                }
-            }
-            else
-            {
-                bool isNextDay = false;
-                int between = dateEnd - dateStart;
-                for (int i = 0; i < times.Count; i++)
-                {
-                    if (i != 0 && !isNextDay)
-                        isNextDay = times[i - 1] > times[i];
-                    int dateAdd = isNextDay ? between : 0;
-                    //times[i] = date + times[i];
-                    timeArr.Add(dateAdd + times[i]);
-                }
-            }
+            //int dateStart = (int)mainTick.Arr_Time[0];
+            //int dateEnd = (int)mainTick.Arr_Time[mainTick.Length - 1];
+            //if (dateStart == dateEnd)
+            //{
+            //    for (int i = 0; i < times.Count; i++)
+            //    {
+            //        //times[i] = dateStart + times[i];
+            //        timeArr.Add(times[i][0]);
+            //    }
+            //}
+            //else
+            //{
+            //    bool isNextDay = false;
+            //    int between = dateEnd - dateStart;
+            //    for (int i = 0; i < times.Count; i++)
+            //    {
+            //        if (i != 0 && !isNextDay)
+            //            isNextDay = times[i - 1] > times[i];
+            //        int dateAdd = isNextDay ? between : 0;
+            //        //times[i] = date + times[i];
+            //        timeArr.Add(dateAdd + times[i]);
+            //    }
+            //}
 
-            return timeArr;
+            //return timeArr;
         }
 
         private ITickData GetMainTickData(List<ITickData> tickData)

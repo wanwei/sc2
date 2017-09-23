@@ -21,7 +21,7 @@ namespace com.wer.sc.data.navigate.impl
 
         private TickData tickData;
 
-        private ITradingSessionReader_Instrument sessionReader;
+        private ITradingSessionReader_Code sessionReader;
 
         public DataNavigate_Code_Tick(IDataPackage dataPackage, double time)
         {

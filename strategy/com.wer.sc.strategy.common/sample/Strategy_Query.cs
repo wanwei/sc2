@@ -9,6 +9,7 @@ using com.wer.sc.utils;
 
 namespace com.wer.sc.strategy.common.sample
 {
+    [Strategy("STRATEGY.SAMPLE.QUERY", "测试查询", "测试查询", "例子")]
     public class Strategy_Query : StrategyAbstract
     {
         public override StrategyReferedPeriods GetStrategyPeriods()
@@ -28,8 +29,8 @@ namespace com.wer.sc.strategy.common.sample
             {
                 string code = klineData.Code;
                 double time = klineData.Time;
-                IStrategyResult result = new StrategyResult(code, time);
-                this.StrategyHelper.AddStrategyResult(result);
+                //IStrategyResult result = new StrategyResult(code, time);
+                this.StrategyHelper.AddStrategyResult(code, time, "", "");
             }
         }
 

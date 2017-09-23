@@ -54,7 +54,7 @@ namespace com.wer.sc.data.receiver
             for (int i = 0; i < periods.Count; i++)
             {
                 KLinePeriod period = periods[i];
-                dicKLineData.Add(period, new KLineData_Present(recentKLineDataLoader.GetRecentKLineData(code, lastOpenDate, period), KLineTimeListUtils.GetKLineTimeList(date, lastOpenDate, openTime, period), period));
+                //dicKLineData.Add(period, new KLineData_Present(recentKLineDataLoader.GetRecentKLineData(code, lastOpenDate, period), KLineTimeListUtils.GetKLineTimeList(date, lastOpenDate, openTime, period), period));
             }
         }
 
@@ -89,5 +89,10 @@ namespace com.wer.sc.data.receiver
             return timeLineData;
         }
 
+        public bool IsPeriodEnd(KLinePeriod period)
+        {
+            //TODO 需要实现获取当日K线每个时间
+            return false;
+        }
     }
 }

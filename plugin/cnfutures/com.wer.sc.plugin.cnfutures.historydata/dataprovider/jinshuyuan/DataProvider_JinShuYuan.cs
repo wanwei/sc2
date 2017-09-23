@@ -39,5 +39,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
         {
             return dataLoader_TradingDay.GetTradingDays();
         }
+
+        public List<AppointUpdate> GetAppointUpdate()
+        {
+            return null;
+        }
     }
 }

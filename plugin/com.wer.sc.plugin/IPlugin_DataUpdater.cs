@@ -11,6 +11,7 @@ namespace com.wer.sc.plugin
     /// 数据更新插件
     /// 该插件用于系统内的数据更新
     /// 比如下载股票数据、更新期货数据到数据中心等。
+    /// 该插件是由com.wer.sc.data.updater项目装载并执行
     /// </summary>
     public interface IPlugin_DataUpdater
     {

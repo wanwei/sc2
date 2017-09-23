@@ -264,7 +264,9 @@ namespace com.wer.sc.strategy
             //try
             //{
             StrategyAssembly strategyAssembly = new StrategyAssembly();
-            Assembly ass = Assembly.LoadFrom(path);
+            byte[] buffer = System.IO.File.ReadAllBytes(path);
+            Assembly ass = Assembly.Load(buffer);
+            //Assembly ass = Assembly.LoadFrom(path);
             if (ass == null)
                 return null;
 

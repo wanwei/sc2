@@ -11,7 +11,7 @@ namespace com.wer.sc.data.store.file
     /// <summary>
     /// 股票或期货信息保存，现在是存储成Csv格式
     /// </summary>
-    public class InstrumentStore_File : IInstrumentStore
+    public class InstrumentStore_File : ICodeStore
     {
         private String path;
 

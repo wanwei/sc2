@@ -42,7 +42,7 @@ namespace com.wer.sc.data.forward.impl
             InitTimeLine();
         }
 
-        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Instrument tradingSessionReader) : this(code, mainKLineData, allKLineData)
+        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingSessionReader_Code tradingSessionReader) : this(code, mainKLineData, allKLineData)
         {
             this.daySplitter = new KLineData_DaySplitter(mainKLineData, tradingSessionReader);
             this.daySplitter.NextDay();

@@ -1,5 +1,4 @@
-﻿using com.wer.sc.data.reader.impl;
-using com.wer.sc.data.store;
+﻿using com.wer.sc.data.store;
 using System;
 using System.Collections.Generic;
 using System.Linq;

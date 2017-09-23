@@ -41,7 +41,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             }
         }
 
-        public string Proceed()
+        public List<CodeInfo> GetAllCodes()
         {
             string path = this.dataUpdateHelper.GetPath_Code();
 
@@ -49,7 +49,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             Dictionary<string, CodeInfo> dic_Id_CodeInfo = new Dictionary<string, CodeInfo>();
             List<CodeInfo> updatedCodes = CsvUtils_Code.Load(path);
             if (File.Exists(path))
-            {                
+            {
                 for (int i = 0; i < updatedCodes.Count; i++)
                 {
                     dic_Id_CodeInfo.Add(updatedCodes[i].Code, updatedCodes[i]);
@@ -63,12 +63,52 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             {
                 CodeInfo code = codes[i];
                 if (dic_Id_CodeInfo.ContainsKey(code.Code))
-                    continue;
-                newcodes.Add(code);
+                {
+                    CodeInfo codeInfo = dic_Id_CodeInfo[code.Code];
+                    if (codeInfo.Start < code.Start)
+                        code.Start = codeInfo.Start;
+                    if (codeInfo.End > code.End)
+                        code.End = codeInfo.End;
+                }
+                else
+                    newcodes.Add(code);
             }
 
             newcodes.Sort(new CodeInfoComparer());
+            return newcodes;
+        }
+
+        public string Proceed()
+        {
+            //string path = this.dataUpdateHelper.GetPath_Code();
+
+            ////装载已更新好的股票
+            //Dictionary<string, CodeInfo> dic_Id_CodeInfo = new Dictionary<string, CodeInfo>();
+            //List<CodeInfo> updatedCodes = CsvUtils_Code.Load(path);
+            //if (File.Exists(path))
+            //{                
+            //    for (int i = 0; i < updatedCodes.Count; i++)
+            //    {
+            //        dic_Id_CodeInfo.Add(updatedCodes[i].Code, updatedCodes[i]);
+            //    }
+            //}
+
+            ////从新的合约中找到之前没有的合约
+            //List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            //List<CodeInfo> newcodes = new List<CodeInfo>(updatedCodes);
+            //for (int i = 0; i < codes.Count; i++)
+            //{
+            //    CodeInfo code = codes[i];
+            //    if (dic_Id_CodeInfo.ContainsKey(code.Code))
+            //        continue;
+            //    newcodes.Add(code);
+            //}
+
+            //newcodes.Sort(new CodeInfoComparer());
             //CsvUtils_Code.Append(path, newcodes);
+
+            string path = this.dataUpdateHelper.GetPath_Code();
+            List<CodeInfo> newcodes = GetAllCodes();
             CsvUtils_Code.Save(path, newcodes);
             return "期货信息更新完成";
         }

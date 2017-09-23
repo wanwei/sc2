@@ -14,15 +14,22 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 {
     public class Step_TickData_CodeDate : IStep
     {
-        private string code;
+        private CodeInfo codeInfo;
         private int date;
         private DataUpdateHelper dataUpdateHelper;
 
-        public Step_TickData_CodeDate(DataUpdateHelper dataUpdateHelper, string code, int date)
+        private bool overwrite = false;
+
+        public Step_TickData_CodeDate(DataUpdateHelper dataUpdateHelper, CodeInfo codeInfo, int date)
         {
             this.dataUpdateHelper = dataUpdateHelper;
-            this.code = code;
+            this.codeInfo = codeInfo;
             this.date = date;
+        }
+
+        public Step_TickData_CodeDate(DataUpdateHelper dataUpdateHelper, CodeInfo codeInfo, int date, bool overwrite) : this(dataUpdateHelper, codeInfo, date)
+        {
+            this.overwrite = overwrite;
         }
 
         public int ProgressStep
@@ -37,7 +44,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             get
             {
-                return "更新" + code + "在" + date + "的Tick数据";
+                return "更新" + codeInfo.Code + "在" + date + "的Tick数据";
             }
         }
 
@@ -45,19 +52,19 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             try
             {
-                string path = this.dataUpdateHelper.GetPath_TickData(code, date);
-                if (File.Exists(path))
-                    return code + "-" + date + "的Tick数据已存在";
-                ITickData tickData = this.dataUpdateHelper.GetNewTickData(code, date);
+                string path = this.dataUpdateHelper.GetPath_TickData(codeInfo.Code, date);
+                if (!overwrite && File.Exists(path))
+                    return codeInfo.Code + "-" + date + "的Tick数据已存在";
+                ITickData tickData = this.dataUpdateHelper.GetNewTickData(codeInfo.ServerCode, date);
                 if (tickData == null)
-                    return code + "-" + date + "没有数据";                
+                    return codeInfo.Code + "-" + date + "没有数据";
                 CsvUtils_TickData.Save(path, tickData);
             }
             catch (Exception e)
-            {                
-                LogHelper.Error(GetType(), new ApplicationException("更新" + code + "-" + date + "的tick数据出错", e));
+            {
+                LogHelper.Error(GetType(), new ApplicationException("更新" + codeInfo.Code + "-" + date + "的tick数据出错", e));
             }
-            return code + "-" + date + "的Tick数据更新完成";
+            return codeInfo.Code + "-" + date + "的Tick数据更新完成";
         }
     }
 }

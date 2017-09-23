@@ -1,5 +1,5 @@
-﻿using com.wer.sc.data.reader.cache;
-using com.wer.sc.data.store;
+﻿using com.wer.sc.data.store;
+using com.wer.sc.data.utils;
 using com.wer.sc.plugin;
 using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
@@ -52,7 +52,7 @@ namespace com.wer.sc.data.update
             List<CodeInfo> allInstruments = historyData.GetInstruments();
             List<int> allTradingDays = historyData.GetTradingDays();
 
-            TradingDayCache tradingDayCache = new TradingDayCache(allTradingDays);
+            CacheUtils_TradingDay tradingDayCache = new CacheUtils_TradingDay(allTradingDays);
 
             for (int i = 0; i < allInstruments.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace com.wer.sc.data.update
             }
         }
 
-        private List<int> GetAllNotUpdateTickData(CodeInfo codeInfo, TradingDayCache allTradingDayCache, List<int> storedDays, bool isFillUp)
+        private List<int> GetAllNotUpdateTickData(CodeInfo codeInfo, CacheUtils_TradingDay allTradingDayCache, List<int> storedDays, bool isFillUp)
         {
             if (isFillUp)
             {
@@ -129,7 +129,7 @@ namespace com.wer.sc.data.update
             }
         }
 
-        private static int GetEndIndex(CodeInfo codeInfo, TradingDayCache allTradingDayCache)
+        private static int GetEndIndex(CodeInfo codeInfo, CacheUtils_TradingDay allTradingDayCache)
         {
             int endIndex;
             if (codeInfo.End <= 0)
@@ -139,7 +139,7 @@ namespace com.wer.sc.data.update
             return endIndex;
         }
 
-        private IList<int> GetCodeTradingDays(CodeInfo codeInfo, TradingDayCache allTradingCache)
+        private IList<int> GetCodeTradingDays(CodeInfo codeInfo, CacheUtils_TradingDay allTradingCache)
         {
             return allTradingCache.GetTradingDays(codeInfo.Start, codeInfo.End);
         }

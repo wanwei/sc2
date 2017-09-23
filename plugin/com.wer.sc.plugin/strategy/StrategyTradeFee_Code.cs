@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyTradeFee_Code : IXmlExchange
+    class StrategyTradeFee_Code : IXmlExchange
     {
         //代码
         private String code;

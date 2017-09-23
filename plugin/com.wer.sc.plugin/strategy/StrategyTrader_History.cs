@@ -9,7 +9,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 基于历史的交易器
     /// </summary>
-    public class StrategyTrader_History : IStrategyTrader
+    class StrategyTrader_History : IStrategyTrader
     {
         public IList<IStrategyTrader_Code> StrategyTraders
         {

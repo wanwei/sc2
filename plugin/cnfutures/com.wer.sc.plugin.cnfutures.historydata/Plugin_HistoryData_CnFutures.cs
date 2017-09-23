@@ -8,6 +8,7 @@ using com.wer.sc.plugin.historydata;
 using com.wer.sc.data;
 using com.wer.sc.utils;
 using System.IO;
+using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.plugin.cnfutures.historydata
 {
@@ -75,16 +76,5 @@ namespace com.wer.sc.plugin.cnfutures.historydata
             //string path = pluginPath + "\\config\\biaopuyonghua.instruments.csv";
             return csvDataPath;
         }
-
-        //public override string GetDataCenterUri()
-        //{
-        //    return dataCenterUri;
-        //    //return @"file:D:\SCDATA\CNFUTURES\";
-        //}
-
-        //public NeedsToUpdate GetNeedsToUpdate()
-        //{
-        //    return needsToUpdate;
-        //}        
     }
 }

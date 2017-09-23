@@ -55,12 +55,15 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
             int totalmount = 0;
             int cnt = GetEmptyLines(lines);
             TickData data = new TickData(lines.Length - 1 - cnt);
+            // lines[0].Split(',');
             for (int i = 0; i < lines.Length - 1 - cnt; i++)
             {
                 String line = lines[i + 1];
                 if (line.Equals(""))
                     continue;
                 String[] dataArr = line.Split(',');
+                if (dataArr.Length > 30)
+                    return ReadLinesToTickData_Full(lines);
                 if (dataArr.Length < 5)
                     continue;
 
@@ -69,6 +72,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
                 //String[] timeArr = dataArr[1].Split(':');
                 //double time = double.Parse(timeArr[0] + timeArr[1] + timeArr[2]);
                 //double fulltime = date + time / 1000000;
+
 
                 double fulltime = GetFullTime(dataArr[2]);
 
@@ -87,6 +91,46 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
                 data.arr_sellPrice[i] = float.Parse(dataArr[13]);
                 data.arr_sellMount[i] = int.Parse(dataArr[15]);
                 data.arr_isBuy[i] = dataArr[11].Equals("B");
+            }
+            return data;
+        }
+
+        private static TickData ReadLinesToTickData_Full(string[] lines)
+        {
+            int totalmount = 0;
+            int cnt = GetEmptyLines(lines);
+            TickData data = new TickData(lines.Length - 1 - cnt);
+            for (int i = 0; i < lines.Length - 1 - cnt; i++)
+            {
+                String line = lines[i + 1];
+                if (line.Equals(""))
+                    continue;
+                String[] dataArr = line.Split(',');
+                if (dataArr.Length < 5)
+                    continue;
+
+                double day = int.Parse(dataArr[43]);
+                string second = dataArr[20];
+                string secondStr = second.Substring(0, 2) + second.Substring(3, 2) + second.Substring(6, 2);
+                int secondInt = int.Parse(secondStr);
+                double fulltime = day + Math.Round((double)secondInt / 1000000, 6);
+
+                data.arr_time[i] = fulltime;
+                data.arr_price[i] = float.Parse(dataArr[4]);
+                data.arr_mount[i] = (int)float.Parse(dataArr[11]);
+                data.Arr_Hold[i] = int.Parse(dataArr[13]);
+                if (i == 0)
+                    data.arr_add[i] += data.Arr_Hold[i];
+                else
+                    data.arr_add[i] = data.Arr_Hold[i] - data.Arr_Hold[i - 1];
+                //data.arr_ = int.Parse(dataArr[6]);
+                totalmount += data.arr_mount[i];
+                data.arr_totalMount[i] = totalmount;
+                data.arr_buyPrice[i] = float.Parse(dataArr[22]);
+                data.arr_buyMount[i] = int.Parse(dataArr[23]);
+                data.arr_sellPrice[i] = float.Parse(dataArr[24]);
+                data.arr_sellMount[i] = int.Parse(dataArr[25]);
+                data.arr_isBuy[i] = data.Arr_SellPrice[i] == data.Arr_Price[i];
             }
             return data;
         }

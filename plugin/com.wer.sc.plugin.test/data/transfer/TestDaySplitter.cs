@@ -1,4 +1,4 @@
-﻿using com.wer.sc.data.reader.cache;
+﻿using com.wer.sc.data.utils;
 using com.wer.sc.mockdata;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -20,7 +20,7 @@ namespace com.wer.sc.data.transfer
 
         private void AssertDaySplitter(string code, int start, int end, KLinePeriod period, string fileName)
         {
-            TradingSessionCache_Instrument cache = GetTradingSessionCache(code);
+            CacheUtils_TradingSession cache = GetTradingSessionCache(code);
 
             IKLineData klineData = MockDataLoader.GetKLineData(code, start, end, period);
             List<SplitterResult> results = DaySplitter.Split(klineData, cache);
@@ -30,10 +30,10 @@ namespace com.wer.sc.data.transfer
             //AssertUtils.PrintLineList(results);
         }
 
-        private static TradingSessionCache_Instrument GetTradingSessionCache(string code)
+        private static CacheUtils_TradingSession GetTradingSessionCache(string code)
         {
             List<TradingSession> tradingSessions = MockDataLoader.GetTradingSessions(code);
-            TradingSessionCache_Instrument cache = new TradingSessionCache_Instrument(code, tradingSessions);
+            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, tradingSessions);
             return cache;
         }
 

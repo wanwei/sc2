@@ -45,9 +45,20 @@ namespace com.wer.sc.plugin.historydata
             return csvDataPath + "\\tradingdays.csv";
         }
 
+        public static string GetTradingTimePath(String csvDataPath)
+        {
+            return csvDataPath + "\\tradingtime.csv";
+        }
+
+
         public static String GetTradingSessionPath(String csvDataPath, String code)
         {
             return csvDataPath + "\\" + code + "\\" + code + "_tradingsession" + ".csv";
+        }
+
+        public static String GetTradingTimePath(String csvDataPath, String code)
+        {
+            return csvDataPath + "\\" + code + "\\" + code + "_tradingtime" + ".csv";
         }
 
         public static String GetTickDataPath(String csvDataPath, String code, int date)
@@ -59,5 +70,6 @@ namespace com.wer.sc.plugin.historydata
         {
             return csvDataPath + "\\" + code + "\\kline\\" + period.ToEngString() + "\\" + code + "_" + period.ToEngString() + "_" + date + ".csv";
         }
+
     }
 }

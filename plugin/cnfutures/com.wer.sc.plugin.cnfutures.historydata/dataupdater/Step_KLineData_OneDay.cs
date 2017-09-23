@@ -7,6 +7,7 @@ using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     /// </summary>
     public class Step_KLineData_OneDay : IStep
     {
-        private string code;
+        private CodeInfo codeInfo;
 
         private int date;
 
@@ -32,11 +33,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private IKLineData klineData;
 
-        private KLineTimeListGetter timeListGetter;
+        private bool overwrite;
+        //private KLineTimeListGetter timeListGetter;
 
-        public Step_KLineData_OneDay(DataUpdateHelper dataUpdateHelper, string code, int date, KLinePeriod klinePeriod, float lastEndPrice, int lastEndHold)
+        public Step_KLineData_OneDay(DataUpdateHelper dataUpdateHelper, CodeInfo codeInfo, int date, KLinePeriod klinePeriod, float lastEndPrice, int lastEndHold)
         {
-            this.code = code;
+            this.codeInfo = codeInfo;
             this.date = date;
             this.klinePeriod = klinePeriod;
             this.dataUpdateHelper = dataUpdateHelper;
@@ -45,7 +47,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
             ITradingDayReader openDateReader = dataUpdateHelper.GetAllTradingDayReader();
             ITradingTimeReader openTimeReader = dataUpdateHelper.GetTradingSessionDetailReader();
-            this.timeListGetter = new KLineTimeListGetter(openDateReader, openTimeReader);
+            //this.timeListGetter = new KLineTimeListGetter(openDateReader, openTimeReader);
+        }
+
+        public Step_KLineData_OneDay(DataUpdateHelper dataUpdateHelper, CodeInfo codeInfo, int date, KLinePeriod klinePeriod, float lastEndPrice, int lastEndHold, bool overwrite) : this(dataUpdateHelper, codeInfo, date, klinePeriod, lastEndPrice, lastEndHold)
+        {
+            this.overwrite = overwrite;
         }
 
         public int ProgressStep
@@ -60,7 +67,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             get
             {
-                return "更新";
+                return "更新" + codeInfo.Code + "在" + date + "的K线数据";
+                //return "更新K线数据" + codeInfo.Code + "-" + date;
             }
         }
 
@@ -74,16 +82,21 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            TickData tickData = (TickData)dataUpdateHelper.GetNewTickData(code, date);
-            /*
-             * 此处不处理tickData为空的情况
-             * 在DataTransfer_Tick2KLine.Transfer里处理tickData为空的情况
-             */
-            List<double> klineTimes = timeListGetter.GetKLineTimeList(code, date, klinePeriod);
-            this.klineData = DataTransfer_Tick2KLine.Transfer(tickData, klineTimes, lastEndPrice, lastEndHold);
-            string path = dataUpdateHelper.GetPath_KLineData(code, date, klinePeriod);
+            TickData tickData = (TickData)dataUpdateHelper.GetNewTickData(codeInfo.ServerCode, date);
+            //tick数据没有，则不生成对应K线数据
+            if (tickData == null)
+                return codeInfo.Code + "-" + date + "的tick数据不存在";
+
+            string path = dataUpdateHelper.GetPath_KLineData(codeInfo.Code, date, klinePeriod);
+            if (!overwrite && File.Exists(path))
+                return codeInfo.Code + "-" + date + "的K线数据已存在";
+
+            List<double[]> tradingPeriod = dataUpdateHelper.GetTradingTime(codeInfo.Code, date).TradingPeriods;
+            //List<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList_Full(tradingPeriod, KLinePeriod.KLinePeriod_1Minute);
+            //timeListGetter.GetKLineTimeList(code, date, klinePeriod);
+            this.klineData = DataTransfer_Tick2KLine.Transfer(tickData, tradingPeriod, KLinePeriod.KLinePeriod_1Minute, lastEndPrice, lastEndHold);
             CsvUtils_KLineData.Save(path, klineData);
-            return "更新" + code + "-" + date + "的" + klinePeriod + "K线完成";
+            return "更新" + codeInfo.Code + "-" + date + "的" + klinePeriod + "K线完成";
         }
     }
 }

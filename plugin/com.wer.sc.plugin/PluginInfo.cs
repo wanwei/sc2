@@ -11,8 +11,6 @@ namespace com.wer.sc.plugin
     /// </summary>
     public class PluginInfo
     {
-        //private PluginAssembly pluginAssembly;
-
         private string pluginPath;
 
         private Type pluginClassType;
@@ -91,7 +89,7 @@ namespace com.wer.sc.plugin
             }
         }
 
-        internal string PluginPath
+        public string PluginPath
         {
             get
             {

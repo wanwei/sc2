@@ -8,8 +8,6 @@ namespace com.wer.sc.strategy
 {
     public interface IStrategyTrader
     {
-        IList<IStrategyTrader_Code> StrategyTraders { get; }
-
         IList<string> GetAllCodes();
 
         IStrategyTrader_Code GetStrategyTrader(string code);

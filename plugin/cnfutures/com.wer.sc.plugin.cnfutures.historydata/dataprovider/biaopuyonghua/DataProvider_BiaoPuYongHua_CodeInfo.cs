@@ -49,6 +49,14 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             LoopByExchange(srcDataPath + "\\DL", codes, set);
             LoopByExchange(srcDataPath + "\\SQ", codes, set);
             LoopByExchange(srcDataPath + "\\ZZ", codes, set);
+
+            for (int i = 0; i < indexCodes.Count; i++)
+            {
+                CodeInfo codeInfo = indexCodes[i];
+                if (dic_Variety_Start.ContainsKey(codeInfo.Catelog))
+                    codeInfo.Start = dic_Variety_Start[codeInfo.Catelog];
+            }
+
             codes.Sort(new CodeInfoComparer());
             return codes;
         }
@@ -93,8 +101,33 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
                 CodeInfo codeInfo = CodeInfoUtils.GetCodeInfo(complexCodeId, dataLoader_Variety);
                 if (codeInfo == null)
                     continue;
+                if (!codeInfo.Code.EndsWith("0000") && !codeInfo.Code.EndsWith("MI"))
+                {
+                    codeInfo.Start = tradingDay;
+                    SetVarietyStart(parser2.VarietyId, tradingDay);
+                }
+                else
+                {
+                    indexCodes.Add(codeInfo);
+                }
                 codes.Add(codeInfo);
             }
+        }
+
+        private List<CodeInfo> indexCodes = new List<CodeInfo>();
+
+        private Dictionary<string, int> dic_Variety_Start = new Dictionary<string, int>();
+
+        private void SetVarietyStart(string variety, int date)
+        {
+            if (dic_Variety_Start.ContainsKey(variety))
+            {
+                int currentStart = dic_Variety_Start[variety];
+                if (currentStart > date)
+                    dic_Variety_Start[variety] = date;
+            }
+            else
+                dic_Variety_Start.Add(variety, date);
         }
 
         private string GetCodeId(int tradingDay, string[] splitCodeArr)

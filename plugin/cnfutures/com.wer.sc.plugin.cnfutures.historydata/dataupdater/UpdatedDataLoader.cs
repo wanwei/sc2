@@ -1,5 +1,5 @@
 ﻿using com.wer.sc.data;
-using com.wer.sc.data.reader.cache;
+using com.wer.sc.data.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +13,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
     {
         private Plugin_HistoryData_CnFutures plugin_HistoryData;
 
-        private TradingDayCache tradingDayCache;
+        private CacheUtils_TradingDay tradingDayCache;
 
-        private CodeInfoCache codeInfoCache;
+        private CacheUtils_CodeInfo codeInfoCache;
 
         public UpdatedDataLoader(string pluginPath) : this(pluginPath, null)
         {
@@ -25,8 +25,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             PluginHelper helper = new PluginHelper(pluginPath);
             this.plugin_HistoryData = new Plugin_HistoryData_CnFutures(helper, csvDataPath);
-            this.tradingDayCache = new TradingDayCache(plugin_HistoryData.GetTradingDays());
-            this.codeInfoCache = new CodeInfoCache(plugin_HistoryData.GetInstruments());
+            this.tradingDayCache = new CacheUtils_TradingDay(plugin_HistoryData.GetTradingDays());
+            this.codeInfoCache = new CacheUtils_CodeInfo(plugin_HistoryData.GetInstruments());
         }
 
         public string GetUpdatedDataPath()
@@ -34,7 +34,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return plugin_HistoryData.GetCsvDataPath();
         }
 
-        public TradingDayCache GetTradingDayCache()
+        public CacheUtils_TradingDay GetTradingDayCache()
         {
             return tradingDayCache;
         }
@@ -43,7 +43,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         /// 得到已更新的合约缓存
         /// </summary>
         /// <returns></returns>
-        public CodeInfoCache GetCodeCache()
+        public CacheUtils_CodeInfo GetCodeCache()
         {
             return codeInfoCache;
         }
@@ -52,6 +52,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             return plugin_HistoryData.GetTradingSessions(code);
         }
+
+        public IList<TradingTime> GetTradingTime(String code)
+        {
+            return plugin_HistoryData.GetTradingTime(code);
+        }
+
 
         /// <summary>
         /// 得到一个合约或品种更新了K线的交易日

@@ -34,6 +34,8 @@ namespace com.wer.sc.strategy
 
         private StrategyHelper strategyHelper;
 
+        private IStrategyReport report;
+
         public StrategyExecutor_History(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
         {
 
@@ -64,6 +66,13 @@ namespace com.wer.sc.strategy
             thread.Start();
         }
 
+        private bool isCancel = false;
+
+        public void Cancel()
+        {
+            this.isCancel = true;
+        }
+
         public void Run()
         {
             lock (lockObj)
@@ -71,14 +80,55 @@ namespace com.wer.sc.strategy
                 if (isRunning)
                     return;
                 isRunning = true;
+                isCancel = false;
 
                 RealTimeReader_Strategy realTimeReader = new RealTimeReader_Strategy(dataPackage, referedPeriods, forwardPeriod);
                 realTimeReader.OnBar += RealTimeReader_OnBar;
                 realTimeReader.OnTick += RealTimeReader_OnTick;
 
+                StrategyTrader trader = new StrategyTrader(100000, realTimeReader);
+                this.strategyHelper.Trader = trader.GetStrategyTrader(dataPackage.Code);
+
                 ExecuteStrategyStart();
-                ExecuteStrategy(realTimeReader);
+                if (isCancel)
+                    return;
+                bool continueExecute = ExecuteStrategy(realTimeReader);
+                if (!continueExecute)
+                    return;
+                if (isCancel)
+                    return;
                 ExecuteStrategyEnd();
+
+                //this.strategyResults = this.strategyHelper.Results;
+                //this.strategyReader_Code = this.strategyHelper.Trader;
+            }
+        }
+
+        //private IStrategyTrader_Code strategyReader_Code;
+
+        //private IStrategyResult strategyResults;
+
+        //public IStrategyResult StrategyResults
+        //{
+        //    get
+        //    {
+        //        return strategyResults;
+        //    }
+        //}
+
+        //public IStrategyTrader_Code StrategyTrader
+        //{
+        //    get
+        //    {
+        //        return strategyReader_Code;
+        //    }
+        //}
+
+        public IStrategyReport StrategyReport
+        {
+            get
+            {
+                return report;
             }
         }
 
@@ -88,8 +138,9 @@ namespace com.wer.sc.strategy
             try
             {
                 this.strategy.StrategyEnd();
+                this.BuildStrategyReport();
                 if (ExecuteFinished != null)
-                    ExecuteFinished(this.strategy);
+                    ExecuteFinished(this.strategy, new StrategyExecuteFinishedArguments(this.report));
             }
             catch (Exception e)
             {
@@ -97,7 +148,20 @@ namespace com.wer.sc.strategy
             }
         }
 
-        private void ExecuteStrategy(RealTimeReader_Strategy realTimeReader)
+        private void BuildStrategyReport()
+        {
+            StrategyReport report = new StrategyReport();
+            report.code = dataPackage.Code;
+            report.startDate = dataPackage.StartDate;
+            report.endDate = dataPackage.EndDate;
+            report.forwardPeriod = forwardPeriod;
+            report.parameters = strategy.Parameters;
+            report.strategyResult = strategyHelper.Results;
+            report.strategyTrader = strategyHelper.Trader.OwnerTrader;
+            this.report = report;
+        }
+
+        private bool ExecuteStrategy(RealTimeReader_Strategy realTimeReader)
         {
             if (forwardPeriod.IsTickForward)
                 RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
@@ -110,12 +174,15 @@ namespace com.wer.sc.strategy
                 try
                 {
                     realTimeReader.Forward();
+                    if (isCancel)
+                        return false;
                 }
                 catch (Exception e)
                 {
                     LogHelper.Warn(GetType(), e);
                 }
             }
+            return true;
         }
 
         private void ExecuteStrategyStart()
@@ -123,7 +190,7 @@ namespace com.wer.sc.strategy
             //策略执行前操作
             try
             {
-                this.strategy.StrategyStart();
+                ExecuteReferStrategyStart(strategy);
             }
             catch (Exception e)
             {
@@ -131,14 +198,56 @@ namespace com.wer.sc.strategy
             }
         }
 
+        private void ExecuteReferStrategyStart(IStrategy strategy)
+        {
+            IList<IStrategy> strategies = strategy.GetReferedStrategies();
+            if (strategies != null)
+            {
+                for (int i = 0; i < strategies.Count; i++)
+                {
+                    IStrategy refstrategy = strategies[i];
+                    ExecuteReferStrategyStart(refstrategy);
+                }
+            }
+            strategy.StrategyStart();
+        }
+
         private void RealTimeReader_OnTick(object sender, ITickData tickData, int index)
         {
-            this.strategy.OnTick((IRealTimeDataReader)sender);
+            OnTick_ReferedStrategies(this.strategy, (IRealTimeDataReader)sender);
+        }
+
+        private void OnTick_ReferedStrategies(IStrategy strategy, IRealTimeDataReader realTimeDataReader)
+        {
+            IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
+            if (referedStrategies != null)
+            {
+                for (int i = 0; i < referedStrategies.Count; i++)
+                {
+                    IStrategy referedStrategy = referedStrategies[i];
+                    OnTick_ReferedStrategies(referedStrategy, realTimeDataReader);
+                }
+            }
+            strategy.OnTick(realTimeDataReader);
         }
 
         private void RealTimeReader_OnBar(object sender, IKLineData klineData, int index)
         {
-            this.strategy.OnBar((IRealTimeDataReader)sender);
+            OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader)sender);
+        }
+
+        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader realTimeDataReader)
+        {
+            IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
+            if (referedStrategies != null)
+            {
+                for (int i = 0; i < referedStrategies.Count; i++)
+                {
+                    IStrategy referedStrategy = referedStrategies[i];
+                    OnBar_ReferedStrategies(referedStrategy, realTimeDataReader);
+                }
+            }
+            strategy.OnBar(realTimeDataReader);
         }
 
         /// <summary>

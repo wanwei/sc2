@@ -22,7 +22,7 @@ namespace com.wer.sc.data.store
         {
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
 
-            IInstrumentStore store = dataStore.CreateInstrumentStore();
+            ICodeStore store = dataStore.CreateInstrumentStore();
 
             List<CodeInfo> codes = MockDataLoader.GetAllInstruments();
             store.Save(codes);

@@ -32,5 +32,9 @@ namespace com.wer.sc.strategy
         /// <param name="strategyName"></param>
         /// <returns></returns>
         IList<IStrategyAssembly> SearchStrategyInfo(String strategyName);
+
+        void Refresh();
+
+        void Refresh(IStrategyAssembly strategyAssembly);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.plugin.data;
 using com.wer.sc.plugin.historydata;
 using System;
 using System.Collections.Generic;
@@ -20,14 +21,6 @@ namespace com.wer.sc.plugin
     /// </summary>
     public interface IPlugin_HistoryData
     {
-        ///// <summary>
-        ///// 返回该数据保存的数据中心的URI
-        ///// 比如用文件保存："file:/d:/scdata/cnfutures/"
-        ///// 用数据库保存："jdbc:oracle:thin:@127.0.0.1:1521:shop?user=root&password=your_password"
-        ///// </summary>
-        ///// <returns></returns>
-        //String GetDataCenterUri();
-
         /// <summary>
         /// 该插件提供的所有股票或期货信息
         /// </summary>
@@ -54,6 +47,20 @@ namespace com.wer.sc.plugin
         /// <returns></returns>
         List<TradingSession> GetTradingSessions(String code);
 
+        /// <summary>
+        /// 得到指定合约和日期的开盘时间
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="tradingDay"></param>
+        /// <returns></returns>
+        IList<TradingTime> GetTradingTime(string code);
+
+        /// <summary>
+        /// 得到该市场默认的开盘时间
+        /// </summary>
+        /// <returns></returns>
+        TradingTime GetDefaultTradingTime();
+      
         /// <summary>
         /// 得到股票或期货的Tick数据
         /// </summary>

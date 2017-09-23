@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.utils
 {
-    public class KLineTimeListGetter
+    class KLineTimeListGetter
     {
         private ITradingDayReader openDateReader;
         private ITradingTimeReader openTimeReader;

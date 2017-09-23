@@ -1,5 +1,4 @@
 ﻿using com.wer.sc.data.reader;
-using com.wer.sc.data.reader.cache;
 using System;
 using System.Collections.Generic;
 using System.IO;

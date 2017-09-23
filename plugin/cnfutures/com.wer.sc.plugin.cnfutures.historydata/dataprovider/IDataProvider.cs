@@ -26,11 +26,28 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider
         List<CodeInfo> GetNewCodes();
 
         /// <summary>
+        /// 得到指定更新的数据
+        /// </summary>
+        /// <returns></returns>
+        List<AppointUpdate> GetAppointUpdate();
+
+        /// <summary>
         /// 装载tick数据
         /// </summary>
         /// <param name="code"></param>
         /// <param name="date"></param>
         /// <returns></returns>
         ITickData LoadTickData(string code, int date);
+    }
+
+    public class AppointUpdate
+    {
+        public string Code;
+
+        public int Date;
+
+        public bool UpdateTick = true;
+
+        public bool UpdateKLine = true;
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyHelper : IStrategyHelper
+    class StrategyHelper : IStrategyHelper
     {
         private List<IStrategyResult> results = new List<IStrategyResult>();
 

@@ -21,7 +21,7 @@ namespace com.wer.sc.data.transfer
             return r;
         }
 
-        public static List<ITimeLineData> ConvertTimeLineDataList(IKLineData data, float lastEndPrice, ITradingSessionReader_Instrument tradingSessionReader)
+        public static List<ITimeLineData> ConvertTimeLineDataList(IKLineData data, float lastEndPrice, ITradingSessionReader_Code tradingSessionReader)
         {
             List<SplitterResult> splitResult = DaySplitter.Split(data, tradingSessionReader);
 

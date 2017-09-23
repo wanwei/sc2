@@ -21,7 +21,7 @@ namespace com.wer.sc.data.store
         /// 创建股票或期货信息保存接口
         /// </summary>
         /// <returns></returns>
-        IInstrumentStore CreateInstrumentStore();
+        ICodeStore CreateInstrumentStore();
 
         /// <summary>
         /// 创建交易日保存接口

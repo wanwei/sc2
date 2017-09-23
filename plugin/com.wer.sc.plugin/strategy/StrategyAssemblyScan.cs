@@ -22,11 +22,16 @@ namespace com.wer.sc.strategy
                 string file = files[i];
                 if (IsIgnoreDll(file))
                     continue;
-                StrategyAssembly strategyAssembly = StrategyAssembly.Create(file);
+                StrategyAssembly strategyAssembly = GetAssembly(file);
                 if (strategyAssembly != null && strategyAssembly.GetAllStrategies().Count > 0)
                     plugins.Add(strategyAssembly);
             }
             return plugins;
+        }
+
+        public static StrategyAssembly GetAssembly(string file)
+        {
+            return StrategyAssembly.Create(file);
         }
 
         private static string[] ignoreDll = GetIgnoreDll();

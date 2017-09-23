@@ -185,5 +185,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
         {
             return dataprovider_CodeInfo.GetNewCodes();
         }
+
+        public List<AppointUpdate> GetAppointUpdate()
+        {
+            return null;
+        }
     }
 }

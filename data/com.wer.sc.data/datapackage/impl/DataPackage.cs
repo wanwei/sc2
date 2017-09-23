@@ -103,7 +103,7 @@ namespace com.wer.sc.data.datapackage.impl
             return dataReader.TickDataReader.GetTickData(code, date);
         }
 
-        public ITradingSessionReader_Instrument GetTradingSessionReader()
+        public ITradingSessionReader_Code GetTradingSessionReader()
         {
             return dataReader.CreateTradingSessionReader(code);
         }

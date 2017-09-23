@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyTrader_History_Code : IStrategyTrader_Code
+    class StrategyTrader_History_Code : IStrategyTrader_Code
     {
         private StrategyTradeFee_Code tradeFee_Code;
 

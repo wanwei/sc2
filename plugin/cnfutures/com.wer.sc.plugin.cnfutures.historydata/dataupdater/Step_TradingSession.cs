@@ -67,11 +67,19 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         /// <returns></returns>
         public List<TradingSession> GetAllTradingSession()
         {
-            List<TradingSession> updatedTradingSessionList = this.dataUpdateHelper.GetUpdatedTradingSessions(code);
+            List<TradingSession> updatedTradingSessionList;
+            try
+            {
+                updatedTradingSessionList = this.dataUpdateHelper.GetUpdatedTradingSessions(code);                
+            }
+            catch (Exception e)
+            {
+                updatedTradingSessionList = new List<TradingSession>();
+            }
             //List<TradingSession> updatedTradingSessionList = new List<TradingSession>();
 
             CodeInfo codeInfo = this.dataUpdateHelper.GetCodeInfo(code);
-
+            //this.dataUpdateHelper.GetUpdatedTradingDayReader();
             ITradingDayReader openDateReader = this.dataUpdateHelper.GetAllTradingDayReader();
 
             int firstCodeTradingDayIndex;
@@ -127,7 +135,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             }
             return result;
         }
-
 
         private List<TradingSession> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)
         {

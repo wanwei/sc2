@@ -31,6 +31,31 @@ namespace com.wer.sc.strategy
             return null;
         }
 
+        /// <summary>
+        /// 刷新所有assembly
+        /// </summary>
+        public void Refresh()
+        {
+            for (int i = 0; i < assemblies.Count; i++)
+            {
+                Refresh(assemblies[i]);
+            }
+        }
+
+        /// <summary>
+        /// 刷新一个assembly
+        /// </summary>
+        /// <param name="ass"></param>
+        public void Refresh(IStrategyAssembly ass)
+        {
+            int index = this.assemblies.IndexOf(ass);
+            this.assemblies.Remove(ass);
+            string path = ass.FullPath;
+            StrategyAssembly newAss = StrategyAssembly.Create(path);
+            if (newAss != null)
+                this.assemblies.Insert(index, newAss);
+        }
+
         public IList<IStrategyAssembly> SearchStrategyInfo(string strategyName)
         {
             return null;

@@ -17,7 +17,7 @@ namespace com.wer.sc.data.update
     /// </summary>
     public class Step_UpdateInstrument : IStep
     {
-        private IInstrumentStore instrumentStore;
+        private ICodeStore instrumentStore;
 
         private List<CodeInfo> codes;
 

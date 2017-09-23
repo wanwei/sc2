@@ -36,6 +36,20 @@ namespace com.wer.sc.data.reader
         IKLineData GetKLineData(KLinePeriod period);
 
         /// <summary>
+        /// 确定现在是否是一个周期的结束点
+        /// </summary>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        bool IsPeriodEnd(KLinePeriod period);
+
+        /// <summary>
+        /// 到周期结束还有多少秒
+        /// </summary>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        //int SecondToPeriodEnd(KLinePeriod period);
+
+        /// <summary>
         /// 得到当前的分时线
         /// </summary>
         /// <returns></returns>

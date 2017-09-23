@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyTradeFee
+    class StrategyTradeFee
     {
         private Dictionary<String, StrategyTradeFee_Code> mapFee = new Dictionary<String, StrategyTradeFee_Code>();
 

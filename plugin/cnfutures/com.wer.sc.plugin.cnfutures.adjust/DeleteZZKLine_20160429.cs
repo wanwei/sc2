@@ -1,5 +1,4 @@
 ﻿using com.wer.sc.data;
-using com.wer.sc.data.reader.cache;
 using com.wer.sc.data.utils;
 using com.wer.sc.plugin.cnfutures.config;
 using com.wer.sc.utils.update;
@@ -43,7 +42,7 @@ namespace com.wer.sc.plugin.cnfutures.adjust
 
             List<CodeInfo> codes = CsvUtils_Code.Load(DATAPATH_DATACENTER + "\\instruments");
 
-            CodeInfoCache cache = new CodeInfoCache(codes);
+            CacheUtils_CodeInfo cache = new CacheUtils_CodeInfo(codes);
             List<CodeInfo> zzcodes = cache.GetCodesByExchange(CodeInfoUtils.EXCHANGE_ZZ);
 
 

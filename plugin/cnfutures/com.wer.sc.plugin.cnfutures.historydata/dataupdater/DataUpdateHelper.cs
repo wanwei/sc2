@@ -5,8 +5,8 @@ using com.wer.sc.data;
 using com.wer.sc.data.reader;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.plugin.cnfutures.config;
-using com.wer.sc.data.reader.cache;
 using com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator;
+using com.wer.sc.data.utils;
 
 namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 {
@@ -64,6 +64,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return CsvHistoryData_PathUtils.GetTradingSessionPath(updatedDataPath, code);
         }
 
+        public string GetPath_TradingTime(string code)
+        {
+            return CsvHistoryData_PathUtils.GetTradingTimePath(updatedDataPath, code);
+        }
+
         public string GetPath_TickData(string code, int date)
         {
             return CsvHistoryData_PathUtils.GetTickDataPath(updatedDataPath, code, date);
@@ -93,7 +98,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             if (newTradingDayReader == null)
             {
-                newTradingDayReader = new TradingDayCache(GetNewTradingDays());
+                newTradingDayReader = new CacheUtils_TradingDay(GetNewTradingDays());
             }
             return newTradingDayReader;
         }
@@ -105,6 +110,20 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public List<CodeInfo> GetNewCodes()
         {
             return dataProvider.GetNewCodes();
+        }
+
+        public List<CodeInfo> GetAllCodes()
+        {
+            List<CodeInfo> allCodes = CsvUtils_Code.Load(GetPath_Code());
+            //List<CodeInfo> a    dataProvider.GetNewCodes();
+            return allCodes;
+        }
+
+        public List<int> GetAllHolidays()
+        {
+            List<int> holidays = new List<int>();
+            holidays.AddRange(this.dataLoader_TradingSessionDetail.Set_Holiday);
+            return holidays;
         }
 
         public ITickData GetNewTickData(string code, int date)
@@ -125,7 +144,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         #region MIXDATA
 
-        private CodeInfoCache newCodeInfoCache;
+        private CacheUtils_CodeInfo newCodeInfoCache;
 
         public CodeInfo GetCodeInfo(String code)
         {
@@ -133,7 +152,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             if (codeInfo != null)
                 return codeInfo;
             if (newCodeInfoCache == null)
-                newCodeInfoCache = new CodeInfoCache(dataProvider.GetNewCodes());
+                newCodeInfoCache = new CacheUtils_CodeInfo(dataProvider.GetNewCodes());
             return newCodeInfoCache.GetCode(code);
         }
 
@@ -159,7 +178,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                     if (!updatedTradingDayReader.IsTrade(newTradingDay))
                         allTradingDays.Add(newTradingDay);
                 }
-                allTradingDayReader = new TradingDayCache(allTradingDays);
+                allTradingDayReader = new CacheUtils_TradingDay(allTradingDays);
             }
             return allTradingDayReader;
         }
@@ -248,6 +267,23 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return dataLoader_TradingSessionDetail;
         }
 
+        private Dictionary<string, Dictionary<int, TradingTime>> dic_Code_TradingTimeCache = new Dictionary<string, Dictionary<int, TradingTime>>();
+
+        public ITradingTime GetTradingTime(string code, int date)
+        {            
+            if (dic_Code_TradingTimeCache.ContainsKey(code))
+                return dic_Code_TradingTimeCache[code][date];
+            IList<TradingTime> tradingTimes = updatedDataLoader.GetTradingTime(code);
+            Dictionary<int, TradingTime> dic = new Dictionary<int, TradingTime>();
+            for(int i = 0; i < tradingTimes.Count; i++)
+            {
+                TradingTime tradingTime = tradingTimes[i];
+                dic.Add(tradingTime.TradingDay, tradingTime);
+            }
+            dic_Code_TradingTimeCache.Add(code, dic);            
+            return dic[date];
+        }
+
         public List<CodeInfo> GetUpdatedCodes(string variety)
         {
             return updatedDataLoader.GetCodeCache().GetCodesByCatelog(variety);
@@ -266,6 +302,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public List<TradingSession> GetUpdatedTradingSessions(string code)
         {
             return this.updatedDataLoader.GetTradingSessions(code);
+        }
+
+        public IList<TradingTime> GetUpdatedTradingTime(string code)
+        {
+            return this.updatedDataLoader.GetTradingTime(code);
         }
 
         public List<double[]> GetUpdatedTradingSessionDetail(string code, int date)

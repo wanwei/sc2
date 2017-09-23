@@ -1,5 +1,5 @@
-﻿using com.wer.sc.data.reader.cache;
-using com.wer.sc.data.store;
+﻿using com.wer.sc.data.store;
+using com.wer.sc.data.utils;
 using com.wer.sc.plugin;
 using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
@@ -50,7 +50,7 @@ namespace com.wer.sc.data.update
             List<CodeInfo> instruments = historyData.GetInstruments();
             List<int> tradingDays = historyData.GetTradingDays();
 
-            TradingDayCache cache = new TradingDayCache(tradingDays);
+            CacheUtils_TradingDay cache = new CacheUtils_TradingDay(tradingDays);
 
             for (int i = 0; i < instruments.Count; i++)
             {
@@ -59,7 +59,7 @@ namespace com.wer.sc.data.update
             }
         }
 
-        private void AddSteps_KLineData_Instrument(List<IStep> steps, CodeInfo codeInfo, TradingDayCache tradingDaysCache)
+        private void AddSteps_KLineData_Instrument(List<IStep> steps, CodeInfo codeInfo, CacheUtils_TradingDay tradingDaysCache)
         {
             string code = codeInfo.Code;
             for (int i = 0; i < updatePeriods.Count; i++)

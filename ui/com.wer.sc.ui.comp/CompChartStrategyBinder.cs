@@ -21,6 +21,11 @@ namespace com.wer.sc.ui.comp
         //绑定的画图组件
         private CompChart compChart1;
 
+        public CompChart CompChart
+        {
+            get { return compChart1; }
+        }
+
         //private StrategyInfo strategyInfo;
 
         //当前使用的策略
@@ -88,10 +93,22 @@ namespace com.wer.sc.ui.comp
             ExecuteStrategy(dataPackage, strategy);
         }
 
+        private CompChartStrategyExecuter strategyExecutor;
+
+        public IStrategyExecutor StrategyExecutor
+        {
+            get
+            {
+                if (strategyExecutor == null)
+                    return null;
+                return strategyExecutor.StrategyExecutor;
+            }
+        }
+
         private void ExecuteStrategy(IDataPackage dataPackage, IStrategy strategy)
         {
             IStrategy newStrategy = StrategyInfo.CreateNewStrategyWithParameters(strategy);
-            CompChartStrategyExecuter strategyExecutor = new CompChartStrategyExecuter(this.compChart1, dataPackage, newStrategy);
+            strategyExecutor = new CompChartStrategyExecuter(this.compChart1, dataPackage, newStrategy);
             if (this.compChart1.ChartType == ChartType.KLine)
             {
                 KLinePeriod currentPeriod = this.compChart1.KlinePeriod;
@@ -180,11 +197,17 @@ namespace com.wer.sc.ui.comp
         //}
     }
 
-    class CompChartStrategyExecuter
+    public class CompChartStrategyExecuter
     {
         private CompChart compChart;
         private IDataPackage dataPackage;
         private IStrategy strategy;
+        private IStrategyExecutor strategyExecutor;
+
+        public IStrategyExecutor StrategyExecutor
+        {
+            get { return strategyExecutor; }
+        }
 
         public CompChartStrategyExecuter(CompChart compChart, IDataPackage dataPackage, IStrategy strategy)
         {
@@ -207,7 +230,7 @@ namespace com.wer.sc.ui.comp
 
         public void Execute()
         {
-            IStrategyExecutor strategyExecutor = GetStrategyExecutor(this.compChart.CompChartData.DataPackage, strategy);
+            strategyExecutor = GetStrategyExecutor(this.compChart.CompChartData.DataPackage, strategy);
             strategyExecutor.ExecuteFinished += StrategyExecutor_ExecuteFinished;
             strategyExecutor.Execute();
         }
@@ -243,7 +266,7 @@ namespace com.wer.sc.ui.comp
             return compChart.StrategyHelper;
         }
 
-        private void StrategyExecutor_ExecuteFinished(IStrategy strategy)
+        private void StrategyExecutor_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments args)
         {
             bool isRefreshCompChart = IsRefreshCompChartData();
             if (isRefreshCompChart)

@@ -52,9 +52,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="data\reader\cache\TestCodes_Cache.cs" />
-    <Compile Include="data\reader\cache\TestTradingDayCache.cs" />
-    <Compile Include="data\reader\cache\TestTradingSessionCache_Instrument.cs" />
+    <Compile Include="data\utils\TestCacheUtils_CodeInfo.cs" />
+    <Compile Include="data\utils\TestCacheUtils_TradingDay.cs" />
+    <Compile Include="data\utils\TestCacheUtils_TradingSession.cs" />
     <Compile Include="data\TestKLineData.cs" />
     <Compile Include="data\TestKLinePeriod.cs" />
     <Compile Include="data\transfer\TestDataTransfer_KLine2KLine.cs" />
@@ -87,6 +87,10 @@
     <Compile Include="strategy\TestStrategyMgr.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\com.wer.sc.plugin.loader\com.wer.sc.plugin.loader.csproj">
+      <Project>{194a5fa2-cd06-4099-b8a9-af64e4d9602a}</Project>
+      <Name>com.wer.sc.plugin.loader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
       <Name>com.wer.sc.plugin</Name>
@@ -131,7 +135,9 @@
   <ItemGroup>
     <None Include="TestCase\com\wer\sc\plugin\market\ConnectionInfo" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="data\reader\cache\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20131201_20131231" />
   </ItemGroup>

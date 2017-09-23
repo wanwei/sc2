@@ -11,7 +11,7 @@ namespace com.wer.sc.data.utils
     /// <summary>
     /// 获取一天中开盘时间的工具类
     /// </summary>
-    public class KLineTimeListUtils
+    class KLineTimeListUtils
     {
         /// <summary>
         /// 得到当日的所有K线时间列表

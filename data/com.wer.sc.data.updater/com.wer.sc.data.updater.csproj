@@ -110,6 +110,10 @@
       <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
       <Name>com.wer.sc.utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin.loader\com.wer.sc.plugin.loader.csproj">
+      <Project>{194a5fa2-cd06-4099-b8a9-af64e4d9602a}</Project>
+      <Name>com.wer.sc.plugin.loader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
       <Name>com.wer.sc.plugin</Name>

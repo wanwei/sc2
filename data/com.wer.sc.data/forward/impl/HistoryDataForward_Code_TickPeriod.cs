@@ -86,7 +86,7 @@ namespace com.wer.sc.data.forward.impl
 
         private void InitDaySplitter(IDataPackage dataReader, string code)
         {
-            ITradingSessionReader_Instrument sessionReader = dataReader.GetTradingSessionReader();
+            ITradingSessionReader_Code sessionReader = dataReader.GetTradingSessionReader();
             this.dic_Period_DaySplitter = new Dictionary<KLinePeriod, KLineData_DaySplitter>();
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {

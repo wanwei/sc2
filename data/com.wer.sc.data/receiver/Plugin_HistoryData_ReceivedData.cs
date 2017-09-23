@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.data.receiver
 {
@@ -46,6 +47,16 @@ namespace com.wer.sc.data.receiver
         }
 
         List<CodeInfo> IPlugin_HistoryData.GetInstruments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradingTime GetDefaultTradingTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradingTime GetTradingTime(string code, int tradingDay)
         {
             throw new NotImplementedException();
         }

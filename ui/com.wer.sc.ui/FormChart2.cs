@@ -5,6 +5,7 @@ using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.strategy;
 using com.wer.sc.ui.comp;
+using com.wer.sc.ui.strategy;
 using com.wer.sc.utils.param;
 using System;
 using System.Collections.Generic;
@@ -47,16 +48,23 @@ namespace com.wer.sc.ui
 
         private void BindDefaultStrategy()
         {
-            IStrategyAssembly strategyAssembly = StrategyMgrFactory.DefaultPluginMgr.GetStrategyAssembly("com.wer.sc.strategy.common");
-            if (strategyAssembly == null)
-                return;
-            strategyInfo = strategyAssembly.GetStrategy("STRATEGY.DEFAULT");
-            //strategyInfo = strategyAssembly.GetStrategy("STRATEGY.ZIGZAG");            
-            if (strategyInfo == null)
-                return;
-            strategy = strategyInfo.CreateStrategy();
-            binder = new CompChartStrategyBinder(this.compChart1);
-            binder.BindStrategy(strategy);
+            try
+            {
+                IStrategyAssembly strategyAssembly = StrategyMgrFactory.DefaultPluginMgr.GetStrategyAssembly("com.wer.sc.strategy.common");
+                if (strategyAssembly == null)
+                    return;
+                strategyInfo = strategyAssembly.GetStrategy("STRATEGY.DEFAULT");
+                //strategyInfo = strategyAssembly.GetStrategy("STRATEGY.ZIGZAG");            
+                if (strategyInfo == null)
+                    return;
+                strategy = strategyInfo.CreateStrategy();
+                binder = new CompChartStrategyBinder(this.compChart1);
+                binder.BindStrategy(strategy);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         private void TreeStrategy_MouseClick(object sender, MouseEventArgs e)
@@ -101,7 +109,7 @@ namespace com.wer.sc.ui
 
         private void tb_SwitchTick_Click(object sender, EventArgs e)
         {
-            this.compChart1.ChartType = ChartType.Tick;
+            //this.compChart1.ChartType = ChartType.Tick;
         }
 
         private void tb_Refresh_Click(object sender, EventArgs e)
@@ -142,14 +150,14 @@ namespace com.wer.sc.ui
 
         private void tb_KLine5S_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_5Second;
-            this.compChart1.ChartType = ChartType.KLine;
+            //this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_5Second;
+            //this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLine15S_Click(object sender, EventArgs e)
         {
-            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_15Second;
-            this.compChart1.ChartType = ChartType.KLine;
+            //this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_15Second;
+            //this.compChart1.ChartType = ChartType.KLine;
         }
 
         private void tb_KLineBackward_Click(object sender, EventArgs e)
@@ -221,7 +229,8 @@ namespace com.wer.sc.ui
 
         private void tb_CodeList_Click(object sender, EventArgs e)
         {
-
+            FormCodes form = new FormCodes(this.compChart1);
+            form.ShowDialog();
         }
 
         private void TreeStrategy_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -271,7 +280,7 @@ namespace com.wer.sc.ui
             strategyRunner.Execute();
         }
 
-        private void StrategyRunner_ExecuteFinished(IStrategy strategy)
+        private void StrategyRunner_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments args)
         {
             compChart1.Refresh();
         }

@@ -18,17 +18,47 @@ namespace com.wer.sc.ui.comp
         public CompStrategyTree()
         {
             InitializeComponent();
+            RefreshTree();
+        }
 
-            IList<IStrategyAssembly> assemblies = StrategyMgrFactory.DefaultPluginMgr.GetAllStrategyAssemblies();
-            for (int i = 0; i < assemblies.Count; i++)
+        public void RefreshTree()
+        {
+            try
             {
-                IStrategyAssembly ass = assemblies[i];
-                TreeNode treeNode = this.treeStrategy.Nodes.Add(ass.AssemblyName);
-                AddSubNodesByAssembly(treeNode, ass);
+                IList<IStrategyAssembly> assemblies = StrategyMgrFactory.DefaultPluginMgr.GetAllStrategyAssemblies();
+                if (assemblies == null)
+                    return;
+                this.treeStrategy.Nodes.Clear();
+                for (int i = 0; i < assemblies.Count; i++)
+                {
+                    IStrategyAssembly ass = assemblies[i];
+                    TreeNode treeNode = this.treeStrategy.Nodes.Add(ass.AssemblyName);
+                    CompStrategyTreeBuilder builder = new CompStrategyTreeBuilder(treeStrategy);
+                    builder.AddSubNodesByAssembly(treeNode, ass);
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
 
-        private void AddSubNodesByAssembly(TreeNode treeNode, IStrategyAssembly ass)
+        public TreeView TreeStrategy
+        {
+            get { return treeStrategy; }
+        }
+    }
+
+    class CompStrategyTreeBuilder
+    {
+        private TreeView treeStrategy;
+
+        public CompStrategyTreeBuilder(TreeView treeView)
+        {
+            this.treeStrategy = treeView;
+        }
+
+        public void AddSubNodesByAssembly(TreeNode treeNode, IStrategyAssembly ass)
         {
             List<StrategyInfo> strategies = ass.GetAllStrategies();
             InitPathStrategies(strategies);
@@ -51,6 +81,7 @@ namespace com.wer.sc.ui.comp
                 StrategyInfo strategy = strategies[i];
                 string name = strategy.StrategyName;
                 TreeNode subNode = parentNode.Nodes.Add(name);
+                subNode.ForeColor = Color.White;
                 subNode.Tag = strategy;
             }
         }
@@ -76,9 +107,5 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public TreeView TreeStrategy
-        {
-            get { return treeStrategy; }
-        }
     }
 }

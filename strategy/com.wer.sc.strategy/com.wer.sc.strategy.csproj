@@ -41,9 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IStrategyExecutor.cs" />
+    <Compile Include="IStrategyReport.cs" />
     <Compile Include="realtimereader\RealTimeReader_Strategy.cs" />
     <Compile Include="realtimereader\RealTimeReader_StrategyArguments.cs" />
+    <Compile Include="StrategyReport.cs" />
+    <Compile Include="StrategyResult.cs" />
+    <Compile Include="StrategyResult_Single.cs" />
+    <Compile Include="StrategyTrader.cs" />
+    <Compile Include="StrategyTrader_Code.cs" />
     <Compile Include="StrategyData.cs" />
+    <Compile Include="StrategyHelper.cs" />
     <Compile Include="StrategyRunnerArguments.cs" />
     <Compile Include="StrategyExecutorFactory.cs" />
     <Compile Include="StrategyExecutor_History.cs" />

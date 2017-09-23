@@ -23,6 +23,11 @@ namespace com.wer.sc.strategy
         void Run();
 
         /// <summary>
+        /// 取消当前执行的策略
+        /// </summary>
+        void Cancel();
+
+        /// <summary>
         /// 执行策略，该方法会开新的线程
         /// </summary>
         void Execute();
@@ -40,7 +45,12 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 执行完
         /// </summary>
-        event StrategyExecuteFinished ExecuteFinished; 
+        event StrategyExecuteFinished ExecuteFinished;
+
+        /// <summary>
+        /// 得到策略执行报告，策略执行完才能获得
+        /// </summary>
+        IStrategyReport StrategyReport { get; }
     }
 
     /// <summary>
@@ -56,7 +66,7 @@ namespace com.wer.sc.strategy
     /// 整个执行完毕
     /// </summary>
     /// <param name="strategy"></param>
-    public delegate void StrategyExecuteFinished(IStrategy strategy);
+    public delegate void StrategyExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg);
 
     public class StrategyExecuteArguments
     {
@@ -64,7 +74,7 @@ namespace com.wer.sc.strategy
 
         private IStrategy strategy;
 
-        public StrategyExecuteArguments(StrategyHelper strategyHelper,IStrategy strategy)
+        public StrategyExecuteArguments(StrategyHelper strategyHelper, IStrategy strategy)
         {
             this.strategyHelper = strategyHelper;
             this.strategy = strategy;
@@ -75,7 +85,7 @@ namespace com.wer.sc.strategy
             get
             {
                 return strategyHelper;
-            }            
+            }
         }
 
         public IStrategy Strategy
@@ -83,6 +93,24 @@ namespace com.wer.sc.strategy
             get
             {
                 return strategy;
+            }
+        }
+    }
+
+    public class StrategyExecuteFinishedArguments
+    {
+        private IStrategyReport report;
+
+        public StrategyExecuteFinishedArguments(IStrategyReport report)
+        {
+            this.report = report;
+        }
+
+        public IStrategyReport Report
+        {
+            get
+            {
+                return report;
             }            
         }
     }

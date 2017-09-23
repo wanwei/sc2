@@ -1,5 +1,5 @@
 ﻿using com.wer.sc.data.reader;
-using com.wer.sc.data.reader.cache;
+using com.wer.sc.data.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +35,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
                 return;
             String path = srcDataPath + "\\DL";
             this.tradingDays = GetTradingDays(path);
-            this.openDateReader = new TradingDayCache(tradingDays);
+            this.openDateReader = new CacheUtils_TradingDay(tradingDays);
         }
 
         public ITradingDayReader GetTradingDayReader()

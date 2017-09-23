@@ -304,6 +304,8 @@ namespace com.wer.sc.plugin.cnfutures.config
         {
             if (exchange == EXCHANGE_ZZ)
             {
+                if (newCodeId.EndsWith("0000") || newCodeId.EndsWith("MI"))
+                    return newCodeId;
                 int cutIndex = newCodeId.Length - 4;
                 return newCodeId.Substring(0, cutIndex) + newCodeId.Substring(cutIndex + 1, 3);
             }
@@ -536,7 +538,7 @@ namespace com.wer.sc.plugin.cnfutures.config
             string variety = ucodeId.Substring(0, index + 1);
             string suffix = ucodeId.Substring(index + 1, ucodeId.Length - index - 1);
 
-            if (variety.EndsWith("X") || variety.EndsWith("Y"))
+            if (variety != "CY" && (variety.EndsWith("X") || variety.EndsWith("Y")))
             {
                 if (variety.Length > 1)
                 {

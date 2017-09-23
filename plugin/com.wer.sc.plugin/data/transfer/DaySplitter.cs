@@ -17,7 +17,7 @@ namespace com.wer.sc.data.transfer
         /// </summary>
         /// <param name="timeGetter"></param>
         /// <returns></returns>
-        public static List<SplitterResult> Split(TimeGetter timeGetter, ITradingSessionReader_Instrument tradingSessionReader)
+        public static List<SplitterResult> Split(TimeGetter timeGetter, ITradingSessionReader_Code tradingSessionReader)
         {
             List<SplitterResult> indeies = new List<SplitterResult>(500);
             double time = timeGetter.GetTime(0);
@@ -35,7 +35,7 @@ namespace com.wer.sc.data.transfer
             return indeies;
         }
 
-        public static List<SplitterResult> Split(IKLineData data, ITradingSessionReader_Instrument tradingSessionReader)
+        public static List<SplitterResult> Split(IKLineData data, ITradingSessionReader_Code tradingSessionReader)
         {
             return Split(new KLineDataTimeGetter(data), tradingSessionReader);
         }

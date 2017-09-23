@@ -24,8 +24,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private const int DAYS_EVERYKLINESTEP = 50;
 
-        //private PluginHelper pluginHelper;
-
         private string srcDataPath;
 
         private string targetDataPath;
@@ -55,22 +53,65 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public List<IStep> GetAllSteps()
         {
+            if (dataProvider.GetAppointUpdate() != null)
+                return GetAllStep_UpdateAppoint();
             List<IStep> steps = new List<IStep>();
 
             UpdatedDataInfo updatedDataInfo = new UpdatedDataInfo(targetDataPath);
 
-            steps.Add(new Step_TradingDay(dataUpdateHelper));
-            steps.Add(new Step_CodeInfo(dataUpdateHelper));
+            Step_CodeInfo step_CodeInfo = new Step_CodeInfo(dataUpdateHelper);
+            steps.Add(step_CodeInfo);
+            //List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
+            //steps.Add(new Step_TradingDay(dataUpdateHelper));            
 
-            GetTradingSession(steps, dataUpdateHelper.GetNewCodes());
-            GetTickSteps(steps, updatedDataInfo);
-            GetKLineDataSteps(steps, updatedDataInfo);
+            //GetTradingSession(steps, allCodes);
+            //GetTradingTime(steps, allCodes, false);
+            //GetTickSteps(steps, updatedDataInfo, allCodes);
+            //GetKLineDataSteps(steps, updatedDataInfo, allCodes);
 
-            /*
-             * 在准备更新的时候会将所有更新信息索引一次
-             * 所以在准备完更新后保存一次
-             */
-            updatedDataInfo.Save();
+            ///*
+            // * 在准备更新的时候会将所有更新信息索引一次
+            // * 所以在准备完更新后保存一次
+            // */
+            //updatedDataInfo.Save();
+            return steps;
+        }
+
+        private List<IStep> GetAllStep_UpdateAppoint()
+        {
+            List<IStep> steps = new List<IStep>();
+
+            //更新一次所有开盘时间
+            //List<CodeInfo> allCodes = dataUpdateHelper.GetAllCodes();
+            //GetTradingTime(steps, allCodes, true);
+
+            List<AppointUpdate> aps = dataProvider.GetAppointUpdate();
+            for (int i = 0; i < aps.Count; i++)
+            {
+                AppointUpdate ap = aps[i];
+                string code = ap.Code;
+                int date = ap.Date;
+                CodeInfo codeInfo = dataUpdateHelper.GetCodeInfo(code);
+                if (ap.UpdateTick)
+                {
+                    Step_TickData_CodeDate step = new Step_TickData_CodeDate(dataUpdateHelper, codeInfo, date, true);
+                    steps.Add(step);
+                }
+                if (ap.UpdateKLine)
+                {
+                    //int prevDate = dataUpdateHelper.GetNewTradingDayCache().GetPrevTradingDay(date);
+                    //ITickData newTickData = dataUpdateHelper.GetNewTickData(code, prevDate);
+                    //if (newTickData == null) {                        
+                    //    continue;
+                    //}
+                    //float lastEndPrice = newTickData.Arr_Price[newTickData.Length - 1];
+                    //int lastEndHold = newTickData.Arr_Hold[newTickData.Length - 1];
+                    float lastEndPrice = -1;
+                    int lastEndHold = -1;
+                    Step_KLineData_OneDay step = new Step_KLineData_OneDay(dataUpdateHelper, codeInfo, ap.Date, KLinePeriod.KLinePeriod_1Minute, lastEndPrice, lastEndHold, true);
+                    steps.Add(step);
+                }
+            }
             return steps;
         }
 
@@ -82,12 +123,20 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             }
         }
 
-        private void GetTickSteps(List<IStep> steps, UpdatedDataInfo updatedDataInfo)
+        private void GetTradingTime(List<IStep> steps, List<CodeInfo> codes, bool forceUpdate)
         {
-            List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            for (int i = 0; i < codes.Count; i++)
+            {
+                steps.Add(new Step_TradingTime(codes[i].Code, dataUpdateHelper, forceUpdate));
+            }
+        }
+
+        private void GetTickSteps(List<IStep> steps, UpdatedDataInfo updatedDataInfo, List<CodeInfo> allCodes)
+        {
+            //List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
             //必须要先更新合约，再更新指数
-            GetTickSteps(steps, GetNotIndexCodes(codes), updatedDataInfo);
-            GetTickSteps(steps, GetIndexCodes(codes), updatedDataInfo);
+            GetTickSteps(steps, GetNotIndexCodes(allCodes), updatedDataInfo);
+            GetTickSteps(steps, GetIndexCodes(allCodes), updatedDataInfo);
         }
 
         private List<CodeInfo> GetIndexCodes(List<CodeInfo> codes)
@@ -135,7 +184,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                         endDate = codeInfo.End;
                     else
                         endDate = tradingDayReader.LastTradingDay;
-                    
+
                     if (lastUpdatedTickDate >= endDate)
                         continue;
                     int startDate = tradingDayReader.GetNextTradingDay(lastUpdatedTickDate);
@@ -159,11 +208,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                     int lastUpdateDate = tradingDayReader.GetPrevTradingDay(startDate);
                     updatedDataInfo.WriteUpdateInfo_Tick(code, lastUpdateDate);
                 }
-                GetTickSteps(steps, code, notUpdatedTradingDays, updatedDataInfo);
+                GetTickSteps(steps, codeInfo, notUpdatedTradingDays, updatedDataInfo);
             }
         }
 
-        private void GetTickSteps(List<IStep> steps, string code, List<int> tradingDays, UpdatedDataInfo updatedDataInfo)
+        private void GetTickSteps(List<IStep> steps, CodeInfo codeInfo, List<int> tradingDays, UpdatedDataInfo updatedDataInfo)
         {
             int stepCount = tradingDays.Count / DAYS_EVERYTICKSTEP;
             int lastStepUpdateCount = tradingDays.Count % DAYS_EVERYTICKSTEP;
@@ -176,26 +225,29 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             {
                 IStep step;
                 if (i != stepCount - 1)
-                    step = new Step_TickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), dataUpdateHelper, null, updateFillUp);
+                    step = new Step_TickData(codeInfo, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), dataUpdateHelper, null, updateFillUp);
                 else
-                    step = new Step_TickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), dataUpdateHelper, updatedDataInfo, updateFillUp);
+                    step = new Step_TickData(codeInfo, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), dataUpdateHelper, updatedDataInfo, updateFillUp);
                 steps.Add(step);
             }
         }
 
-        private void GetKLineDataSteps(List<IStep> steps, UpdatedDataInfo updatedDataInfo)
+        private void GetKLineDataSteps(List<IStep> steps, UpdatedDataInfo updatedDataInfo, List<CodeInfo> allCodes)
         {
-            List<CodeInfo> codes = dataUpdateHelper.GetNewCodes();
+            List<CodeInfo> codes = allCodes;
             for (int i = 0; i < codes.Count; i++)
             {
                 CodeInfo codeInfo = codes[i];
                 string code = codeInfo.Code;
+                //List<int> notUpdatedTradingDays = new List<int>();
+                //notUpdatedTradingDays.AddRange(this.dataUpdateHelper.GetAllHolidays());
+                //notUpdatedTradingDays.Remove(20171009);
+                //Delete(code, notUpdatedTradingDays);
                 List<int> notUpdatedTradingDays;
-
                 ITradingDayReader tradingDayReader = dataUpdateHelper.GetAllTradingDayReader();
                 int lastUpdatedKLineDate = updatedDataInfo.GetLastUpdatedKLineData(code, KLinePeriod.KLinePeriod_1Minute);
                 if (!updateFillUp && lastUpdatedKLineDate >= 0)
-                {                    
+                {
                     int endDate;
                     if (codeInfo.End <= 0)
                         endDate = tradingDayReader.LastTradingDay;
@@ -226,11 +278,22 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                     int lastUpdateDate = tradingDayReader.GetPrevTradingDay(startDate);
                     updatedDataInfo.WriteUpdateInfo_KLine(code, KLinePeriod.KLinePeriod_1Minute, lastUpdateDate);
                 }
-                GetKLineDataSteps(steps, code, notUpdatedTradingDays, updatedDataInfo);
+                GetKLineDataSteps(steps, codeInfo, notUpdatedTradingDays, updatedDataInfo);
             }
         }
 
-        private void GetKLineDataSteps(List<IStep> steps, string code, List<int> tradingDays, UpdatedDataInfo updatedDataInfo)
+        private void Delete(string code, List<int> dates)
+        {
+            for (int i = 0; i < dates.Count; i++)
+            {
+                int date = dates[i];
+                string path = dataUpdateHelper.GetPath_KLineData(code, date, KLinePeriod.KLinePeriod_1Minute);
+                if (File.Exists(path))
+                    File.Delete(path);
+            }
+        }
+
+        private void GetKLineDataSteps(List<IStep> steps, CodeInfo codeInfo, List<int> tradingDays, UpdatedDataInfo updatedDataInfo)
         {
             int stepCount = tradingDays.Count / DAYS_EVERYKLINESTEP;
             int lastStepUpdateCount = tradingDays.Count % DAYS_EVERYKLINESTEP;
@@ -245,9 +308,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             {
                 Step_KLineData step;
                 if (i != stepCount - 1)
-                    step = new Step_KLineData(code, openDates.GetRange(i * DAYS_EVERYKLINESTEP, DAYS_EVERYKLINESTEP), dataUpdateHelper, null, updateFillUp);
+                    step = new Step_KLineData(codeInfo, openDates.GetRange(i * DAYS_EVERYKLINESTEP, DAYS_EVERYKLINESTEP), dataUpdateHelper, null, updateFillUp);
                 else
-                    step = new Step_KLineData(code, openDates.GetRange(i * DAYS_EVERYKLINESTEP, lastStepUpdateCount), dataUpdateHelper, updatedDataInfo, updateFillUp);
+                    step = new Step_KLineData(codeInfo, openDates.GetRange(i * DAYS_EVERYKLINESTEP, lastStepUpdateCount), dataUpdateHelper, updatedDataInfo, updateFillUp);
                 steps.Add(step);
             }
         }

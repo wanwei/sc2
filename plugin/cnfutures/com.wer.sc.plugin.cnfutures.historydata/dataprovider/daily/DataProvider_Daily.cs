@@ -70,5 +70,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily
             string path = srcDataPath + "\\" + date + "\\" + code + "_" + date + ".csv";
             return DataProvider_JinShuYuan_TickData.GetTickData(path);
         }
+
+        public List<AppointUpdate> GetAppointUpdate()
+        {
+            return null;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.data.update
 {
@@ -25,6 +26,11 @@ namespace com.wer.sc.data.update
         public override string GetCsvDataPath()
         {
             return csvDataPath;
+        }
+
+        public override TradingTime GetDefaultTradingTime()
+        {
+            throw new NotImplementedException();
         }
     }
 }

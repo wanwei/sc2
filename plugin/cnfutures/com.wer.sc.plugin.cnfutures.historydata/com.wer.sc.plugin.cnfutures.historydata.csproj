@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config\cnfuturespath" />
+    <None Include="config\appoint" />
+    <Compile Include="dataprovider\appoint\DataProvider_Appoint.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickAdjustMethod.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickDataAdjuster.cs" />
     <Compile Include="dataprovider\biaopuyonghua\adjust\TickDataAnalysis.cs" />
@@ -53,6 +55,8 @@
     <Compile Include="dataprovider\biaopuyonghua\DataProvider_BiaoPuYongHua_CodeInfo.cs" />
     <Compile Include="dataprovider\biaopuyonghua\DataProvider_BiaoPuYongHua_TradingDay.cs" />
     <Compile Include="dataprovider\CodeInfoComparer.cs" />
+    <Compile Include="dataupdater\Plugin_DataUpdater_CnFutures_Appoint.cs" />
+    <Compile Include="dataupdater\Step_TradingTime.cs" />
     <Compile Include="dataupdater\UpdatedDataLoader.cs" />
     <Compile Include="dataprovider\daily\DataProvider_Daily.cs" />
     <Compile Include="dataprovider\daily\DataProvider_Daily_CodeInfo.cs" />
@@ -98,7 +102,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config\jinshuyuan.instruments.csv" />
+    <None Include="config\jinshuyuan.instruments.csv_" />
     <None Include="config\HistoryData.CnFutures.pluginconfig" />
     <None Include="config\biaopuyonghua.instruments.csv" />
   </ItemGroup>

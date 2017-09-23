@@ -16,7 +16,7 @@ namespace com.wer.sc.data.forward.impl
 
         private List<SplitterResult> results;
 
-        public KLineData_DaySplitter(IKLineData klineData, ITradingSessionReader_Instrument tradingSessionReader)
+        public KLineData_DaySplitter(IKLineData klineData, ITradingSessionReader_Code tradingSessionReader)
         {
             this.results = DaySplitter.Split(klineData, tradingSessionReader);
         }

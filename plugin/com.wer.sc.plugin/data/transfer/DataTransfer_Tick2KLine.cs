@@ -13,6 +13,22 @@ namespace com.wer.sc.data.transfer
     public class DataTransfer_Tick2KLine
     {
         /// <summary>
+        /// 将一天的tick数据转换为K线
+        /// </summary>
+        /// <param name="tickData"></param>
+        /// <param name="tradingPeriod"></param>
+        /// <param name="klinePeriod"></param>
+        /// <returns></returns>
+        public static IKLineData Transfer(ITickData tickData, IList<double[]> tradingPeriod, KLinePeriod klinePeriod, float yesterdayEndPrice, int yesterdayEndHold)
+        {
+            if (tickData == null)
+                return null;
+            List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(tradingPeriod, klinePeriod);
+            DataTransfer_Tick2KLine transfer = new DataTransfer_Tick2KLine(tickData, klineTimeList, yesterdayEndPrice, yesterdayEndHold);
+            return transfer.CalcKLineData();
+        }
+
+        /// <summary>
         /// 将一天的Tick数据转换成K线数据
         /// </summary>
         /// <param name="tickData">一天的tick数据</param>
@@ -20,31 +36,31 @@ namespace com.wer.sc.data.transfer
         /// <param name="yesterdayEndPrice">昨日的收盘价</param>
         /// <param name="yesterdayEndHold">昨日的持仓</param>
         /// <returns></returns>
-        public static IKLineData Transfer(ITickData tickData, IList<double> klineTimeList, float yesterdayEndPrice, int yesterdayEndHold)
-        {
-            DataTransfer_Tick2KLine transfer = new DataTransfer_Tick2KLine(tickData, klineTimeList, yesterdayEndPrice, yesterdayEndHold);
-            return transfer.CalcKLineData();
-        }
+        //public static IKLineData Transfer(ITickData tickData, IList<double[]> klineTimeList, float yesterdayEndPrice, int yesterdayEndHold)
+        //{
+        //    DataTransfer_Tick2KLine transfer = new DataTransfer_Tick2KLine(tickData, klineTimeList, yesterdayEndPrice, yesterdayEndHold);
+        //    return transfer.CalcKLineData();
+        //}
 
-        public static IKLineData Transfer(ITickData[] tickDataArray, IList<double>[] klineTimeListArray, float lastEndPrice, int lastEndHold)
-        {
-            if (tickDataArray.Length != klineTimeListArray.Length)
-                throw new Exception("");
-            List<IKLineData> klineDataList = new List<IKLineData>(tickDataArray.Length);
-            for (int i = 0; i < tickDataArray.Length; i++)
-            {
-                ITickData tickData = tickDataArray[i];
-                IList<double> klineTimeList = klineTimeListArray[i];
-                IKLineData klineData = Transfer(tickData, klineTimeList, lastEndPrice, lastEndHold);
-                lastEndPrice = klineData.Arr_End[klineData.Length - 1];
-                lastEndHold = klineData.Arr_Hold[klineData.Length - 1];
-                klineDataList.Add(klineData);
-            }
-            return KLineData.Merge(klineDataList);
-        }
+        //public static IKLineData Transfer(ITickData[] tickDataArray, IList<double[]>[] tradingTimeArray, float lastEndPrice, int lastEndHold)
+        //{
+        //    if (tickDataArray.Length != tradingTimeArray.Length)
+        //        throw new Exception("");
+        //    List<IKLineData> klineDataList = new List<IKLineData>(tickDataArray.Length);
+        //    for (int i = 0; i < tickDataArray.Length; i++)
+        //    {
+        //        ITickData tickData = tickDataArray[i];
+        //        IList<double[]> tradingTime = tradingTimeArray[i];
+        //        IKLineData klineData = Transfer(tickData, klineTimeList, lastEndPrice, lastEndHold);
+        //        lastEndPrice = klineData.Arr_End[klineData.Length - 1];
+        //        lastEndHold = klineData.Arr_Hold[klineData.Length - 1];
+        //        klineDataList.Add(klineData);
+        //    }
+        //    return KLineData.Merge(klineDataList);
+        //}
 
         private ITickData tickData;
-        private IList<double> klineTimes;
+        private IList<double[]> klineTimes;
 
         private float lastEndPrice;
         private int lastEndHold;
@@ -60,7 +76,7 @@ namespace com.wer.sc.data.transfer
         /// <param name="klineTimes">目标K线时间队列，需要传入完整时间，如5分钟K线，要传入20140106090000,20140106090500......</param>
         /// <param name="lastEndPrice"></param>
         /// <param name="lastEndHold"></param>
-        public DataTransfer_Tick2KLine(ITickData data, IList<double> klineTimes, float lastEndPrice, int lastEndHold)
+        public DataTransfer_Tick2KLine(ITickData data, IList<double[]> klineTimes, float lastEndPrice, int lastEndHold)
         {
             this.tickData = data;
             this.klineTimes = klineTimes;
@@ -86,25 +102,34 @@ namespace com.wer.sc.data.transfer
                 int startTickIndex = 0;
                 int endTickIndex = 0;
                 KLineBar klineBar;
-                for (int i = 0; i < klineTimes.Count - 1; i++)
+                for (int i = 0; i < klineTimes.Count; i++)
                 {
-                    endTickIndex = CalcCurrentTickEndIndex(startTickIndex, klineTimes[i + 1]);
+                    double endTime = klineTimes[i][1];
+                    double nextStartTime = -1;
+                    if (i != klineTimes.Count - 1)
+                        nextStartTime = klineTimes[i + 1][0];
+                    if (i == klineTimes.Count - 1)
+                        endTickIndex = tickData.Length - 1;
+                    else
+                        endTickIndex = CalcCurrentTickEndIndex(startTickIndex, endTime, nextStartTime);
                     klineBar = CalcKLineBar(i, startTickIndex, endTickIndex);
                     klineBar.Copy2KLineData(klineData, i);
                     startTickIndex = endTickIndex + 1;
                 }
-
-                klineBar = CalcKLineBar(klineData.Length - 1, startTickIndex, tickData.Length - 1);
-                klineBar.Copy2KLineData(klineData, klineData.Length - 1);
-
                 return this.klineData;
             }
         }
 
-        private int CalcCurrentTickEndIndex(int startTickIndex, double endTime)
+        private int CalcCurrentTickEndIndex(int startTickIndex, double endTime, double nextStartTime)
         {
             if (startTickIndex >= tickData.Arr_Time.Count)
                 return tickData.Arr_Time.Count - 1;
+            if (nextStartTime > 0 && endTime != nextStartTime)
+            {
+                endTime = (endTime + nextStartTime) / 2;
+                // TimeUtils.Substract(nextStartTime, endTime);
+                //endTime = TimeUtils.AddTime()
+            }
             double tickTime = tickData.Arr_Time[startTickIndex];
             while (tickTime < endTime)
             {
@@ -139,7 +164,7 @@ namespace com.wer.sc.data.transfer
                 currentHold += tickData.Arr_Add[i];
             }
             klineBar.Code = tickData.Code;
-            klineBar.Time = klineTimes[klineIndex];
+            klineBar.Time = klineTimes[klineIndex][0];
             klineBar.Start = tickData.Arr_Price[startTickIndex];
             klineBar.High = high;
             klineBar.Low = low;
@@ -153,7 +178,7 @@ namespace com.wer.sc.data.transfer
         private KLineBar CalcCurrentChart_EmptyChart(int currentKLineIndex)
         {
             KLineBar klineBar = new KLineBar();
-            klineBar.Time = klineTimes[currentKLineIndex];
+            klineBar.Time = klineTimes[currentKLineIndex][0];
             float lastPrice = 0;
             if (currentKLineIndex == 0)
             {
@@ -186,12 +211,12 @@ namespace com.wer.sc.data.transfer
             return klineBar;
         }
 
-        private static KLineData GetEmptyKLineData(IList<double> klineTimes, float price, int hold)
+        private static KLineData GetEmptyKLineData(IList<double[]> klineTimes, float price, int hold)
         {
             KLineData klineData = new KLineData(klineTimes.Count);
             for (int i = 0; i < klineTimes.Count; i++)
             {
-                klineData.arr_time[i] = klineTimes[i];
+                klineData.arr_time[i] = klineTimes[i][0];
                 klineData.arr_start[i] = price;
                 klineData.arr_high[i] = price;
                 klineData.arr_low[i] = price;

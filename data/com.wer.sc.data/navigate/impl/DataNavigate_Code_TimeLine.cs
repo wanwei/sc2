@@ -18,7 +18,7 @@ namespace com.wer.sc.data.navigate.impl
 
         private int date;
 
-        private ITradingSessionReader_Instrument sessionReader;
+        private ITradingSessionReader_Code sessionReader;
 
         private TimeLineData timeLineData;
 

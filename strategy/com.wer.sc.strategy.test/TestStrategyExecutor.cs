@@ -89,7 +89,7 @@ namespace com.wer.sc.strategy
 
         private bool isFinished = false;
 
-        private void Runner_ExecuteFinished(IStrategy strategy)
+        private void Runner_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
         {
             Console.WriteLine("ExecuteFinished:");
             isFinished = true;

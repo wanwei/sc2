@@ -44,9 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="account\Account.cs" />
-    <Compile Include="account\AccountOrders.cs" />
-    <Compile Include="account\AccountPosition.cs" />
-    <Compile Include="account\AccountTrades.cs" />
     <Compile Include="account\StrategyTrader_History_Code.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
     <Compile Include="datapackage\IDataPackage.cs" />
@@ -81,18 +78,13 @@
     <Compile Include="navigate\impl\DataNavigate_Code_TimeLine.cs" />
     <Compile Include="navigate\impl\DataNavigate_Code_Tick.cs" />
     <Compile Include="reader\DataReaderFactory.cs" />
-    <Compile Include="reader\IDataReader.cs" />
-    <Compile Include="reader\impl\DataReader.cs" />
-    <Compile Include="reader\ICodeReader.cs" />
-    <Compile Include="reader\IKLineDataReader.cs" />
-    <Compile Include="reader\impl\CodeReader.cs" />
-    <Compile Include="reader\impl\KLineDataReader_Extend.cs" />
-    <Compile Include="reader\ITickDataReader.cs" />
-    <Compile Include="reader\ITimeLineDataReader.cs" />
-    <Compile Include="reader\impl\KLineDataReader.cs" />
-    <Compile Include="reader\impl\TickDataReader.cs" />
-    <Compile Include="reader\impl\TimeLineDataReader.cs" />
-    <Compile Include="reader\impl\TradingSessionReader.cs" />
+    <Compile Include="reader\DataReader.cs" />
+    <Compile Include="reader\CodeReader.cs" />
+    <Compile Include="reader\KLineDataReader_Extend.cs" />
+    <Compile Include="reader\KLineDataReader.cs" />
+    <Compile Include="reader\TickDataReader.cs" />
+    <Compile Include="reader\TimeLineDataReader.cs" />
+    <Compile Include="reader\TradingSessionReader.cs" />
     <Compile Include="datacenter\DataCenter.cs" />
     <Compile Include="datacenter\DataCenterManager.cs" />
     <Compile Include="datacenter\DataCenterConfig.cs" />
@@ -108,7 +100,6 @@
     <Compile Include="receiver\IDataReceiver.cs" />
     <Compile Include="receiver\InstrumentWriter.cs" />
     <Compile Include="receiver\JsonUtils_Instrument.cs" />
-    <Compile Include="receiver\Plugin_HistoryData_ReceivedData.cs" />
     <Compile Include="receiver\RealTimeDataReceiver.cs" />
     <Compile Include="receiver\RealTimeDataReceiver_Code.cs" />
     <Compile Include="receiver\RecentKLineDataLoader.cs" />
@@ -126,7 +117,7 @@
     <Compile Include="store\file\TradingSessionStore_File.cs" />
     <Compile Include="store\file\UpdateInfoStore_File.cs" />
     <Compile Include="store\IDataStore.cs" />
-    <Compile Include="store\IInstrumentStore.cs" />
+    <Compile Include="store\ICodeStore.cs" />
     <Compile Include="store\IKLineDataStore.cs" />
     <Compile Include="store\IAccountStore.cs" />
     <Compile Include="store\ITickDataStore.cs" />
@@ -166,7 +157,9 @@
       <Name>com.wer.sc.plugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="cache\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(ProjectDir)datacenter\datacenter.config $(TargetDir)config\ /s /e /y</PostBuildEvent>

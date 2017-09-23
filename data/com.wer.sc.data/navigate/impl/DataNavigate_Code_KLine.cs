@@ -26,7 +26,7 @@ namespace com.wer.sc.data.navigate.impl
 
         private ITickData tickData;
 
-        private ITradingSessionReader_Instrument sessionReader;
+        private ITradingSessionReader_Code sessionReader;
 
         public DataNavigate_Code_KLine(IDataPackage dataPackage, double time, KLinePeriod klinePeriod) 
         {

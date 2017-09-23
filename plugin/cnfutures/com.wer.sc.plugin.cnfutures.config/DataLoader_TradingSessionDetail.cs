@@ -13,6 +13,15 @@ namespace com.wer.sc.plugin.cnfutures.config
     /// </summary>
     public class DataLoader_TradingSessionDetail : ITradingTimeReader
     {
+        private TradingSessionDetail_Item holidayItem;
+
+        private HashSet<int> set_Holiday = new HashSet<int>();
+
+        public HashSet<int> Set_Holiday
+        {
+            get { return set_Holiday; }
+        }
+
         public TradingSessionDetail_Item defaultOpenTime;
 
         public List<TradingSession_Market> Markets = new List<TradingSession_Market>();
@@ -51,6 +60,11 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         public List<double[]> GetTradingSessionDetail(String market, String variety, int date)
         {
+            if (set_Holiday.Contains(date))
+            {
+                return holidayItem.OpenTime;
+            }
+
             for (int i = 0; i < Markets.Count; i++)
             {
                 TradingSession_Market otm = Markets[i];
@@ -68,6 +82,26 @@ namespace com.wer.sc.plugin.cnfutures.config
 
         public void Load(XmlDocument doc)
         {
+            ReadOpenTime(doc);
+            ReadHoliday(doc);
+            ReadMarket(doc);
+        }
+
+        private void ReadHoliday(XmlDocument doc)
+        {
+            XmlElement elemHoliday = (XmlElement)doc.GetElementsByTagName("HOLIDAY")[0];
+            string openTimeId = elemHoliday.GetAttribute("OPENID");
+            XmlNodeList nodes = elemHoliday.ChildNodes;
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                XmlNode node = nodes[i];
+                this.set_Holiday.Add(int.Parse(((XmlElement)node).GetAttribute("TIME")));
+            }
+            this.holidayItem = dicOpenPeriod[openTimeId];
+        }
+
+        private void ReadOpenTime(XmlDocument doc)
+        {
             XmlElement elem = (XmlElement)doc.DocumentElement.ChildNodes[0];
             for (int i = 0; i < elem.ChildNodes.Count; i++)
             {
@@ -79,7 +113,12 @@ namespace com.wer.sc.plugin.cnfutures.config
                     dicOpenPeriod.Add(period.ID, period);
                 }
             }
+            String openid = elem.GetAttribute("DEFAULT");
+            this.defaultOpenTime = dicOpenPeriod[openid];
+        }
 
+        private void ReadMarket(XmlDocument doc)
+        {
             XmlElement elemMarket = (XmlElement)doc.GetElementsByTagName("MARKETS")[0];
             for (int i = 0; i < elemMarket.ChildNodes.Count; i++)
             {
@@ -93,9 +132,6 @@ namespace com.wer.sc.plugin.cnfutures.config
                     Markets.Add(market);
                 }
             }
-
-            String openid = elem.GetAttribute("DEFAULT");
-            this.defaultOpenTime = dicOpenPeriod[openid];
         }
 
         private TradingSessionDetail_Item ReadTimePeriod(XmlElement elem)

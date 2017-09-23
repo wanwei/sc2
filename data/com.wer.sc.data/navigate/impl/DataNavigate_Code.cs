@@ -86,6 +86,11 @@ namespace com.wer.sc.data.navigate.impl
             return tradingDay >= dataPackage.StartDate && tradingDay <= dataPackage.EndDate;
         }
 
+        public bool IsPeriodEnd(KLinePeriod period)
+        {
+            return false;
+        }
+
         /// <summary>
         /// 前进
         /// </summary>

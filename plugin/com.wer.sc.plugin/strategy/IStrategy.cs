@@ -48,7 +48,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 得到执行策略帮助类，得到策略执行时用到的一些函数，还有绘图使用的一些方法。
         /// </summary>
-        StrategyHelper StrategyHelper { get; set; }
+        IStrategyHelper StrategyHelper { get; set; }
 
         /// <summary>
         /// 得到该策略的参数
@@ -59,6 +59,11 @@ namespace com.wer.sc.strategy
         /// 缺省主周期
         /// </summary>
         KLinePeriod DefaultMainPeriod { get; set; }
+
+        /// <summary>
+        /// 该策略引用的其它策略
+        /// </summary>
+        IList<IStrategy> GetReferedStrategies();
     }
 
     /// <summary>

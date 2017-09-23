@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    /// <summary>
-    /// 策略的搜寻结果
-    /// </summary>
     public interface IStrategyResult
     {
-        string Code { get; }
-
-        double Time { get; }
-
-        string Name { get; }
-
-        string Description { get; }
+        /// <summary>
+        /// 得到所有结果
+        /// </summary>
+        IList<IStrategyResult_Single> StrategyResults { get; }
     }
 }

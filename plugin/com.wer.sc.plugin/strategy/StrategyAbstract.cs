@@ -14,7 +14,7 @@ namespace com.wer.sc.strategy
     {
         private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
 
-        private StrategyHelper strategyHelper;
+        private IStrategyHelper strategyHelper;
 
         private IParameters parameters = ParameterFactory.CreateParameters();
 
@@ -28,7 +28,7 @@ namespace com.wer.sc.strategy
 
         public abstract void StrategyStart();
 
-        public StrategyHelper StrategyHelper
+        public IStrategyHelper StrategyHelper
         {
             get { return strategyHelper; }
             set { strategyHelper = value; }
@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy
             {
                 defaultMainPeriod = value;
             }
-        }        
+        }
 
         public virtual IParameters Parameters
         {
@@ -53,6 +53,11 @@ namespace com.wer.sc.strategy
             {
                 return parameters;
             }
+        }
+
+        public virtual IList<IStrategy> GetReferedStrategies()
+        {
+            return null;
         }
     }
 }

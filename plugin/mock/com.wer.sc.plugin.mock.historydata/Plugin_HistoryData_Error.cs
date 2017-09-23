@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
+using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.plugin.mock.historydata
 {
@@ -54,6 +55,21 @@ namespace com.wer.sc.plugin.mock.historydata
         }
 
         public ITickData GetTickData(string code, int date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradingTime GetDefaultTradingTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradingTime GetTradingTime(string code, int tradingDay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<TradingTime> GetTradingTime(string code)
         {
             throw new NotImplementedException();
         }

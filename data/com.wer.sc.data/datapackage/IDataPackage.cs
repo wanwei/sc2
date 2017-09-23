@@ -59,7 +59,7 @@ namespace com.wer.sc.data.datapackage
         /// 得到交易时间
         /// </summary>
         /// <returns></returns>
-        ITradingSessionReader_Instrument GetTradingSessionReader();
+        ITradingSessionReader_Code GetTradingSessionReader();
 
         /// <summary>
         /// 得到昨日收盘价

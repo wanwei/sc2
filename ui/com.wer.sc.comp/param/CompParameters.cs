@@ -38,8 +38,9 @@ namespace com.wer.sc.comp.param
             set
             {
                 parameters = value;
-                if (parameters != null)
+                if (parameters != null) { 
                     Init(parameters);
+                }
             }
         }
 

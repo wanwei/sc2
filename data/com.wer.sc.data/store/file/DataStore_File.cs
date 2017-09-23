@@ -23,7 +23,7 @@ namespace com.wer.sc.data.store.file
             return new UpdateInfoStore_File(dataPathUtils.GetUpdateInfoPath());
         }
 
-        public IInstrumentStore CreateInstrumentStore()
+        public ICodeStore CreateInstrumentStore()
         {
             return new InstrumentStore_File(dataPathUtils.GetInstrumentPath());
         }

@@ -12,7 +12,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 {
     public class Step_KLineData : IStep
     {
-        private string code;
+        private CodeInfo codeInfo;
 
         private List<int> dates;
 
@@ -22,9 +22,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private bool updateFillUp;
 
-        public Step_KLineData(string code, List<int> dates, DataUpdateHelper dataUpdateHelper, UpdatedDataInfo updatedDataInfo, bool updateFillUp)
+        private bool overwrite;
+
+        public Step_KLineData(CodeInfo codeInfo, List<int> dates, DataUpdateHelper dataUpdateHelper, UpdatedDataInfo updatedDataInfo, bool updateFillUp)
         {
-            this.code = code;
+            this.codeInfo = codeInfo;
             this.dates = dates;
             this.dataUpdateHelper = dataUpdateHelper;
             this.updatedDataInfo = updatedDataInfo;
@@ -49,7 +51,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private string GetDesc()
         {
-            return code + "的K线数据：" + dates[0] + "-" + dates[dates.Count - 1];
+            return codeInfo.Code + "的K线数据：" + dates[0] + "-" + dates[dates.Count - 1];
         }
 
         public string Proceed()
@@ -57,7 +59,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             ITradingDayReader openDateReader = this.dataUpdateHelper.GetAllTradingDayReader();
             KLineDataLastEndInfo lastEndInfo;
             IKLineData lastKLineData = null;
-
+            //string path = dataUpdateHelper.GetPath_KLineData(code, date, klinePeriod);
             for (int i = 0; i < dates.Count; i++)
             {
                 int date = dates[i];
@@ -69,21 +71,27 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 {
                     if (openDateReader.GetTradingDayIndex(date) - openDateReader.GetTradingDayIndex(dates[i - 1]) == 1)
                     {
-                        lastEndInfo.lastEndPrice = lastKLineData.Arr_End[lastKLineData.Length - 1];
-                        lastEndInfo.lastEndHold = lastKLineData.Arr_Hold[lastKLineData.Length - 1];
+                        if (lastKLineData != null)
+                        {
+                            lastEndInfo.lastEndPrice = lastKLineData.Arr_End[lastKLineData.Length - 1];
+                            lastEndInfo.lastEndHold = lastKLineData.Arr_Hold[lastKLineData.Length - 1];
+                        }
+                        else
+                            lastEndInfo = GetLastEndInfo(date);
                     }
                     else
                     {
                         lastEndInfo = GetLastEndInfo(date);
                     }
                 }
-                Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(dataUpdateHelper, code, date, KLinePeriod.KLinePeriod_1Minute, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold);
+                Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(dataUpdateHelper, codeInfo, date, KLinePeriod.KLinePeriod_1Minute, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold);
                 step_klineData.Proceed();
-                lastKLineData = step_klineData.KlineData;
+                if (step_klineData.KlineData != null)
+                    lastKLineData = step_klineData.KlineData;
             }
             if (!updateFillUp && updatedDataInfo != null)
             {
-                updatedDataInfo.WriteUpdateInfo_KLine(code, KLinePeriod.KLinePeriod_1Minute, dates[dates.Count - 1]);
+                updatedDataInfo.WriteUpdateInfo_KLine(codeInfo.Code, KLinePeriod.KLinePeriod_1Minute, dates[dates.Count - 1]);
                 updatedDataInfo.Save();
             }
             return "更新完毕" + GetDesc();
@@ -92,7 +100,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         private KLineDataLastEndInfo GetLastEndInfo(int date)
         {
             int prevDate = this.dataUpdateHelper.GetAllTradingDayReader().GetPrevTradingDay(date);
-            IKLineData lastKLineData = this.dataUpdateHelper.GetUpdatedKLineData(code, prevDate, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData lastKLineData = this.dataUpdateHelper.GetUpdatedKLineData(codeInfo.Code, prevDate, KLinePeriod.KLinePeriod_1Minute);
             float lastEndPrice = lastKLineData != null ? lastKLineData.Arr_End[lastKLineData.Length - 1] : -1;
             int lastEndHold = lastKLineData != null ? lastKLineData.Arr_Hold[lastKLineData.Length - 1] : -1;
             return new KLineDataLastEndInfo(lastEndPrice, lastEndHold);

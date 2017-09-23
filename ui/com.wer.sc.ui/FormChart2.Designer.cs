@@ -55,19 +55,19 @@ namespace com.wer.sc.ui
             this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_CodeList = new System.Windows.Forms.ToolStripButton();
-            this.bt_Log = new System.Windows.Forms.ToolStripButton();
             this.btStrategy = new System.Windows.Forms.ToolStripButton();
+            this.bt_Log = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.数据中心ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.compStrategyTree1 = new com.wer.sc.ui.comp.CompStrategyTree();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemExecute = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemParameters = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.compStrategyTree1 = new com.wer.sc.ui.comp.CompStrategyTree();
             this.compMain1 = new com.wer.sc.ui.comp.CompMain();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -107,8 +107,8 @@ namespace com.wer.sc.ui
             this.tb_ForwordTime,
             this.toolStripSeparator2,
             this.tb_CodeList,
-            this.bt_Log,
-            this.btStrategy});
+            this.btStrategy,
+            this.bt_Log});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1063, 45);
@@ -334,16 +334,6 @@ namespace com.wer.sc.ui
             this.tb_CodeList.Text = "股票列表";
             this.tb_CodeList.Click += new System.EventHandler(this.tb_CodeList_Click);
             // 
-            // bt_Log
-            // 
-            this.bt_Log.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bt_Log.Image = ((System.Drawing.Image)(resources.GetObject("bt_Log.Image")));
-            this.bt_Log.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bt_Log.Name = "bt_Log";
-            this.bt_Log.Size = new System.Drawing.Size(24, 42);
-            this.bt_Log.Text = "toolStripButton1";
-            this.bt_Log.Click += new System.EventHandler(this.bt_Log_Click);
-            // 
             // btStrategy
             // 
             this.btStrategy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -354,6 +344,17 @@ namespace com.wer.sc.ui
             this.btStrategy.Size = new System.Drawing.Size(28, 42);
             this.btStrategy.Text = "策略";
             this.btStrategy.Click += new System.EventHandler(this.btStrategy_Click);
+            // 
+            // bt_Log
+            // 
+            this.bt_Log.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bt_Log.Image = ((System.Drawing.Image)(resources.GetObject("bt_Log.Image")));
+            this.bt_Log.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.bt_Log.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bt_Log.Name = "bt_Log";
+            this.bt_Log.Size = new System.Drawing.Size(28, 42);
+            this.bt_Log.Text = "日志";
+            this.bt_Log.Click += new System.EventHandler(this.bt_Log_Click);
             // 
             // menuStrip1
             // 
@@ -419,6 +420,18 @@ namespace com.wer.sc.ui
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 9;
             // 
+            // compStrategyTree1
+            // 
+            this.compStrategyTree1.ContextMenuStrip = this.contextMenuStrip1;
+            this.compStrategyTree1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compStrategyTree1.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.compStrategyTree1.ForeColor = System.Drawing.Color.Yellow;
+            this.compStrategyTree1.Location = new System.Drawing.Point(0, 0);
+            this.compStrategyTree1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.compStrategyTree1.Name = "compStrategyTree1";
+            this.compStrategyTree1.Size = new System.Drawing.Size(271, 100);
+            this.compStrategyTree1.TabIndex = 0;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -449,21 +462,9 @@ namespace com.wer.sc.ui
             this.menuItemRefresh.Size = new System.Drawing.Size(114, 26);
             this.menuItemRefresh.Text = "刷新";
             // 
-            // compStrategyTree1
-            // 
-            this.compStrategyTree1.ContextMenuStrip = this.contextMenuStrip1;
-            this.compStrategyTree1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compStrategyTree1.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.compStrategyTree1.ForeColor = System.Drawing.Color.Yellow;
-            this.compStrategyTree1.Location = new System.Drawing.Point(0, 0);
-            this.compStrategyTree1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.compStrategyTree1.Name = "compStrategyTree1";
-            this.compStrategyTree1.Size = new System.Drawing.Size(271, 100);
-            this.compStrategyTree1.TabIndex = 0;
-            // 
             // compMain1
             // 
-            this.compMain1.Code = "m1601";
+            this.compMain1.Code = "m1605";
             this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compMain1.KLineBlockWidth = 5F;
@@ -473,7 +474,7 @@ namespace com.wer.sc.ui
             this.compMain1.Name = "compMain1";
             this.compMain1.Size = new System.Drawing.Size(1063, 528);
             this.compMain1.TabIndex = 8;
-            this.compMain1.Time = 20150626.093D;
+            this.compMain1.Time = 20151230.093D;
             // 
             // FormChart2
             // 

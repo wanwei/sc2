@@ -9,5 +9,7 @@
     </Plugin>
     <Plugin class="com.wer.sc.plugin.cnfutures.historydata.dataupdater.Plugin_DataUpdater_CnFutures_Daily">
     </Plugin>
+    <Plugin class="com.wer.sc.plugin.cnfutures.historydata.dataupdater.Plugin_DataUpdater_CnFutures_Appoint">
+    </Plugin>
   </Assembly>
 </Plugins>

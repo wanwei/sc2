@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.plugin;
+using com.wer.sc.plugin.data;
 using com.wer.sc.plugin.historydata;
+using com.wer.sc.data;
 
 namespace com.wer.sc.mockdata
 {
@@ -37,6 +39,16 @@ namespace com.wer.sc.mockdata
             if (csvDataPath != null)
                 return csvDataPath;
             return @"E:\FUTURES\MOCKDATA\";
+        }
+
+        public override TradingTime GetDefaultTradingTime()
+        {
+            return null;
+        }
+
+        public override IList<TradingTime> GetTradingTime(string code)
+        {
+            return null;
         }
     }
 }
