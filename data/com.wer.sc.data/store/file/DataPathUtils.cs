@@ -12,6 +12,7 @@ namespace com.wer.sc.data.store.file
     /// 数据目录：
     ///     --opendate
     ///     --codes
+    ///     --maincontracts
     ///     --m01
     ///         --tick
     ///             --M01_20040102.tick
@@ -47,6 +48,11 @@ namespace com.wer.sc.data.store.file
             return dataPath + "\\tradingday";
         }
 
+        public string GetMainContractsPath()
+        {
+            return dataPath + "\\maincontracts";
+        }
+
         public string GetTickPath(string code)
         {
             return dataPath + "\\" + code + "\\tick\\";
@@ -61,6 +67,12 @@ namespace com.wer.sc.data.store.file
         public string GetTradingSessionPath(string code)
         {
             String realPath = dataPath + "\\" + code + "\\" + code + "_dayopentime";
+            return realPath;
+        }
+
+        public string GetTradingTimePath(string code)
+        {
+            String realPath = dataPath + "\\" + code + "\\" + code + "_tradingtime";
             return realPath;
         }
 

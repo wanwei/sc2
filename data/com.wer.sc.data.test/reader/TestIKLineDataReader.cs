@@ -15,8 +15,8 @@ namespace com.wer.sc.data.reader
         public void TestKLineData_GetDate()
         {
             IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
-            Assert.AreEqual(20070521, dataReader.KLineDataReader.GetFirstDate("m0805", KLinePeriod.KLinePeriod_1Minute));
-            Assert.AreEqual(20080516, dataReader.KLineDataReader.GetLastDate("m0805", KLinePeriod.KLinePeriod_1Minute));
+            Assert.AreEqual(20070522, dataReader.KLineDataReader.GetFirstDate("m0805", KLinePeriod.KLinePeriod_1Minute));
+            Assert.AreEqual(20080513, dataReader.KLineDataReader.GetLastDate("m0805", KLinePeriod.KLinePeriod_1Minute));
         }
 
         [TestMethod]
@@ -83,7 +83,7 @@ namespace com.wer.sc.data.reader
         {
             IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
             IKLineData klineData = dataReader.KLineDataReader.GetData(code, start, end, period);
-            //AssertUtils.PrintKLineData(klineData);
+            AssertUtils.PrintKLineData(klineData);
             AssertUtils.AssertEqual_KLineData(fileName, GetType(), klineData);
         }
 

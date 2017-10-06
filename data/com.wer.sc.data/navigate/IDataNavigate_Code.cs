@@ -12,7 +12,7 @@ namespace com.wer.sc.data.navigate
     /// <summary>
     /// 数据导航接口
     /// </summary>
-    public interface IDataNavigate_Code : IRealTimeDataReader, IDataPackageOwner
+    public interface IDataNavigate_Code : IRealTimeDataReader_Code, IDataPackageOwner
     {
         /// <summary>
         /// 跳转到指定时间

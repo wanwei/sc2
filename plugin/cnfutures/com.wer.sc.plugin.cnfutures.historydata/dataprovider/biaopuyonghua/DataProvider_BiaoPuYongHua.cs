@@ -9,6 +9,7 @@ using com.wer.sc.plugin.cnfutures.config;
 using com.wer.sc.data.cnfutures;
 using System.IO;
 using com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua.adjust;
+using com.wer.sc.data.utils;
 
 namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
 {
@@ -110,8 +111,49 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             if (!File.Exists(path))
                 return null;
             String[] lines = File.ReadAllLines(path);
-            return ReadLinesToTickData(lines);
+            TickData tickData = ReadLinesToTickData(lines);
+            //I1601_20150807 错位4个小时
+            //I1609_20160104 错位4个小时
+            //MA1601_20150807 错位4小时
+            if (IsErrorTick(code, date))
+                AdjustTick(tickData, code);
+            return tickData;
         }
+
+        private void AdjustTick(TickData tickData, string code)
+        {
+            for (int i = 0; i < tickData.Length; i++)
+            {
+                double time = tickData.arr_time[i];
+                time = TimeUtils.AddHours(time, 4);
+                if (code == "I1609")
+                {
+                    int date = (int)Math.Round(time);
+                    if (date == 20160102)
+                    {
+                        time = Math.Round(time + 2, 6);
+                    }
+                }
+                tickData.arr_time[i] = time;
+            }
+        }
+
+        private bool IsErrorTick(string code, int date)
+        {
+            if (code.Equals("I1601"))
+                return date == 20150807;
+            if (code.Equals("I1609"))
+                return date == 20160104;
+            if (code.Equals("MA601"))
+                return date == 20150807;
+            return false;
+        }
+        // ErrorCodeDate
+        //private string[] errCodes;
+        //private int[] errDates;
+
+        //string[] errTick = new string[]
+        //{ "I1601_20150807", "I1609_20160104","MA1601_20150807" };
 
         private static TickData ReadLinesToTickData(string[] lines)
         {
@@ -190,5 +232,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
         {
             return null;
         }
+    }
+
+    class ErrorCodeDate
+    {
+        string code;
+        int date;
     }
 }

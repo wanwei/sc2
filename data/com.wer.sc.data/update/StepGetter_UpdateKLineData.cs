@@ -62,6 +62,18 @@ namespace com.wer.sc.data.update
         private void AddSteps_KLineData_Instrument(List<IStep> steps, CodeInfo codeInfo, CacheUtils_TradingDay tradingDaysCache)
         {
             string code = codeInfo.Code;
+            //int startDate = codeInfo.Start;
+            //if (startDate == 0)
+            //    startDate = tradingDaysCache.FirstTradingDay;
+            //int endDate = codeInfo.End;
+            //if (endDate == 0)
+            //    endDate = tradingDaysCache.LastTradingDay;
+
+            //for (int i = 0; i < updatePeriods.Count; i++) {
+            //    KLinePeriod period = updatePeriods[i];
+            //    Step_UpdateKLineData step = new Step_UpdateKLineData(code, startDate, endDate, period, historyData, klineDataStore);
+            //    steps.Add(step);
+            //}
             for (int i = 0; i < updatePeriods.Count; i++)
             {
                 //TODO 暂时没处理FillUp的情况，考虑使用全覆盖的方式实现

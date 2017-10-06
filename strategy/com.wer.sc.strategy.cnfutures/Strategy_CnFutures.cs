@@ -39,7 +39,7 @@ namespace com.wer.sc.strategy.cnfutures
 
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             IKLineData klineData = currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             int currentBarPos = klineData.BarPos;
@@ -68,7 +68,7 @@ namespace com.wer.sc.strategy.cnfutures
             //currentData.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

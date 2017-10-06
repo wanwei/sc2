@@ -14,10 +14,12 @@ namespace com.wer.sc.data.reader
         [TestMethod]
         public void TestGetAllInstruments()
         {
-            IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
+            //IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
+            IDataReader dataReader = GetDataReader();
             List<CodeInfo> instruments = dataReader.CodeReader.GetAllCodes();
             AssertUtils.PrintLineList(instruments);
-            AssertUtils.AssertEqual_List("instruments", GetType(), instruments);
+            //dataReader.CodeReader.GetCodesByCatelog("M");
+            //AssertUtils.AssertEqual_List("instruments", GetType(), instruments);
 
             CodeInfo instrument = dataReader.CodeReader.GetCodeInfo("m1005");
             Assert.AreEqual("M1005", instrument.Code);
@@ -25,13 +27,20 @@ namespace com.wer.sc.data.reader
             Assert.AreEqual("M", instrument.Catelog);
         }
 
+        private static IDataReader GetDataReader()
+        {
+            IDataReader dataReader = TestDataCenter.Instance.DataReader;
+            return dataReader;
+        }
+
         [TestMethod]
         public void TestGetAllCatelogs()
         {
-            IDataReader dataReader = DataReaderFactory.CreateDataReader(DataCenterUri.URI);
+            IDataReader dataReader = GetDataReader();
+                //DataReaderFactory.CreateDataReader(DataCenterUri.URI);
             List<string> catelogs = dataReader.CodeReader.GetAllCatelogs();
-            Assert.AreEqual(1, catelogs.Count);
-            Assert.AreEqual("M", catelogs[0]);
+            Assert.AreEqual(true, catelogs.Count>=53);
+            Assert.AreEqual("A", catelogs[0]);
         }
     }
 }

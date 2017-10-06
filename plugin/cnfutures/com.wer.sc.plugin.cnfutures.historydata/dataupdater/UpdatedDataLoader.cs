@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.utils;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private CacheUtils_CodeInfo codeInfoCache;
 
+        private IList<MainContractInfo> mainContracts;
+
         public UpdatedDataLoader(string pluginPath) : this(pluginPath, null)
         {
         }
@@ -26,7 +29,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             PluginHelper helper = new PluginHelper(pluginPath);
             this.plugin_HistoryData = new Plugin_HistoryData_CnFutures(helper, csvDataPath);
             this.tradingDayCache = new CacheUtils_TradingDay(plugin_HistoryData.GetTradingDays());
-            this.codeInfoCache = new CacheUtils_CodeInfo(plugin_HistoryData.GetInstruments());
+            this.codeInfoCache = new CacheUtils_CodeInfo(plugin_HistoryData.GetInstruments());            
+            this.mainContracts = plugin_HistoryData.GetMainContractInfos();
         }
 
         public string GetUpdatedDataPath()
@@ -46,6 +50,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public CacheUtils_CodeInfo GetCodeCache()
         {
             return codeInfoCache;
+        }
+
+        public IList<MainContractInfo> GetMainContracts()
+        {
+            return mainContracts;
         }
 
         public List<TradingSession> GetTradingSessions(String code)

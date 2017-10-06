@@ -38,12 +38,12 @@ namespace com.wer.sc.plugin.mock.strategy
             throw new NotImplementedException();
         }
 
-        public override void OnBar(IRealTimeDataReader dataReader)
+        public override void OnBar(IRealTimeDataReader_Code dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnTick(IRealTimeDataReader dataReader)
+        public override void OnTick(IRealTimeDataReader_Code dataReader)
         {
             throw new NotImplementedException();
         }

@@ -22,19 +22,19 @@ namespace com.wer.sc.mockdata
             AssertUtils.AssertEqual_List("TradingDays", GetType(), tradingDays);
         }
 
-        [TestMethod]
-        public void TestGetTradingSessions()
-        {
-            List<TradingSession> tradingSessions = MockDataLoader.GetTradingSessions("m05");
-            AssertUtils.AssertEqual_List("TradingSession", GetType(), tradingSessions);
+        //[TestMethod]
+        //public void TestGetTradingSessions()
+        //{
+        //    IList<TradingTime> tradingSessions = MockDataLoader.GetTradingTimeList("m05");
+        //    AssertUtils.AssertEqual_List("TradingSession", GetType(), tradingSessions);
 
-            List<CodeInfo> instruments = MockDataLoader.GetAllInstruments();
-            for (int i = 0; i < instruments.Count; i++)
-            {
-                tradingSessions = MockDataLoader.GetTradingSessions(instruments[i].Code);
-                AssertUtils.AssertEqual_List("TradingSession", GetType(), tradingSessions);
-            }
-        }
+        //    List<CodeInfo> instruments = MockDataLoader.GetAllInstruments();
+        //    for (int i = 0; i < instruments.Count; i++)
+        //    {
+        //        tradingSessions = MockDataLoader.GetTradingTimeList(instruments[i].Code);
+        //        AssertUtils.AssertEqual_List("TradingSession", GetType(), tradingSessions);
+        //    }
+        //}
 
         [TestMethod]
         public void TestGetTradingTime()

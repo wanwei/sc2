@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.utils.update;
 using com.wer.sc.data.update;
-using com.wer.sc.data.datacenter;
 
 namespace com.wer.sc.data.updater
 {
@@ -46,7 +45,7 @@ namespace com.wer.sc.data.updater
 
             IPlugin_HistoryData plugin_HistoryData = new Plugin_HistoryData_Default(srcDataPath);
             //IPlugin_HistoryData plugin_HistoryData = null;// = new Plugin_DataUpdater();
-            DataCenter dataCenter = DataCenterManager.Instance.GetDataCenter(dataCenterUri);
+            DataCenter dataCenter = DataCenterManager.Instance.GetDataCenterByUri(dataCenterUri);
             this.updateStepGetter = new DataUpdate(plugin_HistoryData, dataCenter, isFillUp);
             //this.stepGetter = new DataUpdate(plugin_HistoryData, dataCenter, isFillUp);
 

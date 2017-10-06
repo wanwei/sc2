@@ -65,9 +65,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 if (dic_Id_CodeInfo.ContainsKey(code.Code))
                 {
                     CodeInfo codeInfo = dic_Id_CodeInfo[code.Code];
-                    if (codeInfo.Start < code.Start)
+                    if (codeInfo.Start != 0 && codeInfo.Start < code.Start)
                         code.Start = codeInfo.Start;
-                    if (codeInfo.End > code.End)
+                    if (codeInfo.Start != 0 && codeInfo.End > code.End)
                         code.End = codeInfo.End;
                 }
                 else

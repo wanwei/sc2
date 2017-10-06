@@ -110,12 +110,12 @@ namespace com.wer.sc.strategy
             return referedPeriods;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             Console.WriteLine("bar:" + currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
             Console.WriteLine("tick:" + currentData.GetTickData());
         }

@@ -101,6 +101,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.plugin.ui", "plu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.data.checker", "data\com.wer.sc.data.checker\com.wer.sc.data.checker.csproj", "{7DCD25B9-E934-4662-94A3-98E1DD07B2A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.ui.strategyrunner", "ui\com.wer.sc.ui.strategyrunner\com.wer.sc.ui.strategyrunner.csproj", "{FD2134D6-F8DE-4036-873B-67E6C0C5521C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -271,6 +273,10 @@ Global
 		{7DCD25B9-E934-4662-94A3-98E1DD07B2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DCD25B9-E934-4662-94A3-98E1DD07B2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DCD25B9-E934-4662-94A3-98E1DD07B2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD2134D6-F8DE-4036-873B-67E6C0C5521C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2134D6-F8DE-4036-873B-67E6C0C5521C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2134D6-F8DE-4036-873B-67E6C0C5521C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2134D6-F8DE-4036-873B-67E6C0C5521C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,5 +325,6 @@ Global
 		{194A5FA2-CD06-4099-B8A9-AF64E4D9602A} = {2979CB39-2B74-4787-A4E2-F4695BE03B03}
 		{79FEF899-41E1-4156-9A78-AFA42042904A} = {2979CB39-2B74-4787-A4E2-F4695BE03B03}
 		{7DCD25B9-E934-4662-94A3-98E1DD07B2A7} = {F009CC7E-CBAC-46C8-BFF8-CF57CE3E0B35}
+		{FD2134D6-F8DE-4036-873B-67E6C0C5521C} = {BFFCBB38-3657-4399-8240-10F096E9E461}
 	EndGlobalSection
 EndGlobal

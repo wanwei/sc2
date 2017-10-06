@@ -24,7 +24,6 @@ namespace com.wer.sc.ui.comp
             get { return compChart1; }
         }
 
-
         [Browsable(true), DisplayName("数据中心"), Description("数据中心"), Category("自定义属性"), DefaultValue(null)]
         public string DataCenterUri
         {

@@ -13,7 +13,7 @@ namespace com.wer.sc.data.store.file
         [TestMethod]
         public void TestKLineDataStore_SaveLoad()
         {
-            IKLineData klineData = MockDataLoader.GetKLineData("m05", 20100107, 20100120, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = MockDataLoader.GetKLineData("m1005", 20100107, 20100120, KLinePeriod.KLinePeriod_1Minute);
 
             String path = TestCaseManager.GetTestCasePath(GetType(), "output_20100107_20100120");
             KLineDataStore_File_Single store = new KLineDataStore_File_Single(path);
@@ -28,8 +28,8 @@ namespace com.wer.sc.data.store.file
         [TestMethod]
         public void TestKLineDataStore_Append()
         {
-            IKLineData klineData = MockDataLoader.GetKLineData("m05", 20100107, 20100114, KLinePeriod.KLinePeriod_1Minute);
-            IKLineData klineData2 = MockDataLoader.GetKLineData("m05", 20100115, 20100120, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = MockDataLoader.GetKLineData("m1005", 20100107, 20100114, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData2 = MockDataLoader.GetKLineData("m1005", 20100115, 20100120, KLinePeriod.KLinePeriod_1Minute);
 
             List<IKLineData> ks = new List<IKLineData>();
             ks.Add(klineData);
@@ -74,7 +74,7 @@ namespace com.wer.sc.data.store.file
         {
             string path = TestCaseManager.GetTestCasePath(GetType(), "output_20100107_20100120");
 
-            IKLineData data = MockDataLoader.GetKLineData("m05", 20100107, 20100120, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData data = MockDataLoader.GetKLineData("m1005", 20100107, 20100120, KLinePeriod.KLinePeriod_1Minute);
             KLineDataStore_File_Single store = new KLineDataStore_File_Single(path);
             store.Save(data);
 

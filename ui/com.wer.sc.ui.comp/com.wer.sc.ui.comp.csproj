@@ -71,6 +71,7 @@
     <Compile Include="CompStrategyTree.Designer.cs">
       <DependentUpon>CompStrategyTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="ICompChartData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

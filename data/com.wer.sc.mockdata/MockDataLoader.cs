@@ -24,10 +24,16 @@ namespace com.wer.sc.mockdata
             return mockData.GetTradingDays();
         }
 
-        public static List<TradingSession> GetTradingSessions(String code)
+        //public static List<TradingSession> GetTradingSessions(String code)
+        //{
+        //    return mockData.GetTradingSessions(code);
+        //}
+
+        public static IList<TradingTime> GetTradingTimeList(String code)
         {
-            return mockData.GetTradingSessions(code);
+            return mockData.GetTradingTime(code);
         }
+
 
         /// <summary>
         /// 得到股票或期货的Tick数据

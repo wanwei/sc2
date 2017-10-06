@@ -4,6 +4,7 @@ using com.wer.sc.data.transfer;
 using com.wer.sc.data.utils;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.plugin.historydata.utils;
+using com.wer.sc.utils;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
@@ -45,8 +46,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             this.lastEndPrice = lastEndPrice;
             this.lastEndHold = lastEndHold;
 
-            ITradingDayReader openDateReader = dataUpdateHelper.GetAllTradingDayReader();
-            ITradingTimeReader openTimeReader = dataUpdateHelper.GetTradingSessionDetailReader();
+            //ITradingDayReader openDateReader = dataUpdateHelper.GetAllTradingDayReader();
+            //ITradingTimeReader openTimeReader = dataUpdateHelper.GetTradingSessionDetailReader();
             //this.timeListGetter = new KLineTimeListGetter(openDateReader, openTimeReader);
         }
 
@@ -82,14 +83,21 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            TickData tickData = (TickData)dataUpdateHelper.GetNewTickData(codeInfo.ServerCode, date);
+            string path = dataUpdateHelper.GetPath_KLineData(codeInfo.Code, date, klinePeriod);
+            //if (!(codeInfo.Code.EndsWith("0000") || codeInfo.Code.EndsWith("MI")))
+            //if (!overwrite && File.Exists(path))
+            //    return codeInfo.Code + "-" + date + "的K线数据已存在";
+
+            TickData tickData = (TickData)dataUpdateHelper.GetUpdatedTickData(codeInfo.Code, date);
+            if (tickData == null)
+                tickData = (TickData)dataUpdateHelper.GetNewTickData(codeInfo.ServerCode, date);
             //tick数据没有，则不生成对应K线数据
             if (tickData == null)
-                return codeInfo.Code + "-" + date + "的tick数据不存在";
-
-            string path = dataUpdateHelper.GetPath_KLineData(codeInfo.Code, date, klinePeriod);
-            if (!overwrite && File.Exists(path))
-                return codeInfo.Code + "-" + date + "的K线数据已存在";
+            {
+                string msg = codeInfo.Code + "-" + date + "的tick数据不存在";
+                LogHelper.Warn(GetType(), msg);
+                return msg;
+            }
 
             List<double[]> tradingPeriod = dataUpdateHelper.GetTradingTime(codeInfo.Code, date).TradingPeriods;
             //List<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList_Full(tradingPeriod, KLinePeriod.KLinePeriod_1Minute);

@@ -20,7 +20,7 @@ namespace com.wer.sc.data.transfer
 
         private void AssertDaySplitter(string code, int start, int end, KLinePeriod period, string fileName)
         {
-            CacheUtils_TradingSession cache = GetTradingSessionCache(code);
+            CacheUtils_TradingTime cache = GetTradingSessionCache(code);
 
             IKLineData klineData = MockDataLoader.GetKLineData(code, start, end, period);
             List<SplitterResult> results = DaySplitter.Split(klineData, cache);
@@ -30,10 +30,10 @@ namespace com.wer.sc.data.transfer
             //AssertUtils.PrintLineList(results);
         }
 
-        private static CacheUtils_TradingSession GetTradingSessionCache(string code)
+        private static CacheUtils_TradingTime GetTradingSessionCache(string code)
         {
-            List<TradingSession> tradingSessions = MockDataLoader.GetTradingSessions(code);
-            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, tradingSessions);
+            IList<TradingTime> tradingSessions = MockDataLoader.GetTradingTimeList(code);
+            CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, tradingSessions);
             return cache;
         }
 

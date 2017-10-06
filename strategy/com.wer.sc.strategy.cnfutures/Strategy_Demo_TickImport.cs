@@ -16,12 +16,12 @@ namespace com.wer.sc.strategy.cnfutures
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
 
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

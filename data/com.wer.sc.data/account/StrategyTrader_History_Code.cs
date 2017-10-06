@@ -18,13 +18,13 @@ namespace com.wer.sc.data.account
 
         //private IStrategyTrader strategyTrader = null;
 
-        private IRealTimeDataReader realTimeDataReader;
+        private IRealTimeDataReader_Code realTimeDataReader;
 
         private bool autoFilter = false;
 
         private List<OrderInfo> orders = new List<OrderInfo>();
 
-        public StrategyTrader_History_Code(string code, double money, IRealTimeDataReader realTimeDataReader, TradeFee_Code tradeFee_Code)
+        public StrategyTrader_History_Code(string code, double money, IRealTimeDataReader_Code realTimeDataReader, TradeFee_Code tradeFee_Code)
         {
             this.code = code;
             this.money = money;

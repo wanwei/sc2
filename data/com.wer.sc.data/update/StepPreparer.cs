@@ -1,5 +1,4 @@
-﻿using com.wer.sc.data.datacenter;
-using com.wer.sc.data.store;
+﻿using com.wer.sc.data.store;
 using com.wer.sc.data.store.file;
 using com.wer.sc.plugin;
 using com.wer.sc.plugin.historydata;
@@ -31,7 +30,7 @@ namespace com.wer.sc.data.update
 
         private bool isFillUp;
 
-        private DataCenterConfig dataCenterConfig;
+        private DataCenterInfo dataCenterConfig;
 
         public StepPreparer(IPlugin_HistoryData plugin_HistoryData, DataCenter dataCenter, bool isFillUp)
         {
@@ -48,18 +47,18 @@ namespace com.wer.sc.data.update
             UpdatedDataInfo updateDataInfo = dataStore.CreateUpdateInfoStore().Load();
 
             steps.Add(new Step_UpdateTradingDays(historyData, dataStore));
-            steps.Add(new Step_UpdateInstrument(historyData, dataStore));
+            steps.Add(new Step_UpdateCode(historyData, dataStore));
 
             //确定是否保存每个品种的交易时间
             if (dataCenterConfig.StoredDataTypes.IsStoreTradingSession)
                 AddSteps_TradingSessions(steps);
-
+            //steps.AddRange(new StepGetter_UpdateKLineData_Vaieties(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods).GetSteps());
             //确定是否保存tick数据
             // if (dataCenterConfig.StoredDataTypes.IsStoreTick)
             steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp, updateDataInfo).GetSteps());
             //增加k线数据保存步骤
             steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp, updateDataInfo).GetSteps());
-
+            steps.Add(new Step_UpdateMainFutures(historyData, dataStore));
             return steps;
         }
 
@@ -68,7 +67,7 @@ namespace com.wer.sc.data.update
             List<CodeInfo> instruments = historyData.GetInstruments();
             for (int i = 0; i < instruments.Count; i++)
             {
-                Step_UpdateTradingSession_Instrument step = new Step_UpdateTradingSession_Instrument(instruments[i].Code, historyData, dataStore);
+                Step_UpdateTradingTime_Code step = new Step_UpdateTradingTime_Code(instruments[i].Code, historyData, dataStore);
                 steps.Add(step);
             }
         }

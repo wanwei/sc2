@@ -53,6 +53,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             try
             {
                 string path = this.dataUpdateHelper.GetPath_TickData(codeInfo.Code, date);
+                //if (!(codeInfo.Code.EndsWith("0000") || codeInfo.Code.EndsWith("MI")))
                 if (!overwrite && File.Exists(path))
                     return codeInfo.Code + "-" + date + "的Tick数据已存在";
                 ITickData tickData = this.dataUpdateHelper.GetNewTickData(codeInfo.ServerCode, date);

@@ -214,10 +214,10 @@ namespace com.wer.sc.strategy
 
         private void RealTimeReader_OnTick(object sender, ITickData tickData, int index)
         {
-            OnTick_ReferedStrategies(this.strategy, (IRealTimeDataReader)sender);
+            OnTick_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender);
         }
 
-        private void OnTick_ReferedStrategies(IStrategy strategy, IRealTimeDataReader realTimeDataReader)
+        private void OnTick_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader)
         {
             IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
             if (referedStrategies != null)
@@ -233,10 +233,10 @@ namespace com.wer.sc.strategy
 
         private void RealTimeReader_OnBar(object sender, IKLineData klineData, int index)
         {
-            OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader)sender);
+            OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender);
         }
 
-        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader realTimeDataReader)
+        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader)
         {
             IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
             if (referedStrategies != null)

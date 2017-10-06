@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy_Default.cs" />
     <EmbeddedResource Include="FormChart2.resx">
       <DependentUpon>FormChart2.cs</DependentUpon>
     </EmbeddedResource>

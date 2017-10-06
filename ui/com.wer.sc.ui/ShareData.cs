@@ -1,4 +1,4 @@
-﻿using com.wer.sc.data.datacenter;
+﻿using com.wer.sc.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace com.wer.sc.ui
                 lock (lockObj)
                 {
                     if (dataCenter == null)
-                        dataCenter = DataCenterManager.Instance.GetDataCenter(dataCenterUrl);
+                        dataCenter = DataCenterManager.Instance.GetDataCenterByUri(dataCenterUrl);
                     return dataCenter;
                 }
             }

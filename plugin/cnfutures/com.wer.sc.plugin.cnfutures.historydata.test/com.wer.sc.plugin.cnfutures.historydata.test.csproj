@@ -59,6 +59,7 @@
     <Compile Include="dataprovider\tick\adjust\TestTickDataAnalysis.cs" />
     <Compile Include="DataUpdateConst.cs" />
     <Compile Include="dataupdater\generator\TestDataGenerator_TickData_Index.cs" />
+    <Compile Include="dataupdater\generator\TestMainFuturesScan.cs" />
     <Compile Include="dataupdater\TestDataUpdateHelper.cs" />
     <Compile Include="dataupdater\TestStepPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

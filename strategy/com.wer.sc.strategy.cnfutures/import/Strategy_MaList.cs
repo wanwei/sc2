@@ -57,7 +57,7 @@ namespace com.wer.sc.strategy.cnfutures.import
             this.length = length;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             IKLineData klineData = currentData.GetKLineData(period);
             int barPos = klineData.BarPos;
@@ -72,7 +72,7 @@ namespace com.wer.sc.strategy.cnfutures.import
             this.maPrice.Add(total / (barPos - startPos + 1));
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

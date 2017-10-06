@@ -16,7 +16,7 @@ namespace com.wer.sc.data.receiver
     /// 单个股票或期货的接收器
     /// 该类实现
     /// </summary>
-    public class RealTimeDataReceiver_Code : IRealTimeDataReader
+    public class RealTimeDataReceiver_Code : IRealTimeDataReader_Code
     {
         private string code;
 

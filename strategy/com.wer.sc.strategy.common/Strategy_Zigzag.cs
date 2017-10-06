@@ -53,7 +53,7 @@ namespace com.wer.sc.strategy.cnfutures
             this.Parameters.AddParameter(PARAMKEY_HIGHLOWLENGTH, "高低点位置的长度", "", utils.param.ParameterType.INTEGER, 6);
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             CalcTurnPoints(currentData);
         }
@@ -63,7 +63,7 @@ namespace com.wer.sc.strategy.cnfutures
         * 1.找到疑似的高点低点
         * 2.和之前的高低点进行比较，确认用之前的高低点还是现在的。
         */
-        private void CalcTurnPoints(IRealTimeDataReader currentData)
+        private void CalcTurnPoints(IRealTimeDataReader_Code currentData)
         {
             AddEmptyPoints();
             IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
@@ -201,7 +201,7 @@ namespace com.wer.sc.strategy.cnfutures
             return lastLowIndex < lastHighIndex ? 1 : -1;
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

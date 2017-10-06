@@ -464,7 +464,7 @@ namespace com.wer.sc.ui
             // 
             // compMain1
             // 
-            this.compMain1.Code = "m1605";
+            //this.compMain1.Code = "RB1801";
             this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compMain1.KLineBlockWidth = 5F;
@@ -474,7 +474,8 @@ namespace com.wer.sc.ui
             this.compMain1.Name = "compMain1";
             this.compMain1.Size = new System.Drawing.Size(1063, 528);
             this.compMain1.TabIndex = 8;
-            this.compMain1.Time = 20151230.093D;
+            //this.compMain1.Code = "RB1801";
+            //this.compMain1.Time = 20170929.1459D;
             // 
             // FormChart2
             // 

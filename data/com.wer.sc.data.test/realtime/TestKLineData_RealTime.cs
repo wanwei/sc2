@@ -14,13 +14,13 @@ namespace com.wer.sc.data.realtime
         [TestMethod]
         public void TestSetRealTimeData()
         {
-            IKLineData data = MockDataLoader.GetKLineData("m05", 20131202, 20131205, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData data = MockDataLoader.GetKLineData("m1405", 20131202, 20131205, KLinePeriod.KLinePeriod_1Minute);
             //IKLineData data = MockDataLoader_Long.GetKLineData("m1405", 20131202, 20131205, KLinePeriod.KLinePeriod_1Minute);
             KLineData_RealTime data_real = new KLineData_RealTime(data);            
 
             KLineBar chart = new KLineBar(data_real, 15);
             data.BarPos = 15;
-            chart.Code = "m05";
+            chart.Code = "m1405";
             chart.Time = 20131202.091455;
             chart.Start = 3745;
             chart.High = 3745;

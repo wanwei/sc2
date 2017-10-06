@@ -8,6 +8,7 @@ namespace com.wer.sc.data.reader
 {
     public class DataCenterUri
     {
-        public static string URI = "file:/E:/FUTURES/MOCKDATACENTER/";
+        //public static string URI = "file:/E:/FUTURES/MOCKDATACENTER/";
+        public static string URI = "file:/E:/SCDATA/CNFUTURES/";
     }
 }

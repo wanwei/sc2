@@ -176,7 +176,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
             string market = varietyInfo.Exchange;
             if (market.Equals("DL"))
                 market = "dc";
-            else if (market.Equals("SZ"))
+            else if (market.Equals("SQ"))
                 market = "sc";
             else if (market.Equals("ZZ"))
                 market = "zc";

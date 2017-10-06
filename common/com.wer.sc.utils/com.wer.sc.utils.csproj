@@ -62,7 +62,7 @@
     <Compile Include="param\impl\ParameterOptions.cs" />
     <Compile Include="param\impl\Parameters.cs" />
     <Compile Include="param\ParameterType.cs" />
-    <Compile Include="ITextExchange.cs" />
+    <Compile Include="TextExchangeUtils.cs" />
     <Compile Include="update\IUpdateHelper.cs" />
     <Compile Include="OpenTimeUtil.cs" />
     <Compile Include="FileUtils.cs" />

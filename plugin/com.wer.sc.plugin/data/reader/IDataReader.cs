@@ -37,7 +37,14 @@ namespace com.wer.sc.data.reader
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        ITradingSessionReader_Code CreateTradingSessionReader(string code);
+        //ITradingSessionReader_Code CreateTradingSessionReader(string code);
+
+        /// <summary>
+        /// 创建一个品种的交易时间读取器
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        ITradingTimeReader_Code CreateTradingTimeReader(string code);
 
         /// <summary>
         /// 创建K线读取器

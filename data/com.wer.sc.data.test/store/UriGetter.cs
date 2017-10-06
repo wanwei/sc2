@@ -15,8 +15,8 @@ namespace com.wer.sc.data.store
             List<string> uris = new List<string>();
             string path = TestCaseManager.GetTestCasePath(typeof(UriGetter), "datacenter.config");
             DataCenterManager mgr = DataCenterManager.Create(path);
-            List<DataCenterConfig> configs = mgr.GetAllConfig();
-            foreach (DataCenterConfig config in configs)
+            List<DataCenterInfo> configs = mgr.GetAllConfig();
+            foreach (DataCenterInfo config in configs)
             {
                 uris.Add(config.Uri);
             }

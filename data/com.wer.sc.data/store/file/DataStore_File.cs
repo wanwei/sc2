@@ -38,6 +38,11 @@ namespace com.wer.sc.data.store.file
             return new TradingSessionStore_File(dataPathUtils);
         }
 
+        public ITradingTimeStore CreateTradingTimeStore()
+        {
+            return new TradingTimeStore_File(dataPathUtils);
+        }
+
         public IKLineDataStore CreateKLineDataStore()
         {
             return new KLineDataStore_File(dataPathUtils);
@@ -51,6 +56,11 @@ namespace com.wer.sc.data.store.file
         public IAccountStore CreateAccountStore()
         {
             return new AccountStore_File(dataPathUtils);
+        }
+
+        public IMainContractStore CreateMainContractStore()
+        {
+            return new MainContractStore_File(dataPathUtils);
         }
     }
 }

@@ -73,5 +73,20 @@ namespace com.wer.sc.plugin.mock.historydata
         {
             throw new NotImplementedException();
         }
+
+        public IList<int> GetTickDataDays(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<int> GetKLineDataDays(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<MainContractInfo> GetMainContractInfos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

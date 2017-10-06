@@ -23,7 +23,7 @@ namespace com.wer.sc.data.store
 
         public void TestTickDataStore_SaveLoad(string uri)
         {
-            string code = "m05";
+            string code = "m1005";
             int day = 20100108;
 
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
@@ -54,7 +54,7 @@ namespace com.wer.sc.data.store
 
         public void TestTickDataStore_Append(string uri)
         {
-            string code = "m05";
+            string code = "m1005";
             int day = 20100108;
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
             ITickDataStore tickDataStore = dataStore.CreateTickDataStore();

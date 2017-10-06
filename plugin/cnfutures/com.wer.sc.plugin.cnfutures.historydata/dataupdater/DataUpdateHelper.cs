@@ -49,6 +49,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         #region PATH
 
+        public string GetPath_Csv()
+        {
+            return updatedDataPath;
+        }
+
         public string GetPath_Code()
         {
             return CsvHistoryData_PathUtils.GetInstrumentsPath(updatedDataPath);
@@ -57,6 +62,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public string GetPath_TradingDays()
         {
             return CsvHistoryData_PathUtils.GetTradingDaysPath(updatedDataPath);
+        }
+
+        public string GetPath_MainFutures()
+        {
+            return CsvHistoryData_PathUtils.GetMainFuturesPath(updatedDataPath);
         }
 
         public string GetPath_TradingSession(string code)
@@ -119,6 +129,23 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return allCodes;
         }
 
+        public string[] GetAllVarieties()
+        {            
+            List<CodeInfo> codes = GetAllCodes();
+            HashSet<string> set = new HashSet<string>();
+            for(int i = 0; i < codes.Count; i++)
+            {
+                string variety = codes[i].Catelog;
+                if (set.Contains(variety))
+                    continue;
+                set.Add(variety);
+            }
+            string[] varieties = new string[set.Count];
+            set.CopyTo(varieties);
+            Array.Sort(varieties);
+            return varieties;
+        }
+
         public List<int> GetAllHolidays()
         {
             List<int> holidays = new List<int>();
@@ -168,7 +195,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             {
                 ITradingDayReader updatedTradingDayReader = GetUpdatedTradingDayReader();
                 List<int> allTradingDays = new List<int>();
-                List<int> tradingDays = updatedTradingDayReader.GetAllTradingDays();
+                IList<int> tradingDays = updatedTradingDayReader.GetAllTradingDays();
                 allTradingDays.AddRange(tradingDays);
                 List<int> newTradingDays = GetNewTradingDays();
                 RemoveTradingDays(allTradingDays, newTradingDays[newTradingDays.Count - 1]);
@@ -199,6 +226,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             CodeInfo codeInfo = GetCodeInfo(code);
             List<int> newTradingDays = this.GetNewTradingDays();
+            //强制更新SQ的JINSHUYUAN的tick数据
+            //if (code.EndsWith("0000") || code.EndsWith("MI"))
+            //    return newTradingDays;
+            if (newTradingDays.Count == 0)
+                return null;
+            if (codeInfo.End < newTradingDays[0])
+                return null;
             List<int> updatedTradingDays = this.GetUpdatedTickDataTradingDays(code);
             return GetNotUpdateTradingDays(codeInfo, newTradingDays, updatedTradingDays, isFill);
         }
@@ -213,6 +247,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         {
             CodeInfo codeInfo = GetCodeInfo(code);
             List<int> newTradingDays = this.GetNewTradingDays();
+            //强制更新SQ的JINSHUYUAN的kline数据
+            //if (code.EndsWith("0000") || code.EndsWith("MI"))
+            //    return newTradingDays;
+            if (newTradingDays.Count == 0)
+                return null;
+            if (codeInfo.End < newTradingDays[0])
+                return null;
             List<int> updatedTradingDays = this.GetUpdatedKLineDataTradingDays(code);
             return GetNotUpdateTradingDays(codeInfo, newTradingDays, updatedTradingDays, isFill);
         }
@@ -297,6 +338,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         public ITradingDayReader GetUpdatedTradingDayReader()
         {
             return updatedDataLoader.GetTradingDayCache();
+        }
+
+        public IList<MainContractInfo> GetMainContractInfos()
+        {
+            return updatedDataLoader.GetMainContracts();
         }
 
         public List<TradingSession> GetUpdatedTradingSessions(string code)

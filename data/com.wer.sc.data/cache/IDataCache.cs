@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data.reader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace com.wer.sc.data.cache
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        ITradingSessionReader_Instrument CreateTradingSessionReader(string code);
+        ITradingTimeReader CreateTradingSessionReader(string code);
 
         /// <summary>
         /// 创建K线读取器

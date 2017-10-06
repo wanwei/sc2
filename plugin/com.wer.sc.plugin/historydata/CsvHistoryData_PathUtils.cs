@@ -13,8 +13,10 @@ namespace com.wer.sc.plugin.historydata
     /// 提供给SC系统的历史数据可以以CSV保存在指定目录，通过插件系统会自动将这些数据更新成SC识别的格式
     /// 
     /// 数据目录：
-    ///     --opendates.csv  开盘日期
-    ///     --instruments.csv      所有品种信息
+    ///     --tradingdays.csv   开盘日期
+    ///     --instruments.csv   所有品种信息
+    ///     --mainfutures.csv   主合约信息
+    ///     --defaulttradingtime.csv  默认的开盘时间
     ///     --m01
     ///         --tick  每日的tick数据
     ///             --M01_20040102.csv  
@@ -25,7 +27,7 @@ namespace com.wer.sc.plugin.historydata
     ///                 --m01_1minute_20040102.csv
     ///                 --m01_1minute_20040105.csv
     ///             --......
-    ///         --m01_tradingsession.csv
+    ///         --m01_tradingtime.csv
     ///     --m03
     ///     --......
     /// </summary>
@@ -45,11 +47,15 @@ namespace com.wer.sc.plugin.historydata
             return csvDataPath + "\\tradingdays.csv";
         }
 
-        public static string GetTradingTimePath(String csvDataPath)
+        public static string GetDefaultTradingTimePath(String csvDataPath)
         {
-            return csvDataPath + "\\tradingtime.csv";
+            return csvDataPath + "\\defaulttradingtime.csv";
         }
 
+        public static string GetMainFuturesPath(String csvDataPath)
+        {
+            return csvDataPath + "\\mainfutures.csv";
+        }
 
         public static String GetTradingSessionPath(String csvDataPath, String code)
         {
@@ -61,15 +67,24 @@ namespace com.wer.sc.plugin.historydata
             return csvDataPath + "\\" + code + "\\" + code + "_tradingtime" + ".csv";
         }
 
+        public static String GetTickDataPath(String csvDataPath, String code)
+        {
+            return csvDataPath + "\\" + code + "\\tick\\";
+        }
+
         public static String GetTickDataPath(String csvDataPath, String code, int date)
         {
             return csvDataPath + "\\" + code + "\\tick" + "\\" + code + "_" + date + ".csv";
+        }
+
+        public static String GetKLineDataPath(String csvDataPath, String code, KLinePeriod period)
+        {
+            return csvDataPath + "\\" + code + "\\kline\\" + period.ToEngString() + "\\";
         }
 
         public static String GetKLineDataPath(String csvDataPath, String code, int date, KLinePeriod period)
         {
             return csvDataPath + "\\" + code + "\\kline\\" + period.ToEngString() + "\\" + code + "_" + period.ToEngString() + "_" + date + ".csv";
         }
-
     }
 }

@@ -14,7 +14,7 @@ namespace com.wer.sc.data.receiver
     /// 当前数据接收器
     /// 该接口用于接收当前数据
     /// </summary>
-    public interface IDataReceiver : IRealTimeDataReader
+    public interface IDataReceiver : IRealTimeDataReader_Code
     {
         //void SubscribeAll();
 

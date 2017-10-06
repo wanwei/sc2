@@ -17,13 +17,16 @@ namespace com.wer.sc.data.navigate.impl
         {
             string code = "rb1705";
             double time = 20170405.093001;
-            IDataReader dataReader = DataReaderFactory.CreateDataReader(@"e:\scdata\cnfutures\");
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, 20170301, 20170410);
+            DataCenter dataCenter = DataCenter.Default;
+            IDataReader dataReader = dataCenter.DataReader;
+            //DataReaderFactory.CreateDataReader(@"e:\scdata\cnfutures\");
+            IDataPackage dataPackage = dataCenter.DataPackageFactory.CreateDataPackage(code, 20170301, 20170410);
+            //DataPackageFactory.CreateDataPackage(dataReader, code, 20170301, 20170410);
             DataNavigate_Code_TimeLine navigate = new DataNavigate_Code_TimeLine(dataPackage, time);
             ITimeLineData timeLineData = navigate.GetTimeLineData();
             Console.WriteLine(timeLineData);
 
-            string txt = "20170405.093001,3470,3471,-347100,272,731414";
+            string txt = "20170405.093001,3470,63,1.85,272,731414";
             Assert.AreEqual(txt, timeLineData.ToString());
         }
     }

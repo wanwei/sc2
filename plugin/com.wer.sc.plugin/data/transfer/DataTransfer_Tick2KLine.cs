@@ -211,7 +211,14 @@ namespace com.wer.sc.data.transfer
             return klineBar;
         }
 
-        private static KLineData GetEmptyKLineData(IList<double[]> klineTimes, float price, int hold)
+        /// <summary>
+        /// 得到一个空的K线数据
+        /// </summary>
+        /// <param name="klineTimes"></param>
+        /// <param name="price"></param>
+        /// <param name="hold"></param>
+        /// <returns></returns>
+        public static KLineData GetEmptyKLineData(IList<double[]> klineTimes, float price, int hold)
         {
             KLineData klineData = new KLineData(klineTimes.Count);
             for (int i = 0; i < klineTimes.Count; i++)

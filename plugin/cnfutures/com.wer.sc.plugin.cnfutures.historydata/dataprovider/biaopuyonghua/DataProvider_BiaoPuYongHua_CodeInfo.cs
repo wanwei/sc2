@@ -50,12 +50,29 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             LoopByExchange(srcDataPath + "\\SQ", codes, set);
             LoopByExchange(srcDataPath + "\\ZZ", codes, set);
 
-            for (int i = 0; i < indexCodes.Count; i++)
+            string[] varieties = this.dic_Variety_Start.Keys.ToArray<String>();
+            for (int i = 0; i < varieties.Length; i++)
             {
-                CodeInfo codeInfo = indexCodes[i];
-                if (dic_Variety_Start.ContainsKey(codeInfo.Catelog))
-                    codeInfo.Start = dic_Variety_Start[codeInfo.Catelog];
+                string variety = varieties[i];                
+                int start = this.dic_Variety_Start[variety];
+
+                string indexId = variety + "0000";
+                CodeInfo codeInfo = CodeInfoUtils.GetCodeInfo(indexId, dataLoader_Variety);
+                codeInfo.Start = start;
+                codes.Add(codeInfo);
+
+                string miId = variety + "MI";
+                codeInfo = CodeInfoUtils.GetCodeInfo(miId, dataLoader_Variety);
+                codeInfo.Start = start;
+                codes.Add(codeInfo);
             }
+
+            //for (int i = 0; i < indexCodes.Count; i++)
+            //{
+            //    CodeInfo codeInfo = indexCodes[i];
+            //    if (dic_Variety_Start.ContainsKey(codeInfo.Catelog))
+            //        codeInfo.Start = dic_Variety_Start[codeInfo.Catelog];
+            //}
 
             codes.Sort(new CodeInfoComparer());
             return codes;
@@ -108,7 +125,8 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
                 }
                 else
                 {
-                    indexCodes.Add(codeInfo);
+                    //indexCodes.Add(codeInfo);
+                    continue;
                 }
                 codes.Add(codeInfo);
             }

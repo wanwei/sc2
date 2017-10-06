@@ -86,7 +86,6 @@
     <Compile Include="store\TestKLineDataStore.cs" />
     <Compile Include="store\TestTickDataStore.cs" />
     <Compile Include="store\TestTradingDayStore.cs" />
-    <Compile Include="store\TestTradingSessionStore.cs" />
     <Compile Include="store\UriGetter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -95,6 +94,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="TestCase\com\wer\sc\data\store\file\Store_AccountFee" />
+    <Compile Include="TestDataCenter.cs" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />
     <None Include="TestCase\com\wer\sc\data\forward\impl\forward_bigperiod" />
     <None Include="TestCase\com\wer\sc\data\forward\impl\forward_tickperiod" />

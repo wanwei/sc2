@@ -22,7 +22,7 @@ namespace com.wer.sc.data.store
 
         private void TestKLineDataStore_SaveLoad(string uri)
         {
-            string code = "m05";
+            string code = "m1005";
             KLinePeriod period = KLinePeriod.KLinePeriod_1Minute;
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
             IKLineDataStore klineDataStore = dataStore.CreateKLineDataStore();
@@ -58,7 +58,7 @@ namespace com.wer.sc.data.store
 
         private void TestKLineDataStore_Append(string uri)
         {
-            string code = "m05";
+            string code = "m1005";
             KLinePeriod period = KLinePeriod.KLinePeriod_1Minute;
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
             IKLineDataStore klineDataStore = dataStore.CreateKLineDataStore();
@@ -97,7 +97,7 @@ namespace com.wer.sc.data.store
 
         private void TestKLineDataStore_LoadByDate(string uri)
         {
-            string code = "m05";
+            string code = "m1005";
             KLinePeriod klinePeriod = KLinePeriod.KLinePeriod_1Minute;
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
             IKLineDataStore klineDataStore = dataStore.CreateKLineDataStore();

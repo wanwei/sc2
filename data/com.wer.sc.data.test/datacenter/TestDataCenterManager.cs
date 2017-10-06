@@ -15,7 +15,7 @@ namespace com.wer.sc.data.datacenter
         [TestMethod]
         public void TestCreateDataCenter()
         {
-            DataCenter dataCenter = DataCenterManager.Instance.GetDataCenter("file:/d:/scdata/cnfutures/");
+            DataCenter dataCenter = DataCenterManager.Instance.GetDataCenterByUri("file:/d:/scdata/cnfutures/");
             Assert.AreEqual("file:/d:/scdata/cnfutures/", dataCenter.Config.Uri);
         }
 
@@ -25,7 +25,7 @@ namespace com.wer.sc.data.datacenter
             string path = TestCaseManager.GetTestCasePath(GetType(), "datacenter.config");
             DataCenterManager mgr = DataCenterManager.Create(path);
             string uri = "file:/e:/FUTURES/MOCKDATACENTER/";
-            DataCenter dataCenter = mgr.GetDataCenter(uri);
+            DataCenter dataCenter = mgr.GetDataCenterByUri(uri);
             Assert.AreEqual(uri, dataCenter.Config.Uri);
         }
 
@@ -38,30 +38,21 @@ namespace com.wer.sc.data.datacenter
                 DataCenterManager mgr = DataCenterManager.Create(path);
 
                 string uri = "file:/e:/futures/mockdatacenter/";
-
-                DataCenterConfig config = new DataCenterConfig();
-                config.MarketType = plugin.MarketType.CnStock;
-                config.DataCenterStoreMethod = StoreMethod.File;
-                config.Uri = uri;
-                config.StoredDataTypes.IsStoredTradingDay = true;
-                config.StoredDataTypes.IsStoreTick = true;
-                config.StoredDataTypes.IsStoreTradingSession = true;
-                config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-                config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
-                config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
-                config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
-                mgr.RegisterDataCenter(config);                
+                string id = "d1";
+                DataCenterInfo config = GetDataCenterInfo(uri, id);
+                mgr.RegisterDataCenter(config);
                 Assert.AreEqual(1, mgr.GetAllConfig().Count);
-
-                DataCenter dataCenter = mgr.GetDataCenter(uri);
+                DataCenter dataCenter = mgr.GetDataCenterByUri(uri);
                 Assert.AreEqual(uri, dataCenter.Config.Uri);
+
                 string uri2 = "file:/d:/scdata/cnfutures/";
-                config.Uri = uri2;
+                string id2 = "d2";
+                config = GetDataCenterInfo(uri2, id2);
                 mgr.RegisterDataCenter(config);
                 Assert.AreEqual(2, mgr.GetAllConfig().Count);
 
                 mgr.UnRegisterDataCenter(uri);
-                dataCenter = mgr.GetDataCenter(uri);
+                dataCenter = mgr.GetDataCenterByUri(uri);
                 Assert.IsNull(dataCenter);
                 Assert.AreEqual(1, mgr.GetAllConfig().Count);
             }
@@ -69,6 +60,23 @@ namespace com.wer.sc.data.datacenter
             {
                 File.Delete(path);
             }
+        }
+
+        private static DataCenterInfo GetDataCenterInfo(string uri, string id)
+        {
+            DataCenterInfo config = new DataCenterInfo();
+            config.MarketType = plugin.MarketType.CnStock;
+            config.DataCenterStoreMethod = StoreMethod.File;
+            config.Id = id;
+            config.Uri = uri;
+            config.StoredDataTypes.IsStoredTradingDay = true;
+            config.StoredDataTypes.IsStoreTick = true;
+            config.StoredDataTypes.IsStoreTradingSession = true;
+            config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
+            config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
+            config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
+            config.StoredDataTypes.StoreKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
+            return config;
         }
     }
 }

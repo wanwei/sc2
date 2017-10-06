@@ -30,12 +30,20 @@ namespace com.wer.sc.data.reader
 
         public List<ITimeLineData> GetData(String code, int startDate, int endDate)
         {
+            if (startDate > endDate)
+                return new List<ITimeLineData>();
+            CodeInfo codeInfo = dataReader.CodeReader.GetCodeInfo(code);
+            if (codeInfo == null)
+                return new List<ITimeLineData>();
+            if (codeInfo.End < startDate || codeInfo.Start > endDate)
+                return new List<ITimeLineData>();
+
             int lastTradingDay = dataReader.TradingDayReader.GetPrevTradingDay(startDate);
             IKLineData klineData_Day = dataReader.KLineDataReader.GetData(code, lastTradingDay, lastTradingDay, KLinePeriod.KLinePeriod_1Day);
             IKLineData klineData_1Min = dataReader.KLineDataReader.GetData(code, startDate, endDate, KLinePeriod.KLinePeriod_1Minute);
 
-            ITradingSessionReader_Code tradingSessionReader = dataReader.CreateTradingSessionReader(code);
-            float lastEndPrice = klineData_Day.Arr_End[0];
+            ITradingTimeReader_Code tradingSessionReader = dataReader.CreateTradingTimeReader(code);
+            float lastEndPrice = klineData_Day == null ? -1 : klineData_Day.Arr_End[0];
             return DataTransfer_KLine2TimeLine.ConvertTimeLineDataList(klineData_1Min, lastEndPrice, tradingSessionReader);
         }
     }

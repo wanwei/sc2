@@ -38,7 +38,7 @@ namespace com.wer.sc.strategy.cnfutures
             this.klinePeriod = KLinePeriod.KLinePeriod_1Minute;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             initTurnPoint(currentData);
         }
@@ -48,7 +48,7 @@ namespace com.wer.sc.strategy.cnfutures
         * 1.找到疑似的高点低点
         * 2.
         */
-        private void initTurnPoint(IRealTimeDataReader currentData)
+        private void initTurnPoint(IRealTimeDataReader_Code currentData)
         {
             IKLineData klineData = currentData.GetKLineData(klinePeriod);
             int barPos = klineData.BarPos;
@@ -179,7 +179,7 @@ namespace com.wer.sc.strategy.cnfutures
             return POS_LASTDD < POS_LASTGD ? 1 : -1;
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

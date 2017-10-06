@@ -53,6 +53,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public List<IStep> GetAllSteps()
         {
+            return GetAllStep_Varieties();
             if (dataProvider.GetAppointUpdate() != null)
                 return GetAllStep_UpdateAppoint();
             List<IStep> steps = new List<IStep>();
@@ -60,21 +61,74 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             UpdatedDataInfo updatedDataInfo = new UpdatedDataInfo(targetDataPath);
 
             Step_CodeInfo step_CodeInfo = new Step_CodeInfo(dataUpdateHelper);
+            List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
             steps.Add(step_CodeInfo);
-            //List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
-            //steps.Add(new Step_TradingDay(dataUpdateHelper));            
+            steps.Add(new Step_TradingDay(dataUpdateHelper));
 
-            //GetTradingSession(steps, allCodes);
-            //GetTradingTime(steps, allCodes, false);
-            //GetTickSteps(steps, updatedDataInfo, allCodes);
-            //GetKLineDataSteps(steps, updatedDataInfo, allCodes);
+            GetTradingSession(steps, allCodes);
+            GetTradingTime(steps, allCodes, false);
+            GetTickSteps(steps, updatedDataInfo, allCodes);
+            GetKLineDataSteps(steps, updatedDataInfo, allCodes);
 
+            //更新主力合约信息
+            Step_MainFutures step_MainFutures = new Step_MainFutures(this.dataUpdateHelper);
+            steps.Add(step_MainFutures);
             ///*
             // * 在准备更新的时候会将所有更新信息索引一次
             // * 所以在准备完更新后保存一次
             // */
             //updatedDataInfo.Save();
             return steps;
+        }
+
+        private List<IStep> GetAllStep_Varieties()
+        {
+            List<IStep> steps = new List<IStep>();            
+            Step_CodeInfo step_CodeInfo = new Step_CodeInfo(dataUpdateHelper);
+            List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
+            allCodes = FilterCodeInfo(allCodes, new string[] { "RB", "HC", "BU" });
+            GetTradingTime(steps, allCodes, true);
+            UpdatedDataInfo updatedDataInfo = new UpdatedDataInfo(targetDataPath);
+
+            ITradingDayReader tradingDayReader = dataUpdateHelper.GetAllTradingDayReader();
+            for (int i = 0; i < allCodes.Count; i++)
+            {
+                CodeInfo codeInfo = allCodes[i];
+                int startDate = codeInfo.Start;
+                if (startDate == 0)
+                    startDate = tradingDayReader.FirstTradingDay;
+
+                int endDate = codeInfo.End;
+                if (endDate <= 0)
+                    endDate = tradingDayReader.LastTradingDay;
+                List<int> tradingDays = new List<int>();
+                tradingDays.AddRange(tradingDayReader.GetTradingDays(startDate, endDate));
+                GetKLineDataSteps(steps, codeInfo, tradingDays, updatedDataInfo);
+            }
+            return steps;
+        }
+
+        private List<CodeInfo> FilterCodeInfo(List<CodeInfo> codes, string[] varieties)
+        {
+            List<CodeInfo> filteredCodes = new List<CodeInfo>();
+            for (int i = 0; i < codes.Count; i++)
+            {
+                CodeInfo code = codes[i];
+                if (IsBelongVarieties(code, varieties))
+                    filteredCodes.Add(code);
+            }
+            return filteredCodes;
+        }
+
+        private bool IsBelongVarieties(CodeInfo code, string[] varieties)
+        {
+            for (int i = 0; i < varieties.Length; i++)
+            {
+                string variety = varieties[i];
+                if (code.Code.StartsWith(variety))
+                    return true;
+            }
+            return false;
         }
 
         private List<IStep> GetAllStep_UpdateAppoint()
@@ -200,13 +254,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                     notUpdatedTradingDays = dataUpdateHelper.GetNotUpdateTradingDays_TickData(code, updateFillUp);
                     if (notUpdatedTradingDays == null || notUpdatedTradingDays.Count == 0)
                     {
-                        updatedDataInfo.WriteUpdateInfo_Tick(code, tradingDayReader.LastTradingDay);
+                        //updatedDataInfo.WriteUpdateInfo_Tick(code, tradingDayReader.LastTradingDay);
                         continue;
                     }
 
                     int startDate = notUpdatedTradingDays[0];
                     int lastUpdateDate = tradingDayReader.GetPrevTradingDay(startDate);
-                    updatedDataInfo.WriteUpdateInfo_Tick(code, lastUpdateDate);
+                    //updatedDataInfo.WriteUpdateInfo_Tick(code, lastUpdateDate);
                 }
                 GetTickSteps(steps, codeInfo, notUpdatedTradingDays, updatedDataInfo);
             }

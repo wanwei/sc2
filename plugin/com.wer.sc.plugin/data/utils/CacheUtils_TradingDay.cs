@@ -15,9 +15,9 @@ namespace com.wer.sc.data.utils
 
         private Dictionary<int, int> dicOpenDateIndex;
 
-        public CacheUtils_TradingDay(List<int> openDateList)
+        public CacheUtils_TradingDay(IList<int> openDateList)
         {
-            this.openDatesList = openDateList;
+            this.openDatesList = openDateList.ToList<int>();
             this.dicOpenDateIndex = new Dictionary<int, int>();
             for (int i = 0; i < openDatesList.Count; i++)
             {

@@ -12,7 +12,7 @@ namespace com.wer.sc.data.forward
     /// <summary>
     /// 单支合约的历史数据前进器
     /// </summary>
-    public interface IHistoryDataForward_Code : IRealTimeDataReader, IDataPackageOwner
+    public interface IHistoryDataForward_Code : IRealTimeDataReader_Code, IDataPackageOwner
     {
         /// <summary>
         /// 得到前进时的主K线，如果是以tick前进，则返回空

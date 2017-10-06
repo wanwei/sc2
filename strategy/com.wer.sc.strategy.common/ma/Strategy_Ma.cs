@@ -107,7 +107,7 @@ namespace com.wer.sc.strategy.common.ma
 
         bool isLastPeriodEnd = true;
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             bool isPeriodStart = false;
             if (isLastPeriodEnd)
@@ -146,7 +146,7 @@ namespace com.wer.sc.strategy.common.ma
                 maList[maList.Count - 1] = total / (barPos - startPos + 1);
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

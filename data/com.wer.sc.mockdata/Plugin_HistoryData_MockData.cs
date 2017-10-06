@@ -38,7 +38,8 @@ namespace com.wer.sc.mockdata
         {
             if (csvDataPath != null)
                 return csvDataPath;
-            return @"E:\FUTURES\MOCKDATA\";
+            //return @"E:\FUTURES\MOCKDATA\";
+            return @"E:\FUTURES\CSV\DATACENTERSOURCE\";
         }
 
         public override TradingTime GetDefaultTradingTime()
@@ -46,9 +47,9 @@ namespace com.wer.sc.mockdata
             return null;
         }
 
-        public override IList<TradingTime> GetTradingTime(string code)
-        {
-            return null;
-        }
+        //public override IList<TradingTime> GetTradingTime(string code)
+        //{
+        //    return null;
+        //}
     }
 }

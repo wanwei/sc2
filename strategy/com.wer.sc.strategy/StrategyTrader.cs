@@ -14,11 +14,11 @@ namespace com.wer.sc.strategy
 
         private Account account;
 
-        private IRealTimeDataReader realTimeDataReader;
+        private IRealTimeDataReader_Code realTimeDataReader;
 
         private Dictionary<String, StrategyTrader_Code> dic_Code_Trader = new Dictionary<string, StrategyTrader_Code>();
 
-        public StrategyTrader(double money, IRealTimeDataReader realTimeDataReader)
+        public StrategyTrader(double money, IRealTimeDataReader_Code realTimeDataReader)
         {
             this.account = new Account(money, realTimeDataReader);
             this.realTimeDataReader = realTimeDataReader;
@@ -32,7 +32,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IRealTimeDataReader RealTimeDataReader
+        public IRealTimeDataReader_Code RealTimeDataReader
         {
             get
             {

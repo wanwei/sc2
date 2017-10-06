@@ -15,7 +15,7 @@ namespace com.wer.sc.data.datacenter
         public void TestGetDataCenter()
         {
             string filePath = TestCaseManager.GetTestCasePath(GetType(), "datacenter.config");
-            DataCenter dataCenter = DataCenterManager.Create(filePath).GetDataCenter("file:/E:/FUTURES/MOCKDATACENTER/");
+            DataCenter dataCenter = DataCenterManager.Create(filePath).GetDataCenterByUri("file:/E:/FUTURES/MOCKDATACENTER/");
             List<CodeInfo> instruments = dataCenter.DataReader.CodeReader.GetAllCodes();
             AssertUtils.PrintLineList(instruments);
             AssertUtils.AssertEqual_List("instruments", GetType(), instruments);

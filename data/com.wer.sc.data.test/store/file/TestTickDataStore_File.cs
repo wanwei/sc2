@@ -18,7 +18,7 @@ namespace com.wer.sc.data.store.file
         [TestMethod]
         public void TestTickDataStore_FromBytes()
         {
-            TickData data = (TickData)MockDataLoader.GetTickData("m05", 20100108);
+            TickData data = (TickData)MockDataLoader.GetTickData("m1005", 20100108);
             byte[] bs = TickDataStore_File_Single.GetBytes(data);
             TickData data2 = TickDataStore_File_Single.FromBytes(bs, 0, bs.Length);
             AssertUtils.AssertEqual_TickData(data, data2);
@@ -27,7 +27,7 @@ namespace com.wer.sc.data.store.file
         [TestMethod]
         public void TestTickDataStore_SaveLoad()
         {
-            TickData data = (TickData)MockDataLoader.GetTickData("m05", 20100108);
+            TickData data = (TickData)MockDataLoader.GetTickData("m1005", 20100108);
             String path = TestCaseManager.GetTestCasePath(GetType(), "output_tick_saveload");
             TickDataStore_File_Single store = new TickDataStore_File_Single(path);
             store.Save(data);
@@ -41,7 +41,7 @@ namespace com.wer.sc.data.store.file
         [TestMethod]
         public void TestTickDataStore_Append()
         {
-            TickData data = (TickData)MockDataLoader.GetTickData("m05", 20100108);
+            TickData data = (TickData)MockDataLoader.GetTickData("m1005", 20100108);
 
             String path = TestCaseManager.GetTestCasePath(GetType(), "output_");
             TickData d1 = data.SubData(0, 100);

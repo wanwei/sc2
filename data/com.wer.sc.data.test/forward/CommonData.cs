@@ -26,14 +26,14 @@ namespace com.wer.sc.data.forward
             {
                 if (dataReader != null)
                     return dataReader;
-                dataReader = DataReaderFactory.CreateDataReader("file:/E:/SCDATA/CNFUTURES/");
+                dataReader = DataCenter.Default.DataReader;
                 return dataReader;
             }
         }
 
         public static IDataPackage GetDataPackage(string code, int startDate, int endDate)
         {
-            return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);            
         }
 
         public static KLineData_RealTime GetKLineData_RealTime(string code, int startDate, int endDate, KLinePeriod klinePeriod)
@@ -51,7 +51,8 @@ namespace com.wer.sc.data.forward
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute);
 
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            IDataPackage dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+                //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
             HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             return realTimeReader;
         }

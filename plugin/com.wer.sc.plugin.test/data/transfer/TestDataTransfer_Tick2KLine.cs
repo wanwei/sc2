@@ -133,11 +133,46 @@ namespace com.wer.sc.data.transfer
         //}
     }
 
-    class MockTradingTimeReader : ITradingTimeReader
+    class MockTradingTimeReader : ITradingTimeReader_Code
     {
+        public string GetCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetRecentTradingDay(double time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetRecentTradingDay(double time, bool forward)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetRecentTradingTime(double time, bool findForward)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTradingDay(double time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TradingTime GetTradingTime(int date)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<double[]> GetTradingTime(string code, int date)
         {
             return MockDataLoader.GetTradingTime(code, date);
+        }
+
+        public bool IsStartTime(double time)
+        {
+            throw new NotImplementedException();
         }
     }
 }

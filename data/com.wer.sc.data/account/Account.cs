@@ -58,16 +58,16 @@ namespace com.wer.sc.data.account
 
         private String description = null;
 
-        private IRealTimeDataReader realTimeDataReader;
+        private IRealTimeDataReader_Code realTimeDataReader;
 
         private object lockObj = new object();
 
-        public Account(double money, IRealTimeDataReader realTimeDataReader) : this(money, realTimeDataReader, null)
+        public Account(double money, IRealTimeDataReader_Code realTimeDataReader) : this(money, realTimeDataReader, null)
         {
 
         }
 
-        public Account(double money, IRealTimeDataReader realTimeDataReader, TradeFee fee)
+        public Account(double money, IRealTimeDataReader_Code realTimeDataReader, TradeFee fee)
         {
             //this.accountOrders = new AccountOrders(this);
             //this.accountTrades = new AccountTrades(this);

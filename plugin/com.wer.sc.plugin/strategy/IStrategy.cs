@@ -29,14 +29,14 @@ namespace com.wer.sc.strategy
         /// 需要在GetStrategyPeriods里面设置usetick=true
         /// </summary>
         /// <param name="currentData"></param>
-        void OnTick(IRealTimeDataReader currentData);
+        void OnTick(IRealTimeDataReader_Code currentData);
 
         /// <summary>
         /// 每到一个bar结束触发该方法
         /// 需要在GetStrategyPeriods里面设置usetick=true
         /// </summary>
         /// <param name="currentData"></param>
-        void OnBar(IRealTimeDataReader currentData);
+        void OnBar(IRealTimeDataReader_Code currentData);
 
         /// <summary>
         /// 返回该策略使用的周期

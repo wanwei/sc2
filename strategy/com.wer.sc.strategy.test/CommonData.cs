@@ -31,7 +31,8 @@ namespace com.wer.sc.strategy
 
         public static IDataPackage GetDataPackage(string code, int startDate, int endDate)
         {
-            return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+            //return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
         }
 
         public static KLineData_RealTime GetKLineData_RealTime(string code, int startDate, int endDate, KLinePeriod klinePeriod)

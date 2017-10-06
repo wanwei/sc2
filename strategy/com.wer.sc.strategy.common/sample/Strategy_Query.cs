@@ -17,7 +17,7 @@ namespace com.wer.sc.strategy.common.sample
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
             if (klineData.BarPos == 0)
@@ -34,7 +34,7 @@ namespace com.wer.sc.strategy.common.sample
             }
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

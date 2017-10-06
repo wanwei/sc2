@@ -116,6 +116,8 @@ namespace com.wer.sc.data.reader
             }
 
             IKLineData lastDayklineData = dataReader.KLineDataReader.GetData(code, lastTradingDay, lastTradingDay, KLinePeriod.KLinePeriod_1Day);
+            if (lastDayklineData == null)
+                return -1;
             return lastDayklineData.End;
         }
     }

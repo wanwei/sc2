@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy
 
         public abstract StrategyReferedPeriods GetStrategyPeriods_();
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
@@ -53,9 +53,9 @@ namespace com.wer.sc.strategy
             OnBar_(currentData);
         }
 
-        public abstract void OnBar_(IRealTimeDataReader currentData);
+        public abstract void OnBar_(IRealTimeDataReader_Code currentData);
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
@@ -63,7 +63,7 @@ namespace com.wer.sc.strategy
             OnTick_(currentData);
         }
 
-        public abstract void OnTick_(IRealTimeDataReader currentData);
+        public abstract void OnTick_(IRealTimeDataReader_Code currentData);
 
 
         public override void StrategyEnd()

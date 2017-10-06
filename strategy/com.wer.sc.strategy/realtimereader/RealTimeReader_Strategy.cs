@@ -5,7 +5,6 @@ using com.wer.sc.data;
 using com.wer.sc.data.realtime;
 using com.wer.sc.strategy;
 using com.wer.sc.data.forward;
-using com.wer.sc.data.forward.impl;
 using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.strategy.realtimereader

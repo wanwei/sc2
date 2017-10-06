@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy.common.sample
             return referPeriods;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             //15分钟K线图ma5>ma10
             if (strategy_MA_15Minute.MAPrice_1 > strategy_MA_15Minute.MAPrice_2)
@@ -63,7 +63,7 @@ namespace com.wer.sc.strategy.common.sample
             }
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

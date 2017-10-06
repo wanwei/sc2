@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="data\utils\TestCacheUtils_CodeInfo.cs" />
     <Compile Include="data\utils\TestCacheUtils_TradingDay.cs" />
-    <Compile Include="data\utils\TestCacheUtils_TradingSession.cs" />
+    <Compile Include="data\utils\TestCacheUtils_TradingTime.cs" />
     <Compile Include="data\TestKLineData.cs" />
     <Compile Include="data\TestKLinePeriod.cs" />
     <Compile Include="data\transfer\TestDataTransfer_KLine2KLine.cs" />
@@ -65,7 +65,7 @@
     <Compile Include="data\utils\TestCsvUtils_KLineData.cs" />
     <Compile Include="data\utils\TestCsvUtils_TickData.cs" />
     <Compile Include="data\utils\TestCsvUtils_TradingDay.cs" />
-    <Compile Include="data\utils\TestCsvUtils_TradingSession.cs" />
+    <Compile Include="data\utils\TestCsvUtils_TradingTime.cs" />
     <Compile Include="data\utils\TestKLineTimeListUtils.cs" />
     <Compile Include="data\utils\TestTimeIndexUtils.cs" />
     <Compile Include="data\utils\TestTimeUtils.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="ResourceLoader.cs" />
     <Compile Include="market\TestConnectionInfo.cs" />
     <None Include="TestCase\com\wer\sc\data\reader\cache\Codes" />
-    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingSession" />
+    <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingTime" />
     <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingDay" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150107" />
     <None Include="TestCase\com\wer\sc\data\transfer\KLine2TimeLine_M05_20150107" />

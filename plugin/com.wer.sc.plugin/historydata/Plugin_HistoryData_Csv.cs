@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.plugin.data;
+using com.wer.sc.utils;
 
 namespace com.wer.sc.plugin.historydata
 {
@@ -85,7 +86,7 @@ namespace com.wer.sc.plugin.historydata
 
         public virtual TradingTime GetDefaultTradingTime()
         {
-            List<TradingTime> tts = CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetTradingTimePath(GetCsvDataPath()));
+            List<TradingTime> tts = CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetDefaultTradingTimePath(GetCsvDataPath()));
             if (tts == null || tts.Count == 0)
                 return null;
             return tts[0];
@@ -108,6 +109,27 @@ namespace com.wer.sc.plugin.historydata
         }
 
         /// <summary>
+        /// 得到现有的tick所有数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public IList<int> GetTickDataDays(string code)
+        {            
+            string tickPath = CsvHistoryData_PathUtils.GetTickDataPath(GetCsvDataPath(), code);
+            if (!Directory.Exists(tickPath))
+                return null;
+            string[] files = Directory.GetFiles(tickPath);
+            List<int> tickDays = new List<int>(files.Length);
+            for (int i = 0; i < files.Length; i++)
+            {
+                string file = files[i];
+                int startIndex = file.LastIndexOf('_') + 1;
+                tickDays.Add(int.Parse(file.Substring(startIndex, 8)));
+            }
+            return tickDays;
+        }
+
+        /// <summary>
         /// 得到股票或期货的K线数据
         /// </summary>
         /// <param name="code"></param>
@@ -117,50 +139,82 @@ namespace com.wer.sc.plugin.historydata
         /// <returns></returns>
         public virtual IKLineData GetKLineData(String code, int startDate, int endDate, KLinePeriod klinePeriod)
         {
-            List<int> tradingDays = GetTradingDays();
+            IList<int> tradingDays = GetTickDataDays(code);// GetTradingDays();
+            if (tradingDays == null)
+                return null;
             CacheUtils_TradingDay cache = new CacheUtils_TradingDay(tradingDays);
-            IList<int> resultOpenDates = cache.GetTradingDays(startDate, endDate);
+            IList<int> openDates = cache.GetTradingDays(startDate, endDate);
+            if (openDates == null || openDates.Count == 0)
+                return null;
+            float lastEndPrice = -1;
+            int lastEndHold = -1;
+            int prevTradingDay = cache.GetPrevTradingDay(openDates[0]);
+            //找到之前交易日的收盘价和收盘持仓
+            if (prevTradingDay > 0)
+            {
+                ITickData tickData = GetTickData(code, prevTradingDay);
+                lastEndPrice = tickData.Arr_Price[tickData.Length - 1];
+                lastEndHold = tickData.Arr_Hold[tickData.Length - 1];
+            }
 
             //如果存在该周期的源数据直接生成，否则用1分钟K线生成
-            if (Exist(code, resultOpenDates[0], klinePeriod))
-                return GetKLineData(code, klinePeriod, resultOpenDates);
+            if (Exist(code, openDates[0], klinePeriod))
+                return GetKLineData(code, klinePeriod, openDates, lastEndPrice, lastEndHold);
 
-            IKLineData oneMinuteKLine = GetKLineData(code, KLinePeriod.KLinePeriod_1Minute, resultOpenDates);
+            IKLineData oneMinuteKLine = GetKLineData(code, KLinePeriod.KLinePeriod_1Minute, openDates, lastEndPrice, lastEndHold);
             if (oneMinuteKLine.Length == 0)
                 return null;
-            List<TradingSession> sessions = GetTradingSessions(code);
+            IList<TradingTime> sessions = GetTradingTime(code);
             if (sessions == null)
                 return null;
-            return DataTransfer_KLine2KLine.Transfer(oneMinuteKLine, klinePeriod, new CacheUtils_TradingSession(code, GetTradingSessions(code)));
+            return DataTransfer_KLine2KLine.Transfer(oneMinuteKLine, klinePeriod, new CacheUtils_TradingTime(code, GetTradingTime(code)));
         }
 
-        private IKLineData GetKLineData(string code, KLinePeriod klinePeriod, IList<int> resultOpenDates)
+        private IKLineData GetKLineData(string code, KLinePeriod klinePeriod, IList<int> openDates, float lastEndPrice, int lastEndHold)
         {
             List<IKLineData> klineDataList = new List<IKLineData>();
-            for (int i = 0; i < resultOpenDates.Count; i++)
+            for (int i = 0; i < openDates.Count; i++)
             {
-                int openDate = resultOpenDates[i];
+                int openDate = openDates[i];
                 IKLineData klineData = GetKLineData(code, openDate, klinePeriod);
                 if (klineData != null)
                 {
                     klineDataList.Add(klineData);
+                    lastEndPrice = klineData.Arr_End[klineData.Length - 1];
+                    lastEndHold = klineData.Arr_Hold[klineData.Length - 1];
                 }
                 else
                 {
-                    //klineDataList.Add(klineData);
-                    //TODO
-                    //GetTradingTime(code)
-                    //IList<double[]> timeList = null;
-                    //DataTransfer_Tick2KLine.Transfer(null, timeList, -1, -1);
-                    //GetTradingTime()
-                    //klineDataList.Add(klineData);
+                    List<double[]> tradingTime = GetTradingTime(code, openDate);
+                    IList<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList_Full(tradingTime, klinePeriod);
+                    klineData = DataTransfer_Tick2KLine.GetEmptyKLineData(klineTimes, lastEndPrice, lastEndHold);
+                    klineDataList.Add(klineData);
                 }
             }
 
             return KLineData.Merge(klineDataList);
         }
 
-        private List<double> GetTradingTime(string code, int date)
+        /// <summary>
+        /// 得到现有的K线所有数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public IList<int> GetKLineDataDays(string code)
+        {
+            string klinePath = CsvHistoryData_PathUtils.GetKLineDataPath(GetCsvDataPath(), code, KLinePeriod.KLinePeriod_1Minute);
+            string[] files = Directory.GetFiles(klinePath);
+            List<int> klineDays = new List<int>(files.Length);
+            for (int i = 0; i < files.Length; i++)
+            {
+                string file = files[i];
+                int startIndex = file.LastIndexOf('_') + 1;
+                klineDays.Add(int.Parse(file.Substring(startIndex, 8)));
+            }
+            return klineDays;
+        }
+
+        private List<double[]> GetTradingTime(string code, int date)
         {
             IList<TradingTime> tradingTime = GetTradingTime(code);
             if (tradingTime != null)
@@ -170,7 +224,7 @@ namespace com.wer.sc.plugin.historydata
                     TradingTime tt = tradingTime[i];
                     if (tt.TradingDay == date)
                     {
-                        //KLineTimeListUtils.GetKLineTimeList()
+                        return tt.TradingPeriods;
                     }
                 }
             }
@@ -204,5 +258,10 @@ namespace com.wer.sc.plugin.historydata
         /// <returns></returns>
         public abstract string GetCsvDataPath();
 
+        public virtual IList<MainContractInfo> GetMainContractInfos()
+        {
+            string mainFuturesPath = CsvHistoryData_PathUtils.GetMainFuturesPath(GetCsvDataPath());
+            return TextExchangeUtils.Load<MainContractInfo>(mainFuturesPath, typeof(MainContractInfo));
+        }
     }
 }

@@ -72,6 +72,7 @@ namespace com.wer.sc.data.update
             IKLineData klineData = historyData.GetKLineData(code, startDate, endDate, period);
             if (klineData == null || klineData.Length == 0)
                 return "";
+            klineDataStore.Delete(code, period);
             klineDataStore.Append(code, period, klineData);
             if (updatedDataInfo != null)
             {

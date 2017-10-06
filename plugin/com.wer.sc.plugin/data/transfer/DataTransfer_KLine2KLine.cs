@@ -22,7 +22,7 @@ namespace com.wer.sc.data.transfer
         /// <param name="targetPeriod"></param>
         /// <param name="openTimeList"></param>
         /// <returns></returns>
-        public static IKLineData Transfer(IKLineData data, KLinePeriod targetPeriod, ITradingSessionReader_Code tradingSessionReader)
+        public static IKLineData Transfer(IKLineData data, KLinePeriod targetPeriod, ITradingTimeReader_Code tradingSessionReader)
         {
             if (targetPeriod.PeriodType == KLineTimeType.DAY)
                 return Transfer_Day(data, targetPeriod, tradingSessionReader);
@@ -47,7 +47,7 @@ namespace com.wer.sc.data.transfer
         /// <param name="targetPeriod"></param>
         /// <param name="timeSplit"></param>
         /// <returns></returns>
-        public static IKLineData Transfer_Day(IKLineData data, KLinePeriod targetPeriod, ITradingSessionReader_Code startTimeReader)
+        public static IKLineData Transfer_Day(IKLineData data, KLinePeriod targetPeriod, ITradingTimeReader_Code startTimeReader)
         {
             List<SplitterResult> results = DaySplitter.Split(data, startTimeReader);
 
@@ -69,7 +69,7 @@ namespace com.wer.sc.data.transfer
             return chart;
         }
 
-        private static IKLineData Transfer_SrcIs1Minute(IKLineData data, KLinePeriod targetPeriod, ITradingSessionReader_Code startTimeReader)
+        private static IKLineData Transfer_SrcIs1Minute(IKLineData data, KLinePeriod targetPeriod, ITradingTimeReader_Code startTimeReader)
         {
             KLinePeriod sourcePeriod = data.Period;
             if (sourcePeriod.PeriodType != targetPeriod.PeriodType)
@@ -165,7 +165,7 @@ namespace com.wer.sc.data.transfer
             return data;
         }
 
-        private static IKLineData Transfer_DifferentPeriod(IKLineData data, KLinePeriod targetPeriod, ITradingSessionReader_Code startTimeReader)
+        private static IKLineData Transfer_DifferentPeriod(IKLineData data, KLinePeriod targetPeriod, ITradingTimeReader_Code startTimeReader)
         {
             KLinePeriod srcPeriod = data.Period;
             if (targetPeriod.PeriodType == KLineTimeType.HOUR && srcPeriod.PeriodType == KLineTimeType.MINUTE)

@@ -45,21 +45,28 @@
   <ItemGroup>
     <Compile Include="account\Account.cs" />
     <Compile Include="account\StrategyTrader_History_Code.cs" />
+    <Compile Include="cache\DataCache.cs" />
+    <Compile Include="cache\DataCacheManager.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
-    <Compile Include="datapackage\IDataPackage.cs" />
     <Compile Include="datapackage\IDataPackageOwner.cs" />
-    <Compile Include="datapackage\impl\DataPackage.cs" />
-    <Compile Include="forward\ForwardPeriod.cs" />
+    <Compile Include="datapackage\DataPackage.cs" />
     <Compile Include="forward\HistoryDataForwardFactory.cs" />
-    <Compile Include="forward\IHistoryDataForward.cs" />
     <Compile Include="forward\HistoryDataForwardArguments.cs" />
-    <Compile Include="forward\IHistoryDataForward_Code.cs" />
-    <Compile Include="forward\impl\HistoryDataForward.cs" />
-    <Compile Include="forward\impl\HistoryDataForward_Code_KLinePeriod.cs" />
-    <Compile Include="forward\impl\HistoryDataForward_Code_TickPeriod.cs" />
-    <Compile Include="forward\impl\KLineData_DaySplitter.cs" />
-    <Compile Include="forward\impl\HistoryDataForward_Code.cs" />
+    <Compile Include="forward\HistoryDataForward.cs" />
+    <Compile Include="forward\HistoryDataForward_Code_KLinePeriod.cs" />
+    <Compile Include="forward\HistoryDataForward_Code_TickPeriod.cs" />
+    <Compile Include="forward\KLineData_DaySplitter.cs" />
+    <Compile Include="forward\HistoryDataForward_Code.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
+    <Compile Include="reader\MainContractReader.cs" />
+    <Compile Include="reader\TradingTimeReader.cs" />
+    <Compile Include="store\file\MainContractStore_File.cs" />
+    <Compile Include="store\file\TradingTimeStore_File.cs" />
+    <Compile Include="store\IMainContractStore.cs" />
+    <Compile Include="store\ITradingTimeStore.cs" />
+    <Compile Include="update\StepGetter_UpdateKLineData_Vaieties.cs" />
+    <Compile Include="update\Step_UpdateMainFutures.cs" />
+    <Compile Include="update\Step_UpdateTradingTime_Code.cs" />
     <Compile Include="utils\TimeLineUtils.cs" />
     <Compile Include="utils\KLineUtils.cs" />
     <Compile Include="market\impl\AccountFee.cs" />
@@ -71,12 +78,10 @@
     <Compile Include="market\impl\PriceGetter_HistoryDataForward_Code.cs" />
     <Compile Include="market\MarketTrader_Code.cs" />
     <Compile Include="market\impl\Account.cs" />
-    <Compile Include="navigate\IDataNavigate.cs" />
-    <Compile Include="navigate\IDataNavigate_Code.cs" />
-    <Compile Include="navigate\impl\DataNavigate_Code.cs" />
-    <Compile Include="navigate\impl\DataNavigate_Code_KLine.cs" />
-    <Compile Include="navigate\impl\DataNavigate_Code_TimeLine.cs" />
-    <Compile Include="navigate\impl\DataNavigate_Code_Tick.cs" />
+    <Compile Include="navigate\DataNavigate_Code.cs" />
+    <Compile Include="navigate\DataNavigate_Code_KLine.cs" />
+    <Compile Include="navigate\DataNavigate_Code_TimeLine.cs" />
+    <Compile Include="navigate\DataNavigate_Code_Tick.cs" />
     <Compile Include="reader\DataReaderFactory.cs" />
     <Compile Include="reader\DataReader.cs" />
     <Compile Include="reader\CodeReader.cs" />
@@ -84,11 +89,9 @@
     <Compile Include="reader\KLineDataReader.cs" />
     <Compile Include="reader\TickDataReader.cs" />
     <Compile Include="reader\TimeLineDataReader.cs" />
-    <Compile Include="reader\TradingSessionReader.cs" />
-    <Compile Include="datacenter\DataCenter.cs" />
-    <Compile Include="datacenter\DataCenterManager.cs" />
-    <Compile Include="datacenter\DataCenterConfig.cs" />
-    <Compile Include="datacenter\StoreMethod.cs" />
+    <Compile Include="DataCenter.cs" />
+    <Compile Include="DataCenterManager.cs" />
+    <Compile Include="DataCenterInfo.cs" />
     <Compile Include="realtime\KLineData_RealTime.cs" />
     <Compile Include="realtime\TimeLineData_RealTime.cs" />
     <Compile Include="receiver\DataReceiver.cs" />
@@ -123,7 +126,6 @@
     <Compile Include="store\ITickDataStore.cs" />
     <Compile Include="store\ITradingDayStore.cs" />
     <Compile Include="store\ITradingSessionStore.cs" />
-    <Compile Include="datacenter\StoreDataTypes.cs" />
     <Compile Include="store\file\DataPathUtils.cs" />
     <Compile Include="store\IUpdateInfoStore.cs" />
     <Compile Include="update\DataUpdate.cs" />
@@ -131,7 +133,7 @@
     <Compile Include="update\StepGetter_UpdateTickData.cs" />
     <Compile Include="update\StepPreparer.cs" />
     <Compile Include="update\Step_SaveUpdateInfo.cs" />
-    <Compile Include="update\Step_UpdateInstrument.cs" />
+    <Compile Include="update\Step_UpdateCode.cs" />
     <Compile Include="update\Step_UpdateKLineData.cs" />
     <Compile Include="update\Step_UpdateTickData.cs" />
     <Compile Include="update\Step_UpdateTradingDays.cs" />
@@ -145,7 +147,7 @@
     <Compile Include="store\file\TickDataStore_File_Single.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="datacenter\datacenter.config" />
+    <None Include="datacenter.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
@@ -158,11 +160,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="cache\" />
+    <Folder Include="datapackage\impl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(ProjectDir)datacenter\datacenter.config $(TargetDir)config\ /s /e /y</PostBuildEvent>
+    <PostBuildEvent>copy $(ProjectDir)datacenter.config $(TargetDir)config\  /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

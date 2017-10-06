@@ -28,12 +28,12 @@ namespace com.wer.sc.plugin.mock.strategy.complex
             throw new NotImplementedException();
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
             throw new NotImplementedException();
         }

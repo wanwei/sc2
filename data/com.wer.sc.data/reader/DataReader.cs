@@ -17,6 +17,8 @@ namespace com.wer.sc.data.reader
         private IKLineDataReader klineDataReader;
         private ITimeLineDataReader timeLineDataReader;
         private ITradingSessionStore tradingSessionStore;
+        private ITradingTimeStore tradingTimeStore;
+        private IMainContractReader mainContractReader;
 
         public DataReader(string dataCenterUri)
         {
@@ -24,9 +26,11 @@ namespace com.wer.sc.data.reader
             this.codeReader = new CodeReader(dataStore.CreateInstrumentStore());
             this.tradingDayReader = new CacheUtils_TradingDay(dataStore.CreateTradingDayStore().Load());
             this.tradingSessionStore = dataStore.CreateTradingSessionStore();
+            this.tradingTimeStore = dataStore.CreateTradingTimeStore();
             this.tickDataReader = new TickDataReader(dataStore);
             this.klineDataReader = new KLineDataReader(dataStore, this);
             this.timeLineDataReader = new TimeLineDataReader(this);
+            this.mainContractReader = new MainContractReader(dataStore);
         }
 
         public ICodeReader CodeReader
@@ -50,10 +54,17 @@ namespace com.wer.sc.data.reader
             throw new NotImplementedException();
         }
 
-        public ITradingSessionReader_Code CreateTradingSessionReader(string code)
+        //public ITradingSessionReader_Code CreateTradingSessionReader(string code)
+        //{
+        //    List<TradingSession> sessions = tradingSessionStore.Load(code);
+        //    CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, sessions);
+        //    return cache;
+        //}
+
+        public ITradingTimeReader_Code CreateTradingTimeReader(string code)
         {
-            List<TradingSession> sessions = tradingSessionStore.Load(code);
-            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, sessions);
+            List<TradingTime> sessions = tradingTimeStore.Load(code);
+            CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, sessions);
             return cache;
         }
 

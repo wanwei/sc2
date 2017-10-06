@@ -1,5 +1,4 @@
-﻿using com.wer.sc.data.datacenter;
-using com.wer.sc.plugin;
+﻿using com.wer.sc.plugin;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;

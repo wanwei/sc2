@@ -69,6 +69,10 @@ namespace com.wer.sc.data.utils
         /// <returns></returns>
         private int IndexOf(TimeGetter timeGetter, double time, int startIndex, int endIndex, bool findBackward, int indexIfRepeat)
         {
+            if (findBackward && time > timeGetter.GetTime(timeGetter.Count - 1))            
+                return timeGetter.Count - 1;
+            if (!findBackward && time < timeGetter.GetTime(0))
+                return 0;
             if (endIndex - startIndex <= 1)
             {
                 double startTime = timeGetter.GetTime(startIndex);

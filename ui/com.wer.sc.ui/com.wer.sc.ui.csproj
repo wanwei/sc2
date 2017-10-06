@@ -83,6 +83,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ICompChart.cs" />
     <Compile Include="ShareData.cs" />
     <Compile Include="strategy\FormStrategy.cs">
       <SubType>Form</SubType>

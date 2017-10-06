@@ -22,6 +22,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily
             this.pluginPath = pluginPath;
             this.dataLoader_Variety = new DataLoader_Variety(pluginPath);
         }
+
         private List<CodeInfo> allCodes;
 
         public List<CodeInfo> GetCodeInfo()
@@ -37,29 +38,28 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily
             List<CodeInfo> codes = new List<CodeInfo>();
             HashSet<string> hashset = new HashSet<string>();
             LoopDic(srcDataPath, codes, hashset);
-            codes.Sort(new CodeInfoComparer());
-            GenerateIndexCodes(codes);
+
+            GenerateIndexCodes(codes);           
+            codes.Sort(new CodeInfoComparer());            
             return codes;
         }
 
         private void GenerateIndexCodes(List<CodeInfo> codes)
         {
-            List<CodeInfo> indexCodes = new List<CodeInfo>();
-            HashSet<string> set_Variety = new HashSet<string>();
-            for (int i = 0; i < codes.Count; i++)
+            string[] keies = this.dic_Variety_Start.Keys.ToArray<string>();
+            for (int i = 0; i < keies.Length; i++)
             {
-                CodeInfo codeInfo = codes[i];
-                string code = codeInfo.Code;
-                CodeIdParser parser = new CodeIdParser(code);
-                string variety = parser.VarietyId;
-                if (!set_Variety.Contains(variety))
-                {
-                    indexCodes.Add(CodeInfoUtils.GetCodeInfo(variety + "0000", dataLoader_Variety));
-                    indexCodes.Add(CodeInfoUtils.GetCodeInfo(variety + "MI", dataLoader_Variety));
-                    set_Variety.Add(variety);
-                }
-            }
-            codes.AddRange(indexCodes);
+                string variety = keies[i];
+                int start = dic_Variety_Start[variety];
+
+                CodeInfo codeInfo = CodeInfoUtils.GetCodeInfo(variety + "0000", dataLoader_Variety);
+                codeInfo.Start = start;
+                codes.Add(codeInfo);
+
+                CodeInfo codeInfo2 = CodeInfoUtils.GetCodeInfo(variety + "MI", dataLoader_Variety);
+                codeInfo2.Start = start;
+                codes.Add(codeInfo2);
+            }           
         }
 
         private void LoopDic(string path, List<CodeInfo> codes, HashSet<string> hashset)
@@ -80,14 +80,39 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.daily
             string codeId = fileName.Substring(startIndex + 1, endIndex - startIndex - 1);
             if (codeId.IndexOf("主力连续") >= 0)
                 return;
+
+            CodeIdParser parser = new CodeIdParser(codeId);
+            if (parser.Suffix.Length == 3)
+            {
+                codeId = parser.VarietyId + "1" + parser.Suffix;
+            }
+
+            int tradingDay = int.Parse(fileName.Substring(endIndex + 1, 8));
+            SetVarietyStart(parser.VarietyId, tradingDay);
+
             if (!hashset.Contains(codeId))
             {
                 hashset.Add(codeId);
-                CodeInfo codeInfo = CodeInfoUtils.GetCodeInfo(codeId, dataLoader_Variety);
+                CodeInfo codeInfo = CodeInfoUtils.GetCodeInfo(codeId, dataLoader_Variety);                
                 if (codeInfo == null)
                     return;
+                codeInfo.Start = tradingDay;
                 codes.Add(codeInfo);
             }
+        }
+
+        private Dictionary<string, int> dic_Variety_Start = new Dictionary<string, int>();
+
+        private void SetVarietyStart(string variety, int date)
+        {
+            if (dic_Variety_Start.ContainsKey(variety))
+            {
+                int currentStart = dic_Variety_Start[variety];
+                if (currentStart > date)
+                    dic_Variety_Start[variety] = date;
+            }
+            else
+                dic_Variety_Start.Add(variety, date);
         }
     }
 }

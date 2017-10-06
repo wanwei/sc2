@@ -20,9 +20,9 @@ namespace com.wer.sc.strategy
 
         public abstract StrategyReferedPeriods GetStrategyPeriods();
 
-        public abstract void OnBar(IRealTimeDataReader currentData);
+        public abstract void OnBar(IRealTimeDataReader_Code currentData);
 
-        public abstract void OnTick(IRealTimeDataReader currentData);
+        public abstract void OnTick(IRealTimeDataReader_Code currentData);
 
         public abstract void StrategyEnd();
 

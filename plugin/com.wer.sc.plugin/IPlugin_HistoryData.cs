@@ -70,6 +70,13 @@ namespace com.wer.sc.plugin
         ITickData GetTickData(String code, int date);
 
         /// <summary>
+        /// 得到现有的tick所有数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        IList<int> GetTickDataDays(string code);
+
+        /// <summary>
         /// 得到股票或期货的K线数据
         /// </summary>
         /// <param name="code"></param>
@@ -78,6 +85,19 @@ namespace com.wer.sc.plugin
         /// <param name="klinePeriod"></param>
         /// <returns></returns>
         IKLineData GetKLineData(String code, int startDate, int endDate, KLinePeriod klinePeriod);
+
+        /// <summary>
+        /// 得到现有的K线所有数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        IList<int> GetKLineDataDays(string code);
+
+        /// <summary>
+        /// 获得主力合约信息
+        /// </summary>
+        /// <returns></returns>
+        IList<MainContractInfo> GetMainContractInfos();
     }
 
     public class NeedsToUpdate

@@ -32,12 +32,12 @@ namespace com.wer.sc.strategy.common.sample
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader currentData)
+        public override void OnBar(IRealTimeDataReader_Code currentData)
         {
             //Console(strategy_MA_1Minute.)
         }
 
-        public override void OnTick(IRealTimeDataReader currentData)
+        public override void OnTick(IRealTimeDataReader_Code currentData)
         {
 
         }

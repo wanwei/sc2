@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using com.wer.sc.data;
+using com.wer.sc.plugin.historydata;
 
 namespace com.wer.sc.plugin.cnfutures.config
 {
@@ -168,7 +170,7 @@ namespace com.wer.sc.plugin.cnfutures.config
             }
 
             return sb.ToString();
-        }
+        }        
     }
 
     public class TradingSession_Market

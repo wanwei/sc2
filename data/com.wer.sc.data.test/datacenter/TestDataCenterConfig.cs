@@ -18,7 +18,7 @@ namespace com.wer.sc.data.datacenter
         public void TestDataCenterConfig_LoadXml()
         {
             string xml = TestCaseManager.LoadTestCaseFile(GetType(), "datacenter.config");
-            DataCenterConfig config = new DataCenterConfig();
+            DataCenterInfo config = new DataCenterInfo();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
             config.LoadXml((XmlElement)doc.DocumentElement.ChildNodes[0]);
@@ -26,7 +26,7 @@ namespace com.wer.sc.data.datacenter
             AssertDataCenterConfig(config);
         }
 
-        private static void AssertDataCenterConfig(DataCenterConfig config)
+        private static void AssertDataCenterConfig(DataCenterInfo config)
         {
             Assert.AreEqual(StoreMethod.File, config.DataCenterStoreMethod);
             Assert.AreEqual(MarketType.CnFutures, config.MarketType);

@@ -1,5 +1,4 @@
 ﻿using com.wer.sc.data;
-using com.wer.sc.data.datacenter;
 using com.wer.sc.data.reader;
 using com.wer.sc.ui.comp;
 using System;

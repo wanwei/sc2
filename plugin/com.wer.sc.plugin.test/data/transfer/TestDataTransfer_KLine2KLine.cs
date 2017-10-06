@@ -20,7 +20,7 @@ namespace com.wer.sc.data.transfer
             int end = 20131231;
             List<double[]> tradingTime = MockDataLoader.GetTradingTime(code, start);
             IKLineData data_1min = MockDataLoader.GetKLineData(code, start, end, KLinePeriod.KLinePeriod_1Minute);
-            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, MockDataLoader.GetTradingSessions(code));
+            CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, MockDataLoader.GetTradingTimeList(code));
 
             //转换成5分钟线
             IKLineData data = DataTransfer_KLine2KLine.Transfer(data_1min, KLinePeriod.KLinePeriod_5Minute, cache);
@@ -40,7 +40,7 @@ namespace com.wer.sc.data.transfer
         {
             string code = "m05";
             IKLineData data_1min = MockDataLoader.GetKLineData(code, 20131216, 20131231, new KLinePeriod(KLineTimeType.MINUTE, 1));
-            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, MockDataLoader.GetTradingSessions(code));
+            CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, MockDataLoader.GetTradingTimeList(code));
             IKLineData data = DataTransfer_KLine2KLine.Transfer_Day(data_1min, new KLinePeriod(KLineTimeType.DAY, 1), cache);
             AssertUtils.AssertEqual_KLineData("Kline2kline_M05_20131216_20131231_Day", GetType(), data);
         }
@@ -50,7 +50,7 @@ namespace com.wer.sc.data.transfer
         {
             string code = "m05";
             IKLineData klineData = MockDataLoader.GetKLineData(code, 20141215, 20150116, KLinePeriod.KLinePeriod_1Minute);
-            CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, MockDataLoader.GetTradingSessions(code));
+            CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, MockDataLoader.GetTradingTimeList(code));
             IKLineData data = DataTransfer_KLine2KLine.Transfer_Day(klineData, new KLinePeriod(KLineTimeType.DAY, 1), cache);
             AssertUtils.AssertEqual_KLineData("Kline2Kline_M05_20141215_20150116_Day", GetType(), data);
         }

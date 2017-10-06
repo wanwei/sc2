@@ -29,8 +29,11 @@ namespace com.wer.sc.ui
         {
             InitializeComponent();
             this.compChart1 = compMain1.CompChart1;
-            //this.compChart1.Code = "RB1710";
-            //this.compChart1.Time = 20170531.210011;
+            this.compChart1.Code = "RB1801";
+            //this.compChart1.Time = 20170929.145900;
+            this.compChart1.Time = 20170929.150000;
+            //this.compChart1.Code = "RB1801";
+            //this.compChart1.Time = 20170930.150000;
             this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.compChart1.OnChartRefresh += CompChart1_OnDataRefresh;
             this.SetLbTime(this.compChart1.Time);
@@ -134,6 +137,7 @@ namespace com.wer.sc.ui
         {
             this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_15Minute;
             this.compChart1.ChartType = ChartType.KLine;
+            //this.compChart1.PaintChart();
         }
 
         private void tb_KLine1H_Click(object sender, EventArgs e)
