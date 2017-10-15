@@ -19,7 +19,7 @@ namespace com.wer.sc.data.navigate
 
         private int date = -1;
 
-        private TickData tickData;
+        private ITickData_Extend tickData;
 
         private ITradingTimeReader_Code sessionReader;
 
@@ -46,7 +46,7 @@ namespace com.wer.sc.data.navigate
             if (this.date != date)
             {
                 this.date = date;
-                this.tickData = (TickData)dataPackage.GetTickData(date);
+                this.tickData = dataPackage.GetTickData(date);
             }
             int index = TimeIndeierUtils.IndexOfTime_Tick(tickData, time, true);
             tickData.BarPos = index < 0 ? 0 : index;
