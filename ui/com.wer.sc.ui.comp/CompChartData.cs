@@ -22,7 +22,7 @@ namespace com.wer.sc.ui.comp
 
         private ChartDataState currentChartDataState;
 
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private IDataReader dataReader;
 
@@ -207,7 +207,7 @@ namespace com.wer.sc.ui.comp
                 return null;
             if (historyDataForward_CodePlaying == null)
             {
-                StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+                ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
                 referedPeriods.UseTickData = true;
                 referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
                 referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
@@ -323,7 +323,7 @@ namespace com.wer.sc.ui.comp
 
         public event DelegateOnDataRefresh OnDataRefresh;
 
-        public IDataPackage DataPackage
+        public IDataPackage_Code DataPackage
         {
             get
             {
@@ -331,7 +331,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public void ChangeDataPackage(IDataPackage dataPackage)
+        public void ChangeDataPackage(IDataPackage_Code dataPackage)
         {
             //TODO
             this.dataPackage = dataPackage;

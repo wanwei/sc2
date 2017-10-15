@@ -13,7 +13,7 @@ namespace com.wer.sc.data.forward
 
         private int endDate;
 
-        private StrategyReferedPeriods referedPeriods;
+        private ForwardReferedPeriods referedPeriods;
 
         private bool isTickForward;
 
@@ -23,7 +23,7 @@ namespace com.wer.sc.data.forward
         {
         }
 
-        public HistoryDataForwardArguments(int startDate, int endDate, StrategyReferedPeriods referedPeriods, bool isTickForward, KLinePeriod forwardKLinePeriod)
+        public HistoryDataForwardArguments(int startDate, int endDate, ForwardReferedPeriods referedPeriods, bool isTickForward, KLinePeriod forwardKLinePeriod)
         {
             this.startDate = startDate;
             this.endDate = endDate;
@@ -55,7 +55,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public StrategyReferedPeriods ReferedPeriods
+        public ForwardReferedPeriods ReferedPeriods
         {
             get
             {

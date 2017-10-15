@@ -31,7 +31,7 @@ namespace com.wer.sc.ui
             this.compChart1 = compMain1.CompChart1;
             this.compChart1.Code = "RB1801";
             //this.compChart1.Time = 20170929.145900;
-            this.compChart1.Time = 20170929.150000;
+            this.compChart1.Time = 20171029.150000;
             //this.compChart1.Code = "RB1801";
             //this.compChart1.Time = 20170930.150000;
             this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
@@ -264,8 +264,8 @@ namespace com.wer.sc.ui
 
         private void RunStrategy(IStrategy strategy)
         {
-            IDataPackage dataPackage = this.compChart1.CompChartData.DataPackage;
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            IDataPackage_Code dataPackage = this.compChart1.CompChartData.DataPackage;
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             //compChart1.KlinePeriod
             KLinePeriod period = compChart1.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);

@@ -12,7 +12,7 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigate_Code_KLine
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private double time;
 
@@ -28,7 +28,7 @@ namespace com.wer.sc.data.navigate
 
         private ITradingTimeReader_Code sessionReader;
 
-        public DataNavigate_Code_KLine(IDataPackage dataPackage, double time, KLinePeriod klinePeriod)
+        public DataNavigate_Code_KLine(IDataPackage_Code dataPackage, double time, KLinePeriod klinePeriod)
         {
             this.dataPackage = dataPackage;
             this.klinePeriod = klinePeriod;
@@ -81,7 +81,7 @@ namespace com.wer.sc.data.navigate
             else
                 startTickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, klineTime);
             KLineBar klineBar = GetKLineBar(tickData, startTickIndex, tickIndex);
-            klineData_RealTime.SetRealTimeData(klineBar, klineIndex);
+            klineData_RealTime.ChangeCurrentBar(klineBar, klineIndex);
             return klineData_RealTime;
         }
 

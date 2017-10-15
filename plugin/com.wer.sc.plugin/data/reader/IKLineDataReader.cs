@@ -35,6 +35,8 @@
         /// <returns></returns>
         IKLineData GetData(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period);
 
+        IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period);
+
         /// <summary>
         /// 得到上个交易日收盘价，如果之前没有交易日，则返回当日的开盘价
         /// </summary>
@@ -58,5 +60,13 @@
         /// <param name="period"></param>
         /// <returns></returns>
         int GetLastDate(string code, KLinePeriod period);
+
+        /// <summary>
+        /// 得到K线时间信息
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        KLineDataTimeInfo GetKLineDataTimeInfo(string code, int startDate, int endDate, KLinePeriod klinePeriod);
     }
 }

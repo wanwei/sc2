@@ -227,8 +227,8 @@ namespace com.wer.sc.ui.comp.test
 
         private void RunStrategy(IStrategy strategy)
         {
-            IDataPackage dataPackage = this.compChart1.CompChartData.DataPackage;
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            IDataPackage_Code dataPackage = this.compChart1.CompChartData.DataPackage;
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             //compChart1.KlinePeriod
             KLinePeriod period = compChart1.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);

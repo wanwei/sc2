@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using com.wer.sc.utils.param;
 using System;
@@ -64,24 +65,5 @@ namespace com.wer.sc.strategy
         /// 该策略引用的其它策略
         /// </summary>
         IList<IStrategy> GetReferedStrategies();
-    }
-
-    /// <summary>
-    /// 策略执行周期
-    /// </summary>
-    public class StrategyReferedPeriods
-    {
-        public bool UseTickData = false;
-
-        public bool isReferTimeLineData = false;
-
-        public List<KLinePeriod> UsedKLinePeriods = new List<KLinePeriod>(); 
-
-        public KLinePeriod GetMinPeriod()
-        {
-            if (UsedKLinePeriods == null)
-                return null;
-            return UsedKLinePeriods.Min();
-        }
-    }
+    }   
 }

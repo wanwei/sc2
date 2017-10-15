@@ -14,9 +14,9 @@ namespace com.wer.sc.data.forward
     /// </summary>
     public class HistoryDataForward_Code : IHistoryDataForward_Code
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
-        private StrategyReferedPeriods referedPeriods;
+        private ForwardReferedPeriods referedPeriods;
 
         private ForwardPeriod forwardPeriod;
 
@@ -24,18 +24,18 @@ namespace com.wer.sc.data.forward
 
         public HistoryDataForward_Code(IDataReader dataReader, string code, HistoryDataForwardArguments args)
         {
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, args.StartDate, args.EndDate);
-            StrategyReferedPeriods referedPeriods = args.ReferedPeriods;
+            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, args.StartDate, args.EndDate);
+            ForwardReferedPeriods referedPeriods = args.ReferedPeriods;
             ForwardPeriod forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
             this.Init(dataPackage, referedPeriods, forwardPeriod);
         }        
 
-        public HistoryDataForward_Code(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        public HistoryDataForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
             Init(dataPackage, referedPeriods, forwardPeriod);
         }
 
-        private void Init(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        private void Init(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
@@ -189,7 +189,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public IDataPackage DataPackage
+        public IDataPackage_Code DataPackage
         {
             get
             {

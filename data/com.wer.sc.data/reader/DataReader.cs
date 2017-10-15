@@ -27,7 +27,7 @@ namespace com.wer.sc.data.reader
             this.tradingDayReader = new CacheUtils_TradingDay(dataStore.CreateTradingDayStore().Load());
             this.tradingSessionStore = dataStore.CreateTradingSessionStore();
             this.tradingTimeStore = dataStore.CreateTradingTimeStore();
-            this.tickDataReader = new TickDataReader(dataStore);
+            this.tickDataReader = new TickDataReader(dataStore,this);
             this.klineDataReader = new KLineDataReader(dataStore, this);
             this.timeLineDataReader = new TimeLineDataReader(this);
             this.mainContractReader = new MainContractReader(dataStore);

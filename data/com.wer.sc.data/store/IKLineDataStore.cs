@@ -51,7 +51,7 @@ namespace com.wer.sc.data.store
         void Delete(string code, KLinePeriod klinePeriod);
 
         /// <summary>
-        /// 得到所有
+        /// 得到一个品种的所有交易日
         /// </summary>
         /// <returns></returns>
         List<int> GetAllTradingDay(string code, KLinePeriod klinePeriod);

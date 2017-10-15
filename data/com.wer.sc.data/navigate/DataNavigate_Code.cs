@@ -16,7 +16,7 @@ namespace com.wer.sc.data.navigate
     /// </summary>
     public class DataNavigate_Code : IDataNavigate_Code
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private int startDate;
 
@@ -35,7 +35,7 @@ namespace com.wer.sc.data.navigate
         //当前分时线数据
         private DataNavigate_Code_TimeLine navigate_TimeLine;
 
-        public DataNavigate_Code(IDataPackage dataPackage, double time)
+        public DataNavigate_Code(IDataPackage_Code dataPackage, double time)
         {
             this.dataPackage = dataPackage;
             this.NavigateTo(time);
@@ -105,7 +105,14 @@ namespace com.wer.sc.data.navigate
             IKLineData klineData = GetKLineData(forwardPeriod);
             int nextBarPos = klineData.BarPos + 1;
             if (nextBarPos >= klineData.Length)
-                return false;
+            {
+                ITickData tickData = GetTickData();
+                if (tickData.BarPos == tickData.Length - 1)
+                    return false;
+                double endtime = tickData.Arr_Time[tickData.Length - 1];
+                NavigateTo(endtime);
+                return true;
+            }
             double time = klineData.Arr_Time[nextBarPos];
             NavigateTo(time);
             return true;
@@ -143,7 +150,7 @@ namespace com.wer.sc.data.navigate
             }
         }
 
-        public IDataPackage DataPackage
+        public IDataPackage_Code DataPackage
         {
             get
             {

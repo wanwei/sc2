@@ -79,5 +79,11 @@ namespace com.wer.sc.data.store.file
             openDates.Sort();            
             return openDates;
         }
+
+        public bool Exist(string code, int date)
+        {
+            string path = dataPathUtils.GetTickPath(code, date);
+            return File.Exists(path);
+        }
     }
 }

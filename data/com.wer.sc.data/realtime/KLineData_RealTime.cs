@@ -34,7 +34,7 @@ namespace com.wer.sc.data.realtime
         public KLineData_RealTime(IKLineData klineData)
         {
             this.klineData = klineData;
-
+            this.BarPos = klineData.BarPos;
             this.list_Time = new ReadOnlyList_TmpValue<double>(klineData.Arr_Time);
             this.list_Start = new ReadOnlyList_TmpValue<float>(klineData.Arr_Start);
             this.list_High = new ReadOnlyList_TmpValue<float>(klineData.Arr_High);
@@ -52,7 +52,12 @@ namespace com.wer.sc.data.realtime
             this.list_UpPercent = new ReadOnlyList_TmpValue<float>(klineData.Arr_UpPercent);
         }
 
-        public void SetRealTimeData(IKLineBar chart, int barPos)
+        public void ResetCurrentBar()
+        {
+            this.ChangeCurrentBar(null);
+        }
+
+        public void ChangeCurrentBar(IKLineBar chart, int barPos)
         {
             this.BarPos = barPos;
             if (chart == null)
@@ -102,9 +107,9 @@ namespace com.wer.sc.data.realtime
         /// 修改当前chart，
         /// </summary>
         /// <param name="chart"></param>
-        public void SetRealTimeData(IKLineBar chart)
+        public void ChangeCurrentBar(IKLineBar chart)
         {
-            SetRealTimeData(chart, BarPos);
+            ChangeCurrentBar(chart, BarPos);
         }
 
         public override string Code
@@ -253,7 +258,7 @@ namespace com.wer.sc.data.realtime
 
         #endregion       
 
-        public IKLineBar GetCurrentRealBar()
+        public IKLineBar GetCurrentBar_Original()
         {
             return new RealKLineBar_RealTime(this, BarPos);
         }

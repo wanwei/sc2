@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
 using com.wer.sc.data.reader;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.plugin.mock.strategy.complex
 {

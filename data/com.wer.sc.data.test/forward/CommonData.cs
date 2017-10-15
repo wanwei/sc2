@@ -1,6 +1,5 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
-using com.wer.sc.data.forward.impl;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
 using com.wer.sc.strategy;
@@ -31,7 +30,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public static IDataPackage GetDataPackage(string code, int startDate, int endDate)
+        public static IDataPackage_Code GetDataPackage(string code, int startDate, int endDate)
         {
             return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);            
         }
@@ -42,18 +41,18 @@ namespace com.wer.sc.data.forward
             return new KLineData_RealTime(klineData);
         }
 
-        public static HistoryDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
+        public static IHistoryDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
         {
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.isReferTimeLineData = false;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute);
 
-            IDataPackage dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
-                //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
-            HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+            //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            IHistoryDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             return realTimeReader;
         }
     }

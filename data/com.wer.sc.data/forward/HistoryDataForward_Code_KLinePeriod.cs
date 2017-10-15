@@ -13,57 +13,57 @@ namespace com.wer.sc.data.forward
     /// <summary>
     /// 该类用于K线数据
     /// </summary>
-    public class HistoryDataForward_Code_KLinePeriod : IHistoryDataForward_Code
+    internal class HistoryDataForward_Code_KLinePeriod : IHistoryDataForward_Code
     {
         private string code;
 
-        private KLineData_RealTime mainKLineData;
+        private IDataPackage_Code dataPackage;
 
-        private Dictionary<KLinePeriod, KLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, KLineData_RealTime>();
+        private IList<KLinePeriod> periods;
 
-        private TimeLineData_RealTime timeLineData;
+        private IKLineData_RealTime mainKLineData;
 
-        private KLineData_DaySplitter daySplitter;
+        private Dictionary<KLinePeriod, IKLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData_RealTime>();
+
+        private ITimeLineData timeLineData;
 
         private ForwardPeriod forwardPeriod;
 
-        /// <summary>
-        /// 创建
-        /// </summary>
-        /// <param name="mainKLineData"></param>
-        /// <param name="allKLineData"></param>
-        public HistoryDataForward_Code_KLinePeriod(string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData)
-        {
-            this.code = code;
-            this.mainKLineData = mainKLineData;
-            this.dic_Period_KLineData = allKLineData;
-            this.forwardPeriod = new ForwardPeriod(false, mainKLineData.Period);
-            InitKLine();
-            InitTimeLine();
-        }
+        private Dictionary<KLinePeriod, bool> dic_KLinePeriod_IsEnd = new Dictionary<KLinePeriod, bool>();
 
-        public HistoryDataForward_Code_KLinePeriod(IDataReader dataReader, string code, KLineData_RealTime mainKLineData, Dictionary<KLinePeriod, KLineData_RealTime> allKLineData, ITradingTimeReader_Code tradingSessionReader) : this(code, mainKLineData, allKLineData)
+        private List<ForwardOnbar_Info> barFinishedInfos = new List<ForwardOnbar_Info>();
+
+        private ForwardOnBarArgument onBarArgument;
+
+        private int currentTradingDay;
+
+        public HistoryDataForward_Code_KLinePeriod(IDataPackage_Code dataPackage, IList<KLinePeriod> periods, KLinePeriod mainKLinePeriod)
         {
-            this.daySplitter = new KLineData_DaySplitter(mainKLineData, tradingSessionReader);
-            this.daySplitter.NextDay();
-            this.daySplitter.NextDay();
+            this.code = dataPackage.Code;
+            this.periods = periods;
+            this.dataPackage = dataPackage;
+            this.dic_Period_KLineData = this.dataPackage.CreateKLineData_RealTimes(periods);
+            this.mainKLineData = this.dic_Period_KLineData[mainKLinePeriod];
+            this.currentTradingDay = dataPackage.StartDate;
+            this.timeLineData = dataPackage.GetTimeLineData(dataPackage.StartDate);
+            this.forwardPeriod = new ForwardPeriod(false, mainKLineData.Period);
+            this.onBarArgument = new ForwardOnBarArgument(this.barFinishedInfos);
+            InitKLine();
         }
 
         private void InitKLine()
         {
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
-                KLineData_RealTime klineData = dic_Period_KLineData[period];
+                IKLineData_RealTime klineData = dic_Period_KLineData[period];
                 //主K线最后前进
                 if (klineData == mainKLineData)
+                {
+                    dic_KLinePeriod_IsEnd[period] = true;
                     continue;
-                klineData.SetRealTimeData(mainKLineData);
+                }
+                klineData.ChangeCurrentBar(mainKLineData);
             }
-        }
-
-        private void InitTimeLine()
-        {
-            // this.timeLineData = timeLineData;
         }
 
         public string Code
@@ -91,11 +91,26 @@ namespace com.wer.sc.data.forward
             return null;
         }
 
+        #region 当前的前进信息
+
         private bool isEnd;
 
         public bool IsEnd
         {
             get { return isEnd; }
+        }
+
+        private bool isDayStart;
+
+        /// <summary>
+        /// 是否是一天的开始
+        /// </summary>
+        public bool IsDayStart
+        {
+            get
+            {
+                return isDayStart;
+            }
         }
 
         private bool isDayEnd;
@@ -107,6 +122,31 @@ namespace com.wer.sc.data.forward
                 return isDayEnd;
             }
         }
+
+        private bool isTradingTimeStart;
+
+        /// <summary>
+        /// 是否是一个交易时段的开始
+        /// </summary>
+        public bool IsTradingTimeStart
+        {
+            get
+            {
+                return isTradingTimeStart;
+            }
+        }
+
+        private bool isTradingTimeEnd;
+
+        public bool IsTradingTimeEnd
+        {
+            get
+            {
+                return isTradingTimeEnd;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 每次前进的周期
@@ -123,7 +163,7 @@ namespace com.wer.sc.data.forward
         {
             get
             {
-                throw new NotImplementedException();
+                return dataPackage.StartDate;
             }
         }
 
@@ -131,15 +171,15 @@ namespace com.wer.sc.data.forward
         {
             get
             {
-                throw new NotImplementedException();
+                return dataPackage.EndDate;
             }
         }
 
-        public IDataPackage DataPackage
+        public IDataPackage_Code DataPackage
         {
             get
             {
-                return null;
+                return dataPackage;
             }
         }
 
@@ -151,13 +191,16 @@ namespace com.wer.sc.data.forward
             double prevTime = this.Time;
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
-                KLineData_RealTime klineData = dic_Period_KLineData[period];
+                IKLineData_RealTime klineData = dic_Period_KLineData[period];
                 //主K线最后前进
                 if (klineData == mainKLineData)
                     continue;
                 ForwardKLineData(klineData);
             }
+            ForwardTimeLineData();
             mainKLineData.BarPos++;
+
+            DealTimeInfo();
 
             //如果是最后一个bar，设置结束标志
             if (mainKLineData.BarPos >= mainKLineData.Length - 1)
@@ -165,33 +208,23 @@ namespace com.wer.sc.data.forward
 
             foreach (KLinePeriod period in dic_Period_KLineData.Keys)
             {
-                KLineData_RealTime klineData = dic_Period_KLineData[period];
+                IKLineData_RealTime klineData = dic_Period_KLineData[period];
                 if (isEnd)
-                {
                     dic_KLinePeriod_IsEnd[period] = true;
-                }
+                else if (klineData.BarPos == klineData.Length - 1)
+                    continue;
                 else if (period.PeriodType >= KLineTimeType.DAY)
                 {
-                    if (daySplitter == null)
-                        continue;
-                    if (klineData.BarPos + 1 >= klineData.Length)
+                    if (period == KLinePeriod.KLinePeriod_1Day)
                     {
-                        dic_KLinePeriod_IsEnd[period] = false;
-                        continue;
+                        if (isDayEnd)
+                            dic_KLinePeriod_IsEnd[period] = true;
+                        else
+                            dic_KLinePeriod_IsEnd[period] = false;
                     }
-
-                    if (daySplitter.CurrentDay == klineData.Arr_Time[klineData.BarPos + 1] && mainKLineData.BarPos + 1 == daySplitter.CurrentDayKLineIndex)
-                        dic_KLinePeriod_IsEnd[period] = true;
-                    else
-                        dic_KLinePeriod_IsEnd[period] = false;
                 }
                 else
                 {
-                    if (klineData.BarPos + 1 >= klineData.Length)
-                    {
-                        dic_KLinePeriod_IsEnd[period] = false;
-                        continue;
-                    }
                     double nextMainTime = mainKLineData.Arr_Time[mainKLineData.BarPos + 1];
                     double nextKLineTime = klineData.Arr_Time[klineData.BarPos + 1];
                     if (nextMainTime == nextKLineTime)
@@ -201,26 +234,48 @@ namespace com.wer.sc.data.forward
                 }
             }
 
-            if (daySplitter != null)
-            {
-                if (mainKLineData.BarPos + 1 == daySplitter.CurrentDayKLineIndex)
-                {
-                    isDayEnd = true;
-                    daySplitter.NextDay();
-                }
-                else
-                {
-                    isDayEnd = isEnd;
-                }
-            }
             if (OnBar != null)
-                OnBar(this, mainKLineData, mainKLineData.BarPos);
+            {
+                barFinishedInfos.Clear();
+                for (int i = 0; i < periods.Count; i++)
+                {
+                    KLinePeriod period = periods[i];
+                    if (dic_KLinePeriod_IsEnd[period]) {
+                        IKLineData_RealTime klineData = dic_Period_KLineData[period];
+                        barFinishedInfos.Add(new ForwardOnbar_Info(klineData, klineData.BarPos));
+                    }
+                }
+                OnBar(this, onBarArgument);
+            }
             if (OnRealTimeChanged != null)
                 OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
             return true;
         }
 
-        private void ForwardKLineData(KLineData_RealTime klineData)
+        private void DealTimeInfo()
+        {
+            if (mainKLineData.IsTradingTimeStart(mainKLineData.BarPos))
+                isTradingTimeStart = true;
+            else
+                isTradingTimeStart = false;
+
+            if (mainKLineData.IsTradingTimeEnd(mainKLineData.BarPos))
+                isTradingTimeEnd = true;
+            else
+                isTradingTimeEnd = false;
+
+            if (mainKLineData.IsDayStart(mainKLineData.BarPos))
+                isDayStart = true;
+            else
+                isDayStart = false;
+
+            if (mainKLineData.IsDayEnd(mainKLineData.BarPos))
+                isDayEnd = true;
+            else
+                isDayEnd = false;
+        }
+
+        private void ForwardKLineData(IKLineData_RealTime klineData)
         {
             IKLineBar nextMainBar = mainKLineData.GetBar(mainKLineData.BarPos + 1);
             int currentBarPos = klineData.BarPos;
@@ -238,13 +293,13 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        private void ForwardBar_NextPeriod(KLineData_RealTime klineData, IKLineBar klineBar)
+        private void ForwardBar_NextPeriod(IKLineData_RealTime klineData, IKLineBar klineBar)
         {
             klineData.BarPos++;
-            klineData.SetRealTimeData(klineBar);
+            klineData.ChangeCurrentBar(klineBar);
         }
 
-        private void ForwardBar_CurrentPeriod(KLineData_RealTime klineData, IKLineBar klineBar)
+        private void ForwardBar_CurrentPeriod(IKLineData_RealTime klineData, IKLineBar klineBar)
         {
             double time = klineBar.Time;
 
@@ -260,7 +315,31 @@ namespace com.wer.sc.data.forward
             bar.Money = oldbar.Money + klineBar.Money;
             bar.Hold = klineBar.Hold;
 
-            klineData.SetRealTimeData(bar);
+            klineData.ChangeCurrentBar(bar);
+        }
+
+        private void ForwardTimeLineData()
+        {
+            if (timeLineData.BarPos >= timeLineData.Length - 1)
+            {
+                int nextTradingDay = DataPackage.GetTradingDayReader().GetNextTradingDay(this.currentTradingDay);
+                if (nextTradingDay < 0)
+                    return;
+                this.currentTradingDay = nextTradingDay;
+                this.timeLineData = DataPackage.GetTimeLineData(this.currentTradingDay);
+            }
+
+            if (mainKLineData.BarPos >= mainKLineData.Length - 1)
+                return;
+            double nextTime_KLine = mainKLineData.Arr_Time[mainKLineData.BarPos + 1];
+            int nextTimeLineBarPos = timeLineData.BarPos;
+            double nextTime_TimeLine = timeLineData.Arr_Time[nextTimeLineBarPos];
+            while (nextTime_TimeLine < nextTime_KLine && nextTimeLineBarPos < timeLineData.Length - 1)
+            {
+                nextTimeLineBarPos++;
+                nextTime_TimeLine = timeLineData.Arr_Time[nextTimeLineBarPos];
+            }
+            timeLineData.BarPos = nextTimeLineBarPos;
         }
 
         public void NavigateTo(double time)
@@ -294,8 +373,6 @@ namespace com.wer.sc.data.forward
         {
             return null;
         }
-
-        private Dictionary<KLinePeriod, bool> dic_KLinePeriod_IsEnd = new Dictionary<KLinePeriod, bool>();
 
         public bool IsPeriodEnd(KLinePeriod klinePeriod)
         {

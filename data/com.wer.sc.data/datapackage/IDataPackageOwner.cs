@@ -8,6 +8,6 @@ namespace com.wer.sc.data.datapackage
 {
     public interface IDataPackageOwner
     {
-        IDataPackage DataPackage { get; }
+        IDataPackage_Code DataPackage { get; }
     }
 }

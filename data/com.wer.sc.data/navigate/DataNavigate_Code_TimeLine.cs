@@ -12,7 +12,7 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigate_Code_TimeLine
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private double time;
 
@@ -26,7 +26,7 @@ namespace com.wer.sc.data.navigate
 
         private ITickData tickData;
 
-        public DataNavigate_Code_TimeLine(IDataPackage dataPackage, double time)
+        public DataNavigate_Code_TimeLine(IDataPackage_Code dataPackage, double time)
         {
             this.dataPackage = dataPackage;     
             this.sessionReader = dataPackage.GetTradingTimeReader();

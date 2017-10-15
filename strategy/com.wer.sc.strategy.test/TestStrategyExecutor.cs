@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.strategy
 {
@@ -21,7 +22,7 @@ namespace com.wer.sc.strategy
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170603;
-            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
             //StrategyRunnerArguments args = new StrategyRunnerArguments();
             //args.Code = code;
@@ -29,7 +30,7 @@ namespace com.wer.sc.strategy
             //args.EndDate = endDate;
             //args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
             //StrategyExecutor_History runner = new StrategyExecutor_History(dataReader, args);
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
@@ -49,7 +50,7 @@ namespace com.wer.sc.strategy
             int start = 20170601;
             int endDate = 20170603;
 
-            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = true;
@@ -69,9 +70,9 @@ namespace com.wer.sc.strategy
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170603;
-            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);

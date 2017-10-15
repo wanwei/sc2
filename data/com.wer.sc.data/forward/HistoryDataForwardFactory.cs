@@ -31,14 +31,16 @@ namespace com.wer.sc.data.forward
             this.dataCenter = dataCenter;
         }
 
-        public IHistoryDataForward_Code CreateHistoryDataForward_Code(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        public IHistoryDataForward_Code CreateHistoryDataForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
-            return new HistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            if (forwardPeriod.IsTickForward)
+                return new HistoryDataForward_Code_TickPeriod(dataPackage, referedPeriods.UsedKLinePeriods, forwardPeriod.KlineForwardPeriod);
+            return new HistoryDataForward_Code_KLinePeriod(dataPackage, referedPeriods.UsedKLinePeriods, forwardPeriod.KlineForwardPeriod);
         }
 
-        public IHistoryDataForward_Code CreateHistoryDataForward_Code(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        public IHistoryDataForward_Code CreateHistoryDataForward_Code(string code, int startDate, int endDate, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
-            IDataPackage dataPackage = dataCenter.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+            IDataPackage_Code dataPackage = dataCenter.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
             return CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
         }
     }

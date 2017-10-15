@@ -18,7 +18,7 @@ namespace com.wer.sc.strategy.cnfutures
             int start = 20170601;
             int endDate = 20170603;
 
-            IDataPackage dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
             //StrategyRunnerArguments args = new StrategyRunnerArguments();
             //args.Code = code;

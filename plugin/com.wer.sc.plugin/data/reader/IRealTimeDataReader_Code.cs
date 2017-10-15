@@ -64,7 +64,7 @@ namespace com.wer.sc.data.reader
         event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 
-    public delegate void DelegateOnRealTimeChanged(Object sender, RealTimeChangedArgument e);
+    public delegate void DelegateOnRealTimeChanged(Object sender, RealTimeChangedArgument argument);
 
     public class RealTimeChangedArgument
     {

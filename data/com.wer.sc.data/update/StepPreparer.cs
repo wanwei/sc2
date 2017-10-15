@@ -44,9 +44,12 @@ namespace com.wer.sc.data.update
         {
             List<IStep> steps = new List<IStep>();
 
-            UpdatedDataInfo updateDataInfo = dataStore.CreateUpdateInfoStore().Load();
+            IUpdateInfoStore updateInfoStore = dataStore.CreateUpdateInfoStore();
+            UpdatedDataInfo updateDataInfo = updateInfoStore.Load();
 
-            steps.Add(new Step_UpdateTradingDays(historyData, dataStore));
+            Step_UpdateTradingDays step_UpdateTradingDays = new Step_UpdateTradingDays(historyData, dataStore);
+            IList<int> newTradingDays = step_UpdateTradingDays.NewTradingDays;
+            steps.Add(step_UpdateTradingDays);
             steps.Add(new Step_UpdateCode(historyData, dataStore));
 
             //确定是否保存每个品种的交易时间
@@ -55,9 +58,9 @@ namespace com.wer.sc.data.update
             //steps.AddRange(new StepGetter_UpdateKLineData_Vaieties(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods).GetSteps());
             //确定是否保存tick数据
             // if (dataCenterConfig.StoredDataTypes.IsStoreTick)
-            steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp, updateDataInfo).GetSteps());
+            steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp, updateDataInfo, updateInfoStore, newTradingDays).GetSteps());
             //增加k线数据保存步骤
-            steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp, updateDataInfo).GetSteps());
+            steps.AddRange(new StepGetter_UpdateKLineData(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods, isFillUp, updateDataInfo, updateInfoStore, newTradingDays).GetSteps());
             steps.Add(new Step_UpdateMainFutures(historyData, dataStore));
             return steps;
         }

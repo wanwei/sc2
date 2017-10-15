@@ -75,13 +75,16 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater.generator
 
         private String GetMainCode(String path, List<CodeInfo> codes, int date)
         {
-            //int maxHold = 0;
             long max = 0;
             String mainCode = null;
             for (int i = 0; i < codes.Count; i++)
             {
-                String code = codes[i].Code;
+                CodeInfo codeInfo = codes[i];
+                String code = codeInfo.Code;
                 if (code.Contains("MI") || code.Contains("0000"))
+                    continue;
+                //合约截止日期如果早于当日，则肯定不是主合约
+                if (codeInfo.End < date)
                     continue;
                 String p = GetPath(path, code, date);
                 //if (!File.Exists(p))

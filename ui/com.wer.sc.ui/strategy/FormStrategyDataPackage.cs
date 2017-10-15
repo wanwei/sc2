@@ -13,7 +13,7 @@ namespace com.wer.sc.ui.strategy
 {
     public partial class FormStrategyDataPackage : Form
     {
-        public FormStrategyDataPackage(IDataPackage dataPackage)
+        public FormStrategyDataPackage(IDataPackage_Code dataPackage)
         {
             InitializeComponent();
 

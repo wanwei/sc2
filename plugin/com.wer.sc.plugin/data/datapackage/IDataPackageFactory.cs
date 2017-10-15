@@ -16,7 +16,7 @@ namespace com.wer.sc.data.datapackage
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        IDataPackage CreateDataPackage(string code, int startDate, int endDate);
+        IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate);
 
         /// <summary>
         /// 
@@ -28,11 +28,28 @@ namespace com.wer.sc.data.datapackage
         /// <param name="minKlineBefore"></param>
         /// <param name="minKlineAfter"></param>
         /// <returns></returns>
-        IDataPackage CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter);
+        IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter);
 
-        IDataPackage CreateDataPackage(string code, int openDate, int beforeDays, int afterDays);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="openDate"></param>
+        /// <param name="beforeDays"></param>
+        /// <param name="afterDays"></param>
+        /// <returns></returns>
+        IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays);
 
-
-        IDataPackage CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter);
+        /// <summary>
+        /// 创建数据包
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="openDate"></param>
+        /// <param name="beforeDays"></param>
+        /// <param name="afterDays"></param>
+        /// <param name="minKlineBefore"></param>
+        /// <param name="minKlineAfter"></param>
+        /// <returns></returns>
+        IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter);
     }
 }

@@ -118,7 +118,7 @@ namespace com.wer.sc.data.market.impl
             this.historyDataForward_Code.OnBar += HistoryDataForward_Code_OnBar;
         }
 
-        private void HistoryDataForward_Code_OnBar(object sender, IKLineData klineData, int index)
+        private void HistoryDataForward_Code_OnBar(object sender, ForwardOnBarArgument argument)
         {
             if (timeChange != null)
                 timeChange(this);

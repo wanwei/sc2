@@ -53,7 +53,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public List<IStep> GetAllSteps()
         {
-            return GetAllStep_Varieties();
+            //return GetAllStep_Varieties();
             if (dataProvider.GetAppointUpdate() != null)
                 return GetAllStep_UpdateAppoint();
             List<IStep> steps = new List<IStep>();

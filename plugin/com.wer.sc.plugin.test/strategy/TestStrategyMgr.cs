@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.forward;
 using com.wer.sc.utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -82,7 +83,7 @@ namespace com.wer.sc.strategy
 
         private void AssertMockStrategy_Ma_Object1(IStrategy strategyObject)
         {
-            StrategyReferedPeriods periods = strategyObject.GetStrategyPeriods();
+            ForwardReferedPeriods periods = strategyObject.GetStrategyPeriods();
             Assert.AreEqual(false, periods.UseTickData);
             Assert.AreEqual(2, periods.UsedKLinePeriods.Count);
             Assert.AreEqual(KLinePeriod.KLinePeriod_1Minute, periods.UsedKLinePeriods[0]);
@@ -91,7 +92,7 @@ namespace com.wer.sc.strategy
 
         private void AssertMockStrategy_Ma_Object2(IStrategy strategyObject)
         {
-            StrategyReferedPeriods periods = strategyObject.GetStrategyPeriods();
+            ForwardReferedPeriods periods = strategyObject.GetStrategyPeriods();
             Assert.AreEqual(true, periods.UseTickData);
             Assert.AreEqual(3, periods.UsedKLinePeriods.Count);
             Assert.AreEqual(KLinePeriod.KLinePeriod_1Minute, periods.UsedKLinePeriods[0]);

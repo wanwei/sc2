@@ -21,9 +21,9 @@ namespace com.wer.sc.ui.strategy
 
         private IStrategy strategy;
 
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
-        public FormStrategy(CompChartStrategyBinder binder, StrategyInfo strategyInfo, IStrategy strategy, IDataPackage dataPackage)
+        public FormStrategy(CompChartStrategyBinder binder, StrategyInfo strategyInfo, IStrategy strategy, IDataPackage_Code dataPackage)
         {
             InitializeComponent();
             this.binder = binder;

@@ -9,6 +9,64 @@ namespace com.wer.sc.data.utils
     public class TradingTimeUtils
     {
         /// <summary>
+        /// 得到多天的交易时间详细信息
+        /// </summary>
+        /// <param name="tradingPeriod"></param>
+        /// <param name="klinePeriod"></param>
+        /// <returns></returns>
+        public static KLineDataTimeInfo GetKLineDataTimeInfo(IList<double[]>[] tradingPeriodArr, KLinePeriod klinePeriod)
+        {
+            List<double[]> klineTimeList = new List<double[]>();
+            ISet<int> set_PeriodEnd = new HashSet<int>();
+            ISet<int> set_DayEnd = new HashSet<int>();
+            List<int> tradingDays = new List<int>();
+            for (int i = 0; i < tradingPeriodArr.Length; i++)
+            {
+                IList<double[]> tradingPeriod = tradingPeriodArr[i];
+                GetKLineTimeDataInfo(tradingPeriod, klinePeriod, klineTimeList, set_PeriodEnd, set_DayEnd);
+                tradingDays.Add((int)tradingPeriod[tradingPeriod.Count - 1][1]);
+            }
+            List<int> periodEnds = new List<int>(set_PeriodEnd);
+            periodEnds.Sort();
+            List<int> dayEnds = new List<int>(set_DayEnd);
+            dayEnds.Sort();
+            return new KLineDataTimeInfo(klineTimeList, periodEnds, tradingDays, dayEnds, klinePeriod);
+        }
+
+        /// <summary>
+        /// 得到一天内交易时间详细信息
+        /// </summary>
+        /// <param name="tradingPeriod"></param>
+        /// <param name="klinePeriod"></param>
+        /// <returns></returns>
+        public static KLineDataTimeInfo GetKLineDataTimeInfo(IList<double[]> tradingPeriod, KLinePeriod klinePeriod)
+        {
+            List<double[]> klineTimeList = new List<double[]>();
+            ISet<int> set_PeriodEnd = new HashSet<int>();
+            ISet<int> set_DayEnd = new HashSet<int>();
+
+            GetKLineTimeDataInfo(tradingPeriod, klinePeriod, klineTimeList, set_PeriodEnd, set_DayEnd);
+            List<int> periodEndBarPoses = new List<int>(set_PeriodEnd);
+            periodEndBarPoses.Sort();
+            List<int> dayEndBarposes = new List<int>(set_DayEnd);
+            dayEndBarposes.Sort();
+            IList<int> tradingDays = new List<int>();
+            tradingDays.Add((int)tradingPeriod[tradingPeriod.Count - 1][1]);
+            return new KLineDataTimeInfo(klineTimeList, periodEndBarPoses, tradingDays, dayEndBarposes, klinePeriod);
+        }
+
+        private static void GetKLineTimeDataInfo(IList<double[]> tradingPeriod, KLinePeriod klinePeriod, List<double[]> klineTimeList, ISet<int> set_PeriodEnd, ISet<int> set_DayEnd)
+        {
+            int offset = 0;
+            for (int i = 0; i < tradingPeriod.Count; i++)
+            {
+                offset = GetTimeArr_Full(tradingPeriod[i], klinePeriod, klineTimeList, offset);
+                set_PeriodEnd.Add(klineTimeList.Count - 1);
+            }
+            set_DayEnd.Add(klineTimeList.Count - 1);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="tradingPeriod"></param>

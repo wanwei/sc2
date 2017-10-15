@@ -62,5 +62,10 @@ namespace com.wer.sc.data.reader
         {
             return cache.GetTradingTime(code, date);
         }
+
+        public KLineDataTimeInfo GetKLineDataTimeInfo(int startDate, int endDate, KLinePeriod klinePeriod)
+        {
+            return null;
+        }
     }
 }

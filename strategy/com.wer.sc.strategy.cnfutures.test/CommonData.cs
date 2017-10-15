@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy.cnfutures
             }
         }
 
-        public static IDataPackage GetDataPackage(string code, int startDate, int endDate)
+        public static IDataPackage_Code GetDataPackage(string code, int startDate, int endDate)
         {
             return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
             //return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.reader;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.strategy.cnfutures
 {

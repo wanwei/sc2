@@ -78,6 +78,7 @@ namespace com.wer.sc.ui.comp
         {
             if (!Inited)
                 return;
+            this.PaintChart();
             if (OnChartRefresh != null)
                 OnChartRefresh(this, new ChartRefreshArguments(true, GetChartState(arg.OldChartDataState), GetChartState(arg.CurrentChartDataState)));
         }

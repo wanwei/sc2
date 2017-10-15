@@ -22,7 +22,7 @@ namespace com.wer.sc.data.datapackage
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        internal static IDataPackage CreateDataPackage(IDataReader dataReader, string code, int startDate, int endDate)
+        internal static IDataPackage_Code CreateDataPackage(IDataReader dataReader, string code, int startDate, int endDate)
         {
             return CreateDataPackage(dataReader, code, startDate, endDate, 500, 0);
         }
@@ -37,17 +37,17 @@ namespace com.wer.sc.data.datapackage
         /// <param name="minKlineBefore"></param>
         /// <param name="minKlineAfter"></param>
         /// <returns></returns>
-        internal static IDataPackage CreateDataPackage(IDataReader dataReader, string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
+        internal static IDataPackage_Code CreateDataPackage(IDataReader dataReader, string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
         {
-            return new DataPackage(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
+            return new DataPackage_Code(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
         }
 
-        internal static IDataPackage CreateDataPackage(IDataReader dataReader, string code, int openDate, int beforeDays, int afterDays)
+        internal static IDataPackage_Code CreateDataPackage(IDataReader dataReader, string code, int openDate, int beforeDays, int afterDays)
         {
             return CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays, 500, 0);
         }
 
-        internal static IDataPackage CreateDataPackage(IDataReader dataReader, string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
+        internal static IDataPackage_Code CreateDataPackage(IDataReader dataReader, string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
         {
             ITradingDayReader tradingDayReader = dataReader.TradingDayReader;
 
@@ -70,22 +70,22 @@ namespace com.wer.sc.data.datapackage
             this.dataReader = dataReader;
         }
 
-        public IDataPackage CreateDataPackage(string code, int startDate, int endDate)
+        public IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate)
         {
             return CreateDataPackage(dataReader, code, startDate, endDate);
         }
 
-        public IDataPackage CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
+        public IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
         {
             return CreateDataPackage(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
         }
 
-        public IDataPackage CreateDataPackage(string code, int openDate, int beforeDays, int afterDays)
+        public IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays)
         {
             return CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);
         }
 
-        public IDataPackage CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
+        public IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
         {
             return CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays, minKlineBefore, minKlineAfter);
         }

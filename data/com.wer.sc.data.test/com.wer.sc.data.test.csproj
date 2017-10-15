@@ -67,7 +67,7 @@
     <Compile Include="market\TestAccount.cs" />
     <Compile Include="market\TestMarketTrader_Code.cs" />
     <Compile Include="navigate\TestDataNavigate.cs" />
-    <Compile Include="navigate\impl\TestDataNavigate_Code_TimeLine.cs" />
+    <Compile Include="navigate\TestDataNavigate_Code_TimeLine.cs" />
     <Compile Include="navigate\TestDataNavigate_Night.cs" />
     <Compile Include="reader\DataCenterUri.cs" />
     <Compile Include="reader\TestCodeReader.cs" />
@@ -94,10 +94,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="TestCase\com\wer\sc\data\store\file\Store_AccountFee" />
+    <None Include="TestCase\com\wer\sc\data\forward\forward_tick" />
+    <None Include="TestCase\com\wer\sc\data\forward\forward_tick_timeinfo" />
+    <None Include="TestCase\com\wer\sc\data\forward\forward_tick_onbar" />
     <Compile Include="TestDataCenter.cs" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />
-    <None Include="TestCase\com\wer\sc\data\forward\impl\forward_bigperiod" />
-    <None Include="TestCase\com\wer\sc\data\forward\impl\forward_tickperiod" />
+    <None Include="TestCase\com\wer\sc\data\forward\forward_kline" />
+    <None Include="TestCase\com\wer\sc\data\forward\forward_tickperiod" />
     <None Include="TestCase\com\wer\sc\data\market\data\KLineData_RealTime" />
     <None Include="TestCase\com\wer\sc\data\market\data\TimeLineData_RealTime" />
     <Compile Include="update\Plugin_History_MockUpdate.cs" />

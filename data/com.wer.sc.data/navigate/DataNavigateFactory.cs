@@ -14,7 +14,7 @@ namespace com.wer.sc.data.navigate
     /// </summary>
     public class DataNavigateFactory : IDataNavigateFactory
     {
-        internal static IDataNavigate_Code CreateDataNavigate(IDataPackage dataPackage, double time)
+        internal static IDataNavigate_Code CreateDataNavigate(IDataPackage_Code dataPackage, double time)
         {
             return new DataNavigate_Code(dataPackage, time);
         }
@@ -24,7 +24,7 @@ namespace com.wer.sc.data.navigate
             int openDate = dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             if (openDate < 0)
                 return null;
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
+            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
             return CreateDataNavigate(dataPackage, time);
         }
 
@@ -46,14 +46,14 @@ namespace com.wer.sc.data.navigate
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             if (openDate < 0)
                 return null;
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
+            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
             return CreateDataNavigate(dataPackage, time);
         }
 
         public IDataNavigate_Code CreateDataNavigate(string code, double time, int beforeDays, int afterDays)
         {
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
-            IDataPackage dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);
+            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);
             return CreateDataNavigate(dataPackage, time);
         }
     }

@@ -59,8 +59,8 @@ namespace com.wer.sc.data.update
             for (int i = 0; i < klinePeriods.Count; i++)
             {
                 KLinePeriod period = klinePeriods[i];
-                Step_UpdateKLineData step = new Step_UpdateKLineData(codeInfo.Code, start, end, period, historyData, klineDataStore);
-                steps.Add(step);
+                //Step_UpdateKLineData step = new Step_UpdateKLineData(codeInfo.Code, start, end, period, historyData, klineDataStore);
+                //steps.Add(step);
             }
         }
 

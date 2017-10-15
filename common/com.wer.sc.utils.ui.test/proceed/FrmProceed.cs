@@ -86,7 +86,7 @@ namespace com.wer.sc.utils.ui.update
 
         public string Proceed()
         {
-            Thread.Sleep(step * 1000);
+            Thread.Sleep(step * 100);
             return "执行了" + step + "步";
         }
     }

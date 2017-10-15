@@ -10,8 +10,8 @@ namespace com.wer.sc.data.forward
 {
     public interface IHistoryDataForwardFactory
     {
-        IHistoryDataForward_Code CreateHistoryDataForward_Code(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
+        IHistoryDataForward_Code CreateHistoryDataForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
 
-        IHistoryDataForward_Code CreateHistoryDataForward_Code(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
+        IHistoryDataForward_Code CreateHistoryDataForward_Code(string code, int startDate, int endDate, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
     }
 }

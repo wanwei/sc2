@@ -14,7 +14,7 @@ namespace com.wer.sc.strategy.realtimereader
     /// </summary>
     public class RealTimeReader_Strategy : IHistoryDataForward_Code
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private string code;
 
@@ -22,7 +22,7 @@ namespace com.wer.sc.strategy.realtimereader
 
         private int endDate;
 
-        private StrategyReferedPeriods referedPeriods;
+        private ForwardReferedPeriods referedPeriods;
 
         private IHistoryDataForward_Code klineDataForward;
 
@@ -30,7 +30,7 @@ namespace com.wer.sc.strategy.realtimereader
 
         private ForwardPeriod forwardPeriod;
 
-        public RealTimeReader_Strategy(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        public RealTimeReader_Strategy(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
             this.dataPackage = dataPackage;
             this.code = dataPackage.Code;
@@ -215,7 +215,7 @@ namespace com.wer.sc.strategy.realtimereader
             }
         }
 
-        public IDataPackage DataPackage
+        public IDataPackage_Code DataPackage
         {
             get
             {

@@ -2,6 +2,7 @@
 using com.wer.sc.data.store.file;
 using com.wer.sc.data.transfer;
 using com.wer.sc.data.update;
+using com.wer.sc.data.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,14 +14,17 @@ namespace com.wer.sc.data.reader
 {
     public class KLineDataReader : IKLineDataReader
     {
+        private IDataReader dataReader;
+
         private IKLineDataStore klineDataStore;
 
         private KLineDataReader_Extend dataReaderExtend;
 
-        public KLineDataReader(IDataStore dataStore,IDataReader dataReader)
+        public KLineDataReader(IDataStore dataStore, IDataReader dataReader)
         {
+            this.dataReader = dataReader;
             this.klineDataStore = dataStore.CreateKLineDataStore();
-            this.dataReaderExtend = new KLineDataReader_Extend(dataReader);
+            this.dataReaderExtend = new KLineDataReader_Extend(dataReader, klineDataStore);
         }
 
         public IKLineData GetAllData(string code, KLinePeriod period)
@@ -60,12 +64,10 @@ namespace com.wer.sc.data.reader
             throw new ArgumentException("暂未实现");
         }
 
-        //public IKLineData GetData(string code, int startDate, int endDate, KLinePeriod period, int beforeBarCount)
-        //{
-        //    //beforeBarCount
-
-        //    return null;
-        //}
+        public IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period)
+        {
+            return dataReaderExtend.GetData_Extend(code, startDate, endDate, minBeforeBarCount, minAfterBarCount, period);
+        }
 
         private IKLineData LoadKLineData(string code, int startDate, int endDate, KLinePeriod period)
         {
@@ -95,6 +97,11 @@ namespace com.wer.sc.data.reader
         public float GetLastEndPrice(string code, int date)
         {
             return dataReaderExtend.GetLastEndPrice(code, date);
+        }
+
+        public KLineDataTimeInfo GetKLineDataTimeInfo(string code, int startDate, int endDate, KLinePeriod klinePeriod)
+        {
+            return dataReaderExtend.GetKLineDataTimeInfo(code, startDate, endDate, klinePeriod);
         }
     }
 }

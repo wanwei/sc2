@@ -49,17 +49,14 @@
     <Compile Include="cache\DataCacheManager.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
     <Compile Include="datapackage\IDataPackageOwner.cs" />
-    <Compile Include="datapackage\DataPackage.cs" />
+    <Compile Include="datapackage\DataPackage_Code.cs" />
     <Compile Include="forward\HistoryDataForwardFactory.cs" />
-    <Compile Include="forward\HistoryDataForwardArguments.cs" />
-    <Compile Include="forward\HistoryDataForward.cs" />
     <Compile Include="forward\HistoryDataForward_Code_KLinePeriod.cs" />
     <Compile Include="forward\HistoryDataForward_Code_TickPeriod.cs" />
-    <Compile Include="forward\KLineData_DaySplitter.cs" />
-    <Compile Include="forward\HistoryDataForward_Code.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
     <Compile Include="reader\MainContractReader.cs" />
     <Compile Include="reader\TradingTimeReader.cs" />
+    <Compile Include="realtime\KLineDataExtend_RealTime.cs" />
     <Compile Include="store\file\MainContractStore_File.cs" />
     <Compile Include="store\file\TradingTimeStore_File.cs" />
     <Compile Include="store\IMainContractStore.cs" />
@@ -159,9 +156,7 @@
       <Name>com.wer.sc.plugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="datapackage\impl\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(ProjectDir)datacenter.config $(TargetDir)config\  /y</PostBuildEvent>

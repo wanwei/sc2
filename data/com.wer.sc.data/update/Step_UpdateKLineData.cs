@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.store;
+﻿using com.wer.sc.data.reader;
+using com.wer.sc.data.store;
 using com.wer.sc.data.store.file;
 using com.wer.sc.data.utils;
 using com.wer.sc.plugin;
@@ -13,11 +14,12 @@ namespace com.wer.sc.data.update
 {
     public class Step_UpdateKLineData : IStep
     {
-        private string code;
+        private CodeInfo codeInfo;
 
-        private int startDate;
+        private ITradingDayReader tradingDayReader;
+        //private int startDate;
 
-        private int endDate;
+        //private int endDate;
 
         private KLinePeriod period;
 
@@ -27,19 +29,28 @@ namespace com.wer.sc.data.update
 
         private UpdatedDataInfo updatedDataInfo;
 
-        public Step_UpdateKLineData(string code, int startDate, int endDate, KLinePeriod period, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore)
+        private IUpdateInfoStore updateInfoStore;
+
+        private bool updateFillUp;
+        //public Step_UpdateKLineData(string code, int startDate, int endDate, KLinePeriod period, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore)
+        //{
+        //    this.code = code;
+
+        //    this.period = period;
+        //    this.historyData = historyData;
+        //    this.klineDataStore = klineDataStore;
+        //}
+
+        public Step_UpdateKLineData(CodeInfo codeInfo, KLinePeriod period, ITradingDayReader tradingDayReader, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore, UpdatedDataInfo updatedDataInfo, IUpdateInfoStore updateInfoStore, bool updateFillUp)
         {
-            this.code = code;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.codeInfo = codeInfo;
+            this.tradingDayReader = tradingDayReader;
             this.period = period;
             this.historyData = historyData;
             this.klineDataStore = klineDataStore;
-        }
-
-        public Step_UpdateKLineData(string code, int startDate, int endDate, KLinePeriod period, IPlugin_HistoryData historyData, IKLineDataStore klineDataStore, UpdatedDataInfo updatedDataInfo) : this(code, startDate, endDate, period, historyData, klineDataStore)
-        {
             this.updatedDataInfo = updatedDataInfo;
+            this.updateInfoStore = updateInfoStore;
+            this.updateFillUp = updateFillUp;
         }
 
         public int ProgressStep
@@ -48,8 +59,8 @@ namespace com.wer.sc.data.update
             {
                 if (period.PeriodType == KLineTimeType.DAY)
                     return 3;
-
-                return 3 * TimeUtils.Substract(endDate, startDate).Days;
+                return 30;
+                //return 3 * TimeUtils.Substract(endDate, startDate).Days;
             }
         }
 
@@ -57,7 +68,7 @@ namespace com.wer.sc.data.update
         {
             get
             {
-                return "更新" + code + "的" + startDate + "-" + endDate + "的" + period + "K线数据";
+                return "更新" + codeInfo.Code + "的" + period + "K线数据";
             }
         }
 
@@ -68,15 +79,27 @@ namespace com.wer.sc.data.update
 
         public string Proceed()
         {
-            //Console.WriteLine(code + "," + startDate + "," + endDate + period);
-            IKLineData klineData = historyData.GetKLineData(code, startDate, endDate, period);
+            int startDate;
+
+            int lastTradingDay = klineDataStore.GetLastTradingDay(codeInfo.Code, period);
+            if (updateFillUp)
+                startDate = codeInfo.Start;
+            else
+                startDate = this.tradingDayReader.GetNextTradingDay(lastTradingDay);
+            int endDate = this.tradingDayReader.LastTradingDay;
+
+            IKLineData klineData = historyData.GetKLineData(codeInfo.Code, startDate, endDate, period);
             if (klineData == null || klineData.Length == 0)
                 return "";
-            klineDataStore.Delete(code, period);
-            klineDataStore.Append(code, period, klineData);
+
+            if (updateFillUp) 
+                klineDataStore.Delete(codeInfo.Code, period);
+            klineDataStore.Append(codeInfo.Code, period, klineData);
             if (updatedDataInfo != null)
             {
-                updatedDataInfo.WriteUpdateInfo_KLine(code, period, endDate);
+                int realEndDate = (int)klineData.Arr_Time[klineData.Length - 1];
+                updatedDataInfo.WriteUpdateInfo_KLine(codeInfo.Code, period, realEndDate);
+                updateInfoStore.Save(updatedDataInfo);
             }
             return StepDesc + "完毕";
         }

@@ -55,6 +55,7 @@ namespace com.wer.sc.data.reader
 
         /// <summary>
         /// 得到最近的交易时间
+        /// 如果time在交易时间内，则返回time
         /// </summary>
         /// <param name="time"></param>
         /// <param name="findForward"></param>
@@ -67,13 +68,5 @@ namespace com.wer.sc.data.reader
         /// <param name="time"></param>
         /// <returns></returns>
         bool IsStartTime(double time);
-
-        /// <summary>
-        /// 得到指定开盘时间
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        //List<double[]> GetTradingTime(String code, int date);
     }
 }

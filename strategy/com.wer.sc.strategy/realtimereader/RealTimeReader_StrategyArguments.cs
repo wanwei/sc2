@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.forward;
 using com.wer.sc.strategy;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace com.wer.sc.strategy.realtimereader
 
         int endDate;
 
-        StrategyReferedPeriods referedPeriods;
+        ForwardReferedPeriods referedPeriods;
 
         bool isTickForward;
 
@@ -61,7 +62,7 @@ namespace com.wer.sc.strategy.realtimereader
             }
         }
 
-        public StrategyReferedPeriods ReferedPeriods
+        public ForwardReferedPeriods ReferedPeriods
         {
             get
             {

@@ -78,5 +78,18 @@ namespace com.wer.sc.data.navigate
             IKLineData klineData = nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             AssertUtils.PrintKLineData(klineData);
         }
+
+        [TestMethod]
+        public void TestNavigate_Forward()
+        {
+            string code = "rb1801";
+            double time = 20170929.145900;
+            IDataNavigate_Code nav = DataCenter.Default.DataNavigateFactory.CreateDataNavigate(code, time);
+            bool canForward = nav.Forward(KLinePeriod.KLinePeriod_1Minute);
+            Assert.IsTrue(canForward);
+
+            canForward = nav.Forward(KLinePeriod.KLinePeriod_1Minute);
+            Assert.IsFalse(canForward);
+        }
     }
 }

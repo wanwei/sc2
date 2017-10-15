@@ -2,7 +2,6 @@
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
-using com.wer.sc.strategy.realtimereader;
 using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
@@ -24,11 +23,11 @@ namespace com.wer.sc.strategy
 
         private bool isRunning;
 
-        private StrategyReferedPeriods referedPeriods;
+        private ForwardReferedPeriods referedPeriods;
 
         private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
 
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private ForwardPeriod forwardPeriod;
 
@@ -36,12 +35,12 @@ namespace com.wer.sc.strategy
 
         private IStrategyReport report;
 
-        public StrategyExecutor_History(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
+        public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
         {
 
         }
 
-        public StrategyExecutor_History(IDataPackage dataPackage, StrategyReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyHelper strategyHelper)
+        public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyHelper strategyHelper)
         {
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
@@ -53,7 +52,7 @@ namespace com.wer.sc.strategy
         {
             this.strategy = strategy;
             this.strategy.StrategyHelper = strategyHelper;
-            StrategyReferedPeriods rPeriods = strategy.GetStrategyPeriods();
+            ForwardReferedPeriods rPeriods = strategy.GetStrategyPeriods();
             if (rPeriods != null)
                 this.referedPeriods = rPeriods;
         }
@@ -82,17 +81,20 @@ namespace com.wer.sc.strategy
                 isRunning = true;
                 isCancel = false;
 
-                RealTimeReader_Strategy realTimeReader = new RealTimeReader_Strategy(dataPackage, referedPeriods, forwardPeriod);
-                realTimeReader.OnBar += RealTimeReader_OnBar;
-                realTimeReader.OnTick += RealTimeReader_OnTick;
+                //RealTimeReader_Strategy realTimeReader = new RealTimeReader_Strategy(dataPackage, referedPeriods, forwardPeriod);
+                //realTimeReader.OnBar += RealTimeReader_OnBar;
+                //realTimeReader.OnTick += RealTimeReader_OnTick;
+                IHistoryDataForward_Code dataForward = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+                dataForward.OnBar += RealTimeReader_OnBar;
+                dataForward.OnTick += RealTimeReader_OnTick;
 
-                StrategyTrader trader = new StrategyTrader(100000, realTimeReader);
+                StrategyTrader trader = new StrategyTrader(100000, dataForward);
                 this.strategyHelper.Trader = trader.GetStrategyTrader(dataPackage.Code);
 
                 ExecuteStrategyStart();
                 if (isCancel)
                     return;
-                bool continueExecute = ExecuteStrategy(realTimeReader);
+                bool continueExecute = ExecuteStrategy(dataForward);
                 if (!continueExecute)
                     return;
                 if (isCancel)
@@ -161,12 +163,12 @@ namespace com.wer.sc.strategy
             this.report = report;
         }
 
-        private bool ExecuteStrategy(RealTimeReader_Strategy realTimeReader)
+        private bool ExecuteStrategy(IHistoryDataForward_Code realTimeReader)
         {
-            if (forwardPeriod.IsTickForward)
-                RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
-            else
-                RealTimeReader_OnBar(realTimeReader, realTimeReader.GetKLineData(), 0);
+            //if (forwardPeriod.IsTickForward)
+            //    RealTimeReader_OnTick(realTimeReader, realTimeReader.GetTickData(), 0);
+            //else
+            //    RealTimeReader_OnBar(realTimeReader, realTimeReader.GetKLineData(), 0);
 
             //执行策略
             while (!realTimeReader.IsEnd)
@@ -231,7 +233,7 @@ namespace com.wer.sc.strategy
             strategy.OnTick(realTimeDataReader);
         }
 
-        private void RealTimeReader_OnBar(object sender, IKLineData klineData, int index)
+        private void RealTimeReader_OnBar(object sender, ForwardOnBarArgument argument)
         {
             OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender);
         }

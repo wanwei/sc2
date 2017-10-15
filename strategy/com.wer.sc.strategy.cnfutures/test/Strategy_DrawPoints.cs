@@ -8,6 +8,7 @@ using com.wer.sc.data;
 using System.Drawing;
 using com.wer.sc.strategy.draw;
 using com.wer.sc.utils;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.strategy.cnfutures.test
 {

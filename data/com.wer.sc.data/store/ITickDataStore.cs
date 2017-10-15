@@ -47,5 +47,13 @@ namespace com.wer.sc.data.store
         /// </summary>
         /// <returns></returns>
         List<int> GetAllDays(string code);
+
+        /// <summary>
+        /// 是否存在该日tick数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        bool Exist(string code, int date);
     }
 }

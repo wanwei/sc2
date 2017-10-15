@@ -12,9 +12,13 @@ namespace com.wer.sc.data.reader
     public class TickDataReader : ITickDataReader
     {
         private ITickDataStore tickDataStore;
-        public TickDataReader(IDataStore dataStore)
+
+        private IDataReader dataReader;
+
+        public TickDataReader(IDataStore dataStore, IDataReader dataReader)
         {
             this.tickDataStore = dataStore.CreateTickDataStore();
+            this.dataReader = dataReader;
         }
 
         //public List<int> GetTickDates(String code)
@@ -36,6 +40,12 @@ namespace com.wer.sc.data.reader
         public TickData GetTickData(String code, int date)
         {
             return tickDataStore.Load(code, date);
-        }      
+        }
+
+        public ITickData_Extend GetTickData_Extend(string code, int date)
+        {
+            TradingTime tradingTime = this.dataReader.CreateTradingTimeReader(code).GetTradingTime(date);
+            return new TickData_Extend(GetTickData(code, date), tradingTime);
+        }
     }
 }

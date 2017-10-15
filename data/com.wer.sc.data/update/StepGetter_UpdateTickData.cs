@@ -29,13 +29,16 @@ namespace com.wer.sc.data.update
 
         private IUpdateInfoStore updateInfoStore;
 
-        public StepGetter_UpdateTickData(IPlugin_HistoryData historyData, IDataStore dataStore, bool isFillUp, UpdatedDataInfo updatedDataInfo)
+        private IList<int> newTradingDays;
+
+        public StepGetter_UpdateTickData(IPlugin_HistoryData historyData, IDataStore dataStore, bool isFillUp, UpdatedDataInfo updatedDataInfo, IUpdateInfoStore updateInfoStore, IList<int> newTradingDays)
         {
             this.historyData = historyData;
             this.dataStore = dataStore;
             this.isFillUp = isFillUp;
             this.updatedDataInfo = updatedDataInfo;
-            this.updateInfoStore = dataStore.CreateUpdateInfoStore();
+            this.updateInfoStore = updateInfoStore;
+            this.newTradingDays = newTradingDays;
         }
 
         public List<IStep> GetSteps()
@@ -55,12 +58,48 @@ namespace com.wer.sc.data.update
             CacheUtils_TradingDay tradingDayCache = new CacheUtils_TradingDay(allTradingDays);
 
             for (int i = 0; i < allInstruments.Count; i++)
+            //for (int i = 0; i < 10; i++)
             {
                 CodeInfo instrument = allInstruments[i];
-                List<int> storedAllDays = tickDataStore.GetAllDays(instrument.Code);
-                List<int> allDays = GetAllNotUpdateTickData(instrument, tradingDayCache, storedAllDays, isFillUp);
-                if (allDays == null)
+                int lastTradingDay = instrument.End;
+                if (lastTradingDay <= 0)
+                    lastTradingDay = tradingDayCache.LastTradingDay;
+                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(instrument.Code);
+                if (lastUpdatedDate >= lastTradingDay)
                     continue;
+                if (lastUpdatedDate < instrument.Start)
+                    lastUpdatedDate = tradingDayCache.GetPrevTradingDay(instrument.Start);                
+                
+                List<int> allDays;
+                if (!isFillUp)
+                {
+                    int startDate = tradingDayCache.GetNextTradingDay(lastUpdatedDate);
+                    //如果不填充数据，直接根据最新交易日期和最后更新日期
+                    int endDate = instrument.End;
+                    if (endDate <= 0)
+                        endDate = allTradingDays[allTradingDays.Count - 1];
+
+                    //20171015 ww 在不全面更新数据情况下，如果最新的交易日比合约截止时间更新，则不再更新该合约数据
+                    int firstNewTradingDay = newTradingDays.Count == 0 ? allTradingDays[allTradingDays.Count - 1] : newTradingDays[0];
+                    if (firstNewTradingDay > endDate)
+                        continue;
+                    
+                    IList<int> tradingDays = tradingDayCache.GetTradingDays(lastUpdatedDate, endDate);
+                    if (tradingDays == null || tradingDays.Count == 0)
+                        continue;
+                    allDays = new List<int>();
+                    allDays.AddRange(tradingDays);
+                    //allTradingDays
+                }
+                else
+                {
+                    //如果填充所有数据
+                    List<int> storedAllDays = tickDataStore.GetAllDays(instrument.Code);
+                    allDays = GetAllNotUpdateTickData(instrument, tradingDayCache, storedAllDays, isFillUp);
+                    if (allDays == null)
+                        continue;
+                }
+
                 AddSteps_TickData_Instrument(steps, instrument.Code, allDays);
             }
         }
@@ -159,10 +198,10 @@ namespace com.wer.sc.data.update
                 IStep step;
                 if (i != stepCount - 1)
                 {
-                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), historyData, tickDataStore, updatedDataInfo, updateInfoStore);
+                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, DAYS_EVERYTICKSTEP), historyData, tickDataStore);
                 }
                 else
-                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), historyData, tickDataStore);
+                    step = new Step_UpdateTickData(code, openDates.GetRange(i * DAYS_EVERYTICKSTEP, lastStepUpdateCount), historyData, tickDataStore, updatedDataInfo, updateInfoStore);
                 steps.Add(step);
             }
         }

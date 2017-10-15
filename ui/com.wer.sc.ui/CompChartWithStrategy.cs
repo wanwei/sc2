@@ -27,9 +27,9 @@ namespace com.wer.sc.ui
             //IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
         }
 
-        public IStrategyExecutor CreateExecutor(IDataPackage dataPackage, IStrategy strategy, KLinePeriod period)
+        public IStrategyExecutor CreateExecutor(IDataPackage_Code dataPackage, IStrategy strategy, KLinePeriod period)
         {
-            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UsedKLinePeriods.Add(period);
             ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
             return StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);

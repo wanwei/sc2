@@ -29,7 +29,7 @@ namespace com.wer.sc.data.realtime
             chart.Mount = 1600;
             chart.Hold = 718011;
 
-            data_real.SetRealTimeData(chart, 15);
+            data_real.ChangeCurrentBar(chart, 15);
             Assert.AreEqual("20131202.091455,3745,3745,3743,3743,1600,0,718011", chart.ToString());
             Assert.AreEqual(chart.ToString(), data_real.ToString());
             Assert.AreEqual(2, data_real.Height);
@@ -52,7 +52,7 @@ namespace com.wer.sc.data.realtime
             //    (float)NumberUtils.percent(chart.End, klineData.Arr_End[barPos - 1]);
             //list_UpPercent.SetTmpValue(barPos, upPercent);
 
-            data_real.SetRealTimeData(null, 16);
+            data_real.ChangeCurrentBar(null, 16);
             Assert.AreEqual("20131202.0915,3354,3354,3352,3353,9202,0,1717708", data_real.ToString(15));
         }
     }

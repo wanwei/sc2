@@ -37,7 +37,7 @@ namespace com.wer.sc.data.navigate
         /// <summary>
         /// 得到它所属的数据包
         /// </summary>
-        IDataPackage DataPackage { get; }
+        IDataPackage_Code DataPackage { get; }
 
         /// <summary>
         /// 导航到

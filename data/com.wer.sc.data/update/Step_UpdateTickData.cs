@@ -63,17 +63,24 @@ namespace com.wer.sc.data.update
         {
             if (tradingDays == null || tradingDays.Count == 0)
                 return "";
-
+            int lastTradingDay = 0;
             for (int i = 0; i < tradingDays.Count; i++)
             {
                 int tradingDay = tradingDays[i];
+                if (tickDataStore.Exist(code, tradingDay)) {
+                    lastTradingDay = tradingDay;
+                    continue;
+                }
                 TickData tickData = (TickData)historyData.GetTickData(code, tradingDay);
                 if (tickData != null)
+                {
                     tickDataStore.Save(code, tradingDay, tickData);
+                    lastTradingDay = tradingDay;
+                }
             }
             if (tradingDays.Count > 0 && updatedDataInfo != null)
             {
-                updatedDataInfo.WriteUpdateInfo_Tick(code, tradingDays[tradingDays.Count - 1]);
+                updatedDataInfo.WriteUpdateInfo_Tick(code, lastTradingDay);
                 updateInfoStore.Save(updatedDataInfo);
             }
             return StepDesc + "完成";

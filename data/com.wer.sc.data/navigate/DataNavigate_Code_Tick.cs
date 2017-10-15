@@ -11,7 +11,7 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigate_Code_Tick
     {
-        private IDataPackage dataPackage;
+        private IDataPackage_Code dataPackage;
 
         private string code;
 
@@ -23,7 +23,7 @@ namespace com.wer.sc.data.navigate
 
         private ITradingTimeReader_Code sessionReader;
 
-        public DataNavigate_Code_Tick(IDataPackage dataPackage, double time)
+        public DataNavigate_Code_Tick(IDataPackage_Code dataPackage, double time)
         {
             this.dataPackage = dataPackage;
             this.sessionReader = dataPackage.GetTradingTimeReader();

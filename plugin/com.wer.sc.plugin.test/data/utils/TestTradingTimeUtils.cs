@@ -32,6 +32,54 @@ namespace com.wer.sc.data.utils
             }
         }
 
+        [TestMethod]
+        public void TestGetKLineDataTimeInfo()
+        {
+            List<double[]> openTime = new List<double[]>();
+            openTime.Add(new double[] { 20150107.210000, 20150107.230000 });
+            openTime.Add(new double[] { 20150110.090000, 20150110.101500 });
+            openTime.Add(new double[] { 20150110.103000, 20150110.113000 });
+            openTime.Add(new double[] { 20150110.133000, 20150110.150000 });
+
+            KLineDataTimeInfo timeInfo = TradingTimeUtils.GetKLineDataTimeInfo(openTime, new KLinePeriod(KLineTimeType.MINUTE, 1));
+            //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_15Minute);
+            //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_1Hour);
+            Console.WriteLine(timeInfo);
+        }
+
+        [TestMethod]
+        public void TestGetKLineDataTimeInfo_Days()
+        {
+            IList<double[]>[] openTimeArr = new List<double[]>[2];
+            openTimeArr[0] = GetDay1();
+            openTimeArr[1] = GetDay2();
+
+            KLineDataTimeInfo timeInfo = TradingTimeUtils.GetKLineDataTimeInfo(openTimeArr, new KLinePeriod(KLineTimeType.MINUTE, 1));
+            //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_15Minute);
+            //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_1Hour);
+            Console.WriteLine(timeInfo);
+        }
+
+        private static List<double[]> GetDay1()
+        {
+            List<double[]> openTime = new List<double[]>();
+            openTime.Add(new double[] { 20150107.210000, 20150108.023000 });
+            openTime.Add(new double[] { 20150110.090000, 20150110.101500 });
+            openTime.Add(new double[] { 20150110.103000, 20150110.113000 });
+            openTime.Add(new double[] { 20150110.133000, 20150110.150000 });
+            return openTime;
+        }
+
+        private static List<double[]> GetDay2()
+        {
+            List<double[]> openTime = new List<double[]>();
+            openTime.Add(new double[] { 20150110.210000, 20150111.023000 });
+            openTime.Add(new double[] { 20150111.090000, 20150111.101500 });
+            openTime.Add(new double[] { 20150111.103000, 20150111.113000 });
+            openTime.Add(new double[] { 20150111.133000, 20150111.150000 });
+            return openTime;
+        }
+
         //[TestMethod]
         //public void TestGetKLineTimeList_DayOpenTime()
         //{
