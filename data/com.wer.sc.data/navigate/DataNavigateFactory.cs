@@ -39,7 +39,7 @@ namespace com.wer.sc.data.navigate
         internal DataNavigateFactory(IDataReader dataReader)
         {
             this.dataReader = dataReader;
-        }
+        }      
 
         public IDataNavigate_Code CreateDataNavigate(string code, double time)
         {

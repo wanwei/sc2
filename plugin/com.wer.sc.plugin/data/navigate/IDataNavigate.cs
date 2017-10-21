@@ -8,6 +8,8 @@ namespace com.wer.sc.data.navigate
 {
     public interface IDataNavigate : IDataNavigate_Code
     {
-        void ChangeCode(string code);
+        void Change(string code);
+
+        void Change(string code, double time);
     }
 }

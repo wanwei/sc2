@@ -24,7 +24,7 @@ namespace com.wer.sc.data
 
         private IDataPackageFactory dataPackageFactory;
 
-        private IHistoryDataForwardFactory historyDataForwardFactory;
+        private IDataForwardFactory historyDataForwardFactory;
 
         private IDataNavigateFactory dataNavigateFactory;
 
@@ -34,7 +34,7 @@ namespace com.wer.sc.data
             this.dataStore = dataStore;
             this.dataReader = dataReaderFactory;
             this.dataPackageFactory = new DataPackageFactory(dataReader);
-            this.historyDataForwardFactory = new HistoryDataForwardFactory(this);
+            this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(dataReader);
         }
 
@@ -117,7 +117,7 @@ namespace com.wer.sc.data
             }
         }
 
-        public IHistoryDataForwardFactory HistoryDataForwardFactory
+        public IDataForwardFactory HistoryDataForwardFactory
         {
             get
             {

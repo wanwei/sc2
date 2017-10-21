@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyResult_Single : IStrategyResult_Single
+    public class StrategyResult_Single : IStrategyQueryResult_Single
     {
         private string code;
 

@@ -70,24 +70,34 @@ namespace com.wer.sc.data.datapackage
             this.dataReader = dataReader;
         }
 
-        public IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate)
+        public IDataPackage_Code CreateDataPackage_Code(string code, int startDate, int endDate)
         {
             return CreateDataPackage(dataReader, code, startDate, endDate);
         }
 
-        public IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
+        public IDataPackage_Code CreateDataPackage_Code(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
         {
             return CreateDataPackage(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
         }
 
-        public IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays)
+        public IDataPackage_Code CreateDataPackage_Code(string code, int openDate, int beforeDays, int afterDays)
         {
             return CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);
         }
 
-        public IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
+        public IDataPackage_Code CreateDataPackage_Code(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
         {
             return CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays, minKlineBefore, minKlineAfter);
+        }
+
+        public IDataPackage CreateDataPackage(string[] codes, int startDate, int endDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataPackage CreateDataPackage(string[] codes, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,22 +17,22 @@ namespace com.wer.sc.strategy.cnfutures
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
 
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
 
         }

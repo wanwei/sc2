@@ -65,7 +65,6 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             steps.Add(step_CodeInfo);
             steps.Add(new Step_TradingDay(dataUpdateHelper));
 
-            GetTradingSession(steps, allCodes);
             GetTradingTime(steps, allCodes, false);
             GetTickSteps(steps, updatedDataInfo, allCodes);
             GetKLineDataSteps(steps, updatedDataInfo, allCodes);

@@ -31,7 +31,7 @@ namespace com.wer.sc.strategy
 
         public static IDataPackage_Code GetDataPackage(string code, int startDate, int endDate)
         {
-            return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+            return DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
             //return DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
         }
 

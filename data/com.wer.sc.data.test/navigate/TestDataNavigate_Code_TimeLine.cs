@@ -20,7 +20,7 @@ namespace com.wer.sc.data.navigate.impl
             DataCenter dataCenter = DataCenter.Default;
             IDataReader dataReader = dataCenter.DataReader;
             //DataReaderFactory.CreateDataReader(@"e:\scdata\cnfutures\");
-            IDataPackage_Code dataPackage = dataCenter.DataPackageFactory.CreateDataPackage(code, 20170301, 20170410);
+            IDataPackage_Code dataPackage = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, 20170301, 20170410);
             //DataPackageFactory.CreateDataPackage(dataReader, code, 20170301, 20170410);
             DataNavigate_Code_TimeLine navigate = new DataNavigate_Code_TimeLine(dataPackage, time);
             ITimeLineData timeLineData = navigate.GetTimeLineData();

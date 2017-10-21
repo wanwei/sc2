@@ -11,11 +11,61 @@ namespace com.wer.sc.data.forward
     /// </summary>
     public class ForwardReferedPeriods
     {
-        public bool UseTickData = false;
+        private bool useTickData = false;
 
-        public bool isReferTimeLineData = false;
+        private bool useTimeLineData = false;
 
-        public List<KLinePeriod> UsedKLinePeriods = new List<KLinePeriod>();
+        private List<KLinePeriod> usedKLinePeriods = new List<KLinePeriod>();
+
+        public ForwardReferedPeriods()
+        {
+        }
+
+        public ForwardReferedPeriods(IList<KLinePeriod> usedKLinePeriods, bool useTick, bool useTimeLine)
+        {
+            this.UsedKLinePeriods.AddRange(usedKLinePeriods);
+            this.useTickData = useTick;
+            this.useTimeLineData = useTimeLine;
+        }
+
+        public bool UseTickData
+        {
+            get
+            {
+                return useTickData;
+            }
+
+            set
+            {
+                useTickData = value;
+            }
+        }
+
+        public bool UseTimeLineData
+        {
+            get
+            {
+                return useTimeLineData;
+            }
+
+            set
+            {
+                useTimeLineData = value;
+            }
+        }
+
+        public List<KLinePeriod> UsedKLinePeriods
+        {
+            get
+            {
+                return usedKLinePeriods;
+            }
+
+            set
+            {
+                usedKLinePeriods = value;
+            }
+        }
 
         public KLinePeriod GetMinPeriod()
         {

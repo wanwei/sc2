@@ -41,6 +41,10 @@ namespace com.wer.sc.data.utils
 
         public IList<int> GetTradingDays(int startDate, int endDate)
         {
+            if (startDate <= 0)
+                startDate = openDatesList[0];
+            if (endDate <= 0)
+                endDate = openDatesList[openDatesList.Count - 1];
             if (endDate < startDate)
                 return ListUtils.EmptyIntList;
 

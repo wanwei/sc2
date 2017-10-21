@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.realtime
 {
-    public class TimeLineData_RealTime : TimeLineData_Abstract
+    public class TimeLineData_RealTime : TimeLineData_Abstract, ITimeLineData_RealTime
     {
-        private ITimeLineData timeLineData;        
+        private ITimeLineData timeLineData;
 
         private ReadOnlyList_TmpValue<double> list_time;
         private ReadOnlyList_TmpValue<float> list_price;
         private ReadOnlyList_TmpValue<int> list_mount;
         private ReadOnlyList_TmpValue<int> list_hold;
         private ReadOnlyList_TmpValue<float> list_upPercent;
-        private ReadOnlyList_TmpValue<float> list_upRange;        
+        private ReadOnlyList_TmpValue<float> list_upRange;
 
         public TimeLineData_RealTime(ITimeLineData timeLineData)
         {
@@ -29,7 +29,12 @@ namespace com.wer.sc.data.realtime
             this.list_upRange = new ReadOnlyList_TmpValue<float>(timeLineData.Arr_UpRange);
         }
 
-        public void SetRealTimeData(ITimeLineBar chart, int barPos)
+        public void ResetCurrentBar()
+        {
+            this.ChangeCurrentBar(null);
+        }
+
+        public void ChangeCurrentBar(ITimeLineBar chart, int barPos)
         {
             this.BarPos = barPos;
             ReadOnlyList_TmpValue<double> timelist = (ReadOnlyList_TmpValue<double>)Arr_Time;
@@ -63,10 +68,15 @@ namespace com.wer.sc.data.realtime
         /// 修改当前chart，
         /// </summary>
         /// <param name="chart"></param>
-        public void SetRealTimeData(ITimeLineBar chart)
+        public void ChangeCurrentBar(ITimeLineBar chart)
         {
-            SetRealTimeData(chart, BarPos);
+            ChangeCurrentBar(chart, BarPos);
         }
+
+        //public ITimeLineBar GetCurrentBar_Original()
+        //{
+        //    return timeLineData.GetCurrentBar();
+        //}
 
         public override string Code
         {
@@ -77,7 +87,7 @@ namespace com.wer.sc.data.realtime
 
             set
             {
-                
+
             }
         }
 
@@ -90,7 +100,7 @@ namespace com.wer.sc.data.realtime
 
             set
             {
-                
+
             }
         }
 

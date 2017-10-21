@@ -15,27 +15,27 @@ namespace com.wer.sc.strategy
     {
         private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
 
-        private IStrategyHelper strategyHelper;
+        private IStrategyOperator strategyHelper;
 
         private IParameters parameters = ParameterFactory.CreateParameters();
 
         public abstract StrategyReferedPeriods GetStrategyPeriods();
 
-        public abstract void OnBar(IRealTimeDataReader_Code currentData);
+        public abstract void OnStrategyStart(Object sender, StrategyOnStartArgument argument);
 
-        public abstract void OnTick(IRealTimeDataReader_Code currentData);
+        public abstract void OnStrategyEnd(Object sender, StrategyOnEndArgument argument);        
 
-        public abstract void StrategyEnd();
+        public abstract void OnBar(Object sender, StrategyOnBarArgument currentData);
 
-        public abstract void StrategyStart();
+        public abstract void OnTick(Object sender, StrategyOnTickArgument currentData);
 
-        public IStrategyHelper StrategyHelper
+        public IStrategyOperator StrategyOperator
         {
             get { return strategyHelper; }
             set { strategyHelper = value; }
         }
 
-        public KLinePeriod DefaultMainPeriod
+        public KLinePeriod MainKLinePeriod
         {
             get
             {

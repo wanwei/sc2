@@ -25,7 +25,7 @@ namespace com.wer.sc.ui.comp
         {
             try
             {
-                IList<IStrategyAssembly> assemblies = StrategyMgrFactory.DefaultPluginMgr.GetAllStrategyAssemblies();
+                IList<IStrategyAssembly> assemblies = null;// StrategyMgrFactory.DefaultPluginMgr.GetAllStrategyAssemblies();
                 if (assemblies == null)
                     return;
                 this.treeStrategy.Nodes.Clear();

@@ -254,14 +254,14 @@ namespace com.wer.sc.ui.comp
             ForwardReferedPeriods referedPeriods = strategy.GetStrategyPeriods();
             if (referedPeriods != null)
                 return referedPeriods;
-            strategy.DefaultMainPeriod = compChart.CompChartData.KlinePeriod;
+            //strategy.MainKLinePeriod = compChart.CompChartData.KlinePeriod;
             referedPeriods = new ForwardReferedPeriods();
             KLinePeriod period = compChart.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);
             return referedPeriods;
         }
 
-        private StrategyHelper GetStrategyHelper()
+        private StrategyOperator GetStrategyHelper()
         {
             return compChart.StrategyHelper;
         }

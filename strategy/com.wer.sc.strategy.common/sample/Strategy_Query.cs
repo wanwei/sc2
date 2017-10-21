@@ -18,9 +18,9 @@ namespace com.wer.sc.strategy.common.sample
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
+            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
             if (klineData.BarPos == 0)
                 return;
             float start = klineData.Start;
@@ -31,21 +31,21 @@ namespace com.wer.sc.strategy.common.sample
                 string code = klineData.Code;
                 double time = klineData.Time;
                 //IStrategyResult result = new StrategyResult(code, time);
-                this.StrategyHelper.AddStrategyResult(code, time, "", "");
+                this.StrategyOperator.AddStrategyResult(code, time, "", "");
             }
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
 
         }

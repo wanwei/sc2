@@ -8,6 +8,7 @@ using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
+using com.wer.sc.strategy.mock;
 
 namespace com.wer.sc.strategy
 {
@@ -24,20 +25,16 @@ namespace com.wer.sc.strategy
             int endDate = 20170603;
             IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
-            //StrategyRunnerArguments args = new StrategyRunnerArguments();
-            //args.Code = code;
-            //args.StartDate = start;
-            //args.EndDate = endDate;
-            //args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
-            //StrategyExecutor_History runner = new StrategyExecutor_History(dataReader, args);
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
+            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
 
-            runner.SetStrategy(new MockStrategy(null));
+            IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
+            runner.SetStrategy(strategy);
             runner.Run();
         }
 
@@ -60,8 +57,14 @@ namespace com.wer.sc.strategy
             data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
             StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
 
+            DateTime prevtime = DateTime.Now;
+
             runner.SetStrategy(new MockStrategy(referedPeriods));
             runner.Run();
+
+            DateTime time = DateTime.Now;
+            TimeSpan span = time.Subtract(prevtime);
+            Console.WriteLine(span.Minutes * 60 * 1000 + span.Seconds * 1000 + span.Milliseconds);
         }
 
         [TestMethod]
@@ -75,10 +78,11 @@ namespace com.wer.sc.strategy
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
 
+            DateTime prevtime = DateTime.Now;
             runner.SetStrategy(new MockStrategy(null));
             runner.ExecuteFinished += Runner_ExecuteFinished;
             runner.Execute();
@@ -86,6 +90,9 @@ namespace com.wer.sc.strategy
             {
 
             }
+            DateTime time = DateTime.Now;
+            TimeSpan span = time.Subtract(prevtime);
+            Console.WriteLine(span.Minutes * 60 + span.Seconds);
         }
 
         private bool isFinished = false;
@@ -97,7 +104,7 @@ namespace com.wer.sc.strategy
         }
     }
 
-    class MockStrategy : StrategyAbstract, IStrategy
+    class MockStrategy : StrategyAbstract
     {
         private StrategyReferedPeriods referedPeriods;
 
@@ -111,22 +118,22 @@ namespace com.wer.sc.strategy
             return referedPeriods;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             Console.WriteLine("bar:" + currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
             Console.WriteLine("tick:" + currentData.GetTickData());
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
             Console.WriteLine("Strategy End");
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             Console.WriteLine("Strategy Start");
         }

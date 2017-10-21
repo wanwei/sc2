@@ -19,10 +19,10 @@ namespace com.wer.sc.strategy.common.sample
         public Strategy_Refer()
         {
             strategy_MA_1Minute = new Strategy_Ma();
-            strategy_MA_1Minute.DefaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
+            strategy_MA_1Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
             strategy_MA_15Minute = new Strategy_Ma();
-            strategy_MA_15Minute.DefaultMainPeriod = KLinePeriod.KLinePeriod_15Minute;
+            strategy_MA_15Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_15Minute;
             referedStrategies.Add(strategy_MA_1Minute);
             referedStrategies.Add(strategy_MA_15Minute);
         }
@@ -32,22 +32,22 @@ namespace com.wer.sc.strategy.common.sample
             return null;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             //Console(strategy_MA_1Minute.)
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
 
         }

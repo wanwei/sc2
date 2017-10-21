@@ -33,7 +33,9 @@ namespace com.wer.sc.data.forward
         }
 
         /// <summary>
+        /// 得到K线前进周期
         /// 如果是以K线为周期前进，则这是其前进周期
+        /// 如果是以tick为前进周期，则OnBar的触发是该属性
         /// </summary>
         public KLinePeriod KlineForwardPeriod
         {

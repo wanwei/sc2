@@ -46,7 +46,7 @@
     <Compile Include="StrategyTrader.cs" />
     <Compile Include="StrategyTrader_Code.cs" />
     <Compile Include="StrategyData.cs" />
-    <Compile Include="StrategyHelper.cs" />
+    <Compile Include="StrategyOperator.cs" />
     <Compile Include="StrategyRunnerArguments.cs" />
     <Compile Include="StrategyExecutorFactory.cs" />
     <Compile Include="StrategyExecutor_History.cs" />

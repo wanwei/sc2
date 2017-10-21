@@ -11,7 +11,7 @@ namespace com.wer.sc.data.market.impl
     {
         private IPriceGetter priceGetter;
 
-        public PriceGetter_HistoryDataForward_Code(IHistoryDataForward_Code historyDataForward_Code)
+        public PriceGetter_HistoryDataForward_Code(IDataForward_Code historyDataForward_Code)
         {
             if (historyDataForward_Code.ForwardPeriod.IsTickForward)
                 this.priceGetter = new PriceGetter_HistoryDataForward_Code_Tick(historyDataForward_Code);
@@ -60,15 +60,15 @@ namespace com.wer.sc.data.market.impl
 
     class PriceGetter_HistoryDataForward_Code_Tick : IPriceGetter
     {
-        private IHistoryDataForward_Code historyDataForward_Code;
+        private IDataForward_Code historyDataForward_Code;
 
-        public PriceGetter_HistoryDataForward_Code_Tick(IHistoryDataForward_Code historyDataForward_Code)
+        public PriceGetter_HistoryDataForward_Code_Tick(IDataForward_Code historyDataForward_Code)
         {
             this.historyDataForward_Code = historyDataForward_Code;
             this.historyDataForward_Code.OnTick += HistoryDataForward_Code_OnTick;
         }
 
-        private void HistoryDataForward_Code_OnTick(object sender, ITickData tickData, int index)
+        private void HistoryDataForward_Code_OnTick(object sender, ForwardOnTickArgument argument)
         {
             if (timeChange != null)
                 timeChange(this);
@@ -110,9 +110,9 @@ namespace com.wer.sc.data.market.impl
 
     class PriceGetter_HistoryDataForward_Code_KLine : IPriceGetter
     {
-        private IHistoryDataForward_Code historyDataForward_Code;
+        private IDataForward_Code historyDataForward_Code;
 
-        public PriceGetter_HistoryDataForward_Code_KLine(IHistoryDataForward_Code historyDataForward_Code)
+        public PriceGetter_HistoryDataForward_Code_KLine(IDataForward_Code historyDataForward_Code)
         {
             this.historyDataForward_Code = historyDataForward_Code;
             this.historyDataForward_Code.OnBar += HistoryDataForward_Code_OnBar;

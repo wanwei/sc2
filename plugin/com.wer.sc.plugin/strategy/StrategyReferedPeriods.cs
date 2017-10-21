@@ -1,4 +1,6 @@
-﻿using com.wer.sc.data.forward;
+﻿using com.wer.sc.data;
+using com.wer.sc.data.forward;
+using com.wer.sc.data.navigate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

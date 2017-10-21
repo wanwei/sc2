@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 该接口表示了一个策略包，里面可能包含了多种策略
+    /// 该接口表示了一个策略包，一个策略包对应dotnet的一个Assembly
+    /// 策略包里面可以包含了多个策略
     /// </summary>
     public interface IStrategyAssembly
     {
@@ -22,11 +23,16 @@ namespace com.wer.sc.strategy
         string FullPath { get; }
 
         /// <summary>
-        /// 得到所有策略信息
+        /// 得到策略包所有策略信息
         /// </summary>
         /// <returns></returns>
         List<StrategyInfo> GetAllStrategies();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strategyId"></param>
+        /// <returns></returns>
         StrategyInfo GetStrategy(String strategyId);
 
         /// <summary>
@@ -64,21 +70,7 @@ namespace com.wer.sc.strategy
         /// <param name="strategyInfo"></param>
         /// <returns></returns>
         IStrategy CreateStrategyObject(StrategyInfo strategyInfo);
-
-        ///// <summary>
-        ///// 得到一个默认的插件对象实例
-        ///// </summary>
-        ///// <param name="strategyId"></param>
-        ///// <returns></returns>
-        //IStrategy GetStrategyObject(string strategyId);
-
-        ///// <summary>
-        ///// 得到一个默认的插件对象实例
-        ///// </summary>
-        ///// <param name="strategyInfo"></param>
-        ///// <returns></returns>
-        //IStrategy GetStrategyObject(StrategyInfo strategyInfo);
-
+    
         /// <summary>
         /// 根据策略名称查找策略，模糊查找
         /// </summary>

@@ -240,7 +240,7 @@ namespace com.wer.sc.ui.comp.test
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();
             if (strategy is StrategyAbstract)
             {
-                ((StrategyAbstract)strategy).DefaultMainPeriod = period;
+                ((StrategyAbstract)strategy).MainKLinePeriod = period;
             }
             strategyRunner.SetStrategy(strategy);
             strategyRunner.Run();

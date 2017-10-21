@@ -19,22 +19,22 @@ namespace com.wer.sc.plugin.mock.strategy.complex
             throw new NotImplementedException();
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
             throw new NotImplementedException();
         }

@@ -52,6 +52,18 @@ namespace com.wer.sc.data.datapackage
         IKLineData_Extend GetKLineData(KLinePeriod period);
 
         /// <summary>
+        /// 得到当前的分时线
+        /// </summary>
+        /// <returns></returns>
+        ITimeLineData GetTimeLineData(int date);
+
+        /// <summary>
+        /// 得到今日的TICK数据
+        /// </summary>
+        /// <returns></returns>
+        ITickData_Extend GetTickData(int date);
+
+        /// <summary>
         /// 创建一个实时K线数据
         /// </summary>
         /// <param name="period"></param>
@@ -66,16 +78,18 @@ namespace com.wer.sc.data.datapackage
         Dictionary<KLinePeriod, IKLineData_RealTime> CreateKLineData_RealTimes(IList<KLinePeriod> periods);
 
         /// <summary>
-        /// 得到当前的分时线
+        /// 创建一个实时分时线
         /// </summary>
+        /// <param name="date"></param>
         /// <returns></returns>
-        ITimeLineData GetTimeLineData(int date);
+        ITimeLineData_RealTime CreateTimeLineData_RealTime(int date);
 
         /// <summary>
-        /// 得到今日的TICK数据
+        /// 创建一个实时tick数据
         /// </summary>
+        /// <param name="date"></param>
         /// <returns></returns>
-        ITickData_Extend GetTickData(int date);
+        ITickData_Extend CreateTickData_RealTime(int date);
 
         /// <summary>
         /// 得到交易时间读取接口

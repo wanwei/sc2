@@ -38,6 +38,6 @@ namespace com.wer.sc.data
         /// 得到数据前进器工厂
         /// </summary>
         /// <returns></returns>
-        IHistoryDataForwardFactory HistoryDataForwardFactory { get; }
+        IDataForwardFactory HistoryDataForwardFactory { get; }
     }
 }

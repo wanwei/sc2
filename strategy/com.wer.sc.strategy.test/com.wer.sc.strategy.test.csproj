@@ -51,7 +51,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
+    <Compile Include="mock\MockStrategy_Simple.cs" />
+    <Compile Include="mock\StrategyGetter.cs" />
     <Compile Include="TestStrategyExecutor.cs" />
+    <Compile Include="TestStrategyExecutor_Multi.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_bigperiod" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_tickperiod" />

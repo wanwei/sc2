@@ -12,14 +12,14 @@ namespace com.wer.sc.data.forward
     [TestClass]
     public class TestHistoryDataForward_Code_TickPeriod_Play
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestKLineData_Play()
         {
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170601;
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnTick += KlineDataForward_OnTick;
             Console.WriteLine(klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
             klineDataForward.Play();
@@ -30,14 +30,14 @@ namespace com.wer.sc.data.forward
             klineDataForward.Pause();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestKLineData_Play2()
         {
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170601;
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnTick += KlineDataForward_OnTick;
             klineDataForward.NavigateTo(20170531.210011);
             Console.WriteLine(klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
@@ -49,14 +49,14 @@ namespace com.wer.sc.data.forward
             klineDataForward.Pause();
         }
 
-        private void KlineDataForward_OnTick(object sender, ITickData tickData, int index)
+        private void KlineDataForward_OnTick(object sender, ForwardOnTickArgument argument)
         {
-            IKLineData klineData = ((IHistoryDataForward_Code)sender).GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = ((IDataForward_Code)sender).GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             //Console.WriteLine(tickData);
             Console.WriteLine(klineData);
         }
 
-        private static IHistoryDataForward_Code GetKLineDataForward(string code, int start, int endDate)
+        private static IDataForward_Code GetKLineDataForward(string code, int start, int endDate)
         {
             //KLineData_RealTime klineData_1Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_1Minute);
             //KLineData_RealTime klineData_5Minute = CommonData.GetKLineData_RealTime(code, start, endDate, KLinePeriod.KLinePeriod_5Minute);
@@ -70,7 +70,7 @@ namespace com.wer.sc.data.forward
             //dic.Add(KLinePeriod.KLinePeriod_15Minute, klineData_15Minute);
             //dic.Add(KLinePeriod.KLinePeriod_1Day, klineData_1Day);
 
-            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, start, endDate);
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
@@ -79,7 +79,7 @@ namespace com.wer.sc.data.forward
             referedPeriods.UseTickData = true;
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
-            IHistoryDataForward_Code klineDataForward = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            IDataForward_Code klineDataForward = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             //new HistoryDataForward_Code_TickPeriod(, code, periods, KLinePeriod.KLinePeriod_1Minute);
             return klineDataForward;
         }

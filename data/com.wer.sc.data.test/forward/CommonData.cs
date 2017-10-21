@@ -32,7 +32,7 @@ namespace com.wer.sc.data.forward
 
         public static IDataPackage_Code GetDataPackage(string code, int startDate, int endDate)
         {
-            return DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);            
+            return DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);            
         }
 
         public static KLineData_RealTime GetKLineData_RealTime(string code, int startDate, int endDate, KLinePeriod klinePeriod)
@@ -41,18 +41,18 @@ namespace com.wer.sc.data.forward
             return new KLineData_RealTime(klineData);
         }
 
-        public static IHistoryDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
+        public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
         {
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
-            referedPeriods.isReferTimeLineData = false;
+            referedPeriods.UseTimeLineData = false;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute);
 
-            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, startDate, endDate);
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
             //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
-            IHistoryDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            IDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             return realTimeReader;
         }
     }

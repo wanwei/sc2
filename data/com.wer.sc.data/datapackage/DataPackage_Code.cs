@@ -35,12 +35,14 @@ namespace com.wer.sc.data.datapackage
         {
             this.dataReader = dataReader;
             this.code = code;
-            this.startDate = startDate;
             if (dataReader.TradingDayReader.IsTrade(startDate))
                 this.startDate = startDate;
             else
-                this.startDate = dataReader.TradingDayReader.GetNextTradingDay(startDate);
-            this.endDate = endDate;
+                this.startDate = dataReader.TradingDayReader.GetNextTradingDay(startDate);            
+            if (this.dataReader.TradingDayReader.IsTrade(endDate))
+                this.endDate = endDate;
+            else
+                this.endDate = dataReader.TradingDayReader.GetPrevTradingDay(endDate);
 
             this.minBefore = minBefore;
             this.minAfter = minAfter;
@@ -115,11 +117,6 @@ namespace com.wer.sc.data.datapackage
             return dataReader.TickDataReader.GetTickData_Extend(code, date);
         }
 
-        //public ITradingSessionReader_Code GetTradingSessionReader()
-        //{
-        //    return dataReader.CreateTradingSessionReader(code);
-        //}
-
         public ITradingTimeReader_Code GetTradingTimeReader()
         {
             return dataReader.CreateTradingTimeReader(code);
@@ -150,6 +147,16 @@ namespace com.wer.sc.data.datapackage
                 dic.Add(period, CreateKLineData_RealTime(period));
             }
             return dic;
+        }
+
+        public ITimeLineData_RealTime CreateTimeLineData_RealTime(int date)
+        {            
+            return new TimeLineData_RealTime(GetTimeLineData(date));
+        }
+
+        public ITickData_Extend CreateTickData_RealTime(int date)
+        {
+            return new TickData_RealTime(GetTickData(date));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace com.wer.sc.strategy
     /// </summary>
     public class StrategyExecutorFactory
     {
-        public static IStrategyExecutor CreateHistoryExecutor(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyHelper strategyHelper)
+        public static IStrategyExecutor CreateHistoryExecutor(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyOperator strategyHelper)
         {
             return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod, strategyHelper);
         }

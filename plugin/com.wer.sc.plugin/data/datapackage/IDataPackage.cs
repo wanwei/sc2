@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.datapackage
 {
+    /// <summary>
+    /// 数据包，可以获得
+    /// </summary>
     public interface IDataPackage
     {
         /// <summary>
@@ -25,7 +28,7 @@ namespace com.wer.sc.data.datapackage
         IList<int> GetTradingDays();
 
         /// <summary>
-        /// 
+        /// 得到数据包里所有的股票或期货
         /// </summary>
         /// <returns></returns>
         IList<string> GetCodes();

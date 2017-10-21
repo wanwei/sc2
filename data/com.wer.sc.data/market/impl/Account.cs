@@ -30,13 +30,13 @@ namespace com.wer.sc.data.market.impl
         /// </summary>
         private Dictionary<string, OrderInfo> dic_ID_TodayOrderInfo;
 
-        public Account(string accountId, double initMoney, IHistoryDataForward historyDataForward)
+        public Account(string accountId, double initMoney, IDataForward historyDataForward)
         {
             this.accountId = accountId;
             this.accountTrade = new AccountTrade(initMoney);
         }
 
-        public Account(string accountId, double money, IHistoryDataForward_Code historyDataForward_Code)
+        public Account(string accountId, double money, IDataForward_Code historyDataForward_Code)
         {
             this.accountId = accountId;
             this.accountTrade = new AccountTrade(money);

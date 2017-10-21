@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.forward;
+using com.wer.sc.data.navigate;
 using com.wer.sc.utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -20,10 +21,10 @@ namespace com.wer.sc.strategy
         string assemblyName1 = "com.wer.sc.plugin.mock.strategy.20170115";
         string assemblyName2 = "com.wer.sc.plugin.mock.strategy.20170207";
 
-        private static IStrategyMgr GetStrategyMgr()
+        private static IStrategyAssemblyMgr GetStrategyMgr()
         {
             string path = GetStrategyPath();
-            IStrategyMgr strategyMgr = StrategyMgrFactory.CreatePluginMgr(path);
+            IStrategyAssemblyMgr strategyMgr = StrategyMgrFactory.CreatePluginMgr(path);
             return strategyMgr;
         }
 
@@ -37,7 +38,7 @@ namespace com.wer.sc.strategy
         [TestMethod]
         public void TestStrategyScan()
         {
-            IStrategyMgr strategyMgr = GetStrategyMgr();
+            IStrategyAssemblyMgr strategyMgr = GetStrategyMgr();
             IList<IStrategyAssembly> assemblies = strategyMgr.GetAllStrategyAssemblies();
             Assert.AreEqual(2, assemblies.Count);
 
@@ -103,7 +104,7 @@ namespace com.wer.sc.strategy
         [TestMethod]
         public void TestStrategyAssembly()
         {
-            IStrategyMgr strategyMgr = GetStrategyMgr();
+            IStrategyAssemblyMgr strategyMgr = GetStrategyMgr();
             IStrategyAssembly assembly1 = strategyMgr.GetStrategyAssembly(assemblyName1);
 
             string path1 = "com.wer.sc.plugin.mock.strategy";
@@ -143,7 +144,7 @@ namespace com.wer.sc.strategy
         [TestMethod]
         public void TestCreateStrategyObject()
         {
-            IStrategyMgr strategyMgr = GetStrategyMgr();
+            IStrategyAssemblyMgr strategyMgr = GetStrategyMgr();
             IStrategyAssembly assembly1 = strategyMgr.GetStrategyAssembly(assemblyName1);
             IStrategy strategy_ma = assembly1.CreateStrategyObject(STRATEGY_MA);
             AssertMockStrategy_Ma_Object1(strategy_ma);

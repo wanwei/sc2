@@ -23,10 +23,10 @@ namespace com.wer.sc.strategy.common.sample
         public Strategy_Trader()
         {
             strategy_MA_1Minute = new Strategy_Ma();
-            strategy_MA_1Minute.DefaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
+            strategy_MA_1Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
             strategy_MA_15Minute = new Strategy_Ma();
-            strategy_MA_15Minute.DefaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
+            strategy_MA_15Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.referedStrategies.Add(strategy_MA_1Minute);
             this.referedStrategies.Add(strategy_MA_15Minute);
         }
@@ -45,37 +45,37 @@ namespace com.wer.sc.strategy.common.sample
             return referPeriods;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             //15分钟K线图ma5>ma10
             if (strategy_MA_15Minute.MAPrice_1 > strategy_MA_15Minute.MAPrice_2)
             {
                 if (strategy_MA_1Minute.MAPrice_2 > strategy_MA_1Minute.MAPrice_3)
                 {
-                    StrategyHelper.Trader.Open(data.market.OrderSide.Buy, 10);
+                    StrategyOperator.Trader.Open(data.market.OrderSide.Buy, 10);
                 }
                 else
-                    StrategyHelper.Trader.Close(data.market.OrderSide.Sell, 10);
+                    StrategyOperator.Trader.Close(data.market.OrderSide.Sell, 10);
             }
             else
             {
-                StrategyHelper.Trader.Close(data.market.OrderSide.Sell, 10);
+                StrategyOperator.Trader.Close(data.market.OrderSide.Sell, 10);
             }
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
-            StrategyHelper.Trader.AutoFilter = true;
+            StrategyOperator.Trader.AutoFilter = true;
 
             //strategy_MA_1Hour = new Strategy_Ma();
             //strategy_MA_1Hour.DefaultMainPeriod = KLinePeriod.KLinePeriod_1Hour;

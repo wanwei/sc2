@@ -145,5 +145,15 @@ namespace com.wer.sc.data
         {
             get { return period_Day; }
         }
+
+        //public static bool operator ==(KLinePeriod klinePeriod1, KLinePeriod klinePeriod2)
+        //{            
+        //    return klinePeriod1.Equals(klinePeriod2);
+        //}
+
+        //public static bool operator !=(KLinePeriod klinePeriod1, KLinePeriod klinePeriod2)
+        //{
+        //    return !klinePeriod1.Equals(klinePeriod2);
+        //}
     }
 }

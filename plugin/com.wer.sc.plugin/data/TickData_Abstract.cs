@@ -38,7 +38,7 @@ namespace com.wer.sc.data
             return new TickBar_TickData(this, index);
         }
 
-        public int BarPos
+        public virtual int BarPos
         {
             get
             {

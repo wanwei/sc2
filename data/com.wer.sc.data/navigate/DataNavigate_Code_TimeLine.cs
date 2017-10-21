@@ -71,7 +71,7 @@ namespace com.wer.sc.data.navigate
             //IKLineData klineData = dataPackage.GetKLineData(date, date, 1, 0, KLinePeriod.KLinePeriod_1Day);
             float lastEndPrice = dataPackage.GetLastEndPrice(date);
             TimeLineBar klineBar = GetTimeLineBar(tickData, startTickIndex, tickIndex, lastEndPrice);
-            timeLineData_RealTime.SetRealTimeData(klineBar, timeLineIndex);
+            timeLineData_RealTime.ChangeCurrentBar(klineBar, timeLineIndex);
             return timeLineData_RealTime;
         }
 

@@ -9,9 +9,9 @@ namespace com.wer.sc.data.market.impl
 {
     public class PriceGetter_HistoryDataForward : IPriceGetter
     {
-        private IHistoryDataForward historyDataForward;
+        private IDataForward historyDataForward;
 
-        public PriceGetter_HistoryDataForward(IHistoryDataForward historyDataForward)
+        public PriceGetter_HistoryDataForward(IDataForward historyDataForward)
         {
             this.historyDataForward = historyDataForward;
         }

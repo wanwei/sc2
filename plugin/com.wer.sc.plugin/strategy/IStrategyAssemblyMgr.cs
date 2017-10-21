@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 策略管理器
-    /// 策略的管理和插件管理不一样，策略的管理基于Assembly
-    /// 所有策略的创建，浏览都是都是基于策略包
+    /// 策略包管理器
+    /// 负责获取已加载的策略包，或重新加载已有的策略包
     /// </summary>
-    public interface IStrategyMgr
+    public interface IStrategyAssemblyMgr
     {
         /// <summary>
         /// 得到所有的策略包
@@ -26,12 +25,12 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyAssembly GetStrategyAssembly(String assemblyName);
 
-        /// <summary>
-        /// 根据策略名称查找策略，模糊查找
-        /// </summary>
-        /// <param name="strategyName"></param>
-        /// <returns></returns>
-        IList<IStrategyAssembly> SearchStrategyInfo(String strategyName);
+        ///// <summary>
+        ///// 根据策略名称查找策略，模糊查找
+        ///// </summary>
+        ///// <param name="strategyName"></param>
+        ///// <returns></returns>
+        //IList<IStrategyAssembly> SearchStrategyInfo(String strategyName);
 
         void Refresh();
 

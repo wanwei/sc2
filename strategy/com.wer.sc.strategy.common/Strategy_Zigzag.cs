@@ -53,7 +53,7 @@ namespace com.wer.sc.strategy.cnfutures
             this.Parameters.AddParameter(PARAMKEY_HIGHLOWLENGTH, "高低点位置的长度", "", utils.param.ParameterType.INTEGER, 6);
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             CalcTurnPoints(currentData);
         }
@@ -66,7 +66,7 @@ namespace com.wer.sc.strategy.cnfutures
         private void CalcTurnPoints(IRealTimeDataReader_Code currentData)
         {
             AddEmptyPoints();
-            IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
+            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
             int barPos = klineData.BarPos;
 
             IList<float> arr_HighPrice = klineData.Arr_High;
@@ -201,12 +201,12 @@ namespace com.wer.sc.strategy.cnfutures
             return lastLowIndex < lastHighIndex ? 1 : -1;
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             //this.arr_Index_Bottom.Clear();
             //this.arr_Index_Top.Clear();
@@ -219,9 +219,9 @@ namespace com.wer.sc.strategy.cnfutures
             this.highLowLength = (int)this.Parameters.GetParameter(PARAMKEY_HIGHLOWLENGTH).Value;
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyHelper.DrawHelper.GetDrawer_KLine(DefaultMainPeriod);
+            IDrawer drawHelper = StrategyOperator.DrawHelper.GetDrawer_KLine(MainKLinePeriod);
             //drawHelper.DrawPoints(arr_Price_Top, System.Drawing.Color.Blue);
             //drawHelper.DrawPoints(arr_Price_Bottom, System.Drawing.Color.White);
 

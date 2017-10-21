@@ -61,18 +61,22 @@ namespace com.wer.sc.data.update
             //for (int i = 0; i < 10; i++)
             {
                 CodeInfo instrument = allInstruments[i];
+
+                //if (!(instrument.Exchange == "SQ" && instrument.Code.EndsWith("0000")))
+                //    continue;
+
                 int lastTradingDay = instrument.End;
                 if (lastTradingDay <= 0)
                     lastTradingDay = tradingDayCache.LastTradingDay;
-                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(instrument.Code);
-                if (lastUpdatedDate >= lastTradingDay)
-                    continue;
+                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(instrument.Code);              
                 if (lastUpdatedDate < instrument.Start)
                     lastUpdatedDate = tradingDayCache.GetPrevTradingDay(instrument.Start);                
                 
                 List<int> allDays;
                 if (!isFillUp)
                 {
+                    if (lastUpdatedDate >= lastTradingDay)
+                        continue;
                     int startDate = tradingDayCache.GetNextTradingDay(lastUpdatedDate);
                     //如果不填充数据，直接根据最新交易日期和最后更新日期
                     int endDate = instrument.End;

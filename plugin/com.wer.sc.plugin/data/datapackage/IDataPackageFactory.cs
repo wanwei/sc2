@@ -9,6 +9,26 @@ namespace com.wer.sc.data.datapackage
     public interface IDataPackageFactory
     {
         /// <summary>
+        /// 创建数据包
+        /// </summary>
+        /// <param name="codes"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        IDataPackage CreateDataPackage(string[] codes, int startDate, int endDate);
+
+        /// <summary>
+        /// 创建数据包
+        /// </summary>
+        /// <param name="codes"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="minKlineBefore"></param>
+        /// <param name="minKlineAfter"></param>
+        /// <returns></returns>
+        IDataPackage CreateDataPackage(string[] codes, int startDate, int endDate, int minKlineBefore, int minKlineAfter);
+
+        /// <summary>
         /// 创建单支股票或期货在一段时间内的数据包
         /// </summary>
         /// <param name="dataReader"></param>
@@ -16,7 +36,7 @@ namespace com.wer.sc.data.datapackage
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate);
+        IDataPackage_Code CreateDataPackage_Code(string code, int startDate, int endDate);
 
         /// <summary>
         /// 
@@ -28,7 +48,7 @@ namespace com.wer.sc.data.datapackage
         /// <param name="minKlineBefore"></param>
         /// <param name="minKlineAfter"></param>
         /// <returns></returns>
-        IDataPackage_Code CreateDataPackage(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter);
+        IDataPackage_Code CreateDataPackage_Code(string code, int startDate, int endDate, int minKlineBefore, int minKlineAfter);
 
         /// <summary>
         /// 
@@ -38,7 +58,7 @@ namespace com.wer.sc.data.datapackage
         /// <param name="beforeDays"></param>
         /// <param name="afterDays"></param>
         /// <returns></returns>
-        IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays);
+        IDataPackage_Code CreateDataPackage_Code(string code, int openDate, int beforeDays, int afterDays);
 
         /// <summary>
         /// 创建数据包
@@ -50,6 +70,6 @@ namespace com.wer.sc.data.datapackage
         /// <param name="minKlineBefore"></param>
         /// <param name="minKlineAfter"></param>
         /// <returns></returns>
-        IDataPackage_Code CreateDataPackage(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter);
+        IDataPackage_Code CreateDataPackage_Code(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter);
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public interface IStrategyHelper
+    public interface IStrategyOperator
     {
         /// <summary>
         /// 得到

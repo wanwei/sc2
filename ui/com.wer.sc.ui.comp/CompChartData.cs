@@ -17,7 +17,7 @@ namespace com.wer.sc.ui.comp
     /// 组件数据提供类
     /// </summary>
     public class CompChartData : IDataPackageOwner
-    {        
+    {
         private ChartDataState oldChartDataState;
 
         private ChartDataState currentChartDataState;
@@ -151,7 +151,7 @@ namespace com.wer.sc.ui.comp
 
         private IDataNavigate_Code dataNavigate_Code;
 
-        private IHistoryDataForward_Code historyDataForward_CodePlaying;
+        private IDataForward_Code historyDataForward_CodePlaying;
 
         public IRealTimeDataReader_Code CurrentRealTimeDataReader
         {
@@ -188,7 +188,7 @@ namespace com.wer.sc.ui.comp
                     return null;
                 if (dataNavigate_Code == null)
                     dataNavigate_Code = this.dataCenter.DataNavigateFactory.CreateDataNavigate(code, time);
-                        //DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
+                //DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
                 else
                 {
                     if (dataNavigate_Code.Code != code)
@@ -201,7 +201,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        private IHistoryDataForward_Code GetHistoryDataForward_Playing()
+        private IDataForward_Code GetHistoryDataForward_Playing()
         {
             if (this.dataReader == null)
                 return null;
@@ -214,9 +214,9 @@ namespace com.wer.sc.ui.comp
 
                 ForwardPeriod fp = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
 
-                this.historyDataForward_CodePlaying = dataCenter.HistoryDataForwardFactory.CreateHistoryDataForward_Code(this.dataPackage, referedPeriods, fp);
-                    
-                    //HistoryDataForwardFactory.CreateHistoryDataForward_Code(this.DataPackage, referedPeriods, fp);
+                this.historyDataForward_CodePlaying = dataCenter.HistoryDataForwardFactory.CreateDataForward_Code(this.dataPackage, referedPeriods, fp);
+
+                //HistoryDataForwardFactory.CreateHistoryDataForward_Code(this.DataPackage, referedPeriods, fp);
                 //HistoryDataForwardArguments args = new HistoryDataForwardArguments();
                 //int date = dataReader.CreateTradingSessionReader(code).GetTradingDay(time);
                 //args.StartDate = date;
@@ -238,11 +238,11 @@ namespace com.wer.sc.ui.comp
             return historyDataForward_CodePlaying;
         }
 
-        private void HistoryDataForward_Code_OnTick(object sender, ITickData tickData, int index)
+        private void HistoryDataForward_Code_OnTick(object sender, ForwardOnTickArgument argument)
         {
             this.IsDataRefresh = true;
-            if (tickData != null)
-                this.time = tickData.Time;
+            if (argument.TickBar != null)
+                this.time = argument.TickBar.Time;
         }
 
         private bool isPlaying;
@@ -251,7 +251,7 @@ namespace com.wer.sc.ui.comp
         {
             if (isPlaying)
                 return;
-            IHistoryDataForward_Code historyDataForward = GetHistoryDataForward_Playing();
+            IDataForward_Code historyDataForward = GetHistoryDataForward_Playing();
             historyDataForward.Play();
             isPlaying = true;
         }
@@ -260,7 +260,7 @@ namespace com.wer.sc.ui.comp
         {
             if (!isPlaying)
                 return;
-            IHistoryDataForward_Code historyDataForward = GetHistoryDataForward_Playing();
+            IDataForward_Code historyDataForward = GetHistoryDataForward_Playing();
             historyDataForward.Pause();
             isPlaying = false;
         }

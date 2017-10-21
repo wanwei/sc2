@@ -35,7 +35,7 @@ namespace com.wer.sc.data.reader
             CodeInfo codeInfo = dataReader.CodeReader.GetCodeInfo(code);
             if (codeInfo == null)
                 return new List<ITimeLineData>();
-            if (codeInfo.End < startDate || codeInfo.Start > endDate)
+            if ((codeInfo.End != 0 && codeInfo.End < startDate) || (codeInfo.Start != 0 && codeInfo.Start > endDate))
                 return new List<ITimeLineData>();
 
             int lastTradingDay = dataReader.TradingDayReader.GetPrevTradingDay(startDate);

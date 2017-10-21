@@ -108,7 +108,7 @@ namespace com.wer.sc.strategy.common.ma
 
         bool isLastPeriodEnd = true;
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             bool isPeriodStart = false;
             if (isLastPeriodEnd)
@@ -116,9 +116,10 @@ namespace com.wer.sc.strategy.common.ma
                 isPeriodStart = true;
                 isLastPeriodEnd = false;
             }
-            IKLineData klineData = currentData.GetKLineData(DefaultMainPeriod);
+            
+            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
             GenMa(klineData, isLastPeriodEnd);
-            isLastPeriodEnd = currentData.IsPeriodEnd(DefaultMainPeriod);
+            isLastPeriodEnd = currentData.IsPeriodEnd(MainKLinePeriod);
         }
 
         private void GenMa(IKLineData klineData, bool isPeriodStart)
@@ -147,7 +148,7 @@ namespace com.wer.sc.strategy.common.ma
                 maList[maList.Count - 1] = total / (barPos - startPos + 1);
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
@@ -162,9 +163,9 @@ namespace com.wer.sc.strategy.common.ma
 
         private Color color_5 = ColorUtils.GetColor("#677878");
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyHelper.DrawHelper.GetDrawer_KLine(DefaultMainPeriod);
+            IDrawer drawHelper = StrategyOperator.DrawHelper.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maArr_1, color_1);
             drawHelper.DrawPolyLine(maArr_2, color_2);
             drawHelper.DrawPolyLine(maArr_3, color_3);
@@ -173,7 +174,7 @@ namespace com.wer.sc.strategy.common.ma
             drawHelper.DrawTitle(1, "MA组合(" + Param_1 + "," + Param_2 + "," + Param_3 + "," + Param_4 + "," + Param_5 + ")", color_2);
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             Param_1 = (int)this.Parameters.GetParameter(PARAMKEY_MA1).Value;
             Param_2 = (int)this.Parameters.GetParameter(PARAMKEY_MA2).Value;

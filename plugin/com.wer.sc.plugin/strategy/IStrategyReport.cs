@@ -20,7 +20,7 @@ namespace com.wer.sc.strategy
 
         IParameters Parameters { get; }
 
-        IStrategyResult StrategyResult { get; }
+        IStrategyQueryResult StrategyResult { get; }
 
         IStrategyTrader StrategyTrader { get; }
     }

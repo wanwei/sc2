@@ -53,7 +53,7 @@ namespace com.wer.sc.ui
         {
             try
             {
-                IStrategyAssembly strategyAssembly = StrategyMgrFactory.DefaultPluginMgr.GetStrategyAssembly("com.wer.sc.strategy.common");
+                IStrategyAssembly strategyAssembly = null;// StrategyMgrFactory.DefaultPluginMgr.GetStrategyAssembly("com.wer.sc.strategy.common");
                 if (strategyAssembly == null)
                     return;
                 strategyInfo = strategyAssembly.GetStrategy("STRATEGY.DEFAULT");
@@ -277,7 +277,7 @@ namespace com.wer.sc.ui
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();
             if (strategy is StrategyAbstract)
             {
-                ((StrategyAbstract)strategy).DefaultMainPeriod = period;
+                ((StrategyAbstract)strategy).MainKLinePeriod = period;
             }
             strategyRunner.SetStrategy(strategy);
             strategyRunner.ExecuteFinished += StrategyRunner_ExecuteFinished;

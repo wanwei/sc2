@@ -61,15 +61,15 @@ namespace com.wer.sc.ui.comp
             InitializeComponent();
             this.compChartData = new CompChartData();
             this.drawHelper = new CompChart_DrawHelper(this);
-            this.strategyHelper = new StrategyHelper(drawHelper);
+            this.strategyHelper = new StrategyOperator(drawHelper);
             this.compChartData.OnDataRefresh += CompChartData_OnDataRefresh;
         }
 
-        private StrategyHelper strategyHelper;
+        private StrategyOperator strategyHelper;
 
         private CompChart_DrawHelper drawHelper;
 
-        public StrategyHelper StrategyHelper
+        public StrategyOperator StrategyHelper
         {
             get { return strategyHelper; }
         }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyResult : IStrategyResult
+    public class StrategyResult : IStrategyQueryResult
     {
-        private IList<IStrategyResult_Single> list = new List<IStrategyResult_Single>();
+        private IList<IStrategyQueryResult_Single> list = new List<IStrategyQueryResult_Single>();
 
-        public IList<IStrategyResult_Single> StrategyResults
+        public IList<IStrategyQueryResult_Single> StrategyResults
         {
             get
             {

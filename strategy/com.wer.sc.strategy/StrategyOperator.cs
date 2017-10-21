@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyHelper : IStrategyHelper
+    public class StrategyOperator : IStrategyOperator
     {
         private StrategyResult results = new StrategyResult();
 
@@ -15,7 +15,7 @@ namespace com.wer.sc.strategy
 
         private IStrategyTrader_Code strategyTrader_Code;
 
-        public StrategyHelper(IDrawHelper drawHelper)
+        public StrategyOperator(IDrawHelper drawHelper)
         {
             this.drawHelper = drawHelper;
         }
@@ -43,7 +43,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IStrategyResult Results
+        public IStrategyQueryResult Results
         {
             get
             {
@@ -52,14 +52,14 @@ namespace com.wer.sc.strategy
         }
 
 
-        public void AddStrategyResult(IStrategyResult_Single strategyResult)
+        public void AddStrategyResult(IStrategyQueryResult_Single strategyResult)
         {
             this.results.StrategyResults.Add(strategyResult);
         }
 
         public void AddStrategyResult(string code, double time, string name, string desc)
         {
-            IStrategyResult_Single result = new StrategyResult_Single(code, time, name, desc);
+            IStrategyQueryResult_Single result = new StrategyResult_Single(code, time, name, desc);
             this.results.StrategyResults.Add(result);
         }
     }

@@ -7,18 +7,25 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 策略执行器
+    /// 策略执行器接口
+    /// 该接口负责策略的执行，一个策略执行器实例只能执行一个策略
     /// </summary>
     public interface IStrategyExecutor
     {
         /// <summary>
-        /// 设置要执行的策略
+        /// 设置希望要执行的策略
         /// </summary>
         /// <param name="strategy"></param>
         void SetStrategy(IStrategy strategy);
 
         /// <summary>
         /// 执行策略
+        /// 该方法会在一个新的线程里执行策略
+        /// </summary>
+        void Execute();
+
+        /// <summary>
+        /// 执行策略 TODO 有execute就可以了，该方法不需要
         /// </summary>
         void Run();
 
@@ -26,11 +33,6 @@ namespace com.wer.sc.strategy
         /// 取消当前执行的策略
         /// </summary>
         void Cancel();
-
-        /// <summary>
-        /// 执行策略，该方法会开新的线程
-        /// </summary>
-        void Execute();
 
         /// <summary>
         /// 
@@ -70,17 +72,17 @@ namespace com.wer.sc.strategy
 
     public class StrategyExecuteArguments
     {
-        private IStrategyHelper strategyHelper;
+        private IStrategyOperator strategyHelper;
 
         private IStrategy strategy;
 
-        public StrategyExecuteArguments(IStrategyHelper strategyHelper, IStrategy strategy)
+        public StrategyExecuteArguments(IStrategyOperator strategyHelper, IStrategy strategy)
         {
             this.strategyHelper = strategyHelper;
             this.strategy = strategy;
         }
 
-        public IStrategyHelper StrategyHelper
+        public IStrategyOperator StrategyHelper
         {
             get
             {

@@ -30,13 +30,18 @@ namespace com.wer.sc.data.forward
             //int start = 20040106;
             //int endDate = 20040106;
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnBar += KlineDataForward_OnBar;
             klineDataForward.OnTick += KlineDataForward_OnTick;
+            DateTime prevtime = DateTime.Now;
             while (klineDataForward.Forward())
             {
 
             }
+
+            DateTime time = DateTime.Now;
+            TimeSpan span = time.Subtract(prevtime);
+            Console.WriteLine(span.Minutes * 60 * 1000 + span.Seconds * 1000 + span.Milliseconds);
             //ITimeLineData timeLineData = klineDataForward.GetTimeLineData();
             //for(int i = 0; i < timeLineData.Length; i++)
             //{
@@ -47,13 +52,13 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_Tick.Clear();
         }
 
-        private void KlineDataForward_OnTick(object sender, ITickData tickData, int index)
+        private void KlineDataForward_OnTick(object sender, ForwardOnTickArgument argument)
         {
-            string txt = "tick:" + tickData.GetBar(index);
+            string txt = "tick:" + argument.TickBar;
             printStrs_Forward_Tick.Add(txt);
 
-            IHistoryDataForward_Code klineDataForward = (IHistoryDataForward_Code)sender;
-            double price = tickData.Price;
+            IDataForward_Code klineDataForward = (IDataForward_Code)sender;
+            double price = argument.TickData.Price;
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End);
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute).End);
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_15Minute).End);
@@ -68,23 +73,24 @@ namespace com.wer.sc.data.forward
             //Console.WriteLine("kline:" + klineData.GetBar(index));
         }
 
-        private static IHistoryDataForward_Code GetKLineDataForward(string code, int start, int endDate)
+        private static IDataForward_Code GetKLineDataForward(string code, int start, int endDate)
         {
-            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, start, endDate);
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
             referedPeriods.UseTickData = true;
+            referedPeriods.UseTimeLineData = true;
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
-            IHistoryDataForward_Code klineDataForward = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            IDataForward_Code klineDataForward = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
             //new HistoryDataForward_Code_TickPeriod(, code, periods, KLinePeriod.KLinePeriod_1Minute);
             return klineDataForward;
         }
 
-        private static void Print(IHistoryDataForward_Code klineDataForward)
+        private static void Print(IDataForward_Code klineDataForward)
         {
             //Console.WriteLine("DayEnd:" + klineDataForward.IsDayEnd
             //      + "|1MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_1Minute)
@@ -115,7 +121,7 @@ namespace com.wer.sc.data.forward
 
             printStrs_Forward_TimeInfo_OnBar.Clear();
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnBar += KlineDataForward_OnBar2;
             while (klineDataForward.Forward())
             {
@@ -135,13 +141,13 @@ namespace com.wer.sc.data.forward
                 printStrs_Forward_TimeInfo_OnBar.Add(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
             }
             //Console.WriteLine("Tick:"+((IHistoryDataForward_Code)sender).GetTickData());
-            printStrs_Forward_TimeInfo_OnBar.Add("Tick:" + ((IHistoryDataForward_Code)sender).GetTickData());
+            printStrs_Forward_TimeInfo_OnBar.Add("Tick:" + ((IDataForward_Code)sender).GetTickData());
             //PrintOnBar((IHistoryDataForward_Code)sender);
             //printStrs.Add("kline:" + klineData.GetBar(index));
             //Console.WriteLine("kline:" + klineData.GetBar(index));
         }
 
-        private static void PrintOnBar(IHistoryDataForward_Code klineDataForward)
+        private static void PrintOnBar(IDataForward_Code klineDataForward)
         {
             Console.WriteLine("tick:" + klineDataForward.GetTickData());
             Console.WriteLine("1minute:" + klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
@@ -152,7 +158,7 @@ namespace com.wer.sc.data.forward
             Console.WriteLine("timeline:" + timeLineData);
         }
 
-        private static void AddToList(List<string> list, IHistoryDataForward_Code klineDataForward)
+        private static void AddToList(List<string> list, IDataForward_Code klineDataForward)
         {
             list.Add("DayEnd:" + klineDataForward.IsDayEnd
                   + "|1MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_1Minute)
@@ -173,7 +179,7 @@ namespace com.wer.sc.data.forward
             int start = 20170601;
             int endDate = 20170603;
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             //klineDataForward.OnBar += KlineDataForward_OnBar1; ;
             //klineDataForward.OnTick += KlineDataForward_OnTick;
             klineDataForward.OnTick += KlineDataForward_OnTick1;
@@ -187,10 +193,10 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_TimeInfo_OnTick.Clear();
         }
 
-        private void KlineDataForward_OnTick1(object sender, ITickData tickData, int index)
+        private void KlineDataForward_OnTick1(object sender, ForwardOnTickArgument argument)
         {
-            IHistoryDataForward_Code klineDataForward = (IHistoryDataForward_Code)sender;
-            string txt = "tick:" + tickData.GetBar(index);
+            IDataForward_Code klineDataForward = (IDataForward_Code)sender;
+            string txt = "tick:" + argument.TickBar;
             printStrs_Forward_TimeInfo_OnTick.Add(txt);
             //Console.WriteLine(txt);
             txt = "tradingTimeStart:" + klineDataForward.IsTradingTimeStart
@@ -208,7 +214,7 @@ namespace com.wer.sc.data.forward
             int start = 20170601;
             int endDate = 20170603;
 
-            IHistoryDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnBar += KlineDataForward_OnBar1;
             //klineDataForward.OnTick += KlineDataForward_OnTick;
             //print_Forward_TimeInfo_OnTick.Clear();
@@ -223,7 +229,7 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnBar1(object sender, ForwardOnBarArgument argument)
         {
-            IHistoryDataForward_Code klineDataForward = (IHistoryDataForward_Code)sender;
+            IDataForward_Code klineDataForward = (IDataForward_Code)sender;
             //Console.WriteLine("DayEnd:" + klineDataForward.IsDayEnd
             //        + "|1MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_1Minute)
             //        + "|5MinuteEnd:" + klineDataForward.IsPeriodEnd(KLinePeriod.KLinePeriod_5Minute)
@@ -234,6 +240,141 @@ namespace com.wer.sc.data.forward
                 + "|tradingTimeEnd:" + klineDataForward.IsTradingTimeEnd
                 + "|dayStart:" + klineDataForward.IsDayStart
                 + "|dayEnd:" + klineDataForward.IsDayEnd);
+        }
+
+
+        //[TestMethod]
+        public void TestKLineDataForward_Tick_Long()
+        {
+            printStrs_Forward_Tick.Clear();
+            //string code = "RB1710";
+            //int start = 20170401;
+            //int endDate = 20170803;
+            string code = "RB0000";
+            int start = 20150401;
+            int endDate = 20170803;
+
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            klineDataForward.OnBar += KlineDataForward_OnBar_Long;
+            klineDataForward.OnTick += KlineDataForward_OnTick_Long;
+            while (klineDataForward.Forward())
+            {
+
+            }
+        }
+
+        private void KlineDataForward_OnTick_Long(object sender, ForwardOnTickArgument argument)
+        {
+
+        }
+
+        private void KlineDataForward_OnBar_Long(object sender, ForwardOnBarArgument argument)
+        {
+
+        }
+
+        private Dictionary<KLinePeriod, List<string>> dic_Period_Content = new Dictionary<KLinePeriod, List<string>>();
+
+        private void AddContent_KLine(KLinePeriod period, string content)
+        {
+            if (dic_Period_Content.ContainsKey(period))
+                dic_Period_Content[period].Add(content);
+            else
+            {
+                List<string> strs = new List<string>();
+                strs.Add(content);
+                dic_Period_Content.Add(period, strs);
+            }
+        }
+
+        private Dictionary<int, List<string>> dic_Date_TickData = new Dictionary<int, List<string>>();
+
+        private void AddContent_Tick(int date, string content)
+        {
+            if (dic_Date_TickData.ContainsKey(date))
+                dic_Date_TickData[date].Add(content);
+            else
+            {
+                List<string> strs = new List<string>();
+                strs.Add(content);
+                dic_Date_TickData.Add(date, strs);
+            }
+        }
+
+        [TestMethod]
+        public void TestCompareWithReader()
+        {
+            string code = "RB0000";
+            int start = 20170601;
+            int endDate = 20170605;
+
+            IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+
+            AddContent_Tick(start, klineDataForward.GetTickData().ToString());
+            klineDataForward.OnBar += KlineDataForward_OnBar_CompareWithReader;
+            klineDataForward.OnTick += KlineDataForward_OnTick_CompareWithReader;
+            while (klineDataForward.Forward())
+            {
+
+            }
+
+            AssertKLineDataInDic(code, start, endDate);
+            AssertTickDataInDic(code);
+        }
+
+        private void AssertKLineDataInDic(string code, int start, int endDate)
+        {
+            foreach (KLinePeriod period in dic_Period_Content.Keys)
+            {
+                //if (period.Equals(KLinePeriod.KLinePeriod_1Day))
+                //    continue;
+                List<string> contents = dic_Period_Content[period];
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < contents.Count; i++)
+                {
+                    if (i != 0)
+                        sb.Append("\r\n");
+                    sb.Append(contents[i]);
+                }
+                IKLineData klineData = DataCenter.Default.DataReader.KLineDataReader.GetData(code, start, endDate, period);
+                AssertUtils.AssertEqual_KLineData(sb.ToString(), klineData);
+            }
+        }
+
+        private void AssertTickDataInDic(string code)
+        {
+            foreach (int date in dic_Date_TickData.Keys)
+            {
+                //if (period.Equals(KLinePeriod.KLinePeriod_1Day))
+                //    continue;
+                List<string> contents = dic_Date_TickData[date];
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < contents.Count; i++)
+                {
+                    if (i != 0)
+                        sb.Append("\r\n");
+                    sb.Append(contents[i]);
+                }
+                ITickData tickData = DataCenter.Default.DataReader.TickDataReader.GetTickData(code, date);
+
+                AssertUtils.AssertEqual_TickData(sb.ToString(), tickData);
+            }
+        }
+
+        private void KlineDataForward_OnTick_CompareWithReader(object sender, ForwardOnTickArgument argument)
+        {
+            AddContent_Tick(argument.TickData.TradingDay, argument.TickBar.ToString());
+        }
+
+        private void KlineDataForward_OnBar_CompareWithReader(object sender, ForwardOnBarArgument argument)
+        {
+            for (int i = 0; i < argument.ForwardOnBar_Infos.Count; i++)
+            {
+                ForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
+                Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
+                AddContent_KLine(info.KLinePeriod, info.KLineBar.ToString());
+                //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);
+            }
         }
     }
 }

@@ -23,24 +23,24 @@ namespace com.wer.sc.strategy.cnfutures
         public Strategy_CnFutures()
         {
             refered = new StrategyReferedPeriods();
-            refered.isReferTimeLineData = false;
+            refered.UseTimeLineData = false;
             refered.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             //refered.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
             //refered.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
             refered.UseTickData = false;
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             IKLineData klineData = currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             int currentBarPos = klineData.BarPos;
@@ -69,7 +69,7 @@ namespace com.wer.sc.strategy.cnfutures
             //currentData.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }

@@ -43,8 +43,8 @@ namespace com.wer.sc.ui.strategy
 
         private void btRefresh_Click(object sender, EventArgs e)
         {
-            StrategyMgrFactory.DefaultPluginMgr.Refresh();
-            this.compStrategyTree1.RefreshTree();
+            //StrategyMgrFactory.DefaultPluginMgr.Refresh();
+            //this.compStrategyTree1.RefreshTree();
         }
     }
 }

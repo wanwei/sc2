@@ -23,7 +23,7 @@ namespace com.wer.sc.strategy
 
         internal IParameters parameters;
 
-        internal IStrategyResult strategyResult;
+        internal IStrategyQueryResult strategyResult;
 
         internal IStrategyTrader strategyTrader;
 
@@ -67,7 +67,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IStrategyResult StrategyResult
+        public IStrategyQueryResult StrategyResult
         {
             get
             {

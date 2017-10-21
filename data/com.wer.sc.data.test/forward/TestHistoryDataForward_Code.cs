@@ -4,6 +4,7 @@ using com.wer.sc.data.reader;
 using com.wer.sc.strategy;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.navigate;
 
 namespace com.wer.sc.data.forward
 {
@@ -16,7 +17,7 @@ namespace com.wer.sc.data.forward
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170610;
-            IHistoryDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, false);
+            IDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, false);
             while (!realTimeReader.IsEnd)
             {
                 realTimeReader.Forward();
@@ -31,7 +32,7 @@ namespace com.wer.sc.data.forward
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170610;
-            IHistoryDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, true);
+            IDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, true);
             realTimeReader.OnTick += RealTimeReader_OnTick;
             realTimeReader.OnBar += RealTimeReader_OnBar;
             while (!realTimeReader.IsEnd)
@@ -50,15 +51,15 @@ namespace com.wer.sc.data.forward
             Console.WriteLine("kline:" + onBarInfo.KlineData.GetBar(barPos - 1));
         }
 
-        private void RealTimeReader_OnTick(object sender, ITickData tickData, int index)
+        private void RealTimeReader_OnTick(object sender, ForwardOnTickArgument argument)
         {
-            Console.WriteLine("tick:" + tickData);
+            Console.WriteLine("tick:" + argument.TickBar);
         }
 
-        private static IHistoryDataForward_Code GetRealTimeReader(string code, int start, int endDate, bool useTickData)
+        private static IDataForward_Code GetRealTimeReader(string code, int start, int endDate, bool useTickData)
         {
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
-            referedPeriods.isReferTimeLineData = false;
+            referedPeriods.UseTimeLineData = false;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 
@@ -71,7 +72,7 @@ namespace com.wer.sc.data.forward
 
             IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
             //HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
-            IHistoryDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateHistoryDataForward_Code(dataPackage, referedPeriods, new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute));
+            IDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute));
             return realTimeReader;
         }
     }

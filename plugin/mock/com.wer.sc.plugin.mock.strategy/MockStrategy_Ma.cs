@@ -28,22 +28,22 @@ namespace com.wer.sc.plugin.mock.zb
             return strategyPeriods;
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnBar(IRealTimeDataReader_Code dataReader)
+        public override void OnBar(Object sender, StrategyOnBarArgument dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnTick(IRealTimeDataReader_Code dataReader)
+        public override void OnTick(Object sender, StrategyOnTickArgument dataReader)
         {
             throw new NotImplementedException();
         }

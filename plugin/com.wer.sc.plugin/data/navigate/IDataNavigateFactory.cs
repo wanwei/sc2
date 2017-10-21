@@ -10,8 +10,12 @@ namespace com.wer.sc.data.navigate
 {
     public interface IDataNavigateFactory
     {
+        //IDataForNavigate_Code CreateNavigateData(string code, double time, int beforeDays, int afterDays);
+
+        //IDataForNavigate_Code CreateNavigateData(string code, double time);
+        
         IDataNavigate_Code CreateDataNavigate(string code, double time, int beforeDays, int afterDays);
 
-        IDataNavigate_Code CreateDataNavigate(string code, double time);
+        IDataNavigate_Code CreateDataNavigate(string code, double time);        
     }
 }

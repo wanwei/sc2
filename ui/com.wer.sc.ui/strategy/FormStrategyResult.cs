@@ -16,9 +16,9 @@ namespace com.wer.sc.ui.strategy
     {
         private CompChart compChart;
 
-        private IStrategyResult strategyResult;
+        private IStrategyQueryResult strategyResult;
 
-        public FormStrategyResult(CompChart compChart, IStrategyResult strategyResult)
+        public FormStrategyResult(CompChart compChart, IStrategyQueryResult strategyResult)
         {
             InitializeComponent();
             this.compChart = compChart;
@@ -28,10 +28,10 @@ namespace com.wer.sc.ui.strategy
 
         private void Init()
         {
-            IList<IStrategyResult_Single> results = strategyResult.StrategyResults;
+            IList<IStrategyQueryResult_Single> results = strategyResult.StrategyResults;
             for (int i = 0; i < results.Count; i++)
             {
-                IStrategyResult_Single result = results[i];
+                IStrategyQueryResult_Single result = results[i];
                 int index = dataGridView1.Rows.Add();
                 this.dataGridView1.Rows[index].Cells[0].Value = result.Code;
                 this.dataGridView1.Rows[index].Cells[1].Value = result.Time;

@@ -1,4 +1,6 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.navigate;
+using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,75 +9,81 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.forward
 {
-    public class HistoryDataForward : IHistoryDataForward
+    public class DataForward : IDataForward
     {
+        private IDataPackage_Code[] dataPackage;
+
+        private ForwardReferedPeriods[] referedPeriods;
+
+        private List<IDataForward_Code> historyDataForwards;
+
         public const double TIME_DAYEND = 0;
 
-        public const double TIME_END = -1;
-
-        private IDataReader dataReader;
+        public const double TIME_END = -1;        
 
         private double time;
 
-        private IList<string> codes;
+        private Dictionary<string, double> dic_Code_NextTime;
 
-        private List<HistoryDataForward_Code> forwardList = new List<HistoryDataForward_Code>();
+        private List<string> codes;
 
-        private Dictionary<string, HistoryDataForward_Code> dic_Code_Forward = new Dictionary<string, HistoryDataForward_Code>();
-
-        private HistoryDataForwardArguments args;
+        //private HistoryDataForwardArguments args;
 
         private ForwardPeriod forwardPeriod;
 
         private IList<int> tradingDays;
 
-        private Dictionary<string, double> dic_Code_NextTime = new Dictionary<string, double>();
+        private List<int> forwardIndeies = new List<int>();
 
-        public HistoryDataForward(IDataReader dataReader, IList<string> codes, HistoryDataForwardArguments args)
+        public DataForward(IDataForwardFactory fac, IDataPackage_Code[] dataPackage, ForwardReferedPeriods[] referedPeriods, ForwardPeriod forwardPeriod)
         {
-            this.dataReader = dataReader;
-            this.codes = codes;
-            this.args = args;
-            //this.tradingDays = args.
-            this.forwardPeriod = new ForwardPeriod(args.IsTickForward, args.ForwardKLinePeriod);
-            for (int i = 0; i < codes.Count; i++)
+            this.dataPackage = dataPackage;
+            this.referedPeriods = referedPeriods;
+            this.forwardPeriod = forwardPeriod;
+            this.tradingDays = dataPackage[0].GetTradingDays();
+
+            this.historyDataForwards = new List<IDataForward_Code>();
+
+            for (int i = 0; i < dataPackage.Length; i++)
             {
-                string code = codes[i];
-                HistoryDataForward_Code forward = new HistoryDataForward_Code(dataReader, code, args);                
-                dic_Code_Forward.Add(code, forward);
-                forwardList.Add(forward);
-                forward.OnBar += Forward_OnBar;
-                forward.OnTick += Forward_OnTick;
-                dic_Code_NextTime.Add(code, forward.Time);
+                ForwardReferedPeriods referedPeriod = referedPeriods[i];
+                ForwardPeriod currentForwardPeriod= new ForwardPeriod(referedPeriod.UseTickData, referedPeriod.GetMinPeriod());
+                IDataForward_Code historyDataForward_Code = fac.CreateDataForward_Code(dataPackage[i], referedPeriod, currentForwardPeriod);
+                this.historyDataForwards.Add(historyDataForward_Code);
             }
         }
 
         private void Forward_OnTick(object sender, ITickData tickData, int index)
         {
-            if (OnTick != null)
-                OnTick(sender, tickData, index);
+            //if (OnTick != null)
+            //    OnTick(sender, tickData, index);
         }
 
         private void Forward_OnBar(object sender, IKLineData klineData, int index)
         {
-            if (OnBar != null)
-                OnBar(sender, klineData, index);
+            //if (OnBar != null)
+            //    OnBar(sender, klineData, index);
         }
 
         /// <summary>
-        /// 
+        /// 多前进
         /// </summary>
         /// <returns></returns>
         public bool Forward()
         {
-            if (forwardPeriod.IsTickForward)
+            List<int> forwardIndeies = GetForwardIndeies();
+            if (forwardIndeies == null)
+                return false;
+            for(int i = 0; i < forwardIndeies.Count; i++)
             {
-                return Forward_Tick();
+                historyDataForwards[i].Forward();
             }
-            else
-            {
-                return Forward_KLine();
-            }
+            return true;
+        }
+
+        private List<int> GetForwardIndeies()
+        {
+            return null;
         }
 
         private bool Forward_Tick()
@@ -88,7 +96,7 @@ namespace com.wer.sc.data.forward
                 double nextTime_Code = dic_Code_NextTime[codes[i]];
                 if (nextTime == nextTime_Code)
                 {
-                    forwardList[i].Forward();
+                    //forwardList[i].Forward();
                 }
             }
             return true;
@@ -99,7 +107,7 @@ namespace com.wer.sc.data.forward
             return -1;
         }
 
-        private double GetNextTime(HistoryDataForward_Code forward_Code)
+        private double GetNextTime(IDataForward_Code forward_Code)
         {
             ITickData tickData = forward_Code.GetTickData();
             if (tickData == null)
@@ -112,12 +120,12 @@ namespace com.wer.sc.data.forward
         private bool Forward_KLine()
         {
             bool isKLineEnd = true;
-            for (int i = 0; i < forwardList.Count; i++)
-            {
-                bool isCurrentEnd = forwardList[i].Forward();
-                if (!isCurrentEnd)
-                    isKLineEnd = false;
-            }
+            //for (int i = 0; i < forwardList.Count; i++)
+            //{
+            //    bool isCurrentEnd = forwardList[i].Forward();
+            //    if (!isCurrentEnd)
+            //        isKLineEnd = false;
+            //}
             return isKLineEnd;
         }
 
@@ -173,10 +181,10 @@ namespace com.wer.sc.data.forward
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public IHistoryDataForward_Code GetHistoryDataForward(string code)
+        public IDataForward_Code GetHistoryDataForward(string code)
         {
-            HistoryDataForward_Code value = null;
-            dic_Code_Forward.TryGetValue(code, out value);
+            IDataForward_Code value = null;
+            //dic_Code_Forward.TryGetValue(code, out value);
             return value;
         }
 
@@ -196,5 +204,22 @@ namespace com.wer.sc.data.forward
         /// 按照AllCodes里合约的顺序依次响应该事件
         /// </summary>
         public event DelegateOnBar OnBar;
+    }
+
+    public class NextTimeCalc
+    {
+        private List<IDataForward_Code> historyDataForwards;
+
+        public NextTimeCalc()
+        {
+
+        }   
+        
+             
+
+        public bool Forward()
+        {
+            return false;
+        }
     }
 }

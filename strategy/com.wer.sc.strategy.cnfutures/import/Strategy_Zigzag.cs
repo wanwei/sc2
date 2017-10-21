@@ -39,7 +39,7 @@ namespace com.wer.sc.strategy.cnfutures
             this.klinePeriod = KLinePeriod.KLinePeriod_1Minute;
         }
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             initTurnPoint(currentData);
         }
@@ -180,17 +180,17 @@ namespace com.wer.sc.strategy.cnfutures
             return POS_LASTDD < POS_LASTGD ? 1 : -1;
         }
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
 
         }
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
 
         }

@@ -44,8 +44,11 @@ namespace com.wer.sc.data.reader
 
         public ITickData_Extend GetTickData_Extend(string code, int date)
         {
+            ITickData tickData = GetTickData(code, date);
+            if (tickData == null)
+                return null;
             TradingTime tradingTime = this.dataReader.CreateTradingTimeReader(code).GetTradingTime(date);
-            return new TickData_Extend(GetTickData(code, date), tradingTime);
+            return new TickData_Extend(tickData, tradingTime);
         }
     }
 }

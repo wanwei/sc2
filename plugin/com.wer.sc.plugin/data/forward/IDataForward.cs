@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 namespace com.wer.sc.data.forward
 {
     /// <summary>
-    /// 历史数据前进器
+    /// 历史数据前进器接口
+    /// 
+    /// 该接口可以同时跟踪多个股票或期货
     /// </summary>
-    public interface IHistoryDataForward : IRealTimeDataReader
+    public interface IDataForward : IRealTimeDataReader
     {
         /// <summary>
-        /// 
+        /// 前进
         /// </summary>
         /// <returns></returns>
         bool Forward();
@@ -39,7 +41,7 @@ namespace com.wer.sc.data.forward
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        //IHistoryDataForward_Code GetHistoryDataForward(string code);
+        IDataForward_Code GetHistoryDataForward(string code);
 
         /// <summary>
         /// 是否不能再前进了
@@ -53,7 +55,10 @@ namespace com.wer.sc.data.forward
 
         /// <summary>
         /// 接收到了tick数据触发该响应
+        /// 会接收这里面所有codes的前进事件
         /// 按照AllCodes里合约的顺序依次响应该事件
+        /// 
+        /// 如果只希望侦听一个
         /// </summary>
         event DelegateOnTick OnTick;
 

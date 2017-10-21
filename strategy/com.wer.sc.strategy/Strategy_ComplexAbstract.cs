@@ -32,8 +32,8 @@ namespace com.wer.sc.strategy
         {
             if (referedPeriods == null)
                 return;
-            if (referedPeriods.isReferTimeLineData)
-                periods.isReferTimeLineData = true;
+            if (referedPeriods.UseTimeLineData)
+                periods.UseTimeLineData = true;
             if (referedPeriods.UseTickData)
                 periods.UseTickData = true;
             for (int i = 0; i < referedPeriods.UsedKLinePeriods.Count; i++)
@@ -46,42 +46,42 @@ namespace com.wer.sc.strategy
 
         public abstract StrategyReferedPeriods GetStrategyPeriods_();
 
-        public override void OnBar(IRealTimeDataReader_Code currentData)
+        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].OnBar(currentData);
+                    ImportStrategies[i].OnBar(sender, currentData);
             OnBar_(currentData);
         }
 
         public abstract void OnBar_(IRealTimeDataReader_Code currentData);
 
-        public override void OnTick(IRealTimeDataReader_Code currentData)
+        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].OnTick(currentData);
+                    ImportStrategies[i].OnTick(sender, currentData);
             OnTick_(currentData);
         }
 
         public abstract void OnTick_(IRealTimeDataReader_Code currentData);
 
 
-        public override void StrategyEnd()
+        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].StrategyEnd();
+                    ImportStrategies[i].OnStrategyEnd(sender, argument);
             StrategyEnd_();
         }
 
         public abstract void StrategyEnd_();
 
-        public override void StrategyStart()
+        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].StrategyStart();
+                    ImportStrategies[i].OnStrategyStart(sender, argument);
             StrategyStart_();
         }
 

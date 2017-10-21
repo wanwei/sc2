@@ -67,6 +67,8 @@ namespace com.wer.sc.data.update
 
         private void AddSteps_KLineData_Instrument(List<IStep> steps, CodeInfo codeInfo, CacheUtils_TradingDay tradingDaysCache)
         {
+            //if (!(codeInfo.Exchange == "SQ" && codeInfo.Code.EndsWith("0000")))
+            //    return;
             string code = codeInfo.Code;
             for (int i = 0; i < updatePeriods.Count; i++)
             {
@@ -82,10 +84,9 @@ namespace com.wer.sc.data.update
                 if (firstNewTradingDay > lastCodeDate)
                     continue;
 
-                if (lastUpdatedDate >= lastCodeDate || lastUpdatedDate >= tradingDaysCache.LastTradingDay)
-                {
-                    continue;
-                }
+                if (!isFillUp)
+                    if (lastUpdatedDate >= lastCodeDate || lastUpdatedDate >= tradingDaysCache.LastTradingDay)
+                        continue;
 
                 Step_UpdateKLineData step = new Step_UpdateKLineData(codeInfo, period, tradingDaysCache, historyData, klineDataStore, updatedDataInfo, updateInfoStore, isFillUp);
                 steps.Add(step);
