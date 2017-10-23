@@ -28,6 +28,7 @@ namespace com.wer.sc.data.navigate
             int tickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, time, true);
             if (IsPeriodEnd(klineData_RealTime, klineIndex, tickData, tickIndex))
             {
+                klineData_RealTime.BarPos = klineIndex;
                 klineData_RealTime.ResetCurrentBar();
                 return;
             }
