@@ -36,6 +36,14 @@ namespace com.wer.sc.data.navigate
             this.ChangeTime(time);
         }
 
+        //public DataNavigate_Code_KLine(IDataPackage_Code dataPackage, KLineData_RealTime klineData_RealTime)
+        //{
+        //    this.dataPackage = dataPackage;
+        //    this.klinePeriod = klineData_RealTime.Period;
+        //    this.sessionReader = dataPackage.GetTradingTimeReader();
+        //    this.klineData_RealTime = klineData_RealTime;
+        //}
+
         public double Time
         {
             get { return time; }

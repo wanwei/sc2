@@ -10,7 +10,7 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigate : IDataNavigate
     {
-        private IDataNavigate_Code currentNavigate_Code;
+        private IDataNavigate_Code currentNavigate_Code;        
 
         private IDataNavigateFactory fac;
 
@@ -55,12 +55,12 @@ namespace com.wer.sc.data.navigate
 
         public void Change(string code)
         {
-            this.currentNavigate_Code = fac.CreateDataNavigate(code, this.Time);
+            this.currentNavigate_Code = fac.CreateDataNavigate_Code(code, this.Time);
         }
 
         public void Change(string code, double time)
         {
-            this.currentNavigate_Code = fac.CreateDataNavigate(code, time);
+            this.currentNavigate_Code = fac.CreateDataNavigate_Code(code, time);
         }
 
         public bool Forward(KLinePeriod forwardPeriod)
@@ -91,6 +91,16 @@ namespace com.wer.sc.data.navigate
         public bool NavigateTo(double time)
         {
             return this.currentNavigate_Code.NavigateTo(time);
+        }
+
+        public void Play()
+        {
+
+        }
+
+        public void Pause()
+        {
+
         }
     }
 }

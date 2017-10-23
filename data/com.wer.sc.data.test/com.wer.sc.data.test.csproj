@@ -69,6 +69,8 @@
     <Compile Include="market\TestAccount.cs" />
     <Compile Include="market\TestMarketTrader_Code.cs" />
     <Compile Include="navigate\TestDataNavigate.cs" />
+    <Compile Include="navigate\TestDataNavigate_Code.cs" />
+    <Compile Include="navigate\TestDataNavigate_ChangeTime.cs" />
     <Compile Include="navigate\TestDataNavigate_Code_TimeLine.cs" />
     <Compile Include="navigate\TestDataNavigate_Night.cs" />
     <Compile Include="reader\DataCenterUri.cs" />

@@ -70,7 +70,7 @@ namespace com.wer.sc.data.forward
             //args.IsTickForward = useTickData;
             //args.ForwardKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
-            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
+            IDataPackage_Code dataPackage = ForwardDataGetter.GetDataPackage(code, start, endDate);
             //HistoryDataForward_Code realTimeReader = new HistoryDataForward_Code(CommonData.GetDataReader(), code, args);
             IDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute));
             return realTimeReader;

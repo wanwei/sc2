@@ -14,8 +14,8 @@ namespace com.wer.sc.data.navigate
 
         //IDataForNavigate_Code CreateNavigateData(string code, double time);
         
-        IDataNavigate_Code CreateDataNavigate(string code, double time, int beforeDays, int afterDays);
+        IDataNavigate_Code CreateDataNavigate_Code(string code, double time, int beforeDays, int afterDays);
 
-        IDataNavigate_Code CreateDataNavigate(string code, double time);        
+        IDataNavigate_Code CreateDataNavigate_Code(string code, double time);        
     }
 }

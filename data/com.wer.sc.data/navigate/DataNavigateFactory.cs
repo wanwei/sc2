@@ -19,20 +19,20 @@ namespace com.wer.sc.data.navigate
             return new DataNavigate_Code(dataPackage, time);
         }
 
-        internal static IDataNavigate_Code CreateDataNavigate(IDataReader dataReader, string code, double time)
-        {
-            int openDate = dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
-            if (openDate < 0)
-                return null;
-            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
-            return CreateDataNavigate(dataPackage, time);
-        }
+        //internal static IDataNavigate_Code CreateDataNavigate(IDataReader dataReader, string code, double time)
+        //{
+        //    int openDate = dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
+        //    if (openDate < 0)
+        //        return null;
+        //    IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
+        //    return CreateDataNavigate(dataPackage, time);
+        //}
 
-        internal static IDataNavigate_Code CreateDataNavigate(String dataCenterUri, string code, double time)
-        {
-            IDataReader dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
-            return new DataNavigate_Code(dataReader, code, time);
-        }
+        //internal static IDataNavigate_Code CreateDataNavigate(String dataCenterUri, string code, double time)
+        //{
+        //    IDataReader dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
+        //    return new DataNavigate_Code2(dataReader, code, time);
+        //}
 
         private IDataReader dataReader;
 
@@ -41,7 +41,7 @@ namespace com.wer.sc.data.navigate
             this.dataReader = dataReader;
         }      
 
-        public IDataNavigate_Code CreateDataNavigate(string code, double time)
+        public IDataNavigate_Code CreateDataNavigate_Code(string code, double time)
         {
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             if (openDate < 0)
@@ -50,7 +50,7 @@ namespace com.wer.sc.data.navigate
             return CreateDataNavigate(dataPackage, time);
         }
 
-        public IDataNavigate_Code CreateDataNavigate(string code, double time, int beforeDays, int afterDays)
+        public IDataNavigate_Code CreateDataNavigate_Code(string code, double time, int beforeDays, int afterDays)
         {
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);

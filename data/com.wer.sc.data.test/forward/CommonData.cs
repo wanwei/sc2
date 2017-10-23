@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.forward
 {
-    public class CommonData
+    public class ForwardDataGetter
     {
         private static IDataReader dataReader;
 
@@ -49,6 +49,21 @@ namespace com.wer.sc.data.forward
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 
             ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, KLinePeriod.KLinePeriod_1Minute);
+
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
+            //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);
+            IDataForward_Code realTimeReader = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
+            return realTimeReader;
+        }
+
+        public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData,IList<KLinePeriod> klinePeriods)
+        {
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            referedPeriods.UseTimeLineData = false;
+            referedPeriods.UseTickData = useTickData;
+            referedPeriods.UsedKLinePeriods.AddRange(klinePeriods);
+
+            ForwardPeriod forwardPeriod = new ForwardPeriod(useTickData, referedPeriods.GetMinPeriod());
 
             IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
             //DataPackageFactory.CreateDataPackage(GetDataReader(), code, startDate, endDate);

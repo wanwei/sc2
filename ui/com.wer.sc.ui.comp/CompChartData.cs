@@ -187,12 +187,12 @@ namespace com.wer.sc.ui.comp
                 if (!CheckData())
                     return null;
                 if (dataNavigate_Code == null)
-                    dataNavigate_Code = this.dataCenter.DataNavigateFactory.CreateDataNavigate(code, time);
+                    dataNavigate_Code = this.dataCenter.DataNavigateFactory.CreateDataNavigate_Code(code, time);
                 //DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
                 else
                 {
                     if (dataNavigate_Code.Code != code)
-                        dataNavigate_Code = this.dataCenter.DataNavigateFactory.CreateDataNavigate(code, time);
+                        dataNavigate_Code = this.dataCenter.DataNavigateFactory.CreateDataNavigate_Code(code, time);
                     //DataNavigateFactory.CreateDataNavigate(dataReader, code, time);
                 }
                 dataNavigate_Code.NavigateTo(time);

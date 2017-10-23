@@ -257,7 +257,7 @@ namespace com.wer.sc.data
         public ITickBar GetCurrentBar()
         {
             return tickData.GetCurrentBar();
-        }
+        } 
 
         public IList<int> TradingTimeEndBarPoses
         {

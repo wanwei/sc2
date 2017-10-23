@@ -19,7 +19,7 @@ namespace com.wer.sc.data.account
             string code = "RB1710";
             int startDate = 20170601;
             int endDate = 20170605;
-            IDataForward_Code historyDataForward = CommonData.GetHistoryDataForward_Code(code, startDate, endDate, true);
+            IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             Account account = new Account(100000, historyDataForward);
             account.OnReturnOrder += Account_OnReturnOrder;
             account.OnReturnTrade += Account_OnReturnTrade;

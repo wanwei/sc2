@@ -44,6 +44,11 @@ namespace com.wer.sc.data.forward
             this.TickData = tickData;
             this.Index = index;
         }
+
+        public double Time
+        {
+            get { return TickData.Time; }
+        }
     }
 
     /// <summary>

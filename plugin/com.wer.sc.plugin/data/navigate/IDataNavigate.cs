@@ -11,5 +11,9 @@ namespace com.wer.sc.data.navigate
         void Change(string code);
 
         void Change(string code, double time);
+
+        void Play();
+
+        void Pause();
     }
 }

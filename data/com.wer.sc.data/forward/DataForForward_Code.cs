@@ -119,14 +119,14 @@ namespace com.wer.sc.data.forward
             get { return referedPeriods.UsedKLinePeriods; }
         }
 
-        public IKLineData_RealTime GetKLineData(KLinePeriod klinePeriod)
+        public virtual IKLineData_RealTime GetKLineData(KLinePeriod klinePeriod)
         {
             if (dic_Period_KLineData.ContainsKey(klinePeriod))
                 return dic_Period_KLineData[klinePeriod];
             return null;
         }
 
-        public ITickData_Extend CurrentTickData
+        public virtual ITickData_Extend CurrentTickData
         {
             get
             {
@@ -139,7 +139,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public ITimeLineData_RealTime CurrentTimeLineData
+        public virtual ITimeLineData_RealTime CurrentTimeLineData
         {
             get
             {
@@ -149,6 +149,22 @@ namespace com.wer.sc.data.forward
             set
             {
                 currentTimeLineData = value;
+            }
+        }
+
+        public virtual double Time
+        {
+            get
+            {
+                if (currentTickData != null)
+                    return currentTickData.Time;
+                if (currentTimeLineData != null)
+                    return currentTimeLineData.Time;
+                foreach (KLinePeriod period in dic_Period_KLineData.Keys)
+                {
+                    return dic_Period_KLineData[period].Time;
+                }
+                return 0;
             }
         }
     }

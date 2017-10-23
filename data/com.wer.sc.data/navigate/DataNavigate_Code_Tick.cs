@@ -52,7 +52,7 @@ namespace com.wer.sc.data.navigate
             tickData.BarPos = index < 0 ? 0 : index;
         }
 
-        public ITickData GetTickData()
+        public ITickData_Extend GetTickData()
         {
             return tickData;
         }

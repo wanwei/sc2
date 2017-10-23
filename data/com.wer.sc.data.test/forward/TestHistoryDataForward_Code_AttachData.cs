@@ -20,7 +20,7 @@ namespace com.wer.sc.data.forward
             //int start = 20040106;
             //int endDate = 20040106;
 
-            IDataForward_Code historyDataForward = CommonData.GetHistoryDataForward_Code(code, start, endDate, true);
+            IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, start, endDate, true);
             historyDataForward.OnBar += HistoryDataForward_OnBar;
             historyDataForward.OnTick += HistoryDataForward_OnTick;
             //historyDataForward.OnTick += KlineDataForward_OnTick;

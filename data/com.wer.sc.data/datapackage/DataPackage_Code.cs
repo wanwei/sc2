@@ -27,6 +27,8 @@ namespace com.wer.sc.data.datapackage
 
         private Dictionary<KLinePeriod, IKLineData_Extend> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData_Extend>();
 
+        private ITradingTimeReader_Code tradingTimeReader;
+
         private int minBefore;
 
         private int minAfter;
@@ -38,7 +40,7 @@ namespace com.wer.sc.data.datapackage
             if (dataReader.TradingDayReader.IsTrade(startDate))
                 this.startDate = startDate;
             else
-                this.startDate = dataReader.TradingDayReader.GetNextTradingDay(startDate);            
+                this.startDate = dataReader.TradingDayReader.GetNextTradingDay(startDate);
             if (this.dataReader.TradingDayReader.IsTrade(endDate))
                 this.endDate = endDate;
             else
@@ -83,6 +85,13 @@ namespace com.wer.sc.data.datapackage
             return tradingDayReader;
         }
 
+        public ITradingTimeReader_Code GetTradingTimeReader()
+        {
+            if (this.tradingTimeReader == null)
+                this.tradingTimeReader = dataReader.CreateTradingTimeReader(this.code);
+            return this.tradingTimeReader;
+        }
+
         /// <summary>
         /// 得到指定周期的K线
         /// </summary>
@@ -117,11 +126,6 @@ namespace com.wer.sc.data.datapackage
             return dataReader.TickDataReader.GetTickData_Extend(code, date);
         }
 
-        public ITradingTimeReader_Code GetTradingTimeReader()
-        {
-            return dataReader.CreateTradingTimeReader(code);
-        }
-
         public float GetLastEndPrice(int date)
         {
             return dataReader.KLineDataReader.GetLastEndPrice(code, date);
@@ -141,7 +145,7 @@ namespace com.wer.sc.data.datapackage
         public Dictionary<KLinePeriod, IKLineData_RealTime> CreateKLineData_RealTimes(IList<KLinePeriod> periods)
         {
             Dictionary<KLinePeriod, IKLineData_RealTime> dic = new Dictionary<KLinePeriod, IKLineData_RealTime>();
-            for(int i = 0; i < periods.Count; i++)
+            for (int i = 0; i < periods.Count; i++)
             {
                 KLinePeriod period = periods[i];
                 dic.Add(period, CreateKLineData_RealTime(period));
@@ -150,7 +154,7 @@ namespace com.wer.sc.data.datapackage
         }
 
         public ITimeLineData_RealTime CreateTimeLineData_RealTime(int date)
-        {            
+        {
             return new TimeLineData_RealTime(GetTimeLineData(date));
         }
 

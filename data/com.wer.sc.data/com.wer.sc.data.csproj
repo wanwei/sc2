@@ -59,6 +59,8 @@
     <Compile Include="navigate\DataForNavigate_Code.cs" />
     <Compile Include="navigate\DataNavigate.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
+    <Compile Include="navigate\DataNavigate_ChangeTime.cs" />
+    <Compile Include="navigate\DataNavigate_Code.cs" />
     <Compile Include="reader\MainContractReader.cs" />
     <Compile Include="reader\TradingTimeReader.cs" />
     <Compile Include="realtime\KLineDataExtend_RealTime.cs" />
@@ -81,10 +83,6 @@
     <Compile Include="market\impl\PriceGetter_HistoryDataForward_Code.cs" />
     <Compile Include="market\MarketTrader_Code.cs" />
     <Compile Include="market\impl\Account.cs" />
-    <Compile Include="navigate\DataNavigate_Code.cs" />
-    <Compile Include="navigate\DataNavigate_Code_KLine.cs" />
-    <Compile Include="navigate\DataNavigate_Code_TimeLine.cs" />
-    <Compile Include="navigate\DataNavigate_Code_Tick.cs" />
     <Compile Include="reader\DataReaderFactory.cs" />
     <Compile Include="reader\DataReader.cs" />
     <Compile Include="reader\CodeReader.cs" />

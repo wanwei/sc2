@@ -20,7 +20,7 @@ namespace com.wer.sc.data.market
             string code = "rb1710";
             int startDate = 20170601;
             int endDate = 20170601;
-            IDataForward_Code historyDataForward_Code = CommonData.GetHistoryDataForward_Code(code, startDate, endDate, true);
+            IDataForward_Code historyDataForward_Code = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             //IAccount account = AccountFactory.CreateAccount("test", 100000, historyDataForward_Code);
             //try
             //{

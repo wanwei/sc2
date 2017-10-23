@@ -14,6 +14,11 @@ namespace com.wer.sc.data.realtime
             this.klineData_Extend = klineData;
         }
 
+        public IKLineData_Extend GetKLineData_Original()
+        {
+            return klineData_Extend;
+        }
+
         public double GetEndTime(int barPos)
         {
             return klineData_Extend.GetEndTime(barPos);

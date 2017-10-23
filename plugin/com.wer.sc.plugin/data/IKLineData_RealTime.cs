@@ -14,6 +14,12 @@ namespace com.wer.sc.data
     public interface IKLineData_RealTime : IKLineData_Extend
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IKLineData_Extend GetKLineData_Original();
+
+        /// <summary>
         /// 清空当前时间数据bar的临时数据
         /// </summary>
         void ResetCurrentBar();

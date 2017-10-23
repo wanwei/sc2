@@ -495,11 +495,12 @@ namespace com.wer.sc.data.forward
         public void NavigateTo(double time)
         {
             //TODO IDataNavigate_Code返回的是ITickData，需要变成ITickData_Extend
-            //IDataNavigate_Code dataNav = DataNavigateFactory.CreateDataNavigate(dataPackage, time);
-            //this.currentTimeLineData = (TimeLineData_RealTime)dataNav.GetTimeLineData();
-            //ITickData tickData = dataNav.GetTickData();
-
-            //this.currentTickData = (TickData)dataNav.GetTickData();
+            //DataNavigate_Code dataNav = new DataNavigate_Code(this.DataPackage, time);
+            //if (navigateData.UseTimeLineData)
+            //    this.navigateData.CurrentTimeLineData = (TimeLineData_RealTime)dataNav.GetTimeLineData();
+            //if (navigateData.UseTickData)
+            //    this.navigateData.CurrentTickData = dataNav.GetTickData_Extend();
+            
             //KLinePeriod[] periods = this.dic_Period_KLineData.Keys.ToArray();
             //for (int i = 0; i < periods.Length; i++)
             //{
