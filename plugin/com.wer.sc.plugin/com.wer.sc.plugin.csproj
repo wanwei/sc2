@@ -81,6 +81,7 @@
     <Compile Include="data\StoreDataTypes.cs" />
     <Compile Include="data\StoreMethod.cs" />
     <Compile Include="data\TickData_Extend.cs" />
+    <Compile Include="data\TimeLineData_Extend.cs" />
     <Compile Include="data\utils\CacheUtils_CodeInfo.cs" />
     <Compile Include="data\utils\CacheUtils_MainContract.cs" />
     <Compile Include="data\utils\CacheUtils_TradingTime.cs" />

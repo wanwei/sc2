@@ -101,7 +101,7 @@ namespace com.wer.sc.data.navigate
             if (OnRealTimeChanged != null)
                 OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
             if (OnNavigateTo != null)
-                OnNavigateTo(this, new DataNavigateEventArgs(prevTime, time));
+                OnNavigateTo(this, new DataNavigateEventArgs(Code, Code, prevTime, time));
             return canNav;
         }
     }

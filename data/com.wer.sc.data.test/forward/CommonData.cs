@@ -32,7 +32,7 @@ namespace com.wer.sc.data.forward
 
         public static IDataPackage_Code GetDataPackage(string code, int startDate, int endDate)
         {
-            return DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);            
+            return DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
         }
 
         public static KLineData_RealTime GetKLineData_RealTime(string code, int startDate, int endDate, KLinePeriod klinePeriod)
@@ -56,10 +56,10 @@ namespace com.wer.sc.data.forward
             return realTimeReader;
         }
 
-        public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData,IList<KLinePeriod> klinePeriods)
+        public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData, bool useTimeLineData, IList<KLinePeriod> klinePeriods)
         {
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
-            referedPeriods.UseTimeLineData = false;
+            referedPeriods.UseTimeLineData = useTimeLineData;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.AddRange(klinePeriods);
 

@@ -112,9 +112,9 @@ namespace com.wer.sc.data.datapackage
         /// 得到当前的分时线
         /// </summary>
         /// <returns></returns>
-        public ITimeLineData GetTimeLineData(int date)
+        public ITimeLineData_Extend GetTimeLineData(int date)
         {
-            return dataReader.TimeLineDataReader.GetData(code, date);
+            return dataReader.TimeLineDataReader.GetData_Extend(code, date);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace com.wer.sc.data.datapackage
 
         public ITimeLineData_RealTime CreateTimeLineData_RealTime(int date)
         {
-            return new TimeLineData_RealTime(GetTimeLineData(date));
+            return new TimeLineDataExtend_RealTime(GetTimeLineData(date));
         }
 
         public ITickData_Extend CreateTickData_RealTime(int date)

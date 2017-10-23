@@ -28,6 +28,12 @@ namespace com.wer.sc.data.reader
             return timeLineDataList[0];
         }
 
+        public ITimeLineData_Extend GetData_Extend(string code, int date)
+        {
+            ITimeLineData timeLineData = GetData(code, date);
+            return new TimeLineData_Extend(timeLineData, dataReader.CreateTradingTimeReader(code).GetTradingTime(date).TradingPeriods);
+        }
+
         public List<ITimeLineData> GetData(String code, int startDate, int endDate)
         {
             if (startDate > endDate)

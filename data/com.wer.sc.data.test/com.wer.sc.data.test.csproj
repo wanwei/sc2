@@ -63,6 +63,7 @@
     <Compile Include="forward\TestHistoryDataForward_Code_TickPeriod.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code_TickPeriod_Play.cs" />
+    <Compile Include="forward\TestHistoryDataForward_Code_Tick_TimeLine.cs" />
     <Compile Include="market\impl\TestAccountPosition.cs" />
     <Compile Include="market\impl\TestAccountTodayOrder.cs" />
     <Compile Include="market\impl\TestAccountTrade.cs" />
@@ -403,6 +404,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="TestCase\com\wer\sc\data\forward\forward_tick_timeline" />
     <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_15Minute.txt" />
     <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_1Hour.txt" />
     <Content Include="TestCase\com\wer\sc\data\transfer\Kline2Kline_M05_20131216_20131231_5Minute.txt" />

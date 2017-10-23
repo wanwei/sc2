@@ -55,7 +55,7 @@ namespace com.wer.sc.data.datapackage
         /// 得到当前的分时线
         /// </summary>
         /// <returns></returns>
-        ITimeLineData GetTimeLineData(int date);
+        ITimeLineData_Extend GetTimeLineData(int date);
 
         /// <summary>
         /// 得到今日的TICK数据

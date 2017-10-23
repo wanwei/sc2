@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.realtime
 {
-    public class TimeLineData_RealTime : TimeLineData_Abstract, ITimeLineData_RealTime
+    public class TimeLineData_RealTime : TimeLineData_Abstract, ITimeLineData
     {
         private ITimeLineData timeLineData;
 
@@ -155,5 +155,112 @@ namespace com.wer.sc.data.realtime
         }
 
         #endregion
+        public ITimeLineBar GetCurrentBar_Original()
+        {
+            return new RealTimeLineBar_RealTime(this, BarPos);
+        }
+
+        class RealTimeLineBar_RealTime : TimeLineBar_Abstract
+        {
+            private int barPos;
+            private TimeLineData_RealTime timeLineData_RealTime;
+
+            public RealTimeLineBar_RealTime(TimeLineData_RealTime timeLineData_RealTime, int barPos)
+            {
+                this.timeLineData_RealTime = timeLineData_RealTime;
+                this.barPos = barPos;
+            }
+
+            public override string Code
+            {
+                get
+                {
+                    return timeLineData_RealTime.Code;
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override int Hold
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_hold.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override int Mount
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_mount.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override float Price
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_price.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override double Time
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_time.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override float UpPercent
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_upPercent.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public override float UpRange
+            {
+                get
+                {
+                    return timeLineData_RealTime.list_upRange.GetRealValue(barPos);
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

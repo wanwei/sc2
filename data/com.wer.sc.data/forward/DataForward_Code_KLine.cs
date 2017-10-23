@@ -375,7 +375,7 @@ namespace com.wer.sc.data.forward
                 if (nextTradingDay < 0)
                     return;
                 navigateData.TradingDay = nextTradingDay;
-                navigateData.CurrentTimeLineData = new TimeLineData_RealTime(DataPackage.GetTimeLineData(navigateData.TradingDay));
+                navigateData.CurrentTimeLineData = new TimeLineDataExtend_RealTime(DataPackage.GetTimeLineData(navigateData.TradingDay));
             }
 
             if (mainKLineData.BarPos >= mainKLineData.Length - 1)

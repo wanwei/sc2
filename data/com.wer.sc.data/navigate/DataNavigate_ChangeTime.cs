@@ -20,8 +20,8 @@ namespace com.wer.sc.data.navigate
 
         public static void ChangeTime_KLineData(IKLineData_RealTime klineData_RealTime, int date, double time, ITickData_Extend tickData)
         {
-            if (klineData_RealTime.Time == time)
-                return;
+            //if (klineData_RealTime.Time == time)
+            //    return;
             KLinePeriod klinePeriod = klineData_RealTime.Period;
             int klineIndex = IndexOfTime(klineData_RealTime, klinePeriod, time, date);
 
@@ -31,6 +31,13 @@ namespace com.wer.sc.data.navigate
                 klineData_RealTime.ResetCurrentBar();
                 return;
             }
+            int startTickIndex = GetStartTickIndex(klineData_RealTime, tickData, klinePeriod, klineIndex);
+            KLineBar klineBar = GetKLineBar(tickData, startTickIndex, tickIndex);
+            klineData_RealTime.ChangeCurrentBar(klineBar, klineIndex);
+        }
+
+        private static int GetStartTickIndex(IKLineData_RealTime klineData_RealTime, ITickData_Extend tickData, KLinePeriod klinePeriod, int klineIndex)
+        {
             int startTickIndex;
             if (klinePeriod.PeriodType == KLineTimeType.DAY)
                 startTickIndex = 0;
@@ -46,8 +53,8 @@ namespace com.wer.sc.data.navigate
                     }
                 }
             }
-            KLineBar klineBar = GetKLineBar(tickData, startTickIndex, tickIndex);
-            klineData_RealTime.ChangeCurrentBar(klineBar, klineIndex);
+
+            return startTickIndex;
         }
 
         private static bool IsPeriodEnd(IKLineData_RealTime klineData_RealTime, int klineIndex, ITickData_Extend tickData, int tickIndex)
@@ -100,15 +107,37 @@ namespace com.wer.sc.data.navigate
 
         public static void ChangeTime_TimeLineData(ITimeLineData_RealTime timeLineData, double time, ITickData_Extend tickData)
         {
-            if (timeLineData.Time == time)
-                return;
-            int timeLineIndex = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
+            //if (timeLineData.Time == time)
+            //    return;
+            int timeLineIndex = GetTimeLineIndex(timeLineData, time);
             int tickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, time);
             double klineTime = timeLineData.Arr_Time[timeLineIndex];
-            int startTickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, klineTime);
+            int startTickIndex = GetStartTickIndex(timeLineData, tickData, timeLineIndex);
 
             TimeLineBar klineBar = GetTimeLineBar(tickData, startTickIndex, tickIndex, timeLineData.YesterdayEnd);
             timeLineData.ChangeCurrentBar(klineBar, timeLineIndex);
+        }
+
+        private static int GetTimeLineIndex(ITimeLineData_RealTime timeLineData, double time)
+        {
+            if (time < timeLineData.Arr_Time[0])
+                return 0;
+            return TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, time);
+        }
+
+        private static int GetStartTickIndex(ITimeLineData_RealTime timeLineData, ITickData_Extend tickData, int timeLineIndex)
+        {
+            double klineTime = timeLineData.BarPos == timeLineIndex ? timeLineData.GetCurrentBar_Original().Time : timeLineData.Arr_Time[timeLineIndex];
+            int startTickIndex;
+            startTickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, klineTime, true);
+            if (timeLineData.IsTradingTimeStart(timeLineIndex))
+            {
+                while (!tickData.IsTradingTimeStart(startTickIndex))
+                {
+                    startTickIndex--;
+                }
+            }
+            return startTickIndex;
         }
 
         private static TimeLineBar GetTimeLineBar(ITickData tickData, int startIndex, int endIndex, float lastEndPrice)

@@ -65,6 +65,7 @@
     <Compile Include="reader\TradingTimeReader.cs" />
     <Compile Include="realtime\KLineDataExtend_RealTime.cs" />
     <Compile Include="realtime\TickData_RealTime.cs" />
+    <Compile Include="realtime\TimeLineDataExtend_RealTime.cs" />
     <Compile Include="store\file\MainContractStore_File.cs" />
     <Compile Include="store\file\TradingTimeStore_File.cs" />
     <Compile Include="store\IMainContractStore.cs" />

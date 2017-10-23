@@ -17,6 +17,7 @@ namespace com.wer.sc.data.forward
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170610;
+
             IDataForward_Code realTimeReader = GetRealTimeReader(code, start, endDate, false);
             while (!realTimeReader.IsEnd)
             {

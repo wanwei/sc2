@@ -49,10 +49,18 @@ namespace com.wer.sc.data.navigate
 
     public class DataNavigateEventArgs : System.EventArgs
     {
+        private string prevCode;
+
+        private string code;
+
         private double time;
 
         private double prevTime;
 
+        public string Code
+        {
+            get { return code; }
+        }
 
         public double Time
         {
@@ -70,9 +78,10 @@ namespace com.wer.sc.data.navigate
             }
         }
 
-
-        public DataNavigateEventArgs(double prevTime, double time)
+        public DataNavigateEventArgs(string prevCode, string code, double prevTime, double time)
         {
+            this.prevCode = prevCode;
+            this.code = code;
             this.prevTime = prevTime;
             this.time = time;
         }

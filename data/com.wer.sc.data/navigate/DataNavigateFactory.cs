@@ -39,7 +39,19 @@ namespace com.wer.sc.data.navigate
         internal DataNavigateFactory(IDataReader dataReader)
         {
             this.dataReader = dataReader;
-        }      
+        }
+
+        public IDataNavigate CreateDataNavigate(string code, double time, int beforeDays, int afterDays)
+        {
+            IDataNavigate_Code dataNav_Code = CreateDataNavigate_Code(code, time, beforeDays, afterDays);
+            DataNavigate nav = new DataNavigate(this, dataReader, dataNav_Code);
+            return nav;
+        }
+
+        public IDataNavigate CreateDataNavigate(string code, double time)
+        {
+            return CreateDataNavigate(code, time, 0, 0);
+        }
 
         public IDataNavigate_Code CreateDataNavigate_Code(string code, double time)
         {

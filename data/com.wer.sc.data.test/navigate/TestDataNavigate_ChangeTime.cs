@@ -36,7 +36,7 @@ namespace com.wer.sc.data.navigate
             this.klineData_15Minute = new KLineDataExtend_RealTime(DataCenter.Default.DataReader.KLineDataReader.GetData_Extend(code, start, endDate, 0, 0, KLinePeriod.KLinePeriod_15Minute));
             this.klineData_1Day = new KLineDataExtend_RealTime(DataCenter.Default.DataReader.KLineDataReader.GetData_Extend(code, start, endDate, 0, 0, KLinePeriod.KLinePeriod_1Day));
 
-            IDataForward_Code dataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, start, endDate, true, periods);
+            IDataForward_Code dataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, start, endDate, true, true, periods);
             dataForward.OnTick += DataForward_OnTick;
 
             while (dataForward.Forward())
@@ -61,7 +61,6 @@ namespace com.wer.sc.data.navigate
             Assert.AreEqual(argument.TickBar.ToString(), tickData.ToString());
 
             IRealTimeDataReader_Code realTimeData = ((IRealTimeDataReader_Code)sender);
-
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_1Minute, tradingDay, time, tickData);
             Assert.AreEqual(realTimeData.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString(), klineData_1Minute.ToString());
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_5Minute, tradingDay, time, tickData);
@@ -70,6 +69,10 @@ namespace com.wer.sc.data.navigate
             Assert.AreEqual(realTimeData.GetKLineData(KLinePeriod.KLinePeriod_15Minute).ToString(), klineData_15Minute.ToString());
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_1Day, tradingDay, time, tickData);
             Assert.AreEqual(realTimeData.GetKLineData(KLinePeriod.KLinePeriod_1Day).ToString(), klineData_1Day.ToString());
+
+            ITimeLineData_RealTime timeLineData = GetTimeLineData(tradingDay);
+            DataNavigate_ChangeTime.ChangeTime_TimeLineData(timeLineData, time, tickData);
+            Assert.AreEqual(realTimeData.GetTimeLineData().ToString(), timeLineData.ToString());
         }
 
         private ITickData_Extend tickData;
@@ -81,6 +84,17 @@ namespace com.wer.sc.data.navigate
                 tickData = DataCenter.Default.DataReader.TickDataReader.GetTickData_Extend(code, date);
             }
             return tickData;
+        }
+
+        private ITimeLineData_RealTime timeLineData;
+
+        private ITimeLineData_RealTime GetTimeLineData(int date)
+        {
+            if (timeLineData == null || timeLineData.Date != date)
+            {
+                timeLineData = new TimeLineDataExtend_RealTime(DataCenter.Default.DataReader.TimeLineDataReader.GetData_Extend(code, date));
+            }
+            return timeLineData;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace com.wer.sc.data
     /// <summary>
     /// 分时线
     /// </summary>
-    public interface ITimeLineData_RealTime : ITimeLineData
+    public interface ITimeLineData_RealTime : ITimeLineData_Extend
     {
         /// <summary>
         /// 清空当前时间数据bar的临时数据
@@ -33,6 +33,6 @@ namespace com.wer.sc.data
         /// 得到当前原始的数据
         /// </summary>
         /// <returns></returns>
-        //ITimeLineBar GetCurrentBar_Original();
+        ITimeLineBar GetCurrentBar_Original();
     }
 }

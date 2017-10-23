@@ -16,6 +16,14 @@ namespace com.wer.sc.data.reader
         ITimeLineData GetData(string code, int date);
 
         /// <summary>
+        /// 读取一天的分时线数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        ITimeLineData_Extend GetData_Extend(string code, int date);
+
+        /// <summary>
         /// 读取一段时间的分时线数据
         /// </summary>
         /// <param name="code"></param>
