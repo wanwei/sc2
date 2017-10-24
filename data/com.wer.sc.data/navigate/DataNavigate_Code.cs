@@ -12,6 +12,11 @@ namespace com.wer.sc.data.navigate
     {
         private DataForNavigate_Code dataForNavigate;
 
+        internal DataNavigate_Code(DataForNavigate_Code dataForNavigate)
+        {
+            this.dataForNavigate = dataForNavigate;
+        }
+
         public DataNavigate_Code(IDataPackage_Code dataPackage, double time)
         {
             this.dataForNavigate = new DataForNavigate_Code(dataPackage, time);

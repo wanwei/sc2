@@ -499,24 +499,23 @@ namespace com.wer.sc.data.forward
 
         public void NavigateTo(double time)
         {
-            //TODO IDataNavigate_Code返回的是ITickData，需要变成ITickData_Extend
-            //DataNavigate_Code dataNav = new DataNavigate_Code(this.DataPackage, time);
-            //if (navigateData.UseTimeLineData)
-            //    this.navigateData.CurrentTimeLineData = (TimeLineData_RealTime)dataNav.GetTimeLineData();
-            //if (navigateData.UseTickData)
-            //    this.navigateData.CurrentTickData = dataNav.GetTickData_Extend();
+            DataForNavigate_Code dataForNav = DataForNavigate_Code.Create(this.forwardData);
+            DataNavigate_Code dataNav = new DataNavigate_Code(dataForNav);
+            dataNav.NavigateTo(time);
 
-            //KLinePeriod[] periods = this.dic_Period_KLineData.Keys.ToArray();
-            //for (int i = 0; i < periods.Length; i++)
-            //{
-            //    KLinePeriod period = periods[i];
-            //    this.dic_Period_KLineData[period] = (IKLineData_RealTime)dataNav.GetKLineData(period);
-            //}
+            if (forwardData.UseTimeLineData)
+                this.forwardData.CurrentTimeLineData = (ITimeLineData_RealTime)dataNav.GetTimeLineData();
+            if (forwardData.UseTickData)
+                this.forwardData.CurrentTickData = (ITickData_Extend)dataNav.GetTickData();
+
+            foreach (KLinePeriod period in this.forwardData.ReferedKLinePeriods)
+            {
+                this.forwardData.SetKLineData(period, (IKLineData_RealTime)dataNav.GetKLineData(period));
+            }
         }
 
-        public event DelegateOnNavigateTo OnNavigateTo;
-
         private System.Timers.Timer timer = new System.Timers.Timer(250);
+        //private System.Timers.Timer timer = new System.Timers.Timer(5000);
 
         private double forwardTime;
 
@@ -532,6 +531,7 @@ namespace com.wer.sc.data.forward
             //this.NavigateTo(forwardTime);
             this.timer.Enabled = true;
             this.timer.Start();
+            //this.Timer_Elapsed(this, null);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

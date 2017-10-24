@@ -5,25 +5,48 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.reader;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.data.navigate
 {
     public class DataNavigate : IDataNavigate
     {
+        public const int OPERATOR_NAVIGATE = 0;
+
+        public const int OPERATOR_PLAY = 1;
+
+        private IRealTimeDataReader_Code currentRealTimeDataReader;
+
+        private IDataForward_Code dataForward_Code;
+
+        private bool isPlaying;
+
+        private int beforeDays;
+
+        private int afterDays;
+
+        private int lastOperator;
+
         private IDataNavigate_Code currentNavigate_Code;
 
-        private IDataNavigateFactory fac;
+        private IDataNavigateFactory dataNavigateFactory;
+
+        private IDataCenter dataCenter;
 
         private IDataReader dataReader;
 
+        private CodeInfo prevCodeInfo;
+
         private CodeInfo codeInfo;
 
-        public DataNavigate(IDataNavigateFactory fac, IDataReader dataReader, IDataNavigate_Code currentNavigate_Code)
+        public DataNavigate(IDataCenter dataCenter, string code, double time, int beforeDays, int afterDays)
         {
-            this.currentNavigate_Code = currentNavigate_Code;
-            this.fac = fac;
-            this.dataReader = dataReader;
-            this.codeInfo = this.dataReader.CodeReader.GetCodeInfo(currentNavigate_Code.Code);
+            this.dataCenter = dataCenter;
+            this.dataNavigateFactory = dataCenter.DataNavigateFactory;
+            this.dataReader = dataCenter.DataReader;
+            this.beforeDays = beforeDays;
+            this.afterDays = afterDays;
+            this.Change(code, time);
         }
 
         public string Code
@@ -46,7 +69,26 @@ namespace com.wer.sc.data.navigate
         {
             get
             {
-                return currentNavigate_Code.Time;
+                if (LastOperator == OPERATOR_NAVIGATE)
+                    return currentNavigate_Code.Time;
+                return dataForward_Code.Time;
+            }
+        }
+
+        public int LastOperator
+        {
+            get
+            {
+                return lastOperator;
+            }
+
+            set
+            {
+                lastOperator = value;
+                if (lastOperator == OPERATOR_NAVIGATE)
+                    this.currentRealTimeDataReader = currentNavigate_Code;
+                else
+                    this.currentRealTimeDataReader = dataForward_Code;
             }
         }
 
@@ -56,13 +98,34 @@ namespace com.wer.sc.data.navigate
 
         public void Change(string code)
         {
-            this.currentNavigate_Code = fac.CreateDataNavigate_Code(code, this.Time);
-            this.codeInfo = dataReader.CodeReader.GetCodeInfo(code);
+            this.Change(code, Time);
         }
 
         public void Change(string code, double time)
         {
-            this.currentNavigate_Code = fac.CreateDataNavigate_Code(code, time);
+            this.prevCodeInfo = codeInfo;
+            this.codeInfo = dataReader.CodeReader.GetCodeInfo(code);
+
+            if (this.currentNavigate_Code != null)
+            {
+                this.currentNavigate_Code.OnNavigateTo -= CurrentNavigate_Code_OnNavigateTo;
+                this.currentNavigate_Code.OnRealTimeChanged -= CurrentNavigate_Code_OnRealTimeChanged;
+                this.currentNavigate_Code = null;
+            }
+            this.currentNavigate_Code = dataNavigateFactory.CreateDataNavigate_Code(code, time, beforeDays, afterDays);
+            this.currentNavigate_Code.OnNavigateTo += CurrentNavigate_Code_OnNavigateTo;
+            this.currentNavigate_Code.OnRealTimeChanged += CurrentNavigate_Code_OnRealTimeChanged;
+            this.LastOperator = OPERATOR_NAVIGATE;
+        }
+
+        private void CurrentNavigate_Code_OnRealTimeChanged(object sender, RealTimeChangedArgument argument)
+        {
+
+        }
+
+        private void CurrentNavigate_Code_OnNavigateTo(object sender, DataNavigateEventArgs e)
+        {
+
         }
 
         public bool Backward(KLinePeriod forwardPeriod)
@@ -73,10 +136,12 @@ namespace com.wer.sc.data.navigate
                 int startDate = this.DataPackage.StartDate;
                 if (startDate > codeInfo.Start)
                 {
-                    currentNavigate_Code = fac.CreateDataNavigate_Code(Code, Time);
+                    currentNavigate_Code = dataNavigateFactory.CreateDataNavigate_Code(Code, Time);
+                    this.LastOperator = OPERATOR_NAVIGATE;
                     return currentNavigate_Code.Backward(forwardPeriod);
                 }
             }
+            this.LastOperator = OPERATOR_NAVIGATE;
             return canBackWard;
         }
 
@@ -91,36 +156,38 @@ namespace com.wer.sc.data.navigate
                     codeEndDate = this.dataReader.TradingDayReader.FirstTradingDay;
                 if (endDate < codeEndDate)
                 {
-                    currentNavigate_Code = fac.CreateDataNavigate_Code(Code, Time);
+                    currentNavigate_Code = dataNavigateFactory.CreateDataNavigate_Code(Code, Time);
+                    this.LastOperator = OPERATOR_NAVIGATE;
                     return currentNavigate_Code.Forward(forwardPeriod);
                 }
             }
+            this.LastOperator = OPERATOR_NAVIGATE;
             return canForward;
         }
 
         public IKLineData GetKLineData(KLinePeriod period)
         {
-            return this.currentNavigate_Code.GetKLineData(period);
+            return this.currentRealTimeDataReader.GetKLineData(period);
         }
 
         public ITickData GetTickData()
         {
-            return this.currentNavigate_Code.GetTickData();
+            return this.currentRealTimeDataReader.GetTickData();
         }
 
         public ITimeLineData GetTimeLineData()
         {
-            return this.currentNavigate_Code.GetTimeLineData();
+            return this.currentRealTimeDataReader.GetTimeLineData();
         }
 
         public bool IsPeriodEnd(KLinePeriod period)
         {
-            return this.currentNavigate_Code.IsPeriodEnd(period);
+            return this.currentRealTimeDataReader.IsPeriodEnd(period);
         }
 
         public bool NavigateTo(double time)
         {
-            if (this.currentNavigate_Code.Time == time)
+            if (Time == time)
                 return true;
             bool canNav = this.currentNavigate_Code.NavigateTo(time);
             if (!canNav)
@@ -128,8 +195,9 @@ namespace com.wer.sc.data.navigate
                 int tradingDay = this.dataReader.CreateTradingTimeReader(Code).GetTradingDay(time);
                 if (!IsInTradingDay(codeInfo, tradingDay))
                     return false;
-                this.currentNavigate_Code = fac.CreateDataNavigate_Code(Code, time);
+                this.currentNavigate_Code = dataNavigateFactory.CreateDataNavigate_Code(Code, time);
             }
+            this.LastOperator = OPERATOR_NAVIGATE;
             return canNav;
         }
 
@@ -142,14 +210,54 @@ namespace com.wer.sc.data.navigate
             return true;
         }
 
+        public bool IsPlaying
+        {
+            get { return isPlaying; }
+        }
+
         public void Play()
         {
+            this.isPlaying = true;
+            if (dataForward_Code == null || this.LastOperator == OPERATOR_NAVIGATE)
+            {
+                if (this.dataForward_Code != null)
+                    this.dataForward_Code.OnRealTimeChanged -= DataForward_Code_OnRealTimeChanged;
+                ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods(new KLinePeriod[] { KLinePeriod.KLinePeriod_1Minute, KLinePeriod.KLinePeriod_5Minute,
+                    KLinePeriod.KLinePeriod_15Minute, KLinePeriod.KLinePeriod_1Hour, KLinePeriod.KLinePeriod_1Day }, true, true);
+                ForwardPeriod forwardPeriod = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+                this.dataForward_Code = dataCenter.HistoryDataForwardFactory.CreateDataForward_Code(this.DataPackage, referedPeriods, forwardPeriod);
+                this.dataForward_Code.OnRealTimeChanged += DataForward_Code_OnRealTimeChanged;
+                this.dataForward_Code.NavigateTo(Time);
+            }
 
+            this.LastOperator = OPERATOR_PLAY;
+            this.dataForward_Code.Play();
+        }
+
+        private void DataForward_Code_OnRealTimeChanged(object sender, RealTimeChangedArgument argument)
+        {
+            if (this.OnRealTimeChanged != null)
+            {
+                double prevTime = argument.PrevTime;
+                double time = argument.Time;
+                this.OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, time, this));
+            }
+            if (this.OnNavigateTo != null)
+            {
+                string prevCode = Code;
+                string code = Code;
+                double prevTime = argument.PrevTime;
+                double time = argument.Time;
+                this.OnNavigateTo(this, new DataNavigateEventArgs(prevCode, code, prevTime, time));
+            }
         }
 
         public void Pause()
         {
-
+            if (this.lastOperator == OPERATOR_NAVIGATE)
+                return;
+            this.dataForward_Code.Pause();
+            this.isPlaying = false;
         }
     }
 }

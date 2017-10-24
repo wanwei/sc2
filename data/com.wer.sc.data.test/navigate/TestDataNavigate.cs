@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace com.wer.sc.data.navigate
@@ -36,7 +37,39 @@ namespace com.wer.sc.data.navigate
             Assert.AreEqual("20170405.093059,3260,3262,3252,3252,33892,1.104346E+08,2476612", dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString());
 
             dataNavigate.Change("rb1705");
-            Assert.AreEqual(str, dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString());
+            Assert.AreEqual(str, getKLineBar(dataNavigate));
+
+            bool canForward = dataNavigate.Forward(KLinePeriod.KLinePeriod_5Minute);
+            Console.WriteLine(getKLineBar(dataNavigate));
+        }
+
+        private static string getKLineBar(IDataNavigate dataNavigate)
+        {
+            return dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString();
+        }
+
+        [TestMethod]
+        public void TestNavigate_Play()
+        {
+            string code = "rb1710";
+            double time = 20170405.093001;
+            IDataNavigate dataNavigate = DataCenter.Default.DataNavigateFactory.CreateDataNavigate(code, time);
+
+            dataNavigate.OnNavigateTo += DataNavigate_OnNavigateTo;
+            dataNavigate.Play();
+
+            while (dataNavigate.IsPlaying)
+            {
+
+            }
+        }
+
+        private void DataNavigate_OnNavigateTo(object sender, DataNavigateEventArgs e)
+        {
+            IDataNavigate dataNavigate = (IDataNavigate)sender;
+            if (e.Time >= 20170405.093110)
+                dataNavigate.Pause();
+            Console.WriteLine(getKLineBar(dataNavigate));
         }
     }
 }

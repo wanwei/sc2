@@ -34,23 +34,26 @@ namespace com.wer.sc.data.navigate
         //    return new DataNavigate_Code2(dataReader, code, time);
         //}
 
+        private IDataCenter dataCenter;
+
         private IDataReader dataReader;
 
-        internal DataNavigateFactory(IDataReader dataReader)
+        internal DataNavigateFactory(IDataCenter dataCenter)
         {
-            this.dataReader = dataReader;
+            this.dataCenter = dataCenter;
+            this.dataReader = dataCenter.DataReader;
         }
 
         public IDataNavigate CreateDataNavigate(string code, double time, int beforeDays, int afterDays)
         {
             IDataNavigate_Code dataNav_Code = CreateDataNavigate_Code(code, time, beforeDays, afterDays);
-            DataNavigate nav = new DataNavigate(this, dataReader, dataNav_Code);
+            DataNavigate nav = new DataNavigate(this.dataCenter, code, time, beforeDays, afterDays);
             return nav;
         }
 
         public IDataNavigate CreateDataNavigate(string code, double time)
         {
-            return CreateDataNavigate(code, time, 0, 0);
+            return CreateDataNavigate(code, time, 100, 50);
         }
 
         public IDataNavigate_Code CreateDataNavigate_Code(string code, double time)

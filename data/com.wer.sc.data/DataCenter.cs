@@ -35,7 +35,7 @@ namespace com.wer.sc.data
             this.dataReader = dataReaderFactory;
             this.dataPackageFactory = new DataPackageFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
-            this.dataNavigateFactory = new DataNavigateFactory(dataReader);
+            this.dataNavigateFactory = new DataNavigateFactory(this);
         }
 
         public DataCenterInfo Config

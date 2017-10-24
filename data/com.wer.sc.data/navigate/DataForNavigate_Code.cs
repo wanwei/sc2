@@ -12,6 +12,17 @@ namespace com.wer.sc.data.navigate
 {
     public class DataForNavigate_Code
     {
+        public static DataForNavigate_Code Create(DataForForward_Code dataForForward)
+        {
+            DataForNavigate_Code dataForNav = new DataForNavigate_Code(dataForForward.DataPackage, dataForForward.Time);
+            foreach(KLinePeriod klinePeriod in dataForForward.ReferedKLinePeriods)
+            {
+                IKLineData_RealTime klineData = dataForForward.GetKLineData(klinePeriod);
+                dataForNav.dic_Period_KLineData.Add(klinePeriod, klineData);
+            }
+            return dataForNav;
+        }
+
         private double time;
 
         //当前交易日
@@ -32,7 +43,7 @@ namespace com.wer.sc.data.navigate
         public DataForNavigate_Code(IDataPackage_Code dataPackage, double time)
         {
             this.dataPackage = dataPackage;
-            this.time = time;
+            this.NavigateTo(time);
         }
 
         public IDataPackage_Code DataPackage

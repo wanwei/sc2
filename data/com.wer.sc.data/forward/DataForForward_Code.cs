@@ -126,6 +126,14 @@ namespace com.wer.sc.data.forward
             return null;
         }
 
+        internal void SetKLineData(KLinePeriod period, IKLineData_RealTime klineData)
+        {
+            if (dic_Period_KLineData.ContainsKey(period))
+                dic_Period_KLineData[period] = klineData;
+            else
+                dic_Period_KLineData.Add(period, klineData);
+        }
+
         public virtual ITickData_Extend CurrentTickData
         {
             get

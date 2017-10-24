@@ -57,7 +57,7 @@ namespace com.wer.sc.data.forward
         /// <param name="time"></param>
         void NavigateTo(double time);
 
-        event DelegateOnNavigateTo OnNavigateTo;
+        //event DelegateOnNavigateTo OnNavigateTo;
 
         #endregion
 
