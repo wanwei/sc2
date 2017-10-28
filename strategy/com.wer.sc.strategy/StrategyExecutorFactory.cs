@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using System;
@@ -12,17 +13,35 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略执行器工厂
     /// </summary>
-    public class StrategyExecutorFactory
+    public class StrategyExecutorFactory : IStrategyExecutorFactory_History
     {
-        public static IStrategyExecutor CreateHistoryExecutor(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyOperator strategyHelper)
+        private IDataCenter dataCenter;
+
+        public StrategyExecutorFactory(IDataCenter dataCenter)
         {
-            return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod, strategyHelper);
+            this.dataCenter = dataCenter;
         }
 
-        //public static IStrategyExecutor CreateStrategyRunner(IDataPackage dataPackage, StrategyRunnerArgument arg)
-        //{
-        //    return new StrategyExecutor_History(dataPackage, arg);
-        //}
+        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        {
+            return CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+        }
+
+        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator)
+        {
+            IDataPackage_Code dataPackage_Code = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate, 200, 0);
+            return CreateExecutorByDataPackage(dataPackage_Code, referedPeriods, forwardPeriod);
+        }
+
+        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        {
+            return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+        }
+
+        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator)
+        {
+            return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
+        }
     }
 
     /// <summary>

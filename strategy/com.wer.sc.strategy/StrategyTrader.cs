@@ -24,7 +24,7 @@ namespace com.wer.sc.strategy
             this.realTimeDataReader = realTimeDataReader;
         }
 
-        public Account Account
+        public IAccount Account
         {
             get
             {

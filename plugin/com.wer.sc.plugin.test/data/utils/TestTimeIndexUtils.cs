@@ -10,7 +10,7 @@ namespace com.wer.sc.data.utils
         [TestMethod]
         public void TestIndexOfKLine()
         {
-            IKLineData klineData = MockDataLoader.GetKLineData("m05", 20141215, 20150116, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = MockDataLoader.GetKLineData("m1505", 20141215, 20150116, KLinePeriod.KLinePeriod_1Minute);
             int index = TimeIndeierUtils.IndexOfTime_KLine(klineData, 20141225.090100);
             Assert.AreEqual(1801, index);
 
@@ -24,11 +24,11 @@ namespace com.wer.sc.data.utils
         [TestMethod]
         public void TestIndexOfTick()
         {
-            ITickData tickData = MockDataLoader.GetTickData("m05", 20150121);
+            ITickData tickData = MockDataLoader.GetTickData("m1505", 20150121);
             int index = TimeIndeierUtils.IndexOfTime_Tick(tickData, 20150120.210116);
             Assert.AreEqual(147, index);
 
-            tickData = MockDataLoader.GetTickData("m05", 20070919);
+            tickData = MockDataLoader.GetTickData("m0805", 20070920);
             index = TimeIndeierUtils.IndexOfTime_Tick(tickData, 20070919.093027, true, 0);
             for(int i = 0; i < tickData.Length; i++)
             {
@@ -41,7 +41,7 @@ namespace com.wer.sc.data.utils
         [TestMethod]
         public void TestIndexOfTick_Repeat()
         {
-            ITickData tickData = MockDataLoader.GetTickData("m05", 20070919);
+            ITickData tickData = MockDataLoader.GetTickData("m0805", 20070919);
 
             int index = TimeIndeierUtils.IndexOfTime_Tick(tickData, 20070919.092414, true, 0);
             Assert.AreEqual(2416, index);

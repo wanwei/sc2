@@ -14,7 +14,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransferTimeLineData()
         {
-            IKLineData klineData = MockDataLoader.GetKLineData("m05", 20150107, 20150107, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = MockDataLoader.GetKLineData("m1505", 20150107, 20150107, KLinePeriod.KLinePeriod_1Minute);
             ITimeLineData timeLineData = DataTransfer_KLine2TimeLine.ConvertTimeLineData(klineData, 2849);
             AssertUtils.AssertEqual_TimeLineData("KLine2TimeLine_M05_20150107", GetType(), timeLineData);
         }

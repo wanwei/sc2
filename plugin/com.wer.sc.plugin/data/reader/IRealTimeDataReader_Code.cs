@@ -29,6 +29,11 @@ namespace com.wer.sc.data.reader
         double Time { get; }
 
         /// <summary>
+        /// 价格
+        /// </summary>
+        float Price { get; }
+
+        /// <summary>
         /// 得到指定周期的K线
         /// </summary>
         /// <param name="period"></param>

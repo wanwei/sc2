@@ -221,7 +221,7 @@ namespace com.wer.sc.strategy.cnfutures
 
         public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyOperator.DrawHelper.GetDrawer_KLine(MainKLinePeriod);
+            IDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
             //drawHelper.DrawPoints(arr_Price_Top, System.Drawing.Color.Blue);
             //drawHelper.DrawPoints(arr_Price_Bottom, System.Drawing.Color.White);
 

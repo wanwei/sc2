@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.plugin.strategy
+namespace com.wer.sc.strategy
 {
-    public class StrategyParameter
+    public class TestStrategy_ReferOtherCode
     {
-        
+
     }
 }

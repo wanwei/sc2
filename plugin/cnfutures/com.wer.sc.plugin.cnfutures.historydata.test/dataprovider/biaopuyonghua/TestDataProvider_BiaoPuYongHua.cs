@@ -21,7 +21,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             //AssertUtils.PrintLineList(tradingDays);
 
             List<CodeInfo> codes = dataProvider.GetNewCodes();
-            //AssertUtils.PrintLineList(codes);
+            AssertUtils.PrintLineList(codes);
             AssertUtils.AssertEqual_List("codes", GetType(), codes);
 
             ITickData tickData = dataProvider.LoadTickData("A1005", 20100105);
@@ -29,7 +29,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.biaopuyonghua
             AssertUtils.AssertEqual_TickData("TickData_A1005_20100105", GetType(), tickData);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestDataProvider_BiaoPuYongHua_Code()
         {
             string srcDataPath = DataUpdateConst.SRCDATAPATH_BIAOPUYONGHUA;

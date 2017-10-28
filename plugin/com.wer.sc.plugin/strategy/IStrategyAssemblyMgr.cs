@@ -25,13 +25,6 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyAssembly GetStrategyAssembly(String assemblyName);
 
-        ///// <summary>
-        ///// 根据策略名称查找策略，模糊查找
-        ///// </summary>
-        ///// <param name="strategyName"></param>
-        ///// <returns></returns>
-        //IList<IStrategyAssembly> SearchStrategyInfo(String strategyName);
-
         void Refresh();
 
         void Refresh(IStrategyAssembly strategyAssembly);

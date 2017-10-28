@@ -45,7 +45,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransfer_M05_20040129()
         {
-            string code = "m05";
+            string code = "m0405";
             int date = 20040129;
             ITickData tickData = MockDataLoader.GetTickData(code, date);
             string time = "20040129,20040129.09-20040129.1015,20040129.103-20040129.113,20040129.133-20040129.15";
@@ -57,7 +57,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransfer_M05_20040630()
         {
-            string code = "m05";
+            string code = "m0505";
             int date = 20040630;
             ITickData tickData = MockDataLoader.GetTickData(code, date);
             string time = "20040630,20040630.09-20040630.1015,20040630.103-20040630.113,20040630.133-20040630.15";
@@ -69,7 +69,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransfer_M05_20150504()
         {
-            string code = "m05";
+            string code = "m1505";
             int date = 20150504;
             ITickData tickData = MockDataLoader.GetTickData(code, date);
             string time = "20150504,20150504.09-20150504.1015,20150504.103-20150504.113,20150504.133-20150504.15";
@@ -82,7 +82,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransferNight()
         {
-            string code = "m05";
+            string code = "m1505";
             int date = 20150107;
             ITickData tickData = MockDataLoader.GetTickData(code, date);
             string time = "20150107,20150106.21-20150107.023,20150107.09-20150107.1015,20150107.103-20150107.113,20150107.133-20150107.15";

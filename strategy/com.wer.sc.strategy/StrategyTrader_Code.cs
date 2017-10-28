@@ -206,7 +206,7 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return null;
+                return this.strategyTrader.Account.CurrentOrderInfo;
             }
         }
 
@@ -217,7 +217,7 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return null;
+                return this.strategyTrader.Account.CurrentPositionInfo;
             }
         }
 
@@ -228,7 +228,7 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return null;
+                return this.strategyTrader.Account.CurrentTradeInfo;
             }
         }
     }

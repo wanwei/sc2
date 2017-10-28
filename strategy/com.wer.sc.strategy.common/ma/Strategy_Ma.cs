@@ -87,11 +87,6 @@ namespace com.wer.sc.strategy.common.ma
             get { return maArr_5.Last(); }
         }
 
-
-        private List<float> topPoints = new List<float>();
-
-        private List<float> bottomPoints = new List<float>();
-
         public Strategy_Ma()
         {
             this.Parameters.AddParameter(PARAMKEY_MA1, "MA5", "MA5", utils.param.ParameterType.INTEGER, 5);
@@ -109,14 +104,7 @@ namespace com.wer.sc.strategy.common.ma
         bool isLastPeriodEnd = true;
 
         public override void OnBar(Object sender, StrategyOnBarArgument currentData)
-        {
-            bool isPeriodStart = false;
-            if (isLastPeriodEnd)
-            {
-                isPeriodStart = true;
-                isLastPeriodEnd = false;
-            }
-            
+        {            
             IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
             GenMa(klineData, isLastPeriodEnd);
             isLastPeriodEnd = currentData.IsPeriodEnd(MainKLinePeriod);
@@ -165,7 +153,7 @@ namespace com.wer.sc.strategy.common.ma
 
         public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyOperator.DrawHelper.GetDrawer_KLine(MainKLinePeriod);
+            IDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maArr_1, color_1);
             drawHelper.DrawPolyLine(maArr_2, color_2);
             drawHelper.DrawPolyLine(maArr_3, color_3);

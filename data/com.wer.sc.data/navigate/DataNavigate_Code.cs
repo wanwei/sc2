@@ -47,6 +47,11 @@ namespace com.wer.sc.data.navigate
             }
         }
 
+        public float Price
+        {
+            get { return dataForNavigate.Price; }
+        }
+
         public event DelegateOnNavigateTo OnNavigateTo;
         public event DelegateOnRealTimeChanged OnRealTimeChanged;
 

@@ -13,7 +13,7 @@ namespace com.wer.sc.ui.strategy
 {
     public partial class FormStrategyDescription : Form
     {
-        public FormStrategyDescription(StrategyInfo strategyInfo)
+        public FormStrategyDescription(IStrategyInfo strategyInfo)
         {
             InitializeComponent();
 

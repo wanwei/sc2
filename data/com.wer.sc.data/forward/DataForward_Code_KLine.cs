@@ -66,6 +66,11 @@ namespace com.wer.sc.data.forward
             }
         }
 
+        public float Price
+        {
+            get { return mainKLineData.End; }
+        }
+
         public double GetNextTime()
         {
             if (mainKLineData.BarPos >= mainKLineData.Length - 1)

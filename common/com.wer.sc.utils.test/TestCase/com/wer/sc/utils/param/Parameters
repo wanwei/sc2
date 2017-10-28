@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<parameters>
+  <parameter type="INTEGER" value="5" key="ma1" caption="ma1" description="ma1" defaultValue="5" />
+  <parameter type="INTEGER" value="10" key="ma2" caption="ma2" description="ma2" defaultValue="10" />
+  <parameter type="INTEGER" value="20" key="ma3" caption="ma3" description="ma3" defaultValue="20" />
+  <parameter type="INTEGER" value="40" key="ma4" caption="ma4" description="ma4" defaultValue="40" />
+  <parameter type="INTEGER" value="60" key="ma5" caption="ma5" description="ma5" defaultValue="60" />
+  <parameter type="INTEGER" key="test" caption="testc" description="testd" defaultValue="0">
+    <option type="INTEGER">
+      <option type="INTEGER" value="5" />
+      <option type="INTEGER" value="10" />
+      <option type="INTEGER" value="20" />
+      <option type="INTEGER" value="40" />
+      <option type="INTEGER" value="60" />
+    </option>
+  </parameter>
+</parameters>

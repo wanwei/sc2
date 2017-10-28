@@ -42,12 +42,12 @@ namespace com.wer.sc.strategy
 
         }
 
-        public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, StrategyOperator strategyHelper)
+        public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod, IStrategyOperator strategyHelper)
         {
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
             this.forwardPeriod = forwardPeriod;
-            this.strategyHelper = strategyHelper;
+            this.strategyHelper = (StrategyOperator)strategyHelper;
         }
 
         public void SetStrategy(IStrategy strategy)
@@ -204,6 +204,7 @@ namespace com.wer.sc.strategy
 
         private void ExecuteReferStrategyStart(IStrategy strategy)
         {
+            strategy.OnStrategyStart(this, null);
             IList<IStrategy> strategies = strategy.GetReferedStrategies();
             if (strategies != null)
             {
@@ -212,8 +213,7 @@ namespace com.wer.sc.strategy
                     IStrategy refstrategy = strategies[i];
                     ExecuteReferStrategyStart(refstrategy);
                 }
-            }
-            strategy.OnStrategyStart(this, null);
+            }            
         }
 
         private void RealTimeReader_OnTick(object sender, ForwardOnTickArgument argument)
@@ -260,6 +260,16 @@ namespace com.wer.sc.strategy
             strategy.OnBar(this, new StrategyOnBarArgument(realTimeDataReader, barInfos));
         }
 
+        /// <summary>
+        /// 得到执行器相关信息
+        /// </summary>
+        public IStrategyExecutorInfo StrategyExecutorInfo
+        {
+            get
+            {
+                return null;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

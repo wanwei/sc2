@@ -17,13 +17,13 @@ namespace com.wer.sc.ui.strategy
     {
         private CompChartStrategyBinder binder;
 
-        private StrategyInfo strategyInfo;
+        private IStrategyInfo strategyInfo;
 
         private IStrategy strategy;
 
         private IDataPackage_Code dataPackage;
 
-        public FormStrategy(CompChartStrategyBinder binder, StrategyInfo strategyInfo, IStrategy strategy, IDataPackage_Code dataPackage)
+        public FormStrategy(CompChartStrategyBinder binder, IStrategyInfo strategyInfo, IStrategy strategy, IDataPackage_Code dataPackage)
         {
             InitializeComponent();
             this.binder = binder;
@@ -32,7 +32,7 @@ namespace com.wer.sc.ui.strategy
             InitStrategy(strategyInfo, strategy);
         }
 
-        private void InitStrategy(StrategyInfo strategyInfo, IStrategy strategy)
+        private void InitStrategy(IStrategyInfo strategyInfo, IStrategy strategy)
         {
             this.strategy = strategy;
             this.strategyInfo = strategyInfo;
@@ -76,7 +76,7 @@ namespace com.wer.sc.ui.strategy
             if (dialogResult == DialogResult.OK)
             {
                 StrategyInfo strategyInfo = form.SelectedStrategy;
-                IStrategy strategy = strategyInfo.CreateStrategy();
+                IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
                 InitStrategy(strategyInfo, strategy);
             }
         }

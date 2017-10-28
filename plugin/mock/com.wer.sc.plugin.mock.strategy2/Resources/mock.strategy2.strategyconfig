@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Strageties>
+  <Assembly file="com.wer.sc.plugin.mock.strategy.20170207.dll" name="Mock策略集合">
+    <Strategy class="com.wer.sc.plugin.mock.strategy.MockStrategy_Ma" name="MA指标" desc="MA指标">
+      <parameters>
+        <parameter type="INTEGER" value="5" key="ma1" caption="ma1" description="ma1" defaultValue="5" />
+        <parameter type="INTEGER" value="10" key="ma2" caption="ma2" description="ma2" defaultValue="10" />
+        <parameter type="INTEGER" value="20" key="ma3" caption="ma3" description="ma3" defaultValue="20" />
+        <parameter type="INTEGER" value="40" key="ma4" caption="ma4" description="ma4" defaultValue="40" />
+        <parameter type="INTEGER" value="60" key="ma5" caption="ma5" description="ma5" defaultValue="60" />
+      </parameters>
+    </Strategy>
+    <Strategy class="com.wer.sc.plugin.mock.strategy.MockStrategy_TurningPoint" name="转折点查找" desc="转折点查找，测试专用">
+      <parameters>
+        <parameter type="INTEGER" value="5" key="short" caption="ma1" description="短周期" defaultValue="5" />
+        <parameter type="INTEGER" value="10" key="long" caption="ma2" description="长周期" defaultValue="10" />
+      </parameters>
+    </Strategy>
+    <Strategy class="com.wer.sc.plugin.mock.strategy.MockStrategy_Volume" name="量能过滤" desc="量能过滤，测试专用">
+    </Strategy>
+  </Assembly>
+</Strageties>

@@ -75,6 +75,16 @@ namespace com.wer.sc.data.navigate
             }
         }
 
+        public float Price
+        {
+            get
+            {
+                if (LastOperator == OPERATOR_NAVIGATE)
+                    return currentNavigate_Code.Price;
+                return dataForward_Code.Price;
+            }
+        }
+
         public int LastOperator
         {
             get

@@ -9,6 +9,7 @@ using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.strategy.mock;
+using com.wer.sc.strategy;
 
 namespace com.wer.sc.strategy
 {
@@ -18,24 +19,21 @@ namespace com.wer.sc.strategy
         [TestMethod]
         public void TestRunStrategy_Minute()
         {
-            //data.reader.IDataReader dataReader = CommonData.GetDataReader();
-
             string code = "RB1710";
-            int start = 20170601;
+            int startDate = 20170601;
             int endDate = 20170603;
-            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
-            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
-            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
-            runner.SetStrategy(strategy);
-            runner.Run();
+            executor.SetStrategy(strategy);
+            executor.Run();
         }
 
         [TestMethod]

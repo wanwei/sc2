@@ -45,7 +45,7 @@ namespace com.wer.sc.ui
             this.BindDefaultStrategy();
         }
 
-        private StrategyInfo strategyInfo;
+        private IStrategyInfo strategyInfo;
         private IStrategy strategy;
         private CompChartStrategyBinder binder;
 
@@ -60,7 +60,7 @@ namespace com.wer.sc.ui
                 //strategyInfo = strategyAssembly.GetStrategy("STRATEGY.ZIGZAG");            
                 if (strategyInfo == null)
                     return;
-                strategy = strategyInfo.CreateStrategy();
+                strategy = strategyInfo.CreateStrategy().Strategy;
                 binder = new CompChartStrategyBinder(this.compChart1);
                 binder.BindStrategy(strategy);
             }
@@ -258,21 +258,21 @@ namespace com.wer.sc.ui
 
         private void RunStrategy(StrategyInfo strategyInfo)
         {
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             RunStrategy(strategy);
         }
 
         private void RunStrategy(IStrategy strategy)
         {
             IDataPackage_Code dataPackage = this.compChart1.CompChartData.DataPackage;
-            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             //compChart1.KlinePeriod
             KLinePeriod period = compChart1.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);
             //referedPeriods.UsedKLinePeriods.Add(this.n)
-            ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
-            IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
-            compChart1.StrategyHelper.DrawHelper.GetDrawer_KLine(period).ClearShapes();
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
+            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            compChart1.StrategyHelper.DrawOperator.GetDrawer_KLine(period).ClearShapes();
             //compChart1.CurrentPriceRectDrawer.cl
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();
             if (strategy is StrategyAbstract)
@@ -300,7 +300,7 @@ namespace com.wer.sc.ui
         private void menuItemParameters_Click(object sender, EventArgs e)
         {
             StrategyInfo strategyInfo = GetSelectedStrategy();
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             IParameters parameters = strategy.Parameters;
 
             //IStrategy strategy
@@ -309,7 +309,7 @@ namespace com.wer.sc.ui
         private void menuItemExecute_Click(object sender, EventArgs e)
         {
             StrategyInfo strategyInfo = GetSelectedStrategy();
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             IParameters parameters = strategy.Parameters;
 
             FormParameters frmParamSetting = new FormParameters(parameters);

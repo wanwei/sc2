@@ -51,15 +51,26 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
+    <Compile Include="mock\MockStrategy_Ma.cs" />
+    <Compile Include="mock\MockStrategy_ReferOtherStrategy.cs" />
     <Compile Include="mock\MockStrategy_Simple.cs" />
+    <Compile Include="mock\MockStrategy_Trade.cs" />
     <Compile Include="mock\StrategyGetter.cs" />
     <Compile Include="TestStrategyExecutor.cs" />
     <Compile Include="TestStrategyExecutor_Multi.cs" />
+    <Compile Include="TestStrategyMgr.cs" />
+    <Compile Include="TestStrategy_ReferOtherCode.cs" />
+    <Compile Include="TestStrategy_ReferOtherStrategy.cs" />
+    <Compile Include="TestStrategy_Trader.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_bigperiod" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="TestCase\com\wer\sc\strategy\realtimereader\forward_tickperiod" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
       <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
       <Name>com.wer.sc.data</Name>

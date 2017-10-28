@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data.account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace com.wer.sc.strategy
         IList<string> GetAllCodes();
 
         IStrategyTrader_Code GetStrategyTrader(string code);
+
+        IAccount Account { get; }
     }
 }

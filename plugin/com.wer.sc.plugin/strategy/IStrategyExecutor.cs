@@ -35,7 +35,7 @@ namespace com.wer.sc.strategy
         void Cancel();
 
         /// <summary>
-        /// 
+        /// 执行完每一个bar
         /// </summary>
         event StrategyExecuteBarFinished BarFinished;
 
@@ -53,6 +53,11 @@ namespace com.wer.sc.strategy
         /// 得到策略执行报告，策略执行完才能获得
         /// </summary>
         IStrategyReport StrategyReport { get; }
+
+        /// <summary>
+        /// 得到执行器相关信息
+        /// </summary>
+        IStrategyExecutorInfo StrategyExecutorInfo { get; }
     }
 
     /// <summary>

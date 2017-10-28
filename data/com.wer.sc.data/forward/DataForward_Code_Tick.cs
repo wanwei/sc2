@@ -99,6 +99,14 @@ namespace com.wer.sc.data.forward
             }
         }
 
+        public float Price
+        {
+            get
+            {
+                return forwardData.CurrentTickData.Price;
+            }
+        }
+
         public double GetNextTime()
         {
             ITickData currentTickData = forwardData.CurrentTickData;
@@ -211,6 +219,7 @@ namespace com.wer.sc.data.forward
                 return null;
             }
         }
+
 
         public bool Forward()
         {

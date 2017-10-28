@@ -8,7 +8,7 @@ using com.wer.sc.strategy;
 using com.wer.sc.data.reader;
 using com.wer.sc.data.forward;
 
-namespace com.wer.sc.plugin.mock.zb
+namespace com.wer.sc.plugin.mock.strategy
 {
     [Strategy("MOCK.STRATEGY.MA", "MA指标", "MA指标，测试专用")]
     public class MockStrategy_Ma : StrategyAbstract

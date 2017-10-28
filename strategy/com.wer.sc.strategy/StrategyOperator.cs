@@ -11,11 +11,11 @@ namespace com.wer.sc.strategy
     {
         private StrategyResult results = new StrategyResult();
 
-        private IDrawHelper drawHelper;
+        private IDrawOperator drawHelper;
 
         private IStrategyTrader_Code strategyTrader_Code;
 
-        public StrategyOperator(IDrawHelper drawHelper)
+        public StrategyOperator(IDrawOperator drawHelper)
         {
             this.drawHelper = drawHelper;
         }
@@ -23,7 +23,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 得到画图帮助接口
         /// </summary>
-        public IDrawHelper DrawHelper
+        public IDrawOperator DrawOperator
         {
             get
             {

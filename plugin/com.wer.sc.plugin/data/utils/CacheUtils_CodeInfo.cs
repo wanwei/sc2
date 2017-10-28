@@ -82,7 +82,7 @@ namespace com.wer.sc.data.utils
         public List<CodeInfo> GetCodesByCatelog(String catelog)
         {
             string key = catelog.ToUpper();
-            if (dic_Catelog_Codes.ContainsKey(catelog))
+            if (dic_Catelog_Codes.ContainsKey(key))
                 return dic_Catelog_Codes[key];
             return null;
         }

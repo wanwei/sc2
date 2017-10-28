@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy.draw
 {
-    public interface IDrawHelper
+    public interface IDrawOperator
     {
         /// <summary>
         /// 得到K线的画图帮助类

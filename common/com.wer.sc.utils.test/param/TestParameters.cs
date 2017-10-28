@@ -1,9 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using com.wer.sc.mockdata;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.utils.param
 {
@@ -12,6 +14,13 @@ namespace com.wer.sc.utils.param
     {
         [TestMethod]
         public void TestAddParameter()
+        {
+            IParameters parameters = GetParameters();
+
+            Console.WriteLine(parameters);
+        }
+
+        private static IParameters GetParameters()
         {
             IParameters parameters = ParameterFactory.CreateParameters();
             parameters.AddParameter("ma1", "ma1", "ma1", ParameterType.INTEGER, 5);
@@ -28,8 +37,21 @@ namespace com.wer.sc.utils.param
             parameters.SetParameterValue("ma3", 20);
             parameters.SetParameterValue("ma4", 40);
             parameters.SetParameterValue("ma5", 60);
+            return parameters;
+        }
 
-            Console.WriteLine(parameters);
+        [TestMethod]
+        public void TestLoadParameters()
+        {
+            IParameters parameters = ParameterFactory.CreateParameters();
+            string testCase = TestCaseManager.GetTestCasePath(GetType(), "Parameters");
+            XmlDocument doc = new XmlDocument();
+            doc.Load(testCase);
+
+            parameters.Load(doc.DocumentElement);
+
+            IParameters parameters2 = GetParameters();
+            Assert.AreEqual(parameters.ToString(), parameters2.ToString());
         }
     }
 }

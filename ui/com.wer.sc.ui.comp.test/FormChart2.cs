@@ -221,20 +221,20 @@ namespace com.wer.sc.ui.comp.test
 
         private void RunStrategy(StrategyInfo strategyInfo)
         {
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             RunStrategy(strategy);
         }
 
         private void RunStrategy(IStrategy strategy)
         {
             IDataPackage_Code dataPackage = this.compChart1.CompChartData.DataPackage;
-            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             //compChart1.KlinePeriod
             KLinePeriod period = compChart1.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);
             //referedPeriods.UsedKLinePeriods.Add(this.n)
-            ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
-            IStrategyExecutor strategyRunner = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
+            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
             //compChart1.StrategyHelper.DrawHelper.ClearShapes();
             //compChart1.CurrentPriceRectDrawer.cl
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();
@@ -267,7 +267,7 @@ namespace com.wer.sc.ui.comp.test
         private void menuItemParameters_Click(object sender, EventArgs e)
         {
             StrategyInfo strategyInfo = GetSelectedStrategy();
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             IParameters parameters = strategy.Parameters;
 
             //IStrategy strategy
@@ -276,7 +276,7 @@ namespace com.wer.sc.ui.comp.test
         private void menuItemExecute_Click(object sender, EventArgs e)
         {
             StrategyInfo strategyInfo = GetSelectedStrategy();
-            IStrategy strategy = strategyInfo.CreateStrategy();
+            IStrategy strategy = strategyInfo.CreateStrategy().Strategy;
             IParameters parameters = strategy.Parameters;
 
             FormParameters frmParamSetting = new FormParameters(parameters);

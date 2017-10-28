@@ -9,7 +9,7 @@ namespace com.wer.sc.strategy.cnfutures
     [TestClass]
     public class TestStrategy_CnFutures
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestMethod1()
         {
             //IDataReader dataReader = CommonData.GetDataReader();

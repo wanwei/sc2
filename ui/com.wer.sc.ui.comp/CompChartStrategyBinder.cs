@@ -112,7 +112,7 @@ namespace com.wer.sc.ui.comp
             if (this.compChart1.ChartType == ChartType.KLine)
             {
                 KLinePeriod currentPeriod = this.compChart1.KlinePeriod;
-                compChart1.StrategyHelper.DrawHelper.GetDrawer_KLine(currentPeriod).ClearShapes();
+                compChart1.StrategyHelper.DrawOperator.GetDrawer_KLine(currentPeriod).ClearShapes();
             }
             strategyExecutor.Execute();
         }
@@ -237,25 +237,25 @@ namespace com.wer.sc.ui.comp
 
         private IStrategyExecutor GetStrategyExecutor(IDataPackage_Code dataPackage, IStrategy strategy)
         {
-            ForwardReferedPeriods referPeriods = GetKLinePeriod(strategy);
+            StrategyReferedPeriods referPeriods = GetKLinePeriod(strategy);
             KLinePeriod period = referPeriods.GetMinPeriod();
             if (period == null)
                 period = KLinePeriod.KLinePeriod_1Minute;
-            ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
             if (dataPackage == null)
                 dataPackage = compChart.CompChartData.DataPackage;
-            IStrategyExecutor executor = StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referPeriods, forwardPeriod, GetStrategyHelper());
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referPeriods, forwardPeriod, GetStrategyHelper());
             executor.SetStrategy(strategy);
             return executor;
         }
 
-        private ForwardReferedPeriods GetKLinePeriod(IStrategy strategy)
+        private StrategyReferedPeriods GetKLinePeriod(IStrategy strategy)
         {
-            ForwardReferedPeriods referedPeriods = strategy.GetStrategyPeriods();
+            StrategyReferedPeriods referedPeriods = strategy.GetStrategyPeriods();
             if (referedPeriods != null)
                 return referedPeriods;
             //strategy.MainKLinePeriod = compChart.CompChartData.KlinePeriod;
-            referedPeriods = new ForwardReferedPeriods();
+            referedPeriods = new StrategyReferedPeriods();
             KLinePeriod period = compChart.GetKLinePeriod();
             referedPeriods.UsedKLinePeriods.Add(period);
             return referedPeriods;

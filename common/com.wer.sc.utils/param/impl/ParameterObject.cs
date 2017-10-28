@@ -66,7 +66,7 @@ namespace com.wer.sc.utils.param.impl
         {
             this.parameterType = (ParameterType)Enum.Parse(typeof(ParameterType), xmlElem.GetAttribute("type"));
             string valuestr = xmlElem.GetAttribute("value");
-            if (valuestr != null)
+            if (valuestr != null && !valuestr.Trim().Equals(""))
                 this.value = Parse(valuestr, ParameterType);
         }
 

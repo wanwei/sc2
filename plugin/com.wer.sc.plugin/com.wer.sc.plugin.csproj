@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\account\AccountSetting.cs" />
     <Compile Include="data\account\IAccount.cs" />
     <Compile Include="data\account\TradeFee.cs" />
     <Compile Include="data\account\TradeFee_Code.cs" />
@@ -108,15 +109,18 @@
     <Compile Include="PluginHelper.cs" />
     <Compile Include="PluginInfo.cs" />
     <Compile Include="strategy\draw\IDrawer.cs" />
-    <Compile Include="strategy\draw\IDrawHelper.cs" />
+    <Compile Include="strategy\draw\IDrawOperator.cs" />
     <Compile Include="strategy\draw\PriceLabel.cs" />
     <Compile Include="strategy\draw\PriceLine.cs" />
     <Compile Include="strategy\draw\PricePoint.cs" />
     <Compile Include="strategy\draw\PricePolyLine.cs" />
     <Compile Include="strategy\draw\PriceRect.cs" />
+    <Compile Include="strategy\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_History.cs" />
     <Compile Include="strategy\IStrategyExecutorInfo.cs" />
+    <Compile Include="strategy\IStrategyCenter.cs" />
+    <Compile Include="strategy\IStrategyInfo.cs" />
     <Compile Include="strategy\IStrategyReport.cs" />
     <Compile Include="strategy\IStrategyQueryResult.cs" />
     <Compile Include="strategy\IStrategyTrader.cs" />
@@ -184,12 +188,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\IStrategyOperator.cs" />
     <Compile Include="strategy\StrategyForwardPeriod.cs" />
-    <Compile Include="strategy\StrategyInfo.cs" />
     <Compile Include="strategy\StrategyOnBarArgument.cs" />
     <Compile Include="strategy\StrategyOnEndArgument.cs" />
     <Compile Include="strategy\StrategyOnStartArgument.cs" />
     <Compile Include="strategy\StrategyOnTickArgument.cs" />
-    <Compile Include="strategy\StrategyParameter.cs" />
     <Compile Include="strategy\StrategyReferedPeriods.cs" />
   </ItemGroup>
   <ItemGroup />

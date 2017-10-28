@@ -26,14 +26,14 @@ namespace com.wer.sc.strategy
         /// 得到策略包所有策略信息
         /// </summary>
         /// <returns></returns>
-        List<StrategyInfo> GetAllStrategies();
+        List<IStrategyInfo> GetAllStrategies();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="strategyId"></param>
         /// <returns></returns>
-        StrategyInfo GetStrategy(String strategyId);
+        IStrategyInfo GetStrategy(String strategyId);
 
         /// <summary>
         /// 得到所有的顶级目录
@@ -55,7 +55,7 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="parentPath"></param>
         /// <returns></returns>
-        IList<StrategyInfo> GetSubStrategies(string parentPath);
+        IList<IStrategyInfo> GetSubStrategies(string parentPath);
 
         /// <summary>
         /// 创建一个新的插件对象实例
@@ -69,7 +69,7 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="strategyInfo"></param>
         /// <returns></returns>
-        IStrategy CreateStrategyObject(StrategyInfo strategyInfo);
+        IStrategy CreateStrategyObject(IStrategyInfo strategyInfo);
     
         /// <summary>
         /// 根据策略名称查找策略，模糊查找

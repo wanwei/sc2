@@ -29,10 +29,10 @@ namespace com.wer.sc.ui
 
         public IStrategyExecutor CreateExecutor(IDataPackage_Code dataPackage, IStrategy strategy, KLinePeriod period)
         {
-            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UsedKLinePeriods.Add(period);
-            ForwardPeriod forwardPeriod = new ForwardPeriod(false, period);
-            return StrategyExecutorFactory.CreateHistoryExecutor(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
+            return StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
         }
 
         public void Run()

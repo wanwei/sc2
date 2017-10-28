@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
+    /// <summary>
+    /// 策略操作接口
+    /// </summary>
     public interface IStrategyOperator
     {
         /// <summary>
-        /// 得到
+        /// 得到策略画图接口
         /// </summary>
-        IDrawHelper DrawHelper { get; }
-
-        IStrategyTrader_Code Trader { get; }
+        IDrawOperator DrawOperator { get; }
 
         /// <summary>
-        /// 添加策略执行结果
+        /// 得到策略的交易接口
         /// </summary>
-        /// <param name="strategyResult"></param>
-        //void AddStrategyResult(IStrategyResult_Single strategyResult);
+        IStrategyTrader_Code Trader { get; }
 
         void AddStrategyResult(string code, double time, string name, string desc);
     }

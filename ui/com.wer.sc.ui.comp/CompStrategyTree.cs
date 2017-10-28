@@ -60,7 +60,7 @@ namespace com.wer.sc.ui.comp
 
         public void AddSubNodesByAssembly(TreeNode treeNode, IStrategyAssembly ass)
         {
-            List<StrategyInfo> strategies = ass.GetAllStrategies();
+            List<IStrategyInfo> strategies = ass.GetAllStrategies();
             InitPathStrategies(strategies);
 
             List<string> pathList = dic_Path_Strategies.Keys.ToList();
@@ -68,17 +68,17 @@ namespace com.wer.sc.ui.comp
             for (int i = 0; i < pathList.Count; i++)
             {
                 string path = pathList[i];
-                List<StrategyInfo> strategiesInPath = dic_Path_Strategies[path];
+                List<IStrategyInfo> strategiesInPath = dic_Path_Strategies[path];
                 TreeNode subNode = treeNode.Nodes.Add(path);
                 AddStrategies(subNode, strategiesInPath);
             }
         }
 
-        private void AddStrategies(TreeNode parentNode, List<StrategyInfo> strategies)
+        private void AddStrategies(TreeNode parentNode, List<IStrategyInfo> strategies)
         {
             for (int i = 0; i < strategies.Count; i++)
             {
-                StrategyInfo strategy = strategies[i];
+                IStrategyInfo strategy = strategies[i];
                 string name = strategy.StrategyName;
                 TreeNode subNode = parentNode.Nodes.Add(name);
                 subNode.ForeColor = Color.White;
@@ -86,17 +86,17 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        private Dictionary<string, List<StrategyInfo>> dic_Path_Strategies = new Dictionary<string, List<StrategyInfo>>();
+        private Dictionary<string, List<IStrategyInfo>> dic_Path_Strategies = new Dictionary<string, List<IStrategyInfo>>();
 
-        private void InitPathStrategies(List<StrategyInfo> strategies)
+        private void InitPathStrategies(List<IStrategyInfo> strategies)
         {
             for (int i = 0; i < strategies.Count; i++)
             {
-                StrategyInfo strategy = strategies[i];
+                IStrategyInfo strategy = strategies[i];
                 string path = strategy.StrategyPath;
                 if (!dic_Path_Strategies.ContainsKey(path))
                 {
-                    List<StrategyInfo> strategiesInPath = new List<StrategyInfo>();
+                    List<IStrategyInfo> strategiesInPath = new List<IStrategyInfo>();
                     dic_Path_Strategies.Add(path, strategiesInPath);
                     strategiesInPath.Add(strategy);
                 }

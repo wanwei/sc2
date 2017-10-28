@@ -13,7 +13,7 @@ namespace com.wer.sc.ui.comp
     /// </summary>
     public interface ICompChartStrategy
     {
-        IDrawHelper DrawHelper { get; }
+        IDrawOperator DrawHelper { get; }
 
         /// <summary>
         /// 绑定一个策略

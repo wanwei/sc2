@@ -15,7 +15,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransferKLine_Minute()
         {
-            string code = "m05";
+            string code = "m1405";
             int start = 20131216;
             int end = 20131231;
             List<double[]> tradingTime = MockDataLoader.GetTradingTime(code, start);
@@ -38,7 +38,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransferKLine_Day()
         {
-            string code = "m05";
+            string code = "m1405";
             IKLineData data_1min = MockDataLoader.GetKLineData(code, 20131216, 20131231, new KLinePeriod(KLineTimeType.MINUTE, 1));
             CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, MockDataLoader.GetTradingTimeList(code));
             IKLineData data = DataTransfer_KLine2KLine.Transfer_Day(data_1min, new KLinePeriod(KLineTimeType.DAY, 1), cache);
@@ -48,7 +48,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestTransferKLine_DayOverNight()
         {
-            string code = "m05";
+            string code = "m1505";
             IKLineData klineData = MockDataLoader.GetKLineData(code, 20141215, 20150116, KLinePeriod.KLinePeriod_1Minute);
             CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, MockDataLoader.GetTradingTimeList(code));
             IKLineData data = DataTransfer_KLine2KLine.Transfer_Day(klineData, new KLinePeriod(KLineTimeType.DAY, 1), cache);

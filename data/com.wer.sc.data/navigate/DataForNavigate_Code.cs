@@ -15,7 +15,7 @@ namespace com.wer.sc.data.navigate
         public static DataForNavigate_Code Create(DataForForward_Code dataForForward)
         {
             DataForNavigate_Code dataForNav = new DataForNavigate_Code(dataForForward.DataPackage, dataForForward.Time);
-            foreach(KLinePeriod klinePeriod in dataForForward.ReferedKLinePeriods)
+            foreach (KLinePeriod klinePeriod in dataForForward.ReferedKLinePeriods)
             {
                 IKLineData_RealTime klineData = dataForForward.GetKLineData(klinePeriod);
                 dataForNav.dic_Period_KLineData.Add(klinePeriod, klineData);
@@ -80,6 +80,14 @@ namespace com.wer.sc.data.navigate
             {
                 return time;
             }
+        }
+
+        public float Price
+        {
+            get
+            {
+                return this.GetTickData().Price;
+             }
         }
 
         /// <summary>

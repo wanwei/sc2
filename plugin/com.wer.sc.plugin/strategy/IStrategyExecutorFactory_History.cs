@@ -16,21 +16,24 @@ namespace com.wer.sc.strategy
         /// 创建策略执行器
         /// </summary>
         /// <param name="code"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="referedPeriods"></param>
+        /// <param name="forwardPeriod"></param>
         /// <returns></returns>
-        IStrategyExecutor CreateExecutor(string code);
-
-        IStrategyExecutor CreateExecutor(string code, int startDate, int endDate);
-
-        IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, IStrategyOperator strategyHelper);
+        IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod);
 
         IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator);
 
-        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage);
-
-        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, IStrategyOperator strategyHelper);
+        /// <summary>
+        /// 创建一个策略执行器
+        /// </summary>
+        /// <param name="dataPackage"></param>
+        /// <param name="referedPeriods"></param>
+        /// <param name="forwardPeriod"></param>
+        /// <returns></returns>
+        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod);
 
         IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator);
-
-        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage dataPackage);
     }
 }

@@ -15,7 +15,7 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestSplit_Normal()
         {
-            AssertDaySplitter("m05", 20131201, 20131231, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20131201_20131231");
+            AssertDaySplitter("m1405", 20131201, 20131231, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20131201_20131231");
         }
 
         private void AssertDaySplitter(string code, int start, int end, KLinePeriod period, string fileName)
@@ -40,21 +40,21 @@ namespace com.wer.sc.data.transfer
         [TestMethod]
         public void TestSplit_Night()
         {
-            AssertDaySplitter("m05", 20150625, 20150715, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20150625_20150715");
+            AssertDaySplitter("m1605", 20150625, 20150715, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20150625_20150715");
         }
 
         [TestMethod]
         public void TestSplit_OverNightWeekend()
         {
-            AssertDaySplitter("m05", 20141229, 20150115, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20141229_20150115");
+            AssertDaySplitter("m1505", 20141229, 20150115, KLinePeriod.KLinePeriod_1Minute, "DaySplit_M05_20141229_20150115");
         }
 
         [TestMethod]
         public void TestSplit_EndInNight()
         {
-            IKLineData klineData = MockDataLoader.GetKLineData("m05", 20150105, 20150106, KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = MockDataLoader.GetKLineData("m1505", 20150105, 20150106, KLinePeriod.KLinePeriod_1Minute);
             IKLineData subData = klineData.Sub(0, 570);
-            List<SplitterResult> results = DaySplitter.Split(subData, GetTradingSessionCache("m05"));            
+            List<SplitterResult> results = DaySplitter.Split(subData, GetTradingSessionCache("m1505"));            
             Assert.AreEqual("20150105,0", results[0].ToString());
             Assert.AreEqual("20150106,225", results[1].ToString());
         }

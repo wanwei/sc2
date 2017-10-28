@@ -39,6 +39,14 @@ namespace com.wer.sc.data.utils
             }
         }
 
+        public float Price
+        {
+            get
+            {
+                return realTimeDataReader_Code.Price;
+            }
+        }
+
         public event DelegateOnRealTimeChanged OnRealTimeChanged;
 
         public IKLineData GetKLineData(KLinePeriod period)

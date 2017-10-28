@@ -13,17 +13,22 @@ namespace com.wer.sc.strategy
 {
     public abstract class StrategyAbstract : IStrategy
     {
+        public const string PARAMETER_PERIOD = "PARAMETER_PERIOD";
+
         private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
 
         private IStrategyOperator strategyHelper;
 
         private IParameters parameters = ParameterFactory.CreateParameters();
 
-        public abstract StrategyReferedPeriods GetStrategyPeriods();
+        public StrategyAbstract()
+        {
+            this.Parameters.AddParameter(PARAMETER_PERIOD, "计算周期", "计算周期", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);
+        }
 
         public abstract void OnStrategyStart(Object sender, StrategyOnStartArgument argument);
 
-        public abstract void OnStrategyEnd(Object sender, StrategyOnEndArgument argument);        
+        public abstract void OnStrategyEnd(Object sender, StrategyOnEndArgument argument);
 
         public abstract void OnBar(Object sender, StrategyOnBarArgument currentData);
 
@@ -54,6 +59,11 @@ namespace com.wer.sc.strategy
             {
                 return parameters;
             }
+        }
+
+        public virtual StrategyReferedPeriods GetStrategyPeriods()
+        {
+            return null;
         }
 
         public virtual IList<IStrategy> GetReferedStrategies()

@@ -41,10 +41,10 @@ namespace com.wer.sc.data.utils
             Assert.AreEqual(-1, date);
 
             date = reader.GetRecentTradingDay(20140505.082000);
-            Assert.AreEqual(20140505, date);
+            Assert.AreEqual(20140430, date);
 
             date = reader.GetRecentTradingDay(20140505.192000);
-            Assert.AreEqual(20140506, date);
+            Assert.AreEqual(20140505, date);
 
             reader = GetTradingSessionCache_Instrument("m1605");
             date = reader.GetTradingDay(20150717.220000);
@@ -69,17 +69,17 @@ namespace com.wer.sc.data.utils
             Assert.AreEqual(20150814, date);
 
             date = reader.GetRecentTradingDay(30150718.220000);
-            Assert.AreEqual(-1, date);
+            Assert.AreEqual(20160520, date);
 
             reader = GetTradingSessionCache_Instrument("m1705");
             date = reader.GetRecentTradingDay(20170130.10, false);
             Assert.AreEqual(20170126, date);
             date = reader.GetRecentTradingDay(20170130.10);
-            Assert.AreEqual(20170203, date);
+            Assert.AreEqual(20170126, date);
 
             reader = GetTradingSessionCache_Instrument("m0405");
             date = reader.GetRecentTradingDay(10150718.220000);
-            Assert.AreEqual(20040102, date);
+            Assert.AreEqual(-1, date);
         }
 
         public void TestTradingTime_GetRecentTime()

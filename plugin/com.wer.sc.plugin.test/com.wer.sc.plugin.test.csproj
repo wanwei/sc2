@@ -77,14 +77,13 @@
     </Compile>
     <Compile Include="ResourceLoader.cs" />
     <Compile Include="market\TestConnectionInfo.cs" />
-    <None Include="TestCase\com\wer\sc\data\reader\cache\Codes" />
+    <None Include="TestCase\com\wer\sc\data\utils\Codes" />
     <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingTime" />
     <None Include="TestCase\com\wer\sc\data\utils\CsvUtils_TradingDay" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M05_20150107" />
     <None Include="TestCase\com\wer\sc\data\transfer\KLine2TimeLine_M05_20150107" />
-    <None Include="TestCase\com\wer\sc\data\reader\cache\Codes_M_20160101" />
+    <None Include="TestCase\com\wer\sc\data\utils\Codes_M_20160101" />
     <Compile Include="TestPluginMgr.cs" />
-    <Compile Include="strategy\TestStrategyMgr.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\com.wer.sc.plugin.loader\com.wer.sc.plugin.loader.csproj">
@@ -112,7 +111,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestCase\com\wer\sc\data\reader\cache\OpenDate_Cache" />
+    <None Include="TestCase\com\wer\sc\data\utils\OpenDate_Cache" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202_20131213" />
     <None Include="TestCase\com\wer\sc\data\transfer\Tick2KLine_M01_20131202_20131213_15Second" />
@@ -137,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\reader\cache\" />
+    <Folder Include="TestCase\com\wer\sc\data\reader\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCase\com\wer\sc\data\transfer\DaySplit_M05_20131201_20131231" />

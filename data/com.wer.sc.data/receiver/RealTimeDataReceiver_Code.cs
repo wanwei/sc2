@@ -46,6 +46,14 @@ namespace com.wer.sc.data.receiver
             }
         }
 
+        public float Price
+        {
+            get
+            {
+                return tickData.Price;
+            }
+        }
+
         public RealTimeDataReceiver_Code(string code, int date, IDataReader dataReaderFactory, int lastOpenDate, List<KLinePeriod> periods, List<double[]> openTime)
         {
             this.code = code;

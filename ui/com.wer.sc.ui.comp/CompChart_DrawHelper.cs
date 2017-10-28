@@ -8,7 +8,7 @@ using com.wer.sc.data;
 
 namespace com.wer.sc.ui.comp
 {
-    public class CompChart_DrawHelper : IDrawHelper
+    public class CompChart_DrawHelper : IDrawOperator
     {
         private Dictionary<KLinePeriod, IDrawer> dic_Period_Drawer = new Dictionary<KLinePeriod, IDrawer>();
 

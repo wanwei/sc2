@@ -11,7 +11,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略信息类
     /// </summary>
-    public class StrategyInfo
+    public class StrategyInfo : IStrategyInfo
     {
         private IStrategyAssembly strategyAssembly;
 
@@ -89,10 +89,15 @@ namespace com.wer.sc.strategy
             get { return strategyPath; }
         }
 
-        public IStrategy CreateStrategy()
+        //public IStrategy CreateStrategy()
+        //{
+        //    Object obj = Activator.CreateInstance(strategyClassType);
+        //    return (IStrategy)obj;
+        //}
+
+        public IStrategyData CreateStrategy()
         {
-            Object obj = Activator.CreateInstance(strategyClassType);
-            return (IStrategy)obj;
+            throw new NotImplementedException();
         }
 
         public static IStrategy CreateNewStrategyWithParameters(IStrategy strategy)
@@ -114,5 +119,6 @@ namespace com.wer.sc.strategy
             sb.Append(StrategyPath);
             return sb.ToString();
         }
+
     }
 }

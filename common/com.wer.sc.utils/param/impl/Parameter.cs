@@ -121,11 +121,11 @@ namespace com.wer.sc.utils.param.impl
             this.caption = xmlElem.GetAttribute("caption");
             this.description = xmlElem.GetAttribute("description");
             this.defaultValue = Parse(xmlElem.GetAttribute("defaultValue"), this.ParameterType);
-            if (options != null)
+            XmlNodeList nodes = xmlElem.GetElementsByTagName("option");
+            if (nodes != null && nodes.Count > 0)
             {
-                XmlElement elemOption = xmlElem.OwnerDocument.CreateElement("option");
-                this.options.Save(elemOption);
-                xmlElem.AppendChild(elemOption);
+                this.options = new ParameterOptions(this.ParameterType);
+                this.options.Load((XmlElement)nodes[0]);
             }
         }
 
