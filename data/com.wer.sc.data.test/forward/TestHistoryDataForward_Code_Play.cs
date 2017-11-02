@@ -29,7 +29,7 @@ namespace com.wer.sc.data.forward
             realTimeReader.Pause();
         }
 
-        private void RealTimeReader_OnTick(object sender, ForwardOnTickArgument argument)
+        private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
             Console.WriteLine(argument.TickBar);
         }    

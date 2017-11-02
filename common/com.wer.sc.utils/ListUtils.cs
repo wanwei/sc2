@@ -15,5 +15,17 @@ namespace com.wer.sc.utils
         {
             return list.ToArray();
         }
+
+        public static String ToString(String[] arr)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i != 0)
+                    sb.Append(",");
+                sb.Append(arr[i]);
+            }
+            return sb.ToString();
+        }
     }
 }

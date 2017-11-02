@@ -2,6 +2,7 @@
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.reader;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace com.wer.sc.data.forward
     /// 单支合约的历史数据导航器
     /// 
     /// </summary>
-    public interface IDataForward_Code : IRealTimeDataReader_Code
+    public interface IDataForward_Code : IRealTimeDataReader_Code, IXmlExchange
     {
         #region 数据
 
@@ -40,12 +41,18 @@ namespace com.wer.sc.data.forward
         /// </summary>
         /// <param name="code"></param>
         /// <param name="referedPeriods"></param>
-        void AttachOtherData(string code, ForwardReferedPeriods referedPeriods);
+        void AttachOtherData(string code);
 
         /// <summary>
         /// 附加数据读取器，附加进来的数据用该接口读取
         /// </summary>
-        IRealTimeDataReader AttachedDataReader { get; }
+        IRealTimeDataReader_Code GetAttachedDataReader(string code);
+
+        /// <summary>
+        /// 得到附加上来的codes
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetAttachedCodes();
 
         #endregion
 

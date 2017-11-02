@@ -43,16 +43,16 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        private void RealTimeReader_OnBar(object sender, ForwardOnBarArgument argument)
+        private void RealTimeReader_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            ForwardOnbar_Info onBarInfo = argument.ForwardOnBar_Infos[0];
+            IForwardOnbar_Info onBarInfo = argument.ForwardOnBar_Infos[0];
             int barPos = onBarInfo.FinishedBarPos;
             if (barPos == 0)
                 return;
             Console.WriteLine("kline:" + onBarInfo.KlineData.GetBar(barPos - 1));
         }
 
-        private void RealTimeReader_OnTick(object sender, ForwardOnTickArgument argument)
+        private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
             Console.WriteLine("tick:" + argument.TickBar);
         }

@@ -80,7 +80,7 @@ namespace com.wer.sc.data.forward
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
             ForwardPeriod forwardPeriod = new ForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
-            return DataCenter.Default.HistoryDataForwardFactory.CreateDataNavigater_Code(code, start, endDate, referedPeriods, forwardPeriod);
+            return DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(code, start, endDate, referedPeriods, forwardPeriod);
         }
 
         private static void Print(IDataForward_Code klineDataForward)
@@ -138,11 +138,11 @@ namespace com.wer.sc.data.forward
             AssertUtils.AssertEqual_List("forward_kline", GetType(), list_OnBar);
         }
 
-        private void KlineDataForward_OnBar(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar(object sender, IForwardOnBarArgument argument)
         {
             for (int i = 0; i < argument.ForwardOnBar_Infos.Count; i++)
             {
-                ForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
+                IForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
                 //Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
                 AddContent(info.KLinePeriod, info.KLineBar.ToString());
                 //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);

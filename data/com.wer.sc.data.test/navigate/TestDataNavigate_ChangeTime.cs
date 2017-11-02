@@ -47,7 +47,7 @@ namespace com.wer.sc.data.navigate
 
         private double prevTime;
 
-        private void DataForward_OnTick(object sender, ForwardOnTickArgument argument)
+        private void DataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             double time = argument.Time;
             //if (time < 20170601.205900)

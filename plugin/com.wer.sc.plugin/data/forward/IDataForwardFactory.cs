@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.forward
 {
@@ -13,7 +14,9 @@ namespace com.wer.sc.data.forward
     {
         IDataForward_Code CreateDataForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
 
-        IDataForward_Code CreateDataNavigater_Code(string code, int startDate, int endDate, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
+        IDataForward_Code CreateDataForward_Code(string code, int startDate, int endDate, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod);
+
+        IDataForward_Code CreateDataForward_Code(XmlElement xmlElem);
 
         IDataForward CreateHistoryDataForward(IDataPackage_Code[] dataPackage, ForwardReferedPeriods[] referedPeriods, ForwardPeriod forwardPeriod);
 

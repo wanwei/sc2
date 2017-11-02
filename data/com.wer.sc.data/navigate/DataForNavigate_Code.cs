@@ -55,7 +55,11 @@ namespace com.wer.sc.data.navigate
         {
             int tradingDay = dataPackage.GetTradingTimeReader().GetRecentTradingDay(time);
             if (!dataPackage.GetTradingDayReader().IsTrade(tradingDay))
-                return false;
+            {
+                tradingDay = dataPackage.GetTradingTimeReader().GetRecentTradingDay(time, true);
+                if (!dataPackage.GetTradingDayReader().IsTrade(tradingDay))
+                    return false;
+            }
             this.time = time;
             this.tradingDay = tradingDay;
             return true;
@@ -87,7 +91,7 @@ namespace com.wer.sc.data.navigate
             get
             {
                 return this.GetTickData().Price;
-             }
+            }
         }
 
         /// <summary>

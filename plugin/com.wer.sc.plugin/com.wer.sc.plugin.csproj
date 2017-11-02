@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data\account\AccountSetting.cs" />
+    <Compile Include="data\account\AccountTradeType.cs" />
     <Compile Include="data\account\IAccount.cs" />
+    <Compile Include="data\account\IAccountFactory.cs" />
     <Compile Include="data\account\TradeFee.cs" />
     <Compile Include="data\account\TradeFee_Code.cs" />
     <Compile Include="data\datapackage\IDataPackage.cs" />
@@ -123,8 +125,8 @@
     <Compile Include="strategy\IStrategyInfo.cs" />
     <Compile Include="strategy\IStrategyReport.cs" />
     <Compile Include="strategy\IStrategyQueryResult.cs" />
+    <Compile Include="strategy\IStrategyTrader2.cs" />
     <Compile Include="strategy\IStrategyTrader.cs" />
-    <Compile Include="strategy\IStrategyTrader_Code.cs" />
     <Compile Include="strategy\IStrategyQueryResult_Single.cs" />
     <Compile Include="strategy\StrategyAbstract.cs" />
     <Compile Include="strategy\StrategyAttribute.cs" />

@@ -1,4 +1,6 @@
-﻿using com.wer.sc.data.account;
+﻿using com.wer.sc.data;
+using com.wer.sc.data.account;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,15 @@ namespace com.wer.sc.strategy
     {
         private List<String> codes = new List<string>();
 
-        private Account account;
+        private IAccount account;
 
         private IRealTimeDataReader_Code realTimeDataReader;
 
         private Dictionary<String, StrategyTrader_Code> dic_Code_Trader = new Dictionary<string, StrategyTrader_Code>();
 
-        public StrategyTrader(double money, IRealTimeDataReader_Code realTimeDataReader)
+        public StrategyTrader(double money, IDataForward_Code realTimeDataReader)
         {
-            this.account = new Account(money, realTimeDataReader);
+            this.account = DataCenter.Default.AccountFactory.CreateAccount(money, realTimeDataReader);
             this.realTimeDataReader = realTimeDataReader;
         }
 

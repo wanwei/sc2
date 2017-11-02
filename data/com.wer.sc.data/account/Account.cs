@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.market;
+﻿using com.wer.sc.data.forward;
+using com.wer.sc.data.market;
 using com.wer.sc.data.reader;
 using com.wer.sc.utils;
 using System;
@@ -12,25 +13,11 @@ namespace com.wer.sc.data.account
 {
     public class Account : IAccount, IXmlExchange
     {
-        //private AccountOrders accountOrders;
-        //internal AccountOrders AccountOrders
-        //{
-        //    get { return accountOrders; }
-        //}
+        private IDataCenter dataCenter;
 
-        //private AccountTrades accountTrades;
-        //internal AccountTrades AccountTrades
-        //{
-        //    get { return accountTrades; }
-        //}
-
-        //private AccountPosition accountPosition;
-        //internal AccountPosition AccountPosition
-        //{
-        //    get { return accountPosition; }
-        //}
         public static TradeFee_Code DEFAULTFEECODE = new TradeFee_Code(null, 10, 1, 3, 3, true, 15);
-        //public static TradeFee_Code DEFAULTFEECODE = new TradeFee_Code(null, 100, 0.01, 0.03, 0.03, true, 100);
+
+        private AccountSetting accountSetting = new AccountSetting();
 
         private double initMoney;
 
@@ -42,8 +29,7 @@ namespace com.wer.sc.data.account
 
         protected Dictionary<String, PositionInfo> mapPosition_Sell = new Dictionary<String, PositionInfo>();
 
-        private List<TradeInfo> historyTrades = new List<TradeInfo>();
-
+        //所有的交易
         private List<TradeInfo> currentTrades = new List<TradeInfo>();
 
         //所有的委托
@@ -52,31 +38,57 @@ namespace com.wer.sc.data.account
         //还没执行完成的委托
         private List<OrderInfo> waitingOrders = new List<OrderInfo>();
 
+        private List<OrderInfo> loopOrders = new List<OrderInfo>();
+
         private TradeFee fee;
 
         private TradeFee_Code defaultFee_Code = Account.DEFAULTFEECODE;
 
         private String description = null;
 
-        private IRealTimeDataReader_Code realTimeDataReader;
+        private IDataForward_Code dataForward_Code;
 
         private object lockObj = new object();
 
-        public Account(double money, IRealTimeDataReader_Code realTimeDataReader) : this(money, realTimeDataReader, null)
+        private Dictionary<string, double> dic_OrderID_LockMoney = new Dictionary<string, double>();
+
+        private Dictionary<string, OrderDelayInfo> dic_Code_OrderDelayInfo = new Dictionary<string, OrderDelayInfo>();
+
+        internal Account(IDataCenter dataCenter)
+        {
+            this.dataCenter = dataCenter;
+        }
+
+        internal Account(double money) : this(money, null, null)
+        {
+            this.AccountSetting.TradeType = AccountTradeType.IMMEDIATELY;
+        }
+
+        internal Account(double money, IDataForward_Code realTimeDataReader) : this(money, realTimeDataReader, null)
         {
 
         }
 
-        public Account(double money, IRealTimeDataReader_Code realTimeDataReader, TradeFee fee)
+        internal Account(double money, IDataForward_Code realTimeDataReader, TradeFee fee)
         {
-            //this.accountOrders = new AccountOrders(this);
-            //this.accountTrades = new AccountTrades(this);
-            //this.accountPosition = new AccountPosition(this);
             this.money = money;
             this.initMoney = money;
             this.fee = fee;
-            this.realTimeDataReader = realTimeDataReader;
-            this.realTimeDataReader.OnRealTimeChanged += RealTimeDataReader_RealTimeChanged;
+            if (realTimeDataReader != null)
+            {
+                this.dataForward_Code = realTimeDataReader;
+                this.dataForward_Code.OnRealTimeChanged += RealTimeDataReader_RealTimeChanged;
+            }
+        }
+
+        public AccountSetting AccountSetting
+        {
+            get { return accountSetting; }
+        }
+
+        public IDataForward_Code DataForward_Code
+        {
+            get { return dataForward_Code; }
         }
 
         #region 交易
@@ -88,30 +100,42 @@ namespace com.wer.sc.data.account
                 //过了新的一天，昨日的委托需要全部清除
                 if (e.TradingDayChanged)
                 {
-                    DoTradingDayChange();
+                    CancelAllOrder();
                     return;
                 }
 
-                //TODO 价格变化后需要修改现金余额
+                loopOrders.Clear();
+                loopOrders.AddRange(waitingOrders);
 
-                for (int i = 0; i < waitingOrders.Count; i++)
+                //TODO 价格变化后需要修改现金余额
+                for (int i = 0; i < loopOrders.Count; i++)
                 {
-                    OrderInfo order = waitingOrders[i];
-                    bool isAllTrade = DoTrade(order);
-                    if (isAllTrade)
+                    OrderInfo order = loopOrders[i];
+                    if (AccountSetting.TradeType == AccountTradeType.DELAYTIME)
                     {
-                        this.waitingOrders.RemoveAt(i);
-                        i--;
+                        double delayTime = AccountSetting.DelayTime;
+                        double betweenTime = e.Time - order.OrderTime;
+                        if (betweenTime <= delayTime)
+                            continue;
                     }
+                    else if (accountSetting.TradeType == AccountTradeType.DELAYTICK)
+                    {
+                        ITickData tickData = this.dataForward_Code.GetTickData();
+                        if (tickData != null)
+                        {
+                            if (this.dic_Code_OrderDelayInfo.ContainsKey(order.OrderID))
+                            {
+                                OrderDelayInfo delayInfo = this.dic_Code_OrderDelayInfo[order.OrderID];
+                                int tickIndex = delayInfo.orderTickIndex;
+                                int delayTick = AccountSetting.DelayTick;
+                                if (tickData.BarPos - tickIndex < delayTick)
+                                    continue;
+                            }
+                        }
+                    }
+                    DoTrade(order);
                 }
             }
-        }
-
-        private void DoTradingDayChange()
-        {
-            //accountOrders.DoTradingDayChange();
-            //accountTrades.DoTradingDayChange();
-            //accountPosition.DoTradingDayChange();
         }
 
         private bool DoTrade(OrderInfo orderInfo)
@@ -131,7 +155,12 @@ namespace com.wer.sc.data.account
              * 3.增加对应持仓    
              * 4.修改委托信息
              */
-            int tradeMount = GetTradeMount(orderInfo);
+            int tradeMount;
+            if (accountSetting.TradeType == AccountTradeType.IMMEDIATELY)
+                tradeMount = orderInfo.Volume;
+            else
+                tradeMount = GetTradeMount(orderInfo);
+
             if (tradeMount == 0)
                 return false;
             TradeInfo tradeInfo = AddTradeInfo(orderInfo, tradeMount);
@@ -150,6 +179,20 @@ namespace com.wer.sc.data.account
                 orderInfo.ExecType = ExecType.Trade;
                 isAllTrade = false;
             }
+
+            if (isAllTrade)
+            {
+                this.dic_Code_OrderDelayInfo.Remove(orderInfo.OrderID);
+                this.dic_OrderID_LockMoney.Remove(orderInfo.OrderID);
+                this.waitingOrders.Remove(orderInfo);
+            }
+            else
+            {
+                double money = CalcTradeMoney_Open(orderInfo.Instrumentid, tradeInfo.Price, tradeMount, OpenCloseType.Open);
+                double lockMoney = this.dic_OrderID_LockMoney[orderInfo.OrderID] - money;
+                this.dic_OrderID_LockMoney[orderInfo.OrderID] = lockMoney;
+            }
+
             if (OnReturnTrade != null)
             {
                 OnReturnTrade(this, ref tradeInfo);
@@ -210,7 +253,7 @@ namespace com.wer.sc.data.account
             tradeInfo.InstrumentID = orderInfo.Instrumentid;
             tradeInfo.OpenClose = orderInfo.OpenClose;
             //TODO 应该是当前价格
-            tradeInfo.Price = orderInfo.Price;
+            tradeInfo.Price = GetTradePrice(orderInfo.Instrumentid, orderInfo.Direction, orderInfo.Price);
             tradeInfo.Qty = tradeMount;
             tradeInfo.Side = orderInfo.Direction;
             tradeInfo.Time = Time;
@@ -219,10 +262,32 @@ namespace com.wer.sc.data.account
             return tradeInfo;
         }
 
+        private double GetTradePrice(string code, OrderSide orderSide, double price)
+        {
+            if (AccountSetting.SlipPerccent != 0)
+            {
+                if (orderSide == OrderSide.Buy)
+                    return price * (1 + AccountSetting.SlipPerccent);
+                else
+                    return price * (1 - AccountSetting.SlipPerccent);
+            }
+            else if (accountSetting.SlipPrice != 0)
+            {
+                TradeFee_Code fee = this.GetTradeFee_Code(code);
+                double minPriceChange = fee.MinPriceChange;
+                if (orderSide == OrderSide.Buy)
+                    return price + (accountSetting.SlipPrice * minPriceChange);
+                else
+                    return price * (accountSetting.SlipPrice * minPriceChange);
+            }
+
+            return price;
+        }
+
         private int GetTradeMount(OrderInfo orderInfo)
         {
             double orderPrice = orderInfo.Price;
-            ITickData tickData = realTimeDataReader.GetTickData();
+            ITickData tickData = dataForward_Code.GetTickData();
             if (tickData != null)
             {
                 if (orderInfo.Direction == OrderSide.Buy)
@@ -240,57 +305,13 @@ namespace com.wer.sc.data.account
             }
             else
             {
-                double price = realTimeDataReader.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End;
+                double price = dataForward_Code.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End;
                 if (orderInfo.Direction == OrderSide.Buy)
                     return orderInfo.Price >= price ? orderInfo.Volume : 0;
                 else
                     return orderInfo.Price <= price ? orderInfo.Volume : 0;
             }
         }
-
-        //public float BuyPrice
-        //{
-        //    get
-        //    {
-        //        ITickData tickData = realTimeDataReader.GetTickData();
-        //        if (tickData != null)
-        //            return tickData.BuyPrice;
-        //        return realTimeDataReader.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End;
-        //    }
-        //}
-
-        //public int BuyMount
-        //{
-        //    get
-        //    {
-        //        ITickData tickData = realTimeDataReader.GetTickData();
-        //        if (tickData != null)
-        //            return tickData.BuyMount;
-        //        return int.MaxValue;
-        //    }
-        //}
-
-        //public float SellPrice
-        //{
-        //    get
-        //    {
-        //        ITickData tickData = realTimeDataReader.GetTickData();
-        //        if (tickData != null)
-        //            return tickData.SellPrice;
-        //        return realTimeDataReader.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End;
-        //    }
-        //}
-
-        //public int SellMount
-        //{
-        //    get
-        //    {
-        //        ITickData tickData = realTimeDataReader.GetTickData();
-        //        if (tickData != null)
-        //            return tickData.SellMount;
-        //        return int.MaxValue;
-        //    }
-        //}
 
         private bool DoTrade_Close(OrderInfo orderInfo)
         {
@@ -302,7 +323,11 @@ namespace com.wer.sc.data.account
             * 4.将钱转为现金
             * 5.修改委托信息
             */
-            int tradeMount = GetTradeMount(orderInfo);
+            int tradeMount;
+            if (accountSetting.TradeType == AccountTradeType.IMMEDIATELY)
+                tradeMount = orderInfo.Volume;
+            else
+                tradeMount = GetTradeMount(orderInfo);
             if (tradeMount == 0)
                 return false;
             TradeInfo tradeInfo = AddTradeInfo(orderInfo, tradeMount);
@@ -329,11 +354,16 @@ namespace com.wer.sc.data.account
                 isAllTrade = false;
             }
 
+            if (isAllTrade)
+            {
+                this.dic_Code_OrderDelayInfo.Remove(orderInfo.OrderID);
+                this.waitingOrders.Remove(orderInfo);
+            }
+
             if (OnReturnTrade != null)
             {
                 OnReturnTrade(this, ref tradeInfo);
             }
-
             return isAllTrade;
         }
 
@@ -386,7 +416,6 @@ namespace com.wer.sc.data.account
                 this.positions.Remove(positionInfo);
                 return;
             }
-            positionInfo.PositionCost = (currentMount * positionInfo.PositionCost - tradeInfo.Price * tradeMount) / positionInfo.Position;
         }
 
         #endregion
@@ -427,20 +456,60 @@ namespace com.wer.sc.data.account
         {
             get
             {
-                return money;
+                return CalcAsset();
             }
+        }
+
+        private double CalcAsset()
+        {
+            double asset = money;
+            foreach (string code in dic_OrderID_LockMoney.Keys)
+            {
+                asset += dic_OrderID_LockMoney[code];
+            }
+            foreach (PositionInfo positionInfo in this.positions)
+            {
+                double price;
+                if (dataForward_Code == null)
+                    price = positionInfo.PositionCost;
+                else
+                {
+                    if (positionInfo.InstrumentID.Equals(this.dataForward_Code.Code))
+                        price = dataForward_Code.Price;
+                    else
+                        price = dataForward_Code.GetAttachedDataReader(positionInfo.InstrumentID).Price;
+                }
+                asset += CalcTradeMoney_Close(positionInfo, price, positionInfo.Position);
+            }
+            return asset;
         }
 
         public double Time
         {
             get
             {
-                return realTimeDataReader.Time;
+                return dataForward_Code == null ? 0 : dataForward_Code.Time;
+                //return realTimeDataReader.Time;
             }
+        }
+
+        private bool CanOpen(string code)
+        {
+            if (accountSetting.AutoFilter)
+            {
+                if (this.CurrentOrderInfo.Count > 0 || this.positions.Count > 0)
+                    return false;
+            }
+            //if (this.GetPosition(code, OrderSide.Buy) > 0 || this.GetPosition(code, OrderSide.Sell) > 0)
+            //    return false;
+            return true;
         }
 
         public void Open(string code, double price, OrderSide orderSide, int mount)
         {
+            if (!CanOpen(code))
+                return;
+
             OrderInfo orderInfo;
             lock (lockObj)
             {
@@ -452,6 +521,8 @@ namespace com.wer.sc.data.account
 
         public void OpenPercent(string code, double price, OrderSide orderSide, float percent)
         {
+            if (!CanOpen(code))
+                return;
             OrderInfo orderInfo;
             lock (lockObj)
             {
@@ -464,6 +535,8 @@ namespace com.wer.sc.data.account
 
         public void OpenAll(string code, double price, OrderSide orderSide)
         {
+            if (!CanOpen(code))
+                return;
             OrderInfo orderInfo;
             lock (lockObj)
             {
@@ -474,21 +547,39 @@ namespace com.wer.sc.data.account
                 OnReturnOrder?.Invoke(this, ref orderInfo);
         }
 
-        private Dictionary<string, double> dic_OrderID_LockMoney = new Dictionary<string, double>();
-
         private OrderInfo OpenInternal(string code, double price, OrderSide orderSide, int mount)
         {
             if (mount <= 0)
                 return null;
-            double buymoney = CalcTradeMoney_Open(code, price, mount, OpenCloseType.Open);
-            if (buymoney > money)
-                return null;
             OrderInfo orderInfo = new OrderInfo(code, this.Time, OpenCloseType.Open, price, mount, orderSide, OrderType.Market);
             orderInfo.OrderID = Guid.NewGuid().ToString();
-            this.waitingOrders.Add(orderInfo);
-            this.historyOrders.Add(orderInfo);
-            this.money -= buymoney;
-            this.dic_OrderID_LockMoney.Add(orderInfo.OrderID, buymoney);
+            double tradePrice = GetTradePrice(code, orderSide, price);
+            double buymoney = CalcTradeMoney_Open(code, tradePrice, mount, OpenCloseType.Open);
+            if (buymoney > money)
+                return null;
+            if (AccountSetting.TradeType == AccountTradeType.IMMEDIATELY)
+            {
+                this.historyOrders.Add(orderInfo);
+                this.DoTrade(orderInfo);
+                this.money -= buymoney;
+            }
+            else
+            {
+                if (AccountSetting.TradeType == AccountTradeType.DELAYTICK)
+                {
+                    ITickData tickData = this.dataForward_Code.GetTickData();
+                    if (tickData != null)
+                    {
+                        OrderDelayInfo delayInfo = new OrderDelayInfo();
+                        delayInfo.orderTickIndex = tickData.BarPos;
+                        this.dic_Code_OrderDelayInfo.Add(orderInfo.OrderID, delayInfo);
+                    }
+                }
+                this.waitingOrders.Add(orderInfo);
+                this.historyOrders.Add(orderInfo);
+                this.money -= buymoney;
+                this.dic_OrderID_LockMoney.Add(orderInfo.OrderID, buymoney);
+            }
             return orderInfo;
         }
 
@@ -501,13 +592,13 @@ namespace com.wer.sc.data.account
             return hand * (price * tradeFee.HandCount * (tradeFee.DepositPercent / 100) + handFee);
         }
 
-        private double CalcEarnMoney(PositionInfo position, double price)
+        private double CalcEarnMoney(PositionInfo position, int mount, double price)
         {
             string code = position.InstrumentID;
             double dprice = price - position.PositionCost;
             if (position.Side == PositionSide.Short)
                 dprice = -dprice;
-            return dprice * position.Position * GetTradeFee_Code(code).HandCount;
+            return dprice * mount * GetTradeFee_Code(code).HandCount;
         }
 
         private double CalcTradeMoney_Close(PositionInfo positionInfo, double price, int mount)
@@ -515,7 +606,7 @@ namespace com.wer.sc.data.account
             TradeFee_Code tradeFee = GetTradeFee_Code(positionInfo.InstrumentID);
             //交易费用
             double handFee = tradeFee.SellFee;
-            double earnmoney = CalcEarnMoney(positionInfo, price);
+            double earnmoney = CalcEarnMoney(positionInfo, mount, price);
             //return hand * (price * tradeFee.HandCount * (tradeFee.DepositPercent / 100) - handFee);
             return mount * (positionInfo.PositionCost * tradeFee.HandCount * (tradeFee.DepositPercent / 100) - handFee) + earnmoney;
         }
@@ -578,7 +669,16 @@ namespace com.wer.sc.data.account
                 return null;
             OrderInfo orderInfo = new OrderInfo(code, this.Time, OpenCloseType.Close, price, mount, orderSide, OrderType.Market);
             orderInfo.OrderID = Guid.NewGuid().ToString();
-            this.waitingOrders.Add(orderInfo);
+            if (AccountSetting.TradeType == AccountTradeType.IMMEDIATELY)
+            {
+                this.historyOrders.Add(orderInfo);
+                DoTrade(orderInfo);
+            }
+            else
+            {
+                this.historyOrders.Add(orderInfo);
+                this.waitingOrders.Add(orderInfo);
+            }
             return orderInfo;
         }
 
@@ -619,18 +719,17 @@ namespace com.wer.sc.data.account
         {
             if (fee == null)
                 return defaultFee_Code;
-            TradeFee_Code tradeFee = fee.getFee(code);
+            TradeFee_Code tradeFee = fee.GetFee(code);
             return tradeFee == null ? defaultFee_Code : tradeFee;
         }
 
-        //计算
-        private double calcCloseMoney(String code, double price, int hand)
+        public void CancelAllOrder()
         {
-            //PositionInfo hold = mapPosition_Buy.get(code);
-            //TradeFee_Code fee = GetTradeFee_Code(code);
-            //return hold.PositionCost * hand * fee.HandCount * fee.getDepositPercent() / 100
-            //        + calcEarnMoney(code, price, hand) - hand * fee.getSellFee();
-            return 0;
+            OrderInfo[] waitingArr = waitingOrders.ToArray();
+            for (int i = 0; i < waitingArr.Length; i++)
+            {
+                CancelOrder(waitingArr[i].OrderID);
+            }
         }
 
         public void CancelOrder(string orderid)
@@ -657,7 +756,15 @@ namespace com.wer.sc.data.account
         {
             get
             {
-                return historyOrders;
+                return waitingOrders;
+            }
+        }
+
+        public IList<OrderInfo> HistoryOrderInfo
+        {
+            get
+            {
+                return this.historyOrders;
             }
         }
 
@@ -679,7 +786,7 @@ namespace com.wer.sc.data.account
         {
             get
             {
-                return historyTrades;
+                return currentTrades;
             }
         }
 
@@ -727,10 +834,26 @@ namespace com.wer.sc.data.account
                 elem.SetAttribute("money", money.ToString());
                 elem.SetAttribute("description", description);
 
+                SaveTradeFee(elem);
                 SaveOrders(elem);
                 SaveTrades(elem);
                 SavePositions(elem);
+
+                SaveForwardInfo(elem);
             }
+        }
+
+        private void SaveTradeFee(XmlElement elem)
+        {
+            if (fee == null)
+                return;
+            XmlElement elemTradeFee = elem.OwnerDocument.CreateElement("tradeFee");
+            elem.AppendChild(elemTradeFee);
+
+            List<string> codes = new List<string>();
+            codes.Add(dataForward_Code.Code);
+            codes.AddRange(this.dataForward_Code.GetAttachedCodes());
+            fee.Save(codes, elemTradeFee);
         }
 
         private void SaveTrades(XmlElement elem)
@@ -749,30 +872,41 @@ namespace com.wer.sc.data.account
                 elemOrder.SetAttribute("price", trade.Price.ToString());
                 elemOrder.SetAttribute("qty", trade.Qty.ToString());
                 elemOrder.SetAttribute("time", trade.Time.ToString());
-
             }
         }
 
         private void SaveOrders(XmlElement elem)
         {
-            XmlElement elemOrders = elem.OwnerDocument.CreateElement("orders");
+            XmlElement elemOrders = elem.OwnerDocument.CreateElement("waitingOrders");
             elem.AppendChild(elemOrders);
             foreach (OrderInfo order in this.waitingOrders)
             {
                 XmlElement elemOrder = elemOrders.OwnerDocument.CreateElement("order");
                 elemOrders.AppendChild(elemOrder);
-
-                elemOrder.SetAttribute("orderid", order.OrderID.ToString());
-                elemOrder.SetAttribute("code", order.Instrumentid);
-                elemOrder.SetAttribute("direction", order.Direction.ToString());
-                elemOrder.SetAttribute("openclose", order.OpenClose.ToString());
-                elemOrder.SetAttribute("price", order.Price.ToString());
-                elemOrder.SetAttribute("volume", order.Volume.ToString());
-                elemOrder.SetAttribute("ordertime", order.OrderTime.ToString());
-                elemOrder.SetAttribute("exectype", order.ExecType.ToString());
-                elemOrder.SetAttribute("leavesqty", order.LeavesQty.ToString());
-                elemOrder.SetAttribute("cumqty", order.CumQty.ToString());
+                SaveOrderInfo(order, elemOrder);
             }
+            XmlElement elemHistoryOrders = elem.OwnerDocument.CreateElement("historyOrders");
+            elem.AppendChild(elemHistoryOrders);
+            foreach (OrderInfo order in this.historyOrders)
+            {
+                XmlElement elemOrder = elemHistoryOrders.OwnerDocument.CreateElement("order");
+                elemHistoryOrders.AppendChild(elemOrder);
+                SaveOrderInfo(order, elemOrder);
+            }
+        }
+
+        private static void SaveOrderInfo(OrderInfo order, XmlElement elemOrder)
+        {
+            elemOrder.SetAttribute("orderid", order.OrderID.ToString());
+            elemOrder.SetAttribute("code", order.Instrumentid);
+            elemOrder.SetAttribute("direction", order.Direction.ToString());
+            elemOrder.SetAttribute("openclose", order.OpenClose.ToString());
+            elemOrder.SetAttribute("price", order.Price.ToString());
+            elemOrder.SetAttribute("volume", order.Volume.ToString());
+            elemOrder.SetAttribute("ordertime", order.OrderTime.ToString());
+            elemOrder.SetAttribute("exectype", order.ExecType.ToString());
+            elemOrder.SetAttribute("leavesqty", order.LeavesQty.ToString());
+            elemOrder.SetAttribute("cumqty", order.CumQty.ToString());
         }
 
         private void SavePositions(XmlElement elem)
@@ -781,7 +915,7 @@ namespace com.wer.sc.data.account
             elem.AppendChild(elemPositions);
             foreach (PositionInfo position in this.positions)
             {
-                XmlElement elemOrder = elemPositions.OwnerDocument.CreateElement("order");
+                XmlElement elemOrder = elemPositions.OwnerDocument.CreateElement("position");
                 elemPositions.AppendChild(elemOrder);
 
                 elemOrder.SetAttribute("code", position.InstrumentID);
@@ -791,76 +925,120 @@ namespace com.wer.sc.data.account
             }
         }
 
-        public void Load(XmlElement elem)
+        private void SaveForwardInfo(XmlElement elem)
         {
-            //this.initMoney = NumberUtils.toDouble(elem.attributeValue("initMoney"), 0);
-            //this.money = NumberUtils.toDouble(elem.attributeValue("money"), 0);
-            //this.asset = NumberUtils.toDouble(elem.attributeValue("asset"), 0);
-            //this.startTime = TimeFactory.getTimeObj(elem.attributeValue("startTime"));
-            //this.currentTime = TimeFactory.getTimeObj(elem.attributeValue("currentTime"));
-            //this.description = elem.attributeValue("description");
-            //this.market = elem.attributeValue("market");
-            //this.targetCode = elem.attributeValue("targetCode");
-
-
-            //Element elemHolds = elem.element("holds");
-            //for (Object obj : elemHolds.elements("hold"))
-            //{
-            //    Element elemHold = (Element)obj;
-            //    HoldInfoImpl hold = new HoldInfoImpl(this);
-            //    hold.loadFromXml(elemHold);
-            //    this.mapPosition_Buy.put(hold.getCode(), hold);
-            //}
-
-            //Element elemOrders = elem.element("orders");
-            //if (elemOrders != null)
-            //{
-            //    List <?> elems = elemOrders.elements("order");
-            //    for (Object obj : elems)
-            //    {
-            //        Element elemOrder = (Element)obj;
-            //        OrderInfo order = OrderInfoImpl.createOrderInfo(this, elemOrder);
-            //        this.orders.add(order);
-            //        if (!order.isFinished())
-            //            this.waitingOrders.add(order);
-            //    }
-            //}
-
-            //Element elemHistory = elem.element("trades");
-            //if (elemHistory != null)
-            //{
-            //    for (Object obj : elemHistory.elements("trade"))
-            //    {
-            //        Element elemTrade = (Element)obj;
-            //        TradeDetailImpl trade = new TradeDetailImpl();
-            //        trade.loadFromXml(elemTrade);
-            //        this.historyTrades.add(trade);
-            //    }
-            //}
+            if (this.dataForward_Code != null)
+            {
+                XmlElement elemForwardInfo = elem.OwnerDocument.CreateElement("forwardInfo");
+                elem.AppendChild(elemForwardInfo);
+                dataForward_Code.Save(elemForwardInfo);
+            }
         }
 
-        //public List<TradeDetail> getTodayTrades()
-        //{
-        //    return null;
-        //}
+        public void Load(XmlElement elem)
+        {
+            this.initMoney = double.Parse(elem.GetAttribute("initMoney"));
+            this.money = double.Parse(elem.GetAttribute("money"));
+            this.description = elem.GetAttribute("description");
 
-        //public List<TradeDetail> getAllTrades()
-        //{
-        //    return this.historyTrades;
-        //}
+            this.LoadFee(elem);
+            this.LoadOrders(elem);
+            this.LoadTrades(elem);
+            this.LoadPositions(elem);
+            this.LoadForwardInfo(elem);
+        }
 
+        private void LoadFee(XmlElement xmlElem)
+        {
+            XmlNodeList nodes = xmlElem.GetElementsByTagName("tradeFee");
+            if (nodes.Count == 0)
+                return;
+            XmlElement elemFee = (XmlElement)nodes[0];
+            this.fee = new TradeFee();
+            fee.Load(elemFee);
+        }
 
-        //public HistoryTradeAnalyser getHistoryAnalyser()
-        //    {
-        //        return new HistoryTradeAnalyserImpl(historyTrades);
-        //    }
+        private void LoadOrders(XmlElement xmlElem)
+        {
+            XmlElement xmlElemWaitingOrders = (XmlElement)xmlElem.GetElementsByTagName("waitingOrders")[0];
+            XmlNodeList xmlNodes = xmlElemWaitingOrders.GetElementsByTagName("order");
+            for (int i = 0; i < xmlNodes.Count; i++)
+            {
+                XmlElement xmlElemOrder = (XmlElement)xmlNodes[i];
+                OrderInfo orderInfo = LoadOrderInfo(xmlElemOrder);
+                this.waitingOrders.Add(orderInfo);
+            }
 
-        //public static Account createAccount(XmlElement elem)
-        //{
-        //    Account account = new Account();
-        //    account.loadFromXml(elem);
-        //    return account;
-        //}
+            XmlElement xmlElemHistoryOrders = (XmlElement)xmlElem.GetElementsByTagName("historyOrders")[0];
+            xmlNodes = xmlElemHistoryOrders.GetElementsByTagName("order");
+            for (int i = 0; i < xmlNodes.Count; i++)
+            {
+                XmlElement xmlElemOrder = (XmlElement)xmlNodes[i];
+                OrderInfo orderInfo = LoadOrderInfo(xmlElemOrder);
+                this.historyOrders.Add(orderInfo);
+            }
+        }
+
+        private static OrderInfo LoadOrderInfo(XmlElement elemOrder)
+        {
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.OrderID = elemOrder.GetAttribute("orderid");
+            orderInfo.Instrumentid = elemOrder.GetAttribute("code");
+            orderInfo.Direction = (OrderSide)Enum.Parse(typeof(OrderSide), elemOrder.GetAttribute("direction"));
+            orderInfo.OpenClose = (OpenCloseType)Enum.Parse(typeof(OpenCloseType), elemOrder.GetAttribute("openclose"));
+            orderInfo.Price = double.Parse(elemOrder.GetAttribute("price"));
+            orderInfo.Volume = int.Parse(elemOrder.GetAttribute("volume"));
+            orderInfo.OrderTime = double.Parse(elemOrder.GetAttribute("ordertime"));
+            orderInfo.ExecType = (ExecType)Enum.Parse(typeof(ExecType), elemOrder.GetAttribute("exectype"));
+            orderInfo.LeavesQty = int.Parse(elemOrder.GetAttribute("leavesqty"));
+            orderInfo.CumQty = int.Parse(elemOrder.GetAttribute("cumqty"));
+            return orderInfo;
+        }
+
+        private void LoadTrades(XmlElement xmlElem)
+        {
+            XmlElement xmlElemWaitingOrders = (XmlElement)xmlElem.GetElementsByTagName("trades")[0];
+            XmlNodeList xmlNodes = xmlElemWaitingOrders.GetElementsByTagName("trade");
+
+            for (int i = 0; i < xmlNodes.Count; i++)
+            {
+                XmlElement xmlElemTrade = (XmlElement)xmlNodes[i];
+                TradeInfo tradeInfo = new TradeInfo();
+                tradeInfo.TradeID = xmlElemTrade.GetAttribute("tradeid");
+                tradeInfo.InstrumentID = xmlElemTrade.GetAttribute("code");
+                tradeInfo.Side = (OrderSide)Enum.Parse(typeof(OrderSide), xmlElemTrade.GetAttribute("direction"));
+                tradeInfo.OpenClose = (OpenCloseType)Enum.Parse(typeof(OpenCloseType), xmlElemTrade.GetAttribute("openclose"));
+                tradeInfo.Price = double.Parse(xmlElemTrade.GetAttribute("price"));
+                tradeInfo.Qty = double.Parse(xmlElemTrade.GetAttribute("qty"));
+                tradeInfo.Time = double.Parse(xmlElemTrade.GetAttribute("time"));
+                this.currentTrades.Add(tradeInfo);
+            }
+        }
+
+        private void LoadPositions(XmlElement xmlElem)
+        {
+            XmlElement xmlElemWaitingOrders = (XmlElement)xmlElem.GetElementsByTagName("positions")[0];
+            XmlNodeList xmlNodes = xmlElemWaitingOrders.GetElementsByTagName("position");
+
+            for (int i = 0; i < xmlNodes.Count; i++)
+            {
+                XmlElement xmlElemTrade = (XmlElement)xmlNodes[i];
+                PositionInfo positionInfo = new PositionInfo();
+                positionInfo.InstrumentID = xmlElemTrade.GetAttribute("code");
+                positionInfo.Side = (PositionSide)Enum.Parse(typeof(PositionSide), xmlElemTrade.GetAttribute("side"));
+                positionInfo.Position = int.Parse(xmlElemTrade.GetAttribute("position"));
+                positionInfo.PositionCost = double.Parse(xmlElemTrade.GetAttribute("positioncost"));
+                this.positions.Add(positionInfo);
+            }
+        }
+
+        private void LoadForwardInfo(XmlElement xmlElem)
+        {
+            XmlNodeList nodes = xmlElem.GetElementsByTagName("forwardInfo");
+            if (nodes.Count == 0)
+                return;
+            this.dataForward_Code = dataCenter.HistoryDataForwardFactory.CreateDataForward_Code((XmlElement)nodes[0]);
+        }
 
         /// <summary>
         /// 委托成功事件
@@ -873,5 +1051,10 @@ namespace com.wer.sc.data.account
         /// <param name="sender"></param>
         /// <param name="trade"></param>
         public event DelegateOnReturnTrade OnReturnTrade;
+    }
+
+    class OrderDelayInfo
+    {
+        public int orderTickIndex;
     }
 }

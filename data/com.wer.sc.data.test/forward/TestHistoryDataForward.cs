@@ -28,12 +28,12 @@ namespace com.wer.sc.data.forward
             //}
         }
 
-        private void Forward_OnTick(object sender, ForwardOnTickArgument argument)
+        private void Forward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             Console.WriteLine(argument.TickBar);
         }
 
-        private void Forward_OnBar(object sender, ForwardOnBarArgument arguments)
+        private void Forward_OnBar(object sender, IForwardOnBarArgument arguments)
         {
             
         }
@@ -60,12 +60,12 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        private void Forward_OnTick2(object sender, ForwardOnTickArgument argument)
+        private void Forward_OnTick2(object sender, IForwardOnTickArgument argument)
         {
             Console.WriteLine(argument.TickBar);
         }
 
-        private void Forward_OnBar2(object sender, ForwardOnBarArgument arguments)
+        private void Forward_OnBar2(object sender, IForwardOnBarArgument arguments)
         {
 
         }

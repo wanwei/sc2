@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.datapackage
 {
@@ -98,6 +99,13 @@ namespace com.wer.sc.data.datapackage
         public IDataPackage CreateDataPackage(string[] codes, int startDate, int endDate, int minKlineBefore, int minKlineAfter)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataPackage_Code CreateDataPackage_Code(XmlElement xmlElem)
+        {
+            IDataPackage_Code dataPackage = new DataPackage_Code(this.dataReader);
+            dataPackage.Load(xmlElem);
+            return dataPackage;
         }
     }
 }

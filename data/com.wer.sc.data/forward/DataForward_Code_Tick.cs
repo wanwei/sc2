@@ -5,83 +5,98 @@ using com.wer.sc.data.reader;
 using com.wer.sc.data.realtime;
 using com.wer.sc.data.transfer;
 using com.wer.sc.data.utils;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Xml;
 
 namespace com.wer.sc.data.forward
 {
     /// <summary>
     /// 该类用于数据的tick前进
     /// </summary>
-    internal class HistoryDataForward_Code_TickForward : IDataForward_Code
+    internal class DataForward_Code_Tick : IDataForward_Code
     {
-        private DataForForward_Code forwardData;
+        private IDataCenter dataCenter;
 
-        private float lastEndPrice;
+        private DataForForward_Code forwardData;
 
         private ForwardPeriod forwardPeriod;
 
         private IKLineData_RealTime mainKlineData;
 
-        private List<ForwardOnbar_Info> barFinishedInfos = new List<ForwardOnbar_Info>();
+        private List<IForwardOnbar_Info> barFinishedInfos = new List<IForwardOnbar_Info>();
 
-        private ForwardOnBarArgument onBarArgument;
+        private IForwardOnBarArgument onBarArgument;
 
-        private IDataPackage_Code dataPackage;
-        public HistoryDataForward_Code_TickForward(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        private Dictionary<string, DataForward_AttachCode_Tick> dic_Code_DataForward = new Dictionary<string, DataForward_AttachCode_Tick>();
+
+        public DataForward_Code_Tick(IDataCenter dataCenter)
         {
-            this.dataPackage = dataPackage;
-            this.forwardData = new DataForForward_Code(dataPackage, referedPeriods);
-            this.forwardPeriod = forwardPeriod;
+            this.dataCenter = dataCenter;
+        }
 
-            this.onBarArgument = new ForwardOnBarArgument(barFinishedInfos);
+        public DataForward_Code_Tick(IDataCenter dataCenter, IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            this.dataCenter = dataCenter;
+            this.forwardData = new DataForForward_Code(dataPackage, referedPeriods);
+            this.forwardPeriod = forwardPeriod;            
             Init();
+            InitData();
         }
 
         private void Init()
         {
-            InitData();
+            this.onBarArgument = new ForwardOnBarArgument(barFinishedInfos, this);
+            foreach (KLinePeriod period in forwardData.ReferedKLinePeriods)
+            {
+                IKLineData_RealTime klineData = forwardData.GetKLineData(period);
+                if (period.Equals(forwardPeriod.KlineForwardPeriod))
+                    this.mainKlineData = klineData;
+            }
             timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
+            timer.AutoReset = true;            
         }
 
         private void InitData()
         {
-            forwardData.TradingDay = forwardData.StartDate;
+            this.forwardData.TradingDay = forwardData.StartDate;
             foreach (KLinePeriod period in forwardData.ReferedKLinePeriods)
             {
                 IKLineData_RealTime klineData = forwardData.GetKLineData(period);
                 klineData.ChangeCurrentBar(GetKLineBar(forwardData.CurrentTickData));
-                if (period.Equals(forwardPeriod.KlineForwardPeriod))
-                    this.mainKlineData = klineData;
             }
             if (this.forwardData.UseTimeLineData)
             {
-                lastEndPrice = dataPackage.GetLastEndPrice(forwardData.StartDate);
+                float lastEndPrice = this.forwardData.CurrentTimeLineData.YesterdayEnd; //dataPackage.GetLastEndPrice(forwardData.StartDate);
                 this.forwardData.CurrentTimeLineData.ChangeCurrentBar(GetTimeLineBar(forwardData.CurrentTickData, lastEndPrice));
+            }
+            foreach (string code in dic_Code_DataForward.Keys)
+            {
+                dic_Code_DataForward[code].ForwardNextDay(forwardData.TradingDay, this.Time);
             }
         }
 
-        private static KLineBar GetKLineBar(ITickBar tickBar)
+        internal static KLineBar GetKLineBar(ITickBar tickBar)
         {
             return KLineUtils.GetKLineBar(tickBar);
         }
 
-        private static KLineBar GetKLineBar(IKLineBar klineBar, ITickBar tickBar)
+        internal static KLineBar GetKLineBar(IKLineBar klineBar, ITickBar tickBar)
         {
             return KLineUtils.GetKLineBar(klineBar, tickBar);
         }
 
-        private static TimeLineBar GetTimeLineBar(ITickBar tickBar, float lastEndPrice)
+        internal static TimeLineBar GetTimeLineBar(ITickBar tickBar, float lastEndPrice)
         {
             return TimeLineUtils.GetTimeLineBar(tickBar, lastEndPrice);
         }
 
-        private static TimeLineBar GetTimeLineBar(ITimeLineBar klineBar, ITickBar tickBar, float lastEndPricce)
+        internal static TimeLineBar GetTimeLineBar(ITimeLineBar klineBar, ITickBar tickBar, float lastEndPricce)
         {
             return TimeLineUtils.GetTimeLineBar(klineBar, tickBar, lastEndPricce);
         }
@@ -125,9 +140,28 @@ namespace com.wer.sc.data.forward
             return forwardData.GetKLineData(klinePeriod);
         }
 
-        public void AttachOtherData(string code, ForwardReferedPeriods referedPeriods)
+        public void AttachOtherData(string code)
         {
+            if (dic_Code_DataForward.ContainsKey(code))
+                return;
+            int startDate = forwardData.StartDate;
+            int endDate = forwardData.EndDate;
+            IDataPackage_Code dataPackage_AttachCode = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
+            DataForward_AttachCode_Tick dataForward_AttachCode = new DataForward_AttachCode_Tick(dataPackage_AttachCode, this.forwardData.ReferedPeriods);
+            this.dic_Code_DataForward.Add(code, dataForward_AttachCode);
+            dataForward_AttachCode.ForwardNextDay(forwardData.TradingDay, this.Time);
+        }
 
+        public List<string> GetAttachedCodes()
+        {
+            return dic_Code_DataForward.Keys.ToList<String>();
+        }
+
+        public IRealTimeDataReader_Code GetAttachedDataReader(string code)
+        {
+            if (this.dic_Code_DataForward.ContainsKey(code))
+                return this.dic_Code_DataForward[code];
+            return null;
         }
 
         private bool isEnd;
@@ -212,15 +246,6 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public IRealTimeDataReader AttachedDataReader
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-
         public bool Forward()
         {
             if (isEnd)
@@ -240,6 +265,7 @@ namespace com.wer.sc.data.forward
                     isDayStart = true;
                     this.isTradingTimeStart = true;
                     this.isTradingTimeEnd = false;
+                    ForwardNextDay_AttachCode(currentTickData.TradingDay);
                 }
                 if (forwardNextDay)
                     DealEvents();
@@ -249,6 +275,7 @@ namespace com.wer.sc.data.forward
                 isDayStart = false;
 
             ForwardToday();
+            ForwardToday_AttachCode();
             if (currentTickData.BarPos + 1 >= currentTickData.Length)
             {
                 isDayEnd = true;
@@ -267,6 +294,22 @@ namespace com.wer.sc.data.forward
                 isDayEnd = false;
             DealEvents();
             return true;
+        }
+
+        private void ForwardToday_AttachCode()
+        {
+            foreach (string code in dic_Code_DataForward.Keys)
+            {
+                dic_Code_DataForward[code].ForwardToday(Time);
+            }
+        }
+
+        private void ForwardNextDay_AttachCode(int tradingDay)
+        {
+            foreach (string code in dic_Code_DataForward.Keys)
+            {
+                dic_Code_DataForward[code].ForwardNextDay(tradingDay, Time);
+            }
         }
 
         private void DealEvents()
@@ -288,7 +331,7 @@ namespace com.wer.sc.data.forward
         private void DealEvent_OnTick()
         {
             if (OnTick != null)
-                OnTick(this, new ForwardOnTickArgument(forwardData.CurrentTickData, forwardData.CurrentTickData.BarPos));
+                OnTick(this, new ForwardOnTickArgument(forwardData.CurrentTickData, forwardData.CurrentTickData.BarPos, this));
         }
 
         private void DealEvent_OnBar()
@@ -329,49 +372,40 @@ namespace com.wer.sc.data.forward
                 return false;
             }
 
-            this.lastEndPrice = forwardData.CurrentTickData.Arr_Price[forwardData.CurrentTickData.Length - 1];
-            this.forwardData.TradingDay = tradingDay;
-
-            foreach (KLinePeriod period in forwardData.ReferedKLinePeriods)
-            {
-                IKLineData_RealTime klineData = forwardData.GetKLineData(period);
-                ForwardNextDay_KLine(klineData, period);
-            }
-
-            ForwardNextDay_TimeLine();
+            //this.lastEndPrice = forwardData.CurrentTickData.Arr_Price[forwardData.CurrentTickData.Length - 1];
+            ForwardNextDay(forwardData, tradingDay);
             return true;
         }
 
-        private void ForwardNextDay_KLine(IKLineData_RealTime klineData, KLinePeriod period)
+        internal static void ForwardNextDay(DataForForward_Code forwardData, int tradingDay)
         {
-            //if (period.PeriodType >= KLineTimeType.DAY)
-            //{
-            //    double day = navigateData.CurrentTickData.TradingDay;
-            //    int nextKLineIndex = FindNextKLineIndex(klineData, day);
-            //    if (nextKLineIndex != klineData.BarPos)
-            //    {
-            //        dic_KLinePeriod_IsEnd[period] = true;
-            //        klineData.ChangeCurrentBar(GetKLineBar(navigateData.CurrentTickData), nextKLineIndex);
-            //    }
-            //    else
-            //    {
-            //        dic_KLinePeriod_IsEnd[period] = false;
-            //        klineData.ChangeCurrentBar(GetKLineBar(klineData, navigateData.CurrentTickData));
-            //    }
-            //    return;
-            //}
+            forwardData.TradingDay = tradingDay;
+            foreach (KLinePeriod period in forwardData.ReferedKLinePeriods)
+            {
+                IKLineData_RealTime klineData = forwardData.GetKLineData(period);
+                ForwardNextDay_KLine(forwardData, klineData, period);
+            }
+            ForwardNextDay_TimeLine(forwardData);
+        }
 
+        private static void ForwardNextDay_KLine(DataForForward_Code forwardData, IKLineData_RealTime klineData, KLinePeriod period)
+        {
             ITickBar tickBar = forwardData.CurrentTickData.GetCurrentBar();
             int nextbarPos = klineData.BarPos + 1;
+            //TODO 这样nextday算法还是不够准确
+            //while (!klineData.IsDayStart(nextbarPos))
+            //{
+            //    nextbarPos = klineData.BarPos + 1;
+            //}
             klineData.ChangeCurrentBar(GetKLineBar(tickBar), nextbarPos);
         }
 
-        private void ForwardNextDay_TimeLine()
+        private static void ForwardNextDay_TimeLine(DataForForward_Code forwardData)
         {
             if (!forwardData.UseTimeLineData)
                 return;
 
-            ITimeLineBar timeLineBar = GetTimeLineBar(forwardData.CurrentTickData, lastEndPrice);
+            ITimeLineBar timeLineBar = GetTimeLineBar(forwardData.CurrentTickData, forwardData.CurrentTimeLineData.YesterdayEnd);
             forwardData.CurrentTimeLineData.ChangeCurrentBar(timeLineBar);
         }
 
@@ -439,7 +473,7 @@ namespace com.wer.sc.data.forward
             klineData.ChangeCurrentBar(bar);
         }
 
-        private double GetEndTime(IKLineData_RealTime klineData, int barPos)
+        private static double GetEndTime(IKLineData_RealTime klineData, int barPos)
         {
             if (klineData.Period.PeriodType >= KLineTimeType.DAY)
                 return klineData.Time;
@@ -451,7 +485,18 @@ namespace com.wer.sc.data.forward
             return endTime;
         }
 
-        private int FindNextKLineIndex(IKLineData_RealTime klineData, double time)
+        //private static double GetEndTime(ITimeLineData_RealTime klineData, int barPos)
+        //{
+        //    //double endTime = klineData.GetEndTime(barPos);
+        //    //if (barPos < klineData.Length - 1 && klineData.IsTradingTimeEnd(barPos))
+        //    //{
+        //    //    endTime = (endTime + klineData.Arr_Time[barPos + 1]) / 2;
+        //    //}
+        //    //return endTime;
+        //    return -1;
+        //}
+
+        internal static int FindNextKLineIndex(IKLineData_RealTime klineData, double time)
         {
             int prevBarPos = klineData.BarPos;
             int barPos = prevBarPos;
@@ -468,12 +513,29 @@ namespace com.wer.sc.data.forward
                 barPos++;
             }
 
-            //if (barPos >= klineData.Length)
             return barPos - 1;
-            //if (barPos != prevBarPos && klineData.Arr_Time[barPos] != time)
-            //    barPos--;
+        }
 
-            //return barPos < 0 ? 0 : barPos;
+        internal static int FindNextTimeLineIndex(ITimeLineData_RealTime timelineData, double time)
+        {
+            int prevBarPos = timelineData.BarPos;
+            int barPos = prevBarPos;
+            if (barPos == timelineData.Length - 1)
+                return barPos;
+
+            while (barPos < timelineData.Length)
+            {
+                double startTime = timelineData.Arr_Time[barPos];
+                if (barPos != 0 && timelineData.IsTradingTimeStart(barPos))
+                    startTime = timelineData.Arr_Time[barPos - 1];
+                if (startTime > time)
+                {
+                    return barPos;
+                }
+                barPos++;
+            }
+
+            return barPos - 1;
         }
 
         private void ForwardToday_TimeLineData(ITimeLineData_RealTime timeLineData)
@@ -485,7 +547,7 @@ namespace com.wer.sc.data.forward
             int nextTimeLineBarPos = timeLineData.BarPos + 1;
             if (nextTimeLineBarPos >= timeLineData.Length)
             {
-                TimeLineBar timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, lastEndPrice);
+                TimeLineBar timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, timeLineData.YesterdayEnd);
                 timeLineData.ChangeCurrentBar(timeLineBar, timeLineData.BarPos);
                 return;
             }
@@ -495,12 +557,12 @@ namespace com.wer.sc.data.forward
                 TimeLineBar timeLineBar;
                 if (nextTickBar.Time >= nextTime)
                 {
-                    timeLineBar = GetTimeLineBar(nextTickBar, lastEndPrice);
+                    timeLineBar = GetTimeLineBar(nextTickBar, timeLineData.YesterdayEnd);
                     timeLineData.ChangeCurrentBar(timeLineBar, nextTimeLineBarPos);
                 }
                 else
                 {
-                    timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, lastEndPrice);
+                    timeLineBar = GetTimeLineBar(timeLineData, nextTickBar, timeLineData.YesterdayEnd);
                     timeLineData.ChangeCurrentBar(timeLineBar, timeLineData.BarPos);
                 }
             }
@@ -603,6 +665,27 @@ namespace com.wer.sc.data.forward
             return isPeriodEnd;
         }
 
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("forwardType", "tick");
+            xmlElem.SetAttribute("time", Time.ToString());
+            this.forwardPeriod.Save(xmlElem);
+            this.forwardData.Save(xmlElem);
+            string[] keies = this.dic_Code_DataForward.Keys.ToArray<string>();
+            xmlElem.SetAttribute("attachedCodes", ListUtils.ToString(keies));
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            double time = double.Parse(xmlElem.GetAttribute("time"));
+            this.forwardPeriod = new ForwardPeriod();
+            this.forwardPeriod.Load(xmlElem);
+            this.forwardData = new DataForForward_Code(dataCenter);
+            this.forwardData.Load(xmlElem);
+            this.Init();
+            this.NavigateTo(time);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -614,5 +697,143 @@ namespace com.wer.sc.data.forward
         public event DelegateOnBar OnBar;
 
         public event DelegateOnRealTimeChanged OnRealTimeChanged;
+    }
+
+    class DataForward_AttachCode_Tick : IRealTimeDataReader_Code
+    {
+        private double time;
+
+        private IDataPackage_Code dataPackage;
+
+        private ForwardReferedPeriods referedPeriods;
+
+        private DataForForward_Code dataForForward;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
+
+        public string Code
+        {
+            get
+            {
+                return dataPackage.Code;
+            }
+        }
+
+        public double Time
+        {
+            get
+            {
+                return time;
+            }
+        }
+
+        public float Price
+        {
+            get
+            {
+                return dataForForward.CurrentTickData.Price;
+            }
+        }
+
+        public DataForward_AttachCode_Tick(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods)
+        {
+            this.dataPackage = dataPackage;
+            this.referedPeriods = referedPeriods;
+            this.dataForForward = new DataForForward_Code(dataPackage, referedPeriods);
+        }
+
+        public void ForwardToday(double time)
+        {
+            this.time = time;
+
+            int prevTickIndex = dataForForward.CurrentTickData.BarPos;
+            ForwardToday_Tick(dataForForward.CurrentTickData, time);
+            foreach (KLinePeriod period in dataForForward.ReferedKLinePeriods)
+            {
+                IKLineData_RealTime klineData = dataForForward.GetKLineData(period);
+                ForwardToday_KLine(klineData, time, dataForForward.CurrentTickData, prevTickIndex);
+            }
+            ForwardToday_TimeLine(dataForForward.CurrentTimeLineData, time, dataForForward.CurrentTickData, prevTickIndex);
+        }
+
+        private void ForwardToday_Tick(ITickData tickData, double time)
+        {
+            tickData.BarPos = FindNextTickIndex(tickData, tickData.BarPos, time);
+        }
+
+        private int FindNextTickIndex(ITickData tickData, int startTickIndex, double time)
+        {
+            int barPos = tickData.BarPos;
+            while (barPos < tickData.Length && tickData.Arr_Time[barPos] < time)
+            {
+                barPos++;
+            }
+            if (barPos == tickData.Length)
+                barPos--;
+            return barPos;
+        }
+
+        private void ForwardToday_KLine(IKLineData_RealTime klineData, double time, ITickData tickData, int prevTickIndex)
+        {
+            if (klineData.Period.Equals(KLinePeriod.KLinePeriod_1Day))
+            {
+                klineData.ChangeCurrentBar(KLineUtils.GetKLineBar(klineData, tickData, prevTickIndex, tickData.BarPos));
+                return;
+            }
+
+            int nextKLineIndex = DataForward_Code_Tick.FindNextKLineIndex(klineData, time);
+            if (nextKLineIndex == klineData.BarPos)
+            {
+                klineData.ChangeCurrentBar(KLineUtils.GetKLineBar(klineData, tickData, prevTickIndex, tickData.BarPos));
+            }
+            else
+            {
+                double periodStartTime = klineData.Arr_Time[nextKLineIndex];
+                int startTickIndex = FindNextTickIndex(tickData, prevTickIndex, time);
+                klineData.ChangeCurrentBar(KLineUtils.GetKLineBar(tickData, startTickIndex, tickData.BarPos), nextKLineIndex);
+            }
+        }
+
+        private void ForwardToday_TimeLine(ITimeLineData_RealTime timeLineData, double time, ITickData tickData, int prevTickIndex)
+        {
+            if (timeLineData == null)
+                return;
+            int nextTimeLineIndex = DataForward_Code_Tick.FindNextTimeLineIndex(timeLineData, time);
+            if (nextTimeLineIndex == timeLineData.BarPos)
+            {
+                timeLineData.ChangeCurrentBar(TimeLineUtils.GetTimeLineBar(timeLineData, tickData, prevTickIndex, tickData.BarPos, timeLineData.YesterdayEnd));
+            }
+            else
+            {
+                double periodStartTime = timeLineData.Arr_Time[nextTimeLineIndex];
+                int startTickIndex = FindNextTickIndex(tickData, prevTickIndex, time);
+                timeLineData.ChangeCurrentBar(TimeLineUtils.GetTimeLineBar(tickData, startTickIndex, tickData.BarPos, timeLineData.YesterdayEnd), nextTimeLineIndex);
+            }
+        }
+
+        public void ForwardNextDay(int tradingDay, double time)
+        {
+            DataForward_Code_Tick.ForwardNextDay(this.dataForForward, tradingDay);
+        }
+
+        public IKLineData GetKLineData(KLinePeriod period)
+        {
+            return dataForForward.GetKLineData(period);
+        }
+
+        public bool IsPeriodEnd(KLinePeriod period)
+        {
+            return false;
+        }
+
+        public ITimeLineData GetTimeLineData()
+        {
+            return dataForForward.CurrentTimeLineData;
+        }
+
+        public ITickData GetTickData()
+        {
+            return dataForForward.CurrentTickData;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data.reader;
 using com.wer.sc.strategy;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace com.wer.sc.data.datapackage
     /// 整个系统里用到的数据建议都通过该接口完成，不建议直接调用IDataReader接口调用数据
     /// 系统对该接口做了很多优化工作，包括缓存，调用时初始化，数据共享等
     /// </summary>
-    public interface IDataPackage_Code
+    public interface IDataPackage_Code : IXmlExchange
     {
         /// <summary>
         /// 得到股票或期货的ID

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -56,7 +57,7 @@
     <Compile Include="data\utils\TestCacheUtils_TradingDay.cs" />
     <Compile Include="data\utils\TestCacheUtils_TradingTime.cs" />
     <Compile Include="data\TestKLineData.cs" />
-    <Compile Include="data\TestKLinePeriod.cs" />
+    <Compile Include="data\TestXmlSaveLoad.cs" />
     <Compile Include="data\transfer\TestDataTransfer_KLine2KLine.cs" />
     <Compile Include="data\transfer\TestDataTransfer_KLine2TimeLine.cs" />
     <Compile Include="data\transfer\TestDataTransfer_Tick2KLine.cs" />

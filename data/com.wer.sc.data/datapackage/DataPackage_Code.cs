@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.datapackage
 {
@@ -33,9 +34,19 @@ namespace com.wer.sc.data.datapackage
 
         private int minAfter;
 
+        public DataPackage_Code(IDataReader dataReader)
+        {
+            this.dataReader = dataReader;
+        }
+
         public DataPackage_Code(IDataReader dataReader, string code, int startDate, int endDate, int minBefore, int minAfter)
         {
             this.dataReader = dataReader;
+            Init(dataReader, code, startDate, endDate, minBefore, minAfter);
+        }
+
+        private void Init(IDataReader dataReader, string code, int startDate, int endDate, int minBefore, int minAfter)
+        {
             this.code = code;
             if (dataReader.TradingDayReader.IsTrade(startDate))
                 this.startDate = startDate;
@@ -72,6 +83,10 @@ namespace com.wer.sc.data.datapackage
         /// 得到结束日期
         /// </summary>
         public int EndDate { get { return endDate; } }
+
+        public int MinBefore { get { return minBefore; } }
+
+        public int MinAfter { get { return minAfter; } }
 
         public IList<int> GetTradingDays()
         {
@@ -161,6 +176,25 @@ namespace com.wer.sc.data.datapackage
         public ITickData_Extend CreateTickData_RealTime(int date)
         {
             return new TickData_RealTime(GetTickData(date));
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("code", code);
+            xmlElem.SetAttribute("start", startDate.ToString());
+            xmlElem.SetAttribute("end", endDate.ToString());
+            xmlElem.SetAttribute("minBefore", minBefore.ToString());
+            xmlElem.SetAttribute("minAfter", minAfter.ToString());
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            string code = xmlElem.GetAttribute("code");
+            int start = int.Parse(xmlElem.GetAttribute("start"));
+            int end = int.Parse(xmlElem.GetAttribute("end"));
+            int minBefore = int.Parse(xmlElem.GetAttribute("minBefore"));
+            int minAfter = int.Parse(xmlElem.GetAttribute("minAfter"));
+            this.Init(dataReader, code, start, end, minBefore, minAfter);
         }
     }
 }

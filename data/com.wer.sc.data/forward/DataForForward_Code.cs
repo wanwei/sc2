@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.forward
 {
@@ -16,14 +17,10 @@ namespace com.wer.sc.data.forward
     /// </summary>
     public class DataForForward_Code : IDataForForward_Code
     {
+        private IDataCenter dataCenter;
+
         //数据包
         protected IDataPackage_Code dataPackage;
-
-        //该周期内所有K线数据
-        protected Dictionary<KLinePeriod, IKLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData_RealTime>();
-
-        //交易日缓存
-        protected CacheUtils_TradingDay cache_TradingDay;
 
         //数据引用的周期
         protected ForwardReferedPeriods referedPeriods;
@@ -31,17 +28,27 @@ namespace com.wer.sc.data.forward
         //当前交易日
         protected int tradingDay;
 
+        //该周期内所有K线数据
+        protected Dictionary<KLinePeriod, IKLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData_RealTime>();
+
+        //交易日缓存
+        protected CacheUtils_TradingDay cache_TradingDay;
+
         //当前交易日的tick数据
         protected ITickData_Extend currentTickData;
 
         //当前交易日的分时数据
         protected ITimeLineData_RealTime currentTimeLineData;
 
+        public DataForForward_Code(IDataCenter dataCenter)
+        {
+            this.dataCenter = dataCenter;
+        }
+
         public DataForForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods)
         {
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
-
             this.dic_Period_KLineData = dataPackage.CreateKLineData_RealTimes(referedPeriods.UsedKLinePeriods);
             this.cache_TradingDay = new CacheUtils_TradingDay(dataPackage.GetTradingDays());
         }
@@ -119,6 +126,11 @@ namespace com.wer.sc.data.forward
             get { return referedPeriods.UsedKLinePeriods; }
         }
 
+        public ForwardReferedPeriods ReferedPeriods
+        {
+            get { return referedPeriods; }
+        }
+
         public virtual IKLineData_RealTime GetKLineData(KLinePeriod klinePeriod)
         {
             if (dic_Period_KLineData.ContainsKey(klinePeriod))
@@ -132,6 +144,24 @@ namespace com.wer.sc.data.forward
                 dic_Period_KLineData[period] = klineData;
             else
                 dic_Period_KLineData.Add(period, klineData);
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            this.dataPackage.Save(xmlElem);
+            this.referedPeriods.Save(xmlElem);
+            xmlElem.SetAttribute("tradingDay", tradingDay.ToString());
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.dataPackage = this.dataCenter.DataPackageFactory.CreateDataPackage_Code(xmlElem);
+            this.referedPeriods = new ForwardReferedPeriods();
+            this.referedPeriods.Load(xmlElem);
+
+            this.dic_Period_KLineData = dataPackage.CreateKLineData_RealTimes(referedPeriods.UsedKLinePeriods);
+            this.cache_TradingDay = new CacheUtils_TradingDay(dataPackage.GetTradingDays());
+            this.TradingDay = int.Parse(xmlElem.GetAttribute("tradingDay"));
         }
 
         public virtual ITickData_Extend CurrentTickData

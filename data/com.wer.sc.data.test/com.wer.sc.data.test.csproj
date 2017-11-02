@@ -52,6 +52,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="account\TestAccount.cs" />
+    <Compile Include="account\TestAccountSaveLoad.cs" />
+    <Compile Include="account\TestAccount_DelayTick.cs" />
+    <Compile Include="account\TestAccountImmediately.cs" />
+    <Compile Include="account\TestAccount_Slip.cs" />
     <Compile Include="datacenter\TestDataCenter.cs" />
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />
@@ -102,7 +106,9 @@
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick_timeinfo" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick_onbar" />
+    <None Include="TestCase\com\wer\sc\data\forward\attachcode_kline" />
     <Compile Include="TestDataCenter.cs" />
+    <Compile Include="TestXmlSaveLoad.cs" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_kline" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tickperiod" />

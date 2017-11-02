@@ -1,19 +1,26 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.forward
 {
     /// <summary>
     /// 前进周期
     /// </summary>
-    public class ForwardPeriod
+    public class ForwardPeriod : IXmlExchange
     {
         private bool isTickForward;
 
         private KLinePeriod klineForwardPeriod;
+
+        public ForwardPeriod()
+        {
+
+        }
 
         public ForwardPeriod(bool isTickForward, KLinePeriod klineForwardPeriod)
         {
@@ -49,16 +56,29 @@ namespace com.wer.sc.data.forward
         {
             if (obj == null)
                 return false;
-            if ((obj is ForwardPeriod))
+            if (!(obj is ForwardPeriod))
                 return false;
 
             ForwardPeriod fp = (ForwardPeriod)obj;
-            return this.isTickForward == fp.isTickForward && this.klineForwardPeriod == fp.klineForwardPeriod;
+            return this.isTickForward == fp.isTickForward && this.klineForwardPeriod.Equals(fp.klineForwardPeriod);
         }
 
         public override int GetHashCode()
         {
             return this.klineForwardPeriod.GetHashCode() * 10 + isTickForward.GetHashCode();
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.klineForwardPeriod = new KLinePeriod();
+            this.klineForwardPeriod.Load(xmlElem);
+            this.isTickForward = bool.Parse(xmlElem.GetAttribute("isTickForward"));
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            this.klineForwardPeriod.Save(xmlElem);
+            xmlElem.SetAttribute("isTickForward", this.isTickForward.ToString());
         }
     }
 }

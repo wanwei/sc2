@@ -43,8 +43,13 @@ namespace com.wer.sc.data.forward
 
         public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData)
         {
+            return GetHistoryDataForward_Code(code, startDate, endDate, useTickData, false);
+        }
+
+        public static IDataForward_Code GetHistoryDataForward_Code(string code, int startDate, int endDate, bool useTickData, bool useTimeLineData)
+        {
             ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
-            referedPeriods.UseTimeLineData = false;
+            referedPeriods.UseTimeLineData = useTimeLineData;
             referedPeriods.UseTickData = useTickData;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
 

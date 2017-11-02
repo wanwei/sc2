@@ -17,7 +17,7 @@ namespace com.wer.sc.strategy.mock
 
         public override void OnBar(Object sender, StrategyOnBarArgument currentData)
         {
-            List<ForwardOnbar_Info> bars = currentData.StrategyOnBarInfos;
+            List<IForwardOnbar_Info> bars = currentData.StrategyOnBarInfos;
             for (int i = 0; i < bars.Count; i++)
             {
                 Console.WriteLine(bars[i].KLinePeriod + ":" + bars[i].KLineBar);

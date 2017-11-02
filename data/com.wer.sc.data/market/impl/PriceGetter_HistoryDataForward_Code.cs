@@ -68,7 +68,7 @@ namespace com.wer.sc.data.market.impl
             this.historyDataForward_Code.OnTick += HistoryDataForward_Code_OnTick;
         }
 
-        private void HistoryDataForward_Code_OnTick(object sender, ForwardOnTickArgument argument)
+        private void HistoryDataForward_Code_OnTick(object sender, IForwardOnTickArgument argument)
         {
             if (timeChange != null)
                 timeChange(this);
@@ -118,7 +118,7 @@ namespace com.wer.sc.data.market.impl
             this.historyDataForward_Code.OnBar += HistoryDataForward_Code_OnBar;
         }
 
-        private void HistoryDataForward_Code_OnBar(object sender, ForwardOnBarArgument argument)
+        private void HistoryDataForward_Code_OnBar(object sender, IForwardOnBarArgument argument)
         {
             if (timeChange != null)
                 timeChange(this);

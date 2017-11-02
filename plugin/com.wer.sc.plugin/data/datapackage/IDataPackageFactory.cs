@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.datapackage
 {
@@ -71,5 +72,12 @@ namespace com.wer.sc.data.datapackage
         /// <param name="minKlineAfter"></param>
         /// <returns></returns>
         IDataPackage_Code CreateDataPackage_Code(string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter);
+
+        /// <summary>
+        /// 根据xml创建数据包
+        /// </summary>
+        /// <param name="xmlElem"></param>
+        /// <returns></returns>
+        IDataPackage_Code CreateDataPackage_Code(XmlElement xmlElem);
     }
 }

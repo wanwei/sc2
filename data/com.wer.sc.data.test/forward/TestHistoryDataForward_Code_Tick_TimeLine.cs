@@ -32,7 +32,7 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_TimeLine.Clear();
         }
 
-        private void KlineDataForward_OnTick(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
             //Console.WriteLine(klineDataForward.GetTimeLineData());

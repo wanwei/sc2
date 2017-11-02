@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Xml;
 
 namespace com.wer.sc.data.account
 {
-    public class TradeFee
+    public class TradeFee : IXmlExchange
     {
         private Dictionary<String, TradeFee_Code> mapFee = new Dictionary<String, TradeFee_Code>();
 
@@ -23,7 +24,7 @@ namespace com.wer.sc.data.account
             this.defaultFee = defaultFee;
         }
 
-        public TradeFee_Code getFee(String code)
+        public TradeFee_Code GetFee(String code)
         {
             if (!mapFee.ContainsKey(code))
                 return defaultFee;
@@ -41,6 +42,17 @@ namespace com.wer.sc.data.account
         public void AddFee_Code(TradeFee_Code feeContract)
         {
             mapFee.Add(feeContract.Code, feeContract);
+        }
+
+        public void Save(List<string> codes, XmlElement xmlElem)
+        {
+            foreach (string code in codes)
+            {
+                XmlElement subElem = xmlElem.OwnerDocument.CreateElement("tradefee");
+                xmlElem.AppendChild(subElem);
+                TradeFee_Code tradeFee = mapFee[code];
+                tradeFee.Save(subElem);
+            }
         }
 
         public void Save(XmlElement elem)

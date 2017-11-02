@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data.datapackage;
 using com.wer.sc.data.reader;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace com.wer.sc.data.forward
     /// <summary>
     /// 用做数据前进的数据包
     /// </summary>
-    public interface IDataForForward_Code
+    public interface IDataForForward_Code : IXmlExchange
     {
         /// <summary>
         /// 数据包

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data.market;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,13 @@ namespace com.wer.sc.data.account
     /// <summary>
     /// 策略交易器
     /// </summary>
-    public interface IAccount
+    public interface IAccount : IXmlExchange
     {
+        /// <summary>
+        /// 账号设置
+        /// </summary>
+        AccountSetting AccountSetting { get; }
+
         /// <summary>
         /// 得到交易费用
         /// </summary>
@@ -106,6 +112,11 @@ namespace com.wer.sc.data.account
         IList<OrderInfo> CurrentOrderInfo { get; }
 
         /// <summary>
+        /// 得到历史委托
+        /// </summary>
+        IList<OrderInfo> HistoryOrderInfo { get; }
+
+        /// <summary>
         /// 当前持仓
         /// </summary>
         IList<PositionInfo> CurrentPositionInfo { get; }
@@ -126,6 +137,5 @@ namespace com.wer.sc.data.account
         /// <param name="sender"></param>
         /// <param name="trade"></param>
         event DelegateOnReturnTrade OnReturnTrade;
-
     }
 }

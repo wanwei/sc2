@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data.reader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace com.wer.sc.data.forward
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="argument"></param>
-    public delegate void DelegateOnTick(object sender, ForwardOnTickArgument argument);
+    public delegate void DelegateOnTick(object sender, IForwardOnTickArgument argument);
 
     /// <summary>
     /// 在K线的bar完全生成后后执行该委托
@@ -26,90 +27,59 @@ namespace com.wer.sc.data.forward
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="arguments"></param>
-    public delegate void DelegateOnBar(object sender, ForwardOnBarArgument arguments);
+    public delegate void DelegateOnBar(object sender, IForwardOnBarArgument arguments);
 
-    public class ForwardOnTickArgument
+    public interface IForwardOnTickArgument
     {
-        public ITickData TickData;
+        ITickData TickData { get; }
 
-        public int Index;
+        int Index { get; }
 
-        public ITickBar TickBar
-        {
-            get { return TickData.GetBar(Index); }
-        }
+        ITickBar TickBar { get; }
 
-        public ForwardOnTickArgument(ITickData tickData, int index)
-        {
-            this.TickData = tickData;
-            this.Index = index;
-        }
+        double Time { get; }
 
-        public double Time
-        {
-            get { return TickData.Time; }
-        }
+        IRealTimeDataReader_Code CurrentData { get; }
+
+        IRealTimeDataReader_Code GetOtherData(string code);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ForwardOnBarArgument
+    public interface IForwardOnBarArgument
     {
-        private IList<ForwardOnbar_Info> klineData_BarFinished;
 
-        public ForwardOnBarArgument(IList<ForwardOnbar_Info> barFinishedInfo)
+        IList<IForwardOnbar_Info> ForwardOnBar_Infos
         {
-            this.klineData_BarFinished = barFinishedInfo;
+            get;
         }
 
-        public IList<ForwardOnbar_Info> ForwardOnBar_Infos
+        IForwardOnbar_Info MainForwardOnBar_Info
         {
-            get
-            {
-                return klineData_BarFinished;
-            }
+            get;
         }
 
-        public ForwardOnbar_Info MainForwardOnBar_Info
-        {
-            get { return klineData_BarFinished[0]; }
-        }
+        IRealTimeDataReader_Code CurrentData { get; }
+
+        IRealTimeDataReader_Code GetOtherData(string code);
     }
 
-    public class ForwardOnbar_Info
+    public interface IForwardOnbar_Info
     {
         /// <summary>
         /// OnBar事件执行时完成一个bar的k线数据
         /// </summary>
-        public IKLineData KlineData;
+        IKLineData KlineData { get; }
 
         /// <summary>
         /// 前进器前进完成的Bar
         /// </summary>
-        public int FinishedBarPos;
+        int FinishedBarPos { get; }
 
-        public KLinePeriod KLinePeriod
-        {
-            get
-            {
-                return KlineData.Period;
-            }
-        }
+        KLinePeriod KLinePeriod { get; }
 
-        public IKLineBar KLineBar
-        {
-            get
-            {
-                return KlineData.GetBar(FinishedBarPos);
-            }
-        }
-
-        public ForwardOnbar_Info(IKLineData klineData, int finishedBarPos)
-        {
-            this.KlineData = klineData;
-            this.FinishedBarPos = finishedBarPos;
-        }
+        IKLineBar KLineBar { get; }
     }
 
     /// <summary>

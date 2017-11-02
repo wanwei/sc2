@@ -35,7 +35,7 @@ namespace com.wer.sc.strategy
 
         private IStrategyReport report;
 
-        private List<ForwardOnbar_Info> barInfos = new List<ForwardOnbar_Info>();
+        private List<IForwardOnbar_Info> barInfos = new List<IForwardOnbar_Info>();
 
         public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyOperator(null))
         {
@@ -216,7 +216,7 @@ namespace com.wer.sc.strategy
             }            
         }
 
-        private void RealTimeReader_OnTick(object sender, ForwardOnTickArgument argument)
+        private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
             OnTick_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender);
         }
@@ -239,12 +239,12 @@ namespace com.wer.sc.strategy
             strategy.OnTick(this, argument);
         }
 
-        private void RealTimeReader_OnBar(object sender, ForwardOnBarArgument argument)
+        private void RealTimeReader_OnBar(object sender, IForwardOnBarArgument argument)
         {
             OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender, argument);
         }
 
-        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader, ForwardOnBarArgument argument)
+        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader, IForwardOnBarArgument argument)
         {
             IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
             if (referedStrategies != null)

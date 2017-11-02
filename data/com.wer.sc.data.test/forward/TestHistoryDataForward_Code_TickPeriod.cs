@@ -52,7 +52,7 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_Tick.Clear();
         }
 
-        private void KlineDataForward_OnTick(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             string txt = "tick:" + argument.TickBar;
             printStrs_Forward_Tick.Add(txt);
@@ -66,9 +66,9 @@ namespace com.wer.sc.data.forward
             Assert.AreEqual(price, klineDataForward.GetTimeLineData().Price);
         }
 
-        private void KlineDataForward_OnBar(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            ForwardOnbar_Info mainOnBarInfo = argument.MainForwardOnBar_Info;
+            IForwardOnbar_Info mainOnBarInfo = argument.MainForwardOnBar_Info;
             printStrs_Forward_Tick.Add("kline:" + mainOnBarInfo.KLineBar);
             //Console.WriteLine("kline:" + klineData.GetBar(index));
         }
@@ -131,12 +131,12 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_TimeInfo_OnBar.Clear();
         }
 
-        private void KlineDataForward_OnBar2(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar2(object sender, IForwardOnBarArgument argument)
         {
-            IList<ForwardOnbar_Info> onBarInfos = argument.ForwardOnBar_Infos;
+            IList<IForwardOnbar_Info> onBarInfos = argument.ForwardOnBar_Infos;
             for (int i = 0; i < onBarInfos.Count; i++)
             {
-                ForwardOnbar_Info onBar_Info = onBarInfos[i];
+                IForwardOnbar_Info onBar_Info = onBarInfos[i];
                 //Console.WriteLine(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
                 printStrs_Forward_TimeInfo_OnBar.Add(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
             }
@@ -193,7 +193,7 @@ namespace com.wer.sc.data.forward
             printStrs_Forward_TimeInfo_OnTick.Clear();
         }
 
-        private void KlineDataForward_OnTick1(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick1(object sender, IForwardOnTickArgument argument)
         {
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
             string txt = "tick:" + argument.TickBar;
@@ -227,7 +227,7 @@ namespace com.wer.sc.data.forward
             //print_Forward_TimeInfo_OnTick.Clear();
         }
 
-        private void KlineDataForward_OnBar1(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar1(object sender, IForwardOnBarArgument argument)
         {
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
             //Console.WriteLine("DayEnd:" + klineDataForward.IsDayEnd
@@ -263,12 +263,12 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        private void KlineDataForward_OnTick_Long(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick_Long(object sender, IForwardOnTickArgument argument)
         {
 
         }
 
-        private void KlineDataForward_OnBar_Long(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar_Long(object sender, IForwardOnBarArgument argument)
         {
 
         }
@@ -361,16 +361,16 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        private void KlineDataForward_OnTick_CompareWithReader(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick_CompareWithReader(object sender, IForwardOnTickArgument argument)
         {
             AddContent_Tick(argument.TickData.TradingDay, argument.TickBar.ToString());
         }
 
-        private void KlineDataForward_OnBar_CompareWithReader(object sender, ForwardOnBarArgument argument)
+        private void KlineDataForward_OnBar_CompareWithReader(object sender, IForwardOnBarArgument argument)
         {
             for (int i = 0; i < argument.ForwardOnBar_Infos.Count; i++)
             {
-                ForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
+                IForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
                 Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
                 AddContent_KLine(info.KLinePeriod, info.KLineBar.ToString());
                 //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);

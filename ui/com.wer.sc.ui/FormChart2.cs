@@ -29,9 +29,11 @@ namespace com.wer.sc.ui
         {
             InitializeComponent();
             this.compChart1 = compMain1.CompChart1;
-            this.compChart1.Code = "RB1801";
+            //this.compChart1.Code = "RB1801";
+            this.compChart1.Code = "MA1801";
             //this.compChart1.Time = 20170929.145900;
-            this.compChart1.Time = 20171029.150000;
+            //this.compChart1.Time = 20171029.150000;
+            this.compChart1.Time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
             //this.compChart1.Code = "RB1801";
             //this.compChart1.Time = 20170930.150000;
             this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;

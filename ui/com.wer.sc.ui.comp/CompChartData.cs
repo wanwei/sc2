@@ -238,7 +238,7 @@ namespace com.wer.sc.ui.comp
             return historyDataForward_CodePlaying;
         }
 
-        private void HistoryDataForward_Code_OnTick(object sender, ForwardOnTickArgument argument)
+        private void HistoryDataForward_Code_OnTick(object sender, IForwardOnTickArgument argument)
         {
             this.IsDataRefresh = true;
             if (argument.TickBar != null)

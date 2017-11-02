@@ -44,18 +44,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="account\Account.cs" />
-    <Compile Include="account\StrategyTrader_History_Code.cs" />
-    <Compile Include="cache\DataCache.cs" />
-    <Compile Include="cache\DataCacheManager.cs" />
+    <Compile Include="account\AccountFactory.cs" />
     <Compile Include="datapackage\DataPackage.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
     <Compile Include="datapackage\IDataPackageOwner.cs" />
     <Compile Include="datapackage\DataPackage_Code.cs" />
+    <Compile Include="forward\DataForwardUtils_Tick.cs" />
     <Compile Include="forward\DataForward_Code_KLine.cs" />
     <Compile Include="forward\DataForForward_Code.cs" />
     <Compile Include="forward\DataForward.cs" />
     <Compile Include="forward\DataForwardFactory.cs" />
     <Compile Include="forward\DataForward_Code_Tick.cs" />
+    <Compile Include="forward\ForwardOnBarArgument.cs" />
+    <Compile Include="forward\ForwardBarInfo.cs" />
+    <Compile Include="forward\ForwardOnTickArgument.cs" />
     <Compile Include="navigate\DataForNavigate_Code.cs" />
     <Compile Include="navigate\DataNavigate.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
@@ -67,8 +69,10 @@
     <Compile Include="realtime\TickData_RealTime.cs" />
     <Compile Include="realtime\TimeLineDataExtend_RealTime.cs" />
     <Compile Include="store\file\MainContractStore_File.cs" />
+    <Compile Include="store\file\TradeFeeStore.cs" />
     <Compile Include="store\file\TradingTimeStore_File.cs" />
     <Compile Include="store\IMainContractStore.cs" />
+    <Compile Include="store\ITradeFeeStore.cs" />
     <Compile Include="store\ITradingTimeStore.cs" />
     <Compile Include="update\StepGetter_UpdateKLineData_Vaieties.cs" />
     <Compile Include="update\Step_UpdateMainFutures.cs" />

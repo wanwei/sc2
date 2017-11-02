@@ -54,4 +54,16 @@ namespace com.wer.sc.utils
         /// <param name="xmlElem"></param>
         void Load(XmlElement xmlElem);
     }
+
+    public abstract class XmlExchange_Abstract : IXmlExchange
+    {
+        public abstract void Load(XmlElement xmlElem);
+
+        public abstract void Save(XmlElement xmlElem);
+
+        public override string ToString()
+        {
+            return XmlUtils.ToString(this);
+        }
+    }
 }

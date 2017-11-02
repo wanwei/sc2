@@ -61,7 +61,7 @@ namespace com.wer.sc.strategy.mock
 
         public override void OnBar(object sender, StrategyOnBarArgument currentData)
         {
-            ForwardOnbar_Info barInfo = currentData.MainBarInfo;
+            IForwardOnbar_Info barInfo = currentData.MainBarInfo;
             GenMa(barInfo.KlineData, barInfo.FinishedBarPos, maList, maPeriod);
         }
 

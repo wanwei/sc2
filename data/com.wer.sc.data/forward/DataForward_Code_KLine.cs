@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.navigate;
+using System.Xml;
 
 namespace com.wer.sc.data.forward
 {
@@ -24,17 +25,27 @@ namespace com.wer.sc.data.forward
 
         private IKLineData_RealTime mainKLineData;
 
-        private List<ForwardOnbar_Info> barFinishedInfos = new List<ForwardOnbar_Info>();
+        private List<IForwardOnbar_Info> barFinishedInfos = new List<IForwardOnbar_Info>();
 
-        private ForwardOnBarArgument onBarArgument;
+        private IForwardOnBarArgument onBarArgument;
 
-        public DataForward_Code_KLine(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        private Dictionary<string, IDataForward_Code> dic_Code_DataForward = new Dictionary<string, IDataForward_Code>();
+
+        private IDataCenter dataCenter;
+
+        public DataForward_Code_KLine(IDataCenter dataCenter)
         {
+            this.dataCenter = dataCenter;
+        }
+
+        public DataForward_Code_KLine(IDataCenter dataCenter, IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
+        {
+            this.dataCenter = dataCenter;
             this.navigateData = new DataForForward_Code(dataPackage, referedPeriods);
             this.navigateData.TradingDay = navigateData.StartDate;
             this.forwardPeriod = forwardPeriod;
             this.mainKLineData = this.navigateData.GetKLineData(forwardPeriod.KlineForwardPeriod);
-            this.onBarArgument = new ForwardOnBarArgument(this.barFinishedInfos);
+            this.onBarArgument = new ForwardOnBarArgument(this.barFinishedInfos, this);
             InitKLine();
         }
 
@@ -88,9 +99,27 @@ namespace com.wer.sc.data.forward
             return navigateData.GetKLineData(klinePeriod);
         }
 
-        public void AttachOtherData(string code, ForwardReferedPeriods referedPeriods)
+        public void AttachOtherData(string code)
         {
+            if (dic_Code_DataForward.ContainsKey(code))
+                return;
+            int startDate = this.DataPackage.StartDate;
+            int endDate = this.DataPackage.EndDate;
+            IDataPackage_Code dataPackage_AttachCode = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate);
+            IDataForward_Code dataForward_AttachCode = new DataForward_Code_KLine(dataCenter, dataPackage_AttachCode, navigateData.ReferedPeriods, forwardPeriod);
+            this.dic_Code_DataForward.Add(code, dataForward_AttachCode);
+        }
 
+        public List<string> GetAttachedCodes()
+        {
+            return dic_Code_DataForward.Keys.ToList<String>();
+        }
+
+        public IRealTimeDataReader_Code GetAttachedDataReader(string code)
+        {
+            if (dic_Code_DataForward.ContainsKey(code))
+                return dic_Code_DataForward[code];
+            return null;
         }
 
         #region 当前的前进信息
@@ -184,15 +213,6 @@ namespace com.wer.sc.data.forward
                 return navigateData.DataPackage;
             }
         }
-
-        public IRealTimeDataReader AttachedDataReader
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         public bool Forward()
         {
             if (isEnd)
@@ -252,7 +272,10 @@ namespace com.wer.sc.data.forward
                         dic_KLinePeriod_IsEnd[period] = false;
                 }
             }
-
+            foreach (string code in dic_Code_DataForward.Keys)
+            {
+                dic_Code_DataForward[code].Forward();
+            }
             if (OnBar != null)
             {
                 barFinishedInfos.Clear();
@@ -269,6 +292,8 @@ namespace com.wer.sc.data.forward
             }
             if (OnRealTimeChanged != null)
                 OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
+
+        
             return true;
         }
 
@@ -435,6 +460,16 @@ namespace com.wer.sc.data.forward
             bool isPeriodEnd = false;
             dic_KLinePeriod_IsEnd.TryGetValue(klinePeriod, out isPeriodEnd);
             return isPeriodEnd;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            
         }
 
 

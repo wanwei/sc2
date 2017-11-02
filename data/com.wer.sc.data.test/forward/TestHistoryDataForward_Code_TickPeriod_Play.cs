@@ -49,7 +49,7 @@ namespace com.wer.sc.data.forward
             klineDataForward.Pause();
         }
 
-        private void KlineDataForward_OnTick(object sender, ForwardOnTickArgument argument)
+        private void KlineDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             IKLineData klineData = ((IDataForward_Code)sender).GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             //Console.WriteLine(tickData);

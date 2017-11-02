@@ -36,5 +36,66 @@ namespace com.wer.sc.data.utils
             return bar;
         }
 
+        public static KLineBar GetKLineBar(ITickData tickData, int startIndex, int endIndex)
+        {
+            KLineBar bar = new KLineBar();
+            ITickBar endTickBar = tickData.GetBar(endIndex);
+
+            bar.Time = endTickBar.Time;
+            bar.Start = tickData.Arr_Price[startIndex];
+
+            float high = 0;
+            float low = float.MaxValue;
+            float money = bar.Money;
+            int mount = bar.Mount;
+            for (int i = startIndex; i <= endIndex; i++)
+            {
+                ITickBar tickBar = tickData.GetBar(i);
+                if (high < tickBar.Price)
+                    high = tickBar.Price;
+                if (low > tickBar.Price)
+                    low = tickBar.Price;
+                money += tickBar.Mount * tickBar.Price;
+                mount += tickBar.Mount;
+            }
+            bar.High = high;
+            bar.Low = low;
+            bar.End = endTickBar.Price;
+            bar.Money = money;
+            bar.Mount = mount;
+            bar.Hold = endTickBar.Hold;
+            return bar;
+        }
+
+        public static KLineBar GetKLineBar(IKLineBar klineBar, ITickData tickData, int startIndex, int endIndex)
+        {
+            KLineBar bar = new KLineBar();
+            ITickBar endTickBar = tickData.GetBar(endIndex);
+
+            bar.Time = endTickBar.Time;
+            bar.Start = klineBar.Start;
+
+            float high = klineBar.High;
+            float low = klineBar.Low;
+            float money = klineBar.Money;
+            int mount = klineBar.Mount;
+            for (int i = startIndex; i <= endIndex; i++)
+            {
+                ITickBar tickBar = tickData.GetBar(i);
+                if (high < tickBar.Price)
+                    high = tickBar.Price;
+                if (low > tickBar.Price)
+                    low = tickBar.Price;
+                money += tickBar.Mount * tickBar.Price;
+                mount += tickBar.Mount;
+            }
+            bar.High = high;
+            bar.Low = low;
+            bar.End = endTickBar.Price;
+            bar.Money = money;
+            bar.Mount = mount;
+            bar.Hold = endTickBar.Hold;
+            return bar;
+        }
     }
 }

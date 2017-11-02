@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.account;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.reader;
@@ -39,5 +40,10 @@ namespace com.wer.sc.data
         /// </summary>
         /// <returns></returns>
         IDataForwardFactory HistoryDataForwardFactory { get; }
+
+        /// <summary>
+        /// 得到账号工厂
+        /// </summary>
+        IAccountFactory AccountFactory { get; }
     }
 }

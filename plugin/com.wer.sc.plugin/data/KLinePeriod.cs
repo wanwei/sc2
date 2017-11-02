@@ -1,8 +1,10 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data
 {
@@ -10,20 +12,8 @@ namespace com.wer.sc.data
     /// K线周期类
     /// 如1分钟、5分钟、日线都用该类表示
     /// </summary>
-    public class KLinePeriod : IComparable<KLinePeriod>
+    public class KLinePeriod : IComparable<KLinePeriod>, IXmlExchange
     {
-        //public const int TYPE_SECOND = 0;
-
-        //public const int TYPE_MINUTE = 1;
-
-        //public const int TYPE_HOUR = 2;
-
-        //public const int TYPE_DAY = 3;
-
-        //public const int TYPE_WEEK = 4;
-
-        //public const int TYPE_MILESECOND = 5;
-
         private KLineTimeType periodType;
 
         public KLineTimeType PeriodType
@@ -103,6 +93,19 @@ namespace com.wer.sc.data
                 return this.periodType.CompareTo(other.periodType);
         }
 
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("periodType", this.periodType.ToString());
+            xmlElem.SetAttribute("period", this.Period.ToString());
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            string periodType = xmlElem.GetAttribute("periodType");
+            this.periodType = (KLineTimeType)Enum.Parse(typeof(KLineTimeType), periodType);
+            this.Period = int.Parse(xmlElem.GetAttribute("period"));
+        }
+
         private static KLinePeriod period_5second = new KLinePeriod(KLineTimeType.SECOND, 5);
         private static KLinePeriod period_15second = new KLinePeriod(KLineTimeType.SECOND, 15);
         private static KLinePeriod period_1minute = new KLinePeriod(KLineTimeType.MINUTE, 1);
@@ -145,15 +148,5 @@ namespace com.wer.sc.data
         {
             get { return period_Day; }
         }
-
-        //public static bool operator ==(KLinePeriod klinePeriod1, KLinePeriod klinePeriod2)
-        //{            
-        //    return klinePeriod1.Equals(klinePeriod2);
-        //}
-
-        //public static bool operator !=(KLinePeriod klinePeriod1, KLinePeriod klinePeriod2)
-        //{
-        //    return !klinePeriod1.Equals(klinePeriod2);
-        //}
     }
 }

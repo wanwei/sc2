@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.account;
 
 namespace com.wer.sc.data
 {
@@ -28,6 +29,8 @@ namespace com.wer.sc.data
 
         private IDataNavigateFactory dataNavigateFactory;
 
+        private IAccountFactory accountFactory;
+
         internal DataCenter(DataCenterInfo config, IDataStore dataStore, IDataReader dataReaderFactory)
         {
             this.config = config;
@@ -36,6 +39,7 @@ namespace com.wer.sc.data
             this.dataPackageFactory = new DataPackageFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(this);
+            this.accountFactory = new AccountFactory(this);
         }
 
         public DataCenterInfo Config
@@ -122,6 +126,14 @@ namespace com.wer.sc.data
             get
             {
                 return historyDataForwardFactory;
+            }
+        }
+
+        public IAccountFactory AccountFactory
+        {
+            get
+            {
+                return this.accountFactory;
             }
         }
     }
