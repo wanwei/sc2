@@ -24,27 +24,27 @@ namespace com.wer.sc.plugin.mock.strategy
             strategyPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return strategyPeriods;
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument dataReader)
+        public override void OnBar(Object sender, IStrategyOnBarArgument dataReader)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument dataReader)
+        public override void OnTick(Object sender, IStrategyOnTickArgument dataReader)
         {
             throw new NotImplementedException();
         }

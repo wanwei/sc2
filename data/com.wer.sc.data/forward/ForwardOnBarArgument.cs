@@ -9,19 +9,34 @@ namespace com.wer.sc.data.forward
 {
     public class ForwardOnBarArgument : IForwardOnBarArgument
     {
-        private IList<IForwardOnbar_Info> klineData_BarFinished;
+        private IList<IForwardKLineBarInfo> klineData_BarFinished;
 
-        private Dictionary<KLinePeriod, IForwardOnbar_Info> dic_Period_Bar = new Dictionary<KLinePeriod, IForwardOnbar_Info>();
+        private Dictionary<KLinePeriod, IForwardKLineBarInfo> dic_Period_Bar = new Dictionary<KLinePeriod, IForwardKLineBarInfo>();
 
         private IDataForward_Code dataForward_Code;
 
-        public ForwardOnBarArgument(IList<IForwardOnbar_Info> barFinishedInfo, IDataForward_Code dataForward_Code)
+        public IDataForward_Code DataForward_Code
         {
-            this.klineData_BarFinished = barFinishedInfo;
+            get { return dataForward_Code; }
+        }
+
+        public ForwardOnBarArgument(IList<IForwardKLineBarInfo> finishedBarInfos, IDataForward_Code dataForward_Code)
+        {
+            this.klineData_BarFinished = finishedBarInfos;
             this.dataForward_Code = dataForward_Code;
         }
 
-        public IList<IForwardOnbar_Info> ForwardOnBar_Infos
+        public string Code
+        {
+            get { return dataForward_Code.Code; }
+        }
+
+        public double Time
+        {
+            get { return dataForward_Code.Time; }
+        }
+
+        public IList<IForwardKLineBarInfo> AllFinishedBars
         {
             get
             {
@@ -29,7 +44,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public IForwardOnbar_Info MainForwardOnBar_Info
+        public IForwardKLineBarInfo MainBar
         {
             get { return klineData_BarFinished[0]; }
         }

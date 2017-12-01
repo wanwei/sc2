@@ -77,6 +77,16 @@ namespace com.wer.sc.data.forward
             return UsedKLinePeriods.Min();
         }
 
+        public override int GetHashCode()
+        {
+            int hash = useTickData.GetHashCode() * 10 + useTimeLineData.GetHashCode();
+            for (int i = 0; i < usedKLinePeriods.Count; i++)
+            {
+                hash = hash * 10 + usedKLinePeriods[i].GetHashCode();
+            }
+            return hash;
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is ForwardReferedPeriods))

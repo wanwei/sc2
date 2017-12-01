@@ -15,7 +15,6 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略执行器
     /// 策略执行前进周期：tick或者K线
-    /// 
     /// </summary>
     public class StrategyExecutor_History : IStrategyExecutor
     {
@@ -35,7 +34,7 @@ namespace com.wer.sc.strategy
 
         private IStrategyReport report;
 
-        private List<IForwardOnbar_Info> barInfos = new List<IForwardOnbar_Info>();
+        //private List<IForwardKLineBarInfo> barInfos = new List<IForwardKLineBarInfo>();
 
         public StrategyExecutor_History(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyOperator(null))
         {
@@ -54,7 +53,7 @@ namespace com.wer.sc.strategy
         {
             this.strategy = strategy;
             this.strategy.StrategyOperator = strategyHelper;
-            ForwardReferedPeriods rPeriods = strategy.GetStrategyPeriods();
+            ForwardReferedPeriods rPeriods = strategy.GetReferedPeriods();
             if (rPeriods != null)
                 this.referedPeriods = rPeriods;
         }
@@ -141,7 +140,7 @@ namespace com.wer.sc.strategy
             //策略执行完毕
             try
             {
-                this.strategy.OnStrategyEnd(this, null);
+                this.strategy.OnEnd(this, null);
                 this.BuildStrategyReport();
                 if (ExecuteFinished != null)
                     ExecuteFinished(this.strategy, new StrategyExecuteFinishedArguments(this.report));
@@ -204,7 +203,7 @@ namespace com.wer.sc.strategy
 
         private void ExecuteReferStrategyStart(IStrategy strategy)
         {
-            strategy.OnStrategyStart(this, null);
+            strategy.OnStart(this, null);
             IList<IStrategy> strategies = strategy.GetReferedStrategies();
             if (strategies != null)
             {
@@ -213,17 +212,15 @@ namespace com.wer.sc.strategy
                     IStrategy refstrategy = strategies[i];
                     ExecuteReferStrategyStart(refstrategy);
                 }
-            }            
+            }
         }
 
         private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            OnTick_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender);
+            OnTick_ReferedStrategies(this.strategy, argument);
         }
 
-        private StrategyOnTickArgument argument;
-
-        private void OnTick_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader)
+        private void OnTick_ReferedStrategies(IStrategy strategy, IForwardOnTickArgument argument)
         {
             IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
             if (referedStrategies != null)
@@ -231,20 +228,21 @@ namespace com.wer.sc.strategy
                 for (int i = 0; i < referedStrategies.Count; i++)
                 {
                     IStrategy referedStrategy = referedStrategies[i];
-                    OnTick_ReferedStrategies(referedStrategy, realTimeDataReader);
+                    OnTick_ReferedStrategies(referedStrategy, argument);
                 }
             }
-            if (argument == null)
-                argument = new StrategyOnTickArgument(realTimeDataReader);
-            strategy.OnTick(this, argument);
+
+            IForwardTickInfo forwardTickInfo = argument.TickInfo;
+            StrategyOnTickArgument strategyArgument = new StrategyOnTickArgument((ForwardOnTickArgument)argument);
+            strategy.OnTick(this, strategyArgument);
         }
 
         private void RealTimeReader_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            OnBar_ReferedStrategies(this.strategy, (IRealTimeDataReader_Code)sender, argument);
+            OnBar_ReferedStrategies(this.strategy, argument);
         }
 
-        private void OnBar_ReferedStrategies(IStrategy strategy, IRealTimeDataReader_Code realTimeDataReader, IForwardOnBarArgument argument)
+        private void OnBar_ReferedStrategies(IStrategy strategy, IForwardOnBarArgument argument)
         {
             IList<IStrategy> referedStrategies = strategy.GetReferedStrategies();
             if (referedStrategies != null)
@@ -252,12 +250,10 @@ namespace com.wer.sc.strategy
                 for (int i = 0; i < referedStrategies.Count; i++)
                 {
                     IStrategy referedStrategy = referedStrategies[i];
-                    OnBar_ReferedStrategies(referedStrategy, realTimeDataReader, argument);
+                    OnBar_ReferedStrategies(referedStrategy, argument);
                 }
-            }
-            barInfos.Clear();
-            barInfos.AddRange(argument.ForwardOnBar_Infos);
-            strategy.OnBar(this, new StrategyOnBarArgument(realTimeDataReader, barInfos));
+            }            
+            strategy.OnBar(this, new StrategyOnBarArgument((ForwardOnBarArgument)argument));
         }
 
         /// <summary>

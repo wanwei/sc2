@@ -24,6 +24,14 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         private bool overwrite;
 
+        public Step_KLineData(CodeInfo codeInfo, List<int> dates, bool isOverWrite, DataUpdateHelper dataUpdateHelper)
+        {
+            this.codeInfo = codeInfo;
+            this.dates = dates;
+            this.overwrite = true;
+            this.dataUpdateHelper = dataUpdateHelper;
+        }
+
         public Step_KLineData(CodeInfo codeInfo, List<int> dates, DataUpdateHelper dataUpdateHelper, UpdatedDataInfo updatedDataInfo, bool updateFillUp)
         {
             this.codeInfo = codeInfo;
@@ -54,8 +62,22 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return codeInfo.Code + "的K线数据：" + dates[0] + "-" + dates[dates.Count - 1];
         }
 
+        private string Proceed_Overwrite()
+        {
+            for (int i = 0; i < dates.Count; i++)
+            {
+                int date = dates[i];
+                KLineDataLastEndInfo lastEndInfo = GetLastEndInfo(date);
+                Step_KLineData_OneDay step_klineData = new Step_KLineData_OneDay(dataUpdateHelper, codeInfo, date, KLinePeriod.KLinePeriod_1Minute, lastEndInfo.lastEndPrice, lastEndInfo.lastEndHold, true);
+                step_klineData.Proceed();
+            }
+            return "更新完毕" + GetDesc();
+        }
+
         public string Proceed()
         {
+            if (overwrite)
+                return Proceed_Overwrite();
             ITradingDayReader openDateReader = this.dataUpdateHelper.GetAllTradingDayReader();
             KLineDataLastEndInfo lastEndInfo;
             IKLineData lastKLineData = null;

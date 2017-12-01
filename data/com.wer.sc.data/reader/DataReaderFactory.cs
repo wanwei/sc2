@@ -9,6 +9,15 @@ namespace com.wer.sc.data.reader
 {
     public class DataReaderFactory
     {
+        public static IDataReader CreateDataReader(DataCenter dataCenter)
+        {
+            string dataCenterUri = dataCenter.DataCenterInfo.Uri;
+            if (!DataStoreFactory.CheckDataStore(dataCenterUri))
+                return null;
+            return new DataReader(dataCenterUri);
+        }
+
+
         /// <summary>
         /// 创建一个数据读取器
         /// </summary>

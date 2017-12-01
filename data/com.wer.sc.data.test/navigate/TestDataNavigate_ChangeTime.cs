@@ -37,6 +37,7 @@ namespace com.wer.sc.data.navigate
             this.klineData_1Day = new KLineDataExtend_RealTime(DataCenter.Default.DataReader.KLineDataReader.GetData_Extend(code, start, endDate, 0, 0, KLinePeriod.KLinePeriod_1Day));
 
             IDataForward_Code dataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, start, endDate, true, true, periods);
+            //dataForward.Forward();
             dataForward.OnTick += DataForward_OnTick;
 
             while (dataForward.Forward())
@@ -52,13 +53,14 @@ namespace com.wer.sc.data.navigate
             double time = argument.Time;
             //if (time < 20170601.205900)
             //    return;
-            int tradingDay = argument.TickData.TradingDay;
+            int tradingDay = argument.TickInfo.TickData.TradingDay;
             if (prevTime == time)
                 return;
             this.prevTime = time;
             ITickData_Extend tickData = GetTickData(tradingDay);
+            //Console.WriteLine(tickData);
             DataNavigate_ChangeTime.ChangeTime_TickData(tickData, time);
-            Assert.AreEqual(argument.TickBar.ToString(), tickData.ToString());
+            Assert.AreEqual(argument.TickInfo.TickBar.ToString(), tickData.ToString());
 
             IRealTimeDataReader_Code realTimeData = ((IRealTimeDataReader_Code)sender);
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_1Minute, tradingDay, time, tickData);

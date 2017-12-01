@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<root>
+  <defaultfee code="" handCount="10" minPriceChange="1" buyFee="3" sellFee="3" isPercent="False" depositPercent="10" />
+  <varietyfee>
+    <fee code="CU" handCount="5" minPriceChange="1" buyFee="0.5" sellFee="0.5" isPercent="True" depositPercent="15" />
+    <fee code="AL" handCount="5" minPriceChange="1" buyFee="3" sellFee="3" isPercent="False" depositPercent="15" />
+    <fee code="ZN" handCount="5" minPriceChange="1" buyFee="3" sellFee="3" isPercent="False" depositPercent="15" />
+    <fee code="RU" handCount="10" minPriceChange="1" buyFee="0.5" sellFee="0.45" isPercent="True" depositPercent="15" />
+    <fee code="RB" handCount="10" minPriceChange="1" buyFee="0.45" sellFee="0.45" isPercent="True" depositPercent="15" />
+  </varietyfee>
+  <codefee>    
+  </codefee>
+</root>

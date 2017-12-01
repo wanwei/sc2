@@ -49,7 +49,9 @@ namespace com.wer.sc.data.store.file
         public KLineData Load(string code, int startDate, int endDate, KLinePeriod klinePeriod)
         {
             string path = dataPathUtils.GetKLineDataPath(code, klinePeriod);
-            return (KLineData)(new KLineDataStore_File_Single(path)).Load(startDate, endDate);
+            KLineData klineData = (KLineData)(new KLineDataStore_File_Single(path)).Load(startDate, endDate);
+            klineData.Period = klinePeriod;
+            return klineData;
         }
 
         /// <summary>
@@ -61,7 +63,9 @@ namespace com.wer.sc.data.store.file
         public KLineData LoadAll(string code, KLinePeriod klinePeriod)
         {
             string path = dataPathUtils.GetKLineDataPath(code, klinePeriod);
-            return (KLineData)(new KLineDataStore_File_Single(path)).LoadAll();
+            KLineData klineData = (KLineData)(new KLineDataStore_File_Single(path)).LoadAll();
+            klineData.Period = klinePeriod;
+            return klineData;
         }
 
         /// <summary>

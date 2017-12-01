@@ -45,6 +45,10 @@ namespace com.wer.sc.data
         /// <returns></returns>
         double GetEndTime(int barPos);
 
+        int GetTradingDayStartIndex(int tradingDay);
+
+        int GetTradingDayEndIndex(int tradingDay);
+
         /// <summary>
         /// 是否是一天的开始
         /// </summary>

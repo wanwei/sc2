@@ -29,28 +29,28 @@ namespace com.wer.sc.strategy.mock
             this.referedStrategies.Add(referedStrategy_MA20);
         }
 
-        public override void OnStrategyStart(object sender, StrategyOnStartArgument argument)
+        public override void OnStart(object sender, IStrategyOnStartArgument argument)
         {
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }
 
-        public override void OnStrategyEnd(object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnTick(object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnBar(object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(object sender, IStrategyOnBarArgument currentData)
         {
-            Console.WriteLine("MA05:" + referedStrategy_MA5.MA + "-" + "MA20:" + referedStrategy_MA20.MA + "-" + referedStrategy_MA5.End);
+            Console.WriteLine("MA05:" + referedStrategy_MA5.MA + ";" + "MA20:" + referedStrategy_MA20.MA);
         }
 
         public override IList<IStrategy> GetReferedStrategies()

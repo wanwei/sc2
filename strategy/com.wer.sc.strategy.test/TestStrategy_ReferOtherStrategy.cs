@@ -25,7 +25,7 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_ReferOtherStrategy));
             executor.SetStrategy(strategy);

@@ -14,18 +14,18 @@ namespace com.wer.sc.strategy.draw
         /// </summary>
         /// <param name="klinePeriod"></param>
         /// <returns></returns>
-        IDrawer GetDrawer_KLine(KLinePeriod klinePeriod);
+        IStrategyDrawer GetDrawer_KLine(KLinePeriod klinePeriod);
 
         /// <summary>
         /// 得到分时线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IDrawer GetDrawer_TimeLine();
+        IStrategyDrawer GetDrawer_TimeLine();
 
         /// <summary>
         /// 得到tick线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IDrawer GetDrawer_Tick();
+        IStrategyDrawer GetDrawer_Tick();
     }
 }

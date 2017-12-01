@@ -21,6 +21,8 @@ namespace com.wer.sc.strategy
         /// 策略回测执行器
         /// </summary>
         /// <returns></returns>
-        IStrategyExecutorFactory_History GetStrategyExecutorFactory();
+        IStrategyExecutorFactory_History GetStrategyExecutorFactory_History();
+
+        //IStrategyExecutorFactory_History GetStrategyExecutorFactory();
     }
 }

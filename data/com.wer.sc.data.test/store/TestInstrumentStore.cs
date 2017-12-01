@@ -19,7 +19,7 @@ namespace com.wer.sc.data.store
         }
 
         private void TestInstrumentsSaveLoad(string uri)
-        {
+        {            
             IDataStore dataStore = DataStoreFactory.CreateDataStore(uri);
 
             ICodeStore store = dataStore.CreateInstrumentStore();

@@ -60,6 +60,7 @@
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />
     <Compile Include="forward\CommonData.cs" />
+    <Compile Include="forward\TestDataForForward_CodeIndeier.cs" />
     <Compile Include="forward\TestHistoryDataForward.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code_AttachData.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code_KLinePeriod.cs" />
@@ -68,6 +69,10 @@
     <Compile Include="forward\TestHistoryDataForward_Code.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code_TickPeriod_Play.cs" />
     <Compile Include="forward\TestHistoryDataForward_Code_Tick_TimeLine.cs" />
+    <Compile Include="forward\utils\TestForwardDataIndeier.cs" />
+    <Compile Include="forward\utils\TestKLineToKLineIndeier.cs" />
+    <Compile Include="forward\utils\TestKLineToTickIndeier.cs" />
+    <Compile Include="forward\utils\TestTimeLineToKLineIndeier.cs" />
     <Compile Include="market\impl\TestAccountPosition.cs" />
     <Compile Include="market\impl\TestAccountTodayOrder.cs" />
     <Compile Include="market\impl\TestAccountTrade.cs" />
@@ -102,11 +107,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="TestCase\com\wer\sc\data\forward\utils\ForwardDataIndeier" />
+    <None Include="TestCase\com\wer\sc\data\forward\utils\forward_kline" />
+    <None Include="TestCase\com\wer\sc\data\forward\utils\klinetotick2" />
     <None Include="TestCase\com\wer\sc\data\store\file\Store_AccountFee" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick_timeinfo" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick_onbar" />
     <None Include="TestCase\com\wer\sc\data\forward\attachcode_kline" />
+    <None Include="TestCase\com\wer\sc\data\forward\forwardcodeindeier" />
+    <None Include="TestCase\com\wer\sc\data\forward\utils\klinetotick" />
+    <None Include="TestCase\com\wer\sc\data\forward\utils\ForwardDataIndeier2" />
     <Compile Include="TestDataCenter.cs" />
     <Compile Include="TestXmlSaveLoad.cs" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />

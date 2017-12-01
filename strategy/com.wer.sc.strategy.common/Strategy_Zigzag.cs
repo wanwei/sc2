@@ -53,9 +53,9 @@ namespace com.wer.sc.strategy.cnfutures
             this.Parameters.AddParameter(PARAMKEY_HIGHLOWLENGTH, "高低点位置的长度", "", utils.param.ParameterType.INTEGER, 6);
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            CalcTurnPoints(currentData);
+            CalcTurnPoints(currentData.CurrentData);
         }
 
         /**
@@ -201,12 +201,12 @@ namespace com.wer.sc.strategy.cnfutures
             return lastLowIndex < lastHighIndex ? 1 : -1;
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             //this.arr_Index_Bottom.Clear();
             //this.arr_Index_Top.Clear();
@@ -219,9 +219,9 @@ namespace com.wer.sc.strategy.cnfutures
             this.highLowLength = (int)this.Parameters.GetParameter(PARAMKEY_HIGHLOWLENGTH).Value;
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
             //drawHelper.DrawPoints(arr_Price_Top, System.Drawing.Color.Blue);
             //drawHelper.DrawPoints(arr_Price_Bottom, System.Drawing.Color.White);
 
@@ -229,7 +229,7 @@ namespace com.wer.sc.strategy.cnfutures
             drawHelper.DrawPoints(arr_Price_SureBottom, System.Drawing.Color.Green);
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }

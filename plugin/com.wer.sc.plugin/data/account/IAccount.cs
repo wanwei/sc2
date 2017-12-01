@@ -21,7 +21,7 @@ namespace com.wer.sc.data.account
         /// <summary>
         /// 得到交易费用
         /// </summary>
-        TradeFee Fee { get; }
+        ITradeFee Fee { get; }
 
         /// <summary>
         /// 得到账户的初始资金

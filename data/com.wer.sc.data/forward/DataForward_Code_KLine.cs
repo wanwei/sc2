@@ -25,7 +25,7 @@ namespace com.wer.sc.data.forward
 
         private IKLineData_RealTime mainKLineData;
 
-        private List<IForwardOnbar_Info> barFinishedInfos = new List<IForwardOnbar_Info>();
+        private List<IForwardKLineBarInfo> barFinishedInfos = new List<IForwardKLineBarInfo>();
 
         private IForwardOnBarArgument onBarArgument;
 

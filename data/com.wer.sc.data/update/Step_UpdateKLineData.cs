@@ -81,11 +81,14 @@ namespace com.wer.sc.data.update
         {
             int startDate;
 
-            int lastTradingDay = klineDataStore.GetLastTradingDay(codeInfo.Code, period);
+
             if (updateFillUp)
                 startDate = codeInfo.Start;
             else
+            {
+                int lastTradingDay = klineDataStore.GetLastTradingDay(codeInfo.Code, period);
                 startDate = this.tradingDayReader.GetNextTradingDay(lastTradingDay);
+            }
             int endDate = this.tradingDayReader.LastTradingDay;
 
             IKLineData klineData = historyData.GetKLineData(codeInfo.Code, startDate, endDate, period);

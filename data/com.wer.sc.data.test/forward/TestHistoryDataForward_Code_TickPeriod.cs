@@ -26,9 +26,6 @@ namespace com.wer.sc.data.forward
             string code = "RB1710";
             int start = 20170601;
             int endDate = 20170603;
-            //string code = "A0401";
-            //int start = 20040106;
-            //int endDate = 20040106;
 
             IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
             klineDataForward.OnBar += KlineDataForward_OnBar;
@@ -54,11 +51,12 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            string txt = "tick:" + argument.TickBar;
+            string txt = "tick:" + argument.TickInfo.TickBar;
             printStrs_Forward_Tick.Add(txt);
+            Console.WriteLine(txt);
 
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
-            double price = argument.TickData.Price;
+            double price = argument.TickInfo.TickData.Price;
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute).End);
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_5Minute).End);
             Assert.AreEqual(price, klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_15Minute).End);
@@ -68,9 +66,9 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            IForwardOnbar_Info mainOnBarInfo = argument.MainForwardOnBar_Info;
+            IForwardKLineBarInfo mainOnBarInfo = argument.MainBar;
             printStrs_Forward_Tick.Add("kline:" + mainOnBarInfo.KLineBar);
-            //Console.WriteLine("kline:" + klineData.GetBar(index));
+            Console.WriteLine("kline:" + mainOnBarInfo.KLineBar);
         }
 
         private static IDataForward_Code GetKLineDataForward(string code, int start, int endDate)
@@ -133,15 +131,17 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnBar2(object sender, IForwardOnBarArgument argument)
         {
-            IList<IForwardOnbar_Info> onBarInfos = argument.ForwardOnBar_Infos;
+            Console.WriteLine("Tick:" + ((IDataForward_Code)sender).GetTickData());
+            printStrs_Forward_TimeInfo_OnBar.Add("Tick:" + ((IDataForward_Code)sender).GetTickData());
+
+            IList<IForwardKLineBarInfo> onBarInfos = argument.AllFinishedBars;
             for (int i = 0; i < onBarInfos.Count; i++)
             {
-                IForwardOnbar_Info onBar_Info = onBarInfos[i];
-                //Console.WriteLine(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
+                IForwardKLineBarInfo onBar_Info = onBarInfos[i];
+                //Assert.AreEqual(onBar_Info.KLineBar.End, onBar_Info.KlineData.End);
+                Console.WriteLine(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
                 printStrs_Forward_TimeInfo_OnBar.Add(onBar_Info.KLinePeriod + ":" + onBar_Info.KLineBar.ToString());
             }
-            //Console.WriteLine("Tick:"+((IHistoryDataForward_Code)sender).GetTickData());
-            printStrs_Forward_TimeInfo_OnBar.Add("Tick:" + ((IDataForward_Code)sender).GetTickData());
             //PrintOnBar((IHistoryDataForward_Code)sender);
             //printStrs.Add("kline:" + klineData.GetBar(index));
             //Console.WriteLine("kline:" + klineData.GetBar(index));
@@ -196,14 +196,14 @@ namespace com.wer.sc.data.forward
         private void KlineDataForward_OnTick1(object sender, IForwardOnTickArgument argument)
         {
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
-            string txt = "tick:" + argument.TickBar;
+            string txt = "tick:" + argument.TickInfo.TickBar;
             printStrs_Forward_TimeInfo_OnTick.Add(txt);
-            //Console.WriteLine(txt);
+            Console.WriteLine(txt);
             txt = "tradingTimeStart:" + klineDataForward.IsTradingTimeStart
                 + "|tradingTimeEnd:" + klineDataForward.IsTradingTimeEnd
                 + "|dayStart:" + klineDataForward.IsDayStart
                 + "|dayEnd:" + klineDataForward.IsDayEnd;
-            //Console.WriteLine(txt);
+            Console.WriteLine(txt);
             printStrs_Forward_TimeInfo_OnTick.Add(txt);
         }
 
@@ -309,6 +309,7 @@ namespace com.wer.sc.data.forward
             int endDate = 20170605;
 
             IDataForward_Code klineDataForward = GetKLineDataForward(code, start, endDate);
+            klineDataForward.Forward();
 
             AddContent_Tick(start, klineDataForward.GetTickData().ToString());
             klineDataForward.OnBar += KlineDataForward_OnBar_CompareWithReader;
@@ -363,14 +364,14 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnTick_CompareWithReader(object sender, IForwardOnTickArgument argument)
         {
-            AddContent_Tick(argument.TickData.TradingDay, argument.TickBar.ToString());
+            AddContent_Tick(argument.TickInfo.TickData.TradingDay, argument.TickInfo.TickBar.ToString());
         }
 
         private void KlineDataForward_OnBar_CompareWithReader(object sender, IForwardOnBarArgument argument)
         {
-            for (int i = 0; i < argument.ForwardOnBar_Infos.Count; i++)
+            for (int i = 0; i < argument.AllFinishedBars.Count; i++)
             {
-                IForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
+                IForwardKLineBarInfo info = argument.AllFinishedBars[i];
                 Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
                 AddContent_KLine(info.KLinePeriod, info.KLineBar.ToString());
                 //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);

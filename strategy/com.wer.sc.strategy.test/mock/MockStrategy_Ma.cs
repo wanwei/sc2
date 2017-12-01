@@ -49,25 +49,25 @@ namespace com.wer.sc.strategy.mock
             this.Parameters.AddParameter(PARAMKEY_MA, "MA周期", "MA周期", utils.param.ParameterType.INTEGER, 5);
         }
 
-        public override void OnStrategyStart(object sender, StrategyOnStartArgument argument)
+        public override void OnStart(object sender, IStrategyOnStartArgument argument)
         {
             this.maPeriod = (int)this.Parameters.GetParameter(PARAMKEY_MA).Value;
         }
 
-        public override void OnStrategyEnd(object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnBar(object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(object sender, IStrategyOnBarArgument currentData)
         {
-            IForwardOnbar_Info barInfo = currentData.MainBarInfo;
-            GenMa(barInfo.KlineData, barInfo.FinishedBarPos, maList, maPeriod);
+            IStrategyOnBarInfo barInfo = currentData.MainBar;
+            GenMa(barInfo.KLineData, barInfo.KLineData.BarPos, maList, maPeriod);
         }
 
         private void GenMa(IKLineData klineData, int barPos, List<float> maList, int length)
         {
-            int startPos = barPos - length;
+            int startPos = barPos - length + 1;
             startPos = startPos < 0 ? 0 : startPos;
 
             float total = 0;
@@ -79,7 +79,7 @@ namespace com.wer.sc.strategy.mock
             endList.Add(klineData.Arr_End[barPos]);
         }
 
-        public override void OnTick(object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(object sender, IStrategyOnTickArgument currentData)
         {
 
         }

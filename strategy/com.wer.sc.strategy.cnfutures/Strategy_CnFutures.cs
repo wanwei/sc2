@@ -30,19 +30,19 @@ namespace com.wer.sc.strategy.cnfutures
             refered.UseTickData = false;
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
 
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData = currentData.CurrentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
             int currentBarPos = klineData.BarPos;
             int lastBarPos = currentBarPos - 5;
             if (lastBarPos < 0)
@@ -69,12 +69,12 @@ namespace com.wer.sc.strategy.cnfutures
             //currentData.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return refered;
         }

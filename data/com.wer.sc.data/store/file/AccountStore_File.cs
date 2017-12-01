@@ -5,31 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using com.wer.sc.utils;
-using com.wer.sc.data.market;
-using com.wer.sc.data.market.impl;
+using com.wer.sc.data.account;
+using System.Xml;
 
 namespace com.wer.sc.data.store.file
 {
     public class AccountStore_File : IAccountStore
     {
+        private IDataCenter dataCenter;
+
         private DataPathUtils pathUtils;
 
-        private AccountFeeInfoStore_File feeInfoStore;
-
-        public AccountStore_File(DataPathUtils path)
+        public AccountStore_File(IDataCenter dataCenter, DataPathUtils path)
         {
+            this.dataCenter = dataCenter;
             this.pathUtils = path;
-            this.feeInfoStore = new AccountFeeInfoStore_File(path.GetAccountPath_Fee());
         }
 
-        public Account Load(string accountID)
+        public IAccount Load(string accountID)
         {
             string path = pathUtils.GetAccountPath(accountID);
             if (!File.Exists(path))
                 return null;
-            string content = File.ReadAllText(path);
-            //return Account.LoadAccount(content);
-            return null;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            Account account = new Account(dataCenter);
+            account.Load(doc.DocumentElement);
+            return account;
         }
 
         public void Save(string accountID, Account account)
@@ -60,21 +62,6 @@ namespace com.wer.sc.data.store.file
                 accountIds.Add(accountId);
             }
             return accountIds;
-        }
-
-        /// <summary>
-        /// 装载所有的交易费用数据
-        /// </summary>
-        /// <returns></returns>
-        public List<AccountFeeInfo> LoadAllAccountFee()
-        {
-            return feeInfoStore.LoadAllAccountFee();
-        }
-
-
-        public void SaveAccountFee(List<AccountFeeInfo> accountFeeInfo)
-        {
-            feeInfoStore.SaveAccountFee(accountFeeInfo);
         }
     }
 }

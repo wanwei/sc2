@@ -19,8 +19,6 @@ namespace com.wer.sc.strategy.common
 
         private bool isRecordInMainPeriod;
 
-
-
         /// <summary>
         /// 得到指定周期的MA参数
         /// </summary>

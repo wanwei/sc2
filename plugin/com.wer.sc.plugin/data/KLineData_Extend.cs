@@ -12,7 +12,7 @@ namespace com.wer.sc.data
 
         private KLineDataTimeInfo timeInfo;
 
-        public KLineData_Extend(IKLineData klineData, KLineDataTimeInfo timeInfo) 
+        public KLineData_Extend(IKLineData klineData, KLineDataTimeInfo timeInfo)
         {
             this.timeInfo = timeInfo;
             this.klineData = klineData;
@@ -410,6 +410,16 @@ namespace com.wer.sc.data
         public double GetEndTime(int barPos)
         {
             return timeInfo.GetKLineTime(barPos)[1];
+        }
+
+        public int GetTradingDayStartIndex(int tradingDay)
+        {
+            return timeInfo.GetDayStartPos(tradingDay);
+        }
+
+        public int GetTradingDayEndIndex(int tradingDay)
+        {
+            return timeInfo.GetDayEndPos(tradingDay);
         }
     }
 }

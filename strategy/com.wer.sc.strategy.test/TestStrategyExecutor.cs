@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             executor.SetStrategy(strategy);
@@ -99,41 +99,6 @@ namespace com.wer.sc.strategy
         {
             Console.WriteLine("ExecuteFinished:");
             isFinished = true;
-        }
-    }
-
-    class MockStrategy : StrategyAbstract
-    {
-        private StrategyReferedPeriods referedPeriods;
-
-        public MockStrategy(StrategyReferedPeriods referedPeriods)
-        {
-            this.referedPeriods = referedPeriods;
-        }
-
-        public override StrategyReferedPeriods GetStrategyPeriods()
-        {
-            return referedPeriods;
-        }
-
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
-        {
-            Console.WriteLine("bar:" + currentData.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
-        }
-
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
-        {
-            Console.WriteLine("tick:" + currentData.GetTickData());
-        }
-
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
-        {
-            Console.WriteLine("Strategy End");
-        }
-
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
-        {
-            Console.WriteLine("Strategy Start");
         }
     }
 }

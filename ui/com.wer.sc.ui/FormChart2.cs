@@ -29,8 +29,8 @@ namespace com.wer.sc.ui
         {
             InitializeComponent();
             this.compChart1 = compMain1.CompChart1;
-            //this.compChart1.Code = "RB1801";
-            this.compChart1.Code = "MA1801";
+            this.compChart1.Code = "RB1805";
+            //this.compChart1.Code = "MA1801";
             //this.compChart1.Time = 20170929.145900;
             //this.compChart1.Time = 20171029.150000;
             this.compChart1.Time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
@@ -273,7 +273,7 @@ namespace com.wer.sc.ui
             referedPeriods.UsedKLinePeriods.Add(period);
             //referedPeriods.UsedKLinePeriods.Add(this.n)
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
-            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
             compChart1.StrategyHelper.DrawOperator.GetDrawer_KLine(period).ClearShapes();
             //compChart1.CurrentPriceRectDrawer.cl
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();

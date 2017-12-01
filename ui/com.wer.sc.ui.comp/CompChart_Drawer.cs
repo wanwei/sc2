@@ -13,7 +13,7 @@ using com.wer.sc.comp.graphic.shape;
 
 namespace com.wer.sc.ui.comp
 {
-    public class CompChart_Drawer : IDrawer
+    public class CompChart_Drawer : IStrategyDrawer
     {
         private CompChart compChart;
 

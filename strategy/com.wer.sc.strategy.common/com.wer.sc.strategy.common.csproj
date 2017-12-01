@@ -49,12 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ma\Strategy_MA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sample\Strategy_Query.cs" />
     <Compile Include="sample\Strategy_Refer.cs" />
     <Compile Include="sample\Strategy_Trader.cs" />
     <Compile Include="Strategy_Default.cs" />
-    <Compile Include="ma\Strategy_Ma.cs" />
+    <Compile Include="ma\Strategy_MultiMa.cs" />
     <Compile Include="Strategy_Zigzag.cs" />
     <Compile Include="TurnPointAnalysis.cs" />
   </ItemGroup>

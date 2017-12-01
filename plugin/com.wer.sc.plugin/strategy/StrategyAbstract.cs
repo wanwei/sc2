@@ -26,13 +26,19 @@ namespace com.wer.sc.strategy
             this.Parameters.AddParameter(PARAMETER_PERIOD, "计算周期", "计算周期", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);
         }
 
-        public abstract void OnStrategyStart(Object sender, StrategyOnStartArgument argument);
+        public virtual void OnStart(Object sender, IStrategyOnStartArgument argument)
+        {
 
-        public abstract void OnStrategyEnd(Object sender, StrategyOnEndArgument argument);
+        }
 
-        public abstract void OnBar(Object sender, StrategyOnBarArgument currentData);
+        public virtual void OnEnd(Object sender, IStrategyOnEndArgument argument)
+        {
 
-        public abstract void OnTick(Object sender, StrategyOnTickArgument currentData);
+        }
+
+        public abstract void OnBar(Object sender, IStrategyOnBarArgument currentData);
+
+        public abstract void OnTick(Object sender, IStrategyOnTickArgument currentData);
 
         public IStrategyOperator StrategyOperator
         {
@@ -60,8 +66,31 @@ namespace com.wer.sc.strategy
                 return parameters;
             }
         }
+        protected Dictionary<string, object> dic_Key_Data = new Dictionary<string, object>();
 
-        public virtual StrategyReferedPeriods GetStrategyPeriods()
+        protected void AddData(String key, object obj)
+        {
+            this.dic_Key_Data.Add(key, obj);
+        }
+
+        public Object GetData(string key)
+        {
+            if (dic_Key_Data.ContainsKey(key))
+                return dic_Key_Data[key];
+            return null;
+        }
+
+        public object GetParameter(string parameterName)
+        {
+            return this.parameters.GetParameterValue(parameterName);
+        }
+
+        public virtual StrategyReferedPeriods GetReferedPeriods()
+        {
+            return null;
+        }
+
+        public List<string> GetStrategyReferedCodes(string code)
         {
             return null;
         }

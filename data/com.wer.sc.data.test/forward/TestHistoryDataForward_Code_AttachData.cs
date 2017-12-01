@@ -38,7 +38,7 @@ namespace com.wer.sc.data.forward
 
         private void HistoryDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            Console.WriteLine(code + ":" + argument.TickBar);
+            Console.WriteLine(code + ":" + argument.TickInfo.TickBar);
             Console.WriteLine(code2 + ":" + argument.GetOtherData(code2).GetTickData());
             Console.WriteLine(code2 + ":" + argument.GetOtherData(code2).GetKLineData(KLinePeriod.KLinePeriod_1Minute));
             Console.WriteLine(code2 + ":" + argument.GetOtherData(code2).GetTimeLineData());
@@ -75,7 +75,7 @@ namespace com.wer.sc.data.forward
 
         private void HistoryDataForward_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            string code1txt = code + ":" + argument.ForwardOnBar_Infos[0];
+            string code1txt = code + ":" + argument.AllFinishedBars[0];
             string code2txt = code2 + ":" + argument.GetOtherData(code2).GetKLineData(KLinePeriod.KLinePeriod_1Minute);
 
             printStrs_Forward_KLine.Add(code1txt);

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.account;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.utils;
@@ -61,13 +62,32 @@ namespace com.wer.sc.data
             dataForward.Save(root);
 
             IDataForward_Code dataForward2 = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(root);
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++)
+            {
                 dataForward.Forward();
                 dataForward2.Forward();
             }
 
             Console.WriteLine(XmlUtils.ToString(dataForward2));
             Assert.AreEqual(dataForward.Time, dataForward2.Time);
+        }
+
+        [TestMethod]
+        public void TestSaveLoad_TradeFee()
+        {
+            TradeFee fee = new TradeFee();
+
+            fee.AddVarietyFee(new TradeFee_Code("RB", 10, 1, 2, 2, false, 15));
+            fee.AddCodeFee(new TradeFee_Code("RB", 10, 1, 2, 2, false, 15));
+
+            XmlElement elem = GetXmlRoot();
+            fee.Save(elem);
+            //Console.WriteLine(fee);
+
+            TradeFee fee2 = new TradeFee();
+            fee2.Load(elem);
+
+            Assert.AreEqual(fee.ToString(), fee2.ToString());
         }
     }
 }

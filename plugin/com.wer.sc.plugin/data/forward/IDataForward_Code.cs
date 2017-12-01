@@ -71,12 +71,6 @@ namespace com.wer.sc.data.forward
         #region 历史数据模拟前进
 
         /// <summary>
-        /// 得到下一个
-        /// </summary>
-        /// <returns></returns>
-        double GetNextTime();
-
-        /// <summary>
         /// 前进
         /// </summary>
         /// <returns></returns>

@@ -9,7 +9,6 @@ namespace com.wer.sc.data.realtime
 {
     /// <summary>
     /// 实时k线数据
-    /// 
     /// </summary>
     public class KLineData_RealTime : KLineData_Abstract, IKLineData
     {
@@ -35,6 +34,7 @@ namespace com.wer.sc.data.realtime
         {
             this.klineData = klineData;
             this.BarPos = klineData.BarPos;
+            this.Period = klineData.Period;
             this.list_Time = new ReadOnlyList_TmpValue<double>(klineData.Arr_Time);
             this.list_Start = new ReadOnlyList_TmpValue<float>(klineData.Arr_Start);
             this.list_High = new ReadOnlyList_TmpValue<float>(klineData.Arr_High);

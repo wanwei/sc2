@@ -84,7 +84,7 @@ namespace com.wer.sc.strategy
 
         private void AssertMockStrategy_Ma_Object1(IStrategy strategyObject)
         {
-            ForwardReferedPeriods periods = strategyObject.GetStrategyPeriods();
+            ForwardReferedPeriods periods = strategyObject.GetReferedPeriods();
             Assert.AreEqual(false, periods.UseTickData);
             Assert.AreEqual(2, periods.UsedKLinePeriods.Count);
             Assert.AreEqual(KLinePeriod.KLinePeriod_1Minute, periods.UsedKLinePeriods[0]);
@@ -93,7 +93,7 @@ namespace com.wer.sc.strategy
 
         private void AssertMockStrategy_Ma_Object2(IStrategy strategyObject)
         {
-            ForwardReferedPeriods periods = strategyObject.GetStrategyPeriods();
+            ForwardReferedPeriods periods = strategyObject.GetReferedPeriods();
             Assert.AreEqual(true, periods.UseTickData);
             Assert.AreEqual(3, periods.UsedKLinePeriods.Count);
             Assert.AreEqual(KLinePeriod.KLinePeriod_1Minute, periods.UsedKLinePeriods[0]);

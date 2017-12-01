@@ -66,8 +66,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             steps.Add(new Step_TradingDay(dataUpdateHelper));
 
             GetTradingTime(steps, allCodes, false);
+            //GetTradingTime(steps, allCodes, false);
             GetTickSteps(steps, updatedDataInfo, allCodes);
             GetKLineDataSteps(steps, updatedDataInfo, allCodes);
+            //GetKLineDataSteps_Day(steps, 20171124, allCodes);
 
             //更新主力合约信息
             Step_MainFutures step_MainFutures = new Step_MainFutures(this.dataUpdateHelper);
@@ -80,9 +82,24 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return steps;
         }
 
+        private void GetKLineDataSteps_Day(List<IStep> steps, int tradingDay, List<CodeInfo> allCodes)
+        {
+            for (int i = 0; i < allCodes.Count; i++)
+            {
+                CodeInfo codeInfo = allCodes[i];
+                if (codeInfo.End == 0 || codeInfo.End >= tradingDay)
+                {
+                    List<int> tradingDays = new List<int>();
+                    tradingDays.Add(tradingDay);
+                    Step_KLineData step = new Step_KLineData(codeInfo, tradingDays, true, dataUpdateHelper);
+                    steps.Add(step);
+                }
+            }
+        }
+
         private List<IStep> GetAllStep_Varieties()
         {
-            List<IStep> steps = new List<IStep>();            
+            List<IStep> steps = new List<IStep>();
             Step_CodeInfo step_CodeInfo = new Step_CodeInfo(dataUpdateHelper);
             List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
             allCodes = FilterCodeInfo(allCodes, new string[] { "RB", "HC", "BU" });

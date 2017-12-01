@@ -29,7 +29,8 @@ namespace com.wer.sc.data.account
             string code = "RB1710";
             int startDate = 20170601;
             int endDate = 20170605;
-            IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);            
+            IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
+            historyDataForward.Forward();
             IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
             account.AccountSetting.TradeType = AccountTradeType.MARKETPRICE;
             account.OnReturnOrder += Account_OnReturnOrder;

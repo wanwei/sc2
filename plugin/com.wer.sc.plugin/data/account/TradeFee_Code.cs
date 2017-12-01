@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace com.wer.sc.data.account
 {
-    public class TradeFee_Code : IXmlExchange
+    public class TradeFee_Code : IXmlExchange, ITradeFee_Code
     {
         //代码
         private String code;

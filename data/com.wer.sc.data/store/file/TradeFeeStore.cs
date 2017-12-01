@@ -9,15 +9,16 @@ namespace com.wer.sc.data.store.file
 {
     public class TradeFeeStore : ITradeFeeStore
     {
+        public List<string> LoadAllNames()
+        {
+            return null;
+        }
+
         public TradeFee Load(string name)
         {
             return null;
         }
 
-        public List<string> LoadAllNames()
-        {
-            return null;
-        }
 
         public void Save(string name, TradeFee tradeFee)
         {

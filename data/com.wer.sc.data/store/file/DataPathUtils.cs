@@ -13,29 +13,37 @@ namespace com.wer.sc.data.store.file
     ///     --opendate
     ///     --codes
     ///     --maincontracts
-    ///     --m01
-    ///         --tick
-    ///             --M01_20040102.tick
-    ///             --M01_20040105.tick
+    ///     --MARKET
+    ///         --m01
+    ///             --tick
+    ///                 --M01_20040102.tick
+    ///                 --M01_20040105.tick
+    ///                 --......
+    ///             --M01_1minute.kline
+    ///             --M01_1hour.kline
     ///             --......
-    ///         --M01_1minute.kline
-    ///         --M01_1hour.kline
+    ///             --M01_dayopentime
+    ///         --m03
     ///         --......
-    ///         --M01_dayopentime
-    ///     --m03
-    ///     --......
+    ///     --UPDATEINFO
+    ///     --TRADE
+    ///         --ACCOUNT
+    ///         --FEE
     /// </summary>
     public class DataPathUtils
     {
+        private const string MARKETPATH = "MARKET";
+
         private String dataPath;
 
         public DataPathUtils(String dataPath)
         {
             this.dataPath = RealPath(dataPath);
         }
+
         public String GetUpdateInfoPath()
         {
-            return dataPath + "\\updateinfo";
+            return dataPath + "\\UPDATEINFO";
         }
 
         public String GetInstrumentPath()
@@ -55,7 +63,7 @@ namespace com.wer.sc.data.store.file
 
         public string GetTickPath(string code)
         {
-            return dataPath + "\\" + code + "\\tick\\";
+            return dataPath + "\\" + MARKETPATH + "\\" + code + "\\tick\\";
         }
 
         public string GetTickPath(string code, int date)
@@ -66,19 +74,19 @@ namespace com.wer.sc.data.store.file
 
         public string GetTradingSessionPath(string code)
         {
-            String realPath = dataPath + "\\" + code + "\\" + code + "_dayopentime";
+            String realPath = dataPath + "\\" + MARKETPATH + "\\" + code + "\\" + code + "_dayopentime";
             return realPath;
         }
 
         public string GetTradingTimePath(string code)
         {
-            String realPath = dataPath + "\\" + code + "\\" + code + "_tradingtime";
+            String realPath = dataPath + "\\" + MARKETPATH + "\\" + code + "\\" + code + "_tradingtime";
             return realPath;
         }
 
         public String GetKLineDataPath(String code, KLinePeriod period)
         {
-            String realPath = dataPath + "\\" + code + "\\" + code + "_" + period.Period + GetPeriodTypeName(period.PeriodType) + ".kline";
+            String realPath = dataPath + "\\" + MARKETPATH + "\\" + code + "\\" + code + "_" + period.Period + GetPeriodTypeName(period.PeriodType) + ".kline";
             return realPath;
         }
 
@@ -89,7 +97,17 @@ namespace com.wer.sc.data.store.file
 
         public String GetAccountPath(string accountID)
         {
-            return dataPath + "\\TRADE\\ACCOUNT\\" + accountID + ".account";
+            return GetAccountPath() + accountID + ".account";
+        }
+
+        public string GetFeePath()
+        {
+            return dataPath + "\\TRADE\\FEE\\";
+        }
+
+        public string GetFeePath(string feeName)
+        {
+            return GetFeePath() + feeName + ".fee";
         }
 
         public String GetAccountPath_Fee()

@@ -45,11 +45,15 @@
   <ItemGroup>
     <Compile Include="account\Account.cs" />
     <Compile Include="account\AccountFactory.cs" />
+    <Compile Include="account\TradeFee.cs" />
+    <Compile Include="account\TradeFee_Code.cs" />
+    <Compile Include="account\TradeFee_Variety.cs" />
     <Compile Include="datapackage\DataPackage.cs" />
     <Compile Include="datapackage\DataPackageFactory.cs" />
     <Compile Include="datapackage\IDataPackageOwner.cs" />
     <Compile Include="datapackage\DataPackage_Code.cs" />
     <Compile Include="forward\DataForwardUtils_Tick.cs" />
+    <Compile Include="forward\DataForForward_CodeIndeier.cs" />
     <Compile Include="forward\DataForward_Code_KLine.cs" />
     <Compile Include="forward\DataForForward_Code.cs" />
     <Compile Include="forward\DataForward.cs" />
@@ -58,6 +62,16 @@
     <Compile Include="forward\ForwardOnBarArgument.cs" />
     <Compile Include="forward\ForwardBarInfo.cs" />
     <Compile Include="forward\ForwardOnTickArgument.cs" />
+    <Compile Include="forward\ForwardTickInfo.cs" />
+    <Compile Include="forward\KLineListIndeier.cs" />
+    <Compile Include="forward\KLineTickIndeier.cs" />
+    <Compile Include="forward\DataForward_Code_Tick2.cs" />
+    <Compile Include="forward\utils\ForwardDataIndeier.cs" />
+    <Compile Include="forward\utils\IndexUtils.cs" />
+    <Compile Include="forward\utils\KLineToKLineIndeier.cs" />
+    <Compile Include="forward\utils\KLineToTickIndeier.cs" />
+    <Compile Include="forward\utils\TimeLineToKLineIndeier.cs" />
+    <Compile Include="forward\utils\TimeLineToTickIndeier.cs" />
     <Compile Include="navigate\DataForNavigate_Code.cs" />
     <Compile Include="navigate\DataNavigate.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />
@@ -71,6 +85,7 @@
     <Compile Include="store\file\MainContractStore_File.cs" />
     <Compile Include="store\file\TradeFeeStore.cs" />
     <Compile Include="store\file\TradingTimeStore_File.cs" />
+    <Compile Include="store\IDataStoreFactory.cs" />
     <Compile Include="store\IMainContractStore.cs" />
     <Compile Include="store\ITradeFeeStore.cs" />
     <Compile Include="store\ITradingTimeStore.cs" />
@@ -153,6 +168,7 @@
     <Compile Include="store\file\TickDataStore_File_Single.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="account\allvariety.fee" />
     <None Include="datacenter.config" />
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +181,9 @@
       <Name>com.wer.sc.plugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="forward\tick\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(ProjectDir)datacenter.config $(TargetDir)config\  /y</PostBuildEvent>

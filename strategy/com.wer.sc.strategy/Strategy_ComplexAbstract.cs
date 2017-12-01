@@ -15,14 +15,14 @@ namespace com.wer.sc.strategy
 
         public abstract List<IStrategy> ImportStrategies { get; }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             if (referedPeriods != null)
                 return referedPeriods;
             referedPeriods = new StrategyReferedPeriods();
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    MergeReferedPeriods(referedPeriods, ImportStrategies[i].GetStrategyPeriods());
+                    MergeReferedPeriods(referedPeriods, ImportStrategies[i].GetReferedPeriods());
             StrategyReferedPeriods periods = GetStrategyPeriods_();
             MergeReferedPeriods(referedPeriods, periods);
             return referedPeriods;
@@ -46,42 +46,41 @@ namespace com.wer.sc.strategy
 
         public abstract StrategyReferedPeriods GetStrategyPeriods_();
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
                     ImportStrategies[i].OnBar(sender, currentData);
-            OnBar_(currentData);
+            OnBar_(currentData.CurrentData);
         }
 
         public abstract void OnBar_(IRealTimeDataReader_Code currentData);
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
                     ImportStrategies[i].OnTick(sender, currentData);
-            OnTick_(currentData);
+            OnTick_(currentData.CurrentData);
         }
 
         public abstract void OnTick_(IRealTimeDataReader_Code currentData);
 
-
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].OnStrategyEnd(sender, argument);
+                    ImportStrategies[i].OnEnd(sender, argument);
             StrategyEnd_();
         }
 
         public abstract void StrategyEnd_();
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             if (ImportStrategies != null)
                 for (int i = 0; i < ImportStrategies.Count; i++)
-                    ImportStrategies[i].OnStrategyStart(sender, argument);
+                    ImportStrategies[i].OnStart(sender, argument);
             StrategyStart_();
         }
 

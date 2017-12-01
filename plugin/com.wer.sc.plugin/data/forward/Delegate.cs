@@ -29,19 +29,55 @@ namespace com.wer.sc.data.forward
     /// <param name="arguments"></param>
     public delegate void DelegateOnBar(object sender, IForwardOnBarArgument arguments);
 
+    /// <summary>
+    /// 历史回测时每跳一个tick触发事件的参数
+    /// </summary>
     public interface IForwardOnTickArgument
     {
-        ITickData TickData { get; }
+        /// <summary>
+        /// 当前回测的股票或期货合约
+        /// </summary>
+        string Code { get; }
 
-        int Index { get; }
-
-        ITickBar TickBar { get; }
-
+        /// <summary>
+        /// 当前回测触发事件所处的历史时间
+        /// </summary>
         double Time { get; }
 
+        IForwardTickInfo TickInfo { get; }
+
+        /// <summary>
+        /// 获得回测的股票或期货在当前历史时间的实时数据
+        /// </summary>
         IRealTimeDataReader_Code CurrentData { get; }
 
+        /// <summary>
+        /// 获得其它股票或期货在当前历史时间的实时数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         IRealTimeDataReader_Code GetOtherData(string code);
+    }
+
+    /// <summary>
+    /// 历史回测的当前tick信息
+    /// </summary>
+    public interface IForwardTickInfo
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        ITickData_Extend TickData { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        int Index { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ITickBar TickBar { get; }
     }
 
     /// <summary>
@@ -49,36 +85,56 @@ namespace com.wer.sc.data.forward
     /// </summary>
     public interface IForwardOnBarArgument
     {
+        /// <summary>
+        /// 得到当前回归测试的股票或期货合约
+        /// </summary>
+        String Code { get; }
 
-        IList<IForwardOnbar_Info> ForwardOnBar_Infos
+        double Time { get; }
+
+        IList<IForwardKLineBarInfo> AllFinishedBars
         {
             get;
         }
 
-        IForwardOnbar_Info MainForwardOnBar_Info
+        IForwardKLineBarInfo MainBar
         {
             get;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         IRealTimeDataReader_Code CurrentData { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         IRealTimeDataReader_Code GetOtherData(string code);
     }
 
-    public interface IForwardOnbar_Info
+    public interface IForwardKLineBarInfo
     {
         /// <summary>
         /// OnBar事件执行时完成一个bar的k线数据
         /// </summary>
-        IKLineData KlineData { get; }
+        IKLineData_Extend KLineData { get; }
 
         /// <summary>
         /// 前进器前进完成的Bar
         /// </summary>
-        int FinishedBarPos { get; }
+        int BarPos { get; }
 
+        /// <summary>
+        /// K线周期
+        /// </summary>
         KLinePeriod KLinePeriod { get; }
 
+        /// <summary>
+        /// K线柱
+        /// </summary>
         IKLineBar KLineBar { get; }
     }
 

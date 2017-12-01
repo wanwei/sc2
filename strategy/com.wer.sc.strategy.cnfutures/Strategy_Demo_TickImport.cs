@@ -12,27 +12,27 @@ namespace com.wer.sc.strategy.cnfutures
     [TestClass]
     public class Strategy_Demo_TickImport :StrategyAbstract, IStrategy
     {
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
 
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
 
         }

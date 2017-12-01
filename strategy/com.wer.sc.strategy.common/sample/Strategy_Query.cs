@@ -13,14 +13,14 @@ namespace com.wer.sc.strategy.common.sample
     [Strategy("STRATEGY.SAMPLE.QUERY", "测试查询", "测试查询", "例子")]
     public class Strategy_Query : StrategyAbstract
     {
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
+            IKLineData klineData = currentData.CurrentData.GetKLineData(MainKLinePeriod);
             if (klineData.BarPos == 0)
                 return;
             float start = klineData.Start;
@@ -35,17 +35,17 @@ namespace com.wer.sc.strategy.common.sample
             }
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
 
         }

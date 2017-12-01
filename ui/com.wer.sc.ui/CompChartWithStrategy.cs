@@ -32,7 +32,7 @@ namespace com.wer.sc.ui
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UsedKLinePeriods.Add(period);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
-            return StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            return StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
         }
 
         public void Run()

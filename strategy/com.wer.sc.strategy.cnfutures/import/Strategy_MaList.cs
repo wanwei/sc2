@@ -58,9 +58,9 @@ namespace com.wer.sc.strategy.cnfutures.import
             this.length = length;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(period);
+            IKLineData klineData = currentData.CurrentData.GetKLineData(period);
             int barPos = klineData.BarPos;
             int startPos = barPos - length;
             startPos = startPos < 0 ? 0 : startPos;
@@ -73,24 +73,24 @@ namespace com.wer.sc.strategy.cnfutures.import
             this.maPrice.Add(total / (barPos - startPos + 1));
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
 
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
             StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod).DrawPolyLine(maPrice, Color.Red);
 
             //StrategyHelper.DrawPoint()
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }

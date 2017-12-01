@@ -130,10 +130,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         }
 
         public string[] GetAllVarieties()
-        {            
+        {
             List<CodeInfo> codes = GetAllCodes();
             HashSet<string> set = new HashSet<string>();
-            for(int i = 0; i < codes.Count; i++)
+            for (int i = 0; i < codes.Count; i++)
             {
                 string variety = codes[i].Catelog;
                 if (set.Contains(variety))
@@ -229,10 +229,13 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             //强制更新SQ的JINSHUYUAN的tick数据
             //if (code.EndsWith("0000") || code.EndsWith("MI"))
             //    return newTradingDays;
-            if (newTradingDays.Count == 0)
-                return null;
-            if (codeInfo.End < newTradingDays[0])
-                return null;
+            if (!isFill)
+            {
+                if (newTradingDays.Count == 0)
+                    return null;
+                if (codeInfo.End < newTradingDays[0])
+                    return null;
+            }
             List<int> updatedTradingDays = this.GetUpdatedTickDataTradingDays(code);
             return GetNotUpdateTradingDays(codeInfo, newTradingDays, updatedTradingDays, isFill);
         }
@@ -311,17 +314,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         private Dictionary<string, Dictionary<int, TradingTime>> dic_Code_TradingTimeCache = new Dictionary<string, Dictionary<int, TradingTime>>();
 
         public ITradingTime GetTradingTime(string code, int date)
-        {            
+        {
             if (dic_Code_TradingTimeCache.ContainsKey(code))
                 return dic_Code_TradingTimeCache[code][date];
             IList<TradingTime> tradingTimes = updatedDataLoader.GetTradingTime(code);
             Dictionary<int, TradingTime> dic = new Dictionary<int, TradingTime>();
-            for(int i = 0; i < tradingTimes.Count; i++)
+            for (int i = 0; i < tradingTimes.Count; i++)
             {
                 TradingTime tradingTime = tradingTimes[i];
                 dic.Add(tradingTime.TradingDay, tradingTime);
             }
-            dic_Code_TradingTimeCache.Add(code, dic);            
+            dic_Code_TradingTimeCache.Add(code, dic);
             return dic[date];
         }
 

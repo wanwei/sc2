@@ -26,12 +26,22 @@ namespace com.wer.sc.data.store
             return true;
         }
 
+        public static IDataStore CreateDataStore(DataCenter dataCenter)
+        {
+            Uri uri = new Uri(dataCenter.DataCenterInfo.Uri);
+            if (uri.IsFile)
+            {
+                return new DataStore_File(dataCenter, uri.LocalPath);
+            }
+            return null;
+        }
+
         public static IDataStore CreateDataStore(string dataCenterUri)
         {
             Uri uri = new Uri(dataCenterUri);
             if (uri.IsFile)
             {
-                return new DataStore_File(uri.LocalPath);
+                return new DataStore_File(null, uri.LocalPath);
             }
             return null;
         }

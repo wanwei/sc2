@@ -53,5 +53,15 @@ namespace com.wer.sc.data.realtime
         {
             return klineData_Extend.IsTradingTimeStart(barPos);
         }
+
+        public int GetTradingDayStartIndex(int tradingDay)
+        {
+            return klineData_Extend.GetTradingDayStartIndex(tradingDay);
+        }
+
+        public int GetTradingDayEndIndex(int tradingDay)
+        {
+            return klineData_Extend.GetTradingDayEndIndex(tradingDay);
+        }
     }
 }

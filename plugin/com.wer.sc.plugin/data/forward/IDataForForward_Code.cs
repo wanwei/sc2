@@ -38,6 +38,11 @@ namespace com.wer.sc.data.forward
         IList<KLinePeriod> ReferedKLinePeriods { get; }
 
         /// <summary>
+        /// 得到主K线周期
+        /// </summary>
+        KLinePeriod MainKLinePeriod { get; }
+
+        /// <summary>
         /// 获取数据的code
         /// </summary>
         string Code
@@ -73,6 +78,8 @@ namespace com.wer.sc.data.forward
         {
             get;
         }
+
+        IKLineData_RealTime GetMainKLineData();
 
         IKLineData_RealTime GetKLineData(KLinePeriod klinePeriod);
 

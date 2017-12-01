@@ -18,7 +18,7 @@ namespace com.wer.sc.data.account
 
         IAccount CreateAccount(double money, IDataForward_Code realTimeDataReader);
 
-        IAccount CreateAccount(double money, IDataForward_Code realTimeDataReader, TradeFee fee);
+        IAccount CreateAccount(double money, IDataForward_Code realTimeDataReader, ITradeFee fee);
 
         IAccount CreateAccount(XmlElement xmlElem);
     }

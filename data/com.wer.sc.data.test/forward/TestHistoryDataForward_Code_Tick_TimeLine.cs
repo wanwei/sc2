@@ -35,7 +35,9 @@ namespace com.wer.sc.data.forward
         private void KlineDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
             IDataForward_Code klineDataForward = (IDataForward_Code)sender;
-            //Console.WriteLine(klineDataForward.GetTimeLineData());
+            //Console.WriteLine("tick:" + klineDataForward.GetTickData());
+            //Console.WriteLine("timeline:"+klineDataForward.GetTimeLineData());            
+            Console.WriteLine(klineDataForward.GetTimeLineData());
             printStrs_Forward_TimeLine.Add(klineDataForward.GetTimeLineData().ToString());
         }
     }

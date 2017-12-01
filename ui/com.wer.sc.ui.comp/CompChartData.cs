@@ -241,8 +241,8 @@ namespace com.wer.sc.ui.comp
         private void HistoryDataForward_Code_OnTick(object sender, IForwardOnTickArgument argument)
         {
             this.IsDataRefresh = true;
-            if (argument.TickBar != null)
-                this.time = argument.TickBar.Time;
+            if (argument.TickInfo.TickBar != null)
+                this.time = argument.TickInfo.TickBar.Time;
         }
 
         private bool isPlaying;

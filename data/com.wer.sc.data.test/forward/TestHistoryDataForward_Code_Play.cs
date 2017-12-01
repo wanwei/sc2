@@ -31,7 +31,7 @@ namespace com.wer.sc.data.forward
 
         private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            Console.WriteLine(argument.TickBar);
+            Console.WriteLine(argument.TickInfo.TickBar);
         }    
     }
 }

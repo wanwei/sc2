@@ -58,6 +58,12 @@
     <Compile Include="FormChart.Designer.cs">
       <DependentUpon>FormChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormChartComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChartComponent.Designer.cs">
+      <DependentUpon>FormChartComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormForwardSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormChartComponent.resx">
+      <DependentUpon>FormChartComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormForwardSetting.resx">
       <DependentUpon>FormForwardSetting.cs</DependentUpon>

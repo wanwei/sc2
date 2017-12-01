@@ -27,13 +27,13 @@ namespace com.wer.sc.data
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();   
             sb.Append(Time).Append(",");
             sb.Append(Price).Append(",");
-            sb.Append(Mount).Append(",");
-            sb.Append(Hold).Append(",");
+            sb.Append(UpRange).Append(",");
             sb.Append(UpPercent).Append(",");
-            sb.Append(UpRange);
+            sb.Append(Mount).Append(",");
+            sb.Append(Hold);
             return sb.ToString();
         }
     }

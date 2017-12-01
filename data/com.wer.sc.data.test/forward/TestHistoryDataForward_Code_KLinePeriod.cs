@@ -140,9 +140,10 @@ namespace com.wer.sc.data.forward
 
         private void KlineDataForward_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            for (int i = 0; i < argument.ForwardOnBar_Infos.Count; i++)
+            for (int i = 0; i < argument.AllFinishedBars.Count; i++)
             {
-                IForwardOnbar_Info info = argument.ForwardOnBar_Infos[i];
+                IForwardKLineBarInfo info = argument.AllFinishedBars[i];
+                Assert.AreEqual(info.KLineBar.End, info.KLineData.End);
                 //Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
                 AddContent(info.KLinePeriod, info.KLineBar.ToString());
                 //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);

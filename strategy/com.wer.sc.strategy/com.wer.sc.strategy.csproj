@@ -49,6 +49,11 @@
     <Compile Include="loader\StrategyMgr.cs" />
     <Compile Include="loader\StrategyMgrFactory.cs" />
     <Compile Include="loader\StrategyInfo.cs" />
+    <Compile Include="StrategyOnBarArgument.cs" />
+    <Compile Include="StrategyOnBarInfo.cs" />
+    <Compile Include="StrategyOnStartArgument.cs" />
+    <Compile Include="StrategyOnTickArgument.cs" />
+    <Compile Include="StrategyOnTickInfo.cs" />
     <Compile Include="StrategyReport.cs" />
     <Compile Include="StrategyResult.cs" />
     <Compile Include="StrategyResult_Single.cs" />

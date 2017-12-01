@@ -137,6 +137,8 @@ namespace com.wer.sc.mockdata
         public static void AssertEqual_List<T>(string expectedResult, IList<T> actualList)
         {
             string[] periodArr = expectedResult.Split('\r');
+            Assert.AreEqual(periodArr.Length, actualList.Count);
+
             for (int i = 0; i < actualList.Count; i++)
             {
                 T t = actualList[i];

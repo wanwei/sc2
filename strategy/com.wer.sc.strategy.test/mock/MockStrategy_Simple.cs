@@ -10,31 +10,31 @@ namespace com.wer.sc.strategy.mock
 {
     public class MockStrategy_Simple : StrategyAbstract
     {
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            List<IForwardOnbar_Info> bars = currentData.StrategyOnBarInfos;
+            IList<IStrategyOnBarInfo> bars = currentData.FinishedBars;
             for (int i = 0; i < bars.Count; i++)
             {
                 Console.WriteLine(bars[i].KLinePeriod + ":" + bars[i].KLineBar);
             }
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
-            Console.WriteLine("tick:" + currentData.GetTickData());
+            Console.WriteLine("tick:" + currentData.CurrentData.GetTickData());
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
             Console.WriteLine("Strategy End");
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             Console.WriteLine("Strategy Start");
         }

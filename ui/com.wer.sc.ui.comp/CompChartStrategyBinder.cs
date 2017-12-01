@@ -62,7 +62,7 @@ namespace com.wer.sc.ui.comp
                  */
                 if (arg.CurrentChartState.ChartDataState.chartType == ChartType.KLine && arg.IsKLinePeriodChange)
                 {
-                    ForwardReferedPeriods referedPeriods = strategy.GetStrategyPeriods();
+                    ForwardReferedPeriods referedPeriods = strategy.GetReferedPeriods();
                     if (referedPeriods != null)
                     {
                         this.compChart1.PaintChart();
@@ -244,14 +244,14 @@ namespace com.wer.sc.ui.comp
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
             if (dataPackage == null)
                 dataPackage = compChart.CompChartData.DataPackage;
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referPeriods, forwardPeriod, GetStrategyHelper());
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutorByDataPackage(dataPackage, referPeriods, forwardPeriod, GetStrategyHelper());
             executor.SetStrategy(strategy);
             return executor;
         }
 
         private StrategyReferedPeriods GetKLinePeriod(IStrategy strategy)
         {
-            StrategyReferedPeriods referedPeriods = strategy.GetStrategyPeriods();
+            StrategyReferedPeriods referedPeriods = strategy.GetReferedPeriods();
             if (referedPeriods != null)
                 return referedPeriods;
             //strategy.MainKLinePeriod = compChart.CompChartData.KlinePeriod;

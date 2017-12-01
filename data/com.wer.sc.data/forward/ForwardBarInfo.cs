@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.forward
 {
-    public class ForwardOnbar_Info:IForwardOnbar_Info
+    public class ForwardOnbar_Info : IForwardKLineBarInfo
     {
-        private IKLineData klineData;
+        private IKLineData_Extend klineData;
 
         private int finishedBarPos;
 
         /// <summary>
         /// OnBar事件执行时完成一个bar的k线数据
         /// </summary>
-        public IKLineData KlineData
+        public IKLineData_Extend KLineData
         {
             get { return klineData; }
         }
@@ -23,7 +23,7 @@ namespace com.wer.sc.data.forward
         /// <summary>
         /// 前进器前进完成的Bar
         /// </summary>
-        public int FinishedBarPos
+        public int BarPos
         {
             get { return finishedBarPos; }
         }
@@ -32,7 +32,7 @@ namespace com.wer.sc.data.forward
         {
             get
             {
-                return KlineData.Period;
+                return KLineData.Period;
             }
         }
 
@@ -40,11 +40,11 @@ namespace com.wer.sc.data.forward
         {
             get
             {
-                return KlineData.GetBar(FinishedBarPos);
+                return KLineData.GetBar(BarPos);
             }
         }
 
-        public ForwardOnbar_Info(IKLineData klineData, int finishedBarPos)
+        public ForwardOnbar_Info(IKLineData_Extend klineData, int finishedBarPos)
         {
             this.klineData = klineData;
             this.finishedBarPos = finishedBarPos;

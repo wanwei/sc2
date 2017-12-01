@@ -31,6 +31,16 @@ namespace com.wer.sc.data
 
         private IAccountFactory accountFactory;
 
+        internal DataCenter(DataCenterInfo config)
+        {
+            this.dataStore = DataStoreFactory.CreateDataStore(this);
+            this.dataReader = DataReaderFactory.CreateDataReader(this);
+            this.dataPackageFactory = new DataPackageFactory(dataReader);
+            this.historyDataForwardFactory = new DataForwardFactory(this);
+            this.dataNavigateFactory = new DataNavigateFactory(this);
+            this.accountFactory = new AccountFactory(this);
+        }
+
         internal DataCenter(DataCenterInfo config, IDataStore dataStore, IDataReader dataReaderFactory)
         {
             this.config = config;

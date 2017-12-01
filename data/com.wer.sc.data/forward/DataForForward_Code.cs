@@ -28,6 +28,10 @@ namespace com.wer.sc.data.forward
         //当前交易日
         protected int tradingDay;
 
+        private IKLineData_RealTime mainKLineData;
+
+        private KLinePeriod mainKLinePeriod;
+
         //该周期内所有K线数据
         protected Dictionary<KLinePeriod, IKLineData_RealTime> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData_RealTime>();
 
@@ -50,6 +54,8 @@ namespace com.wer.sc.data.forward
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
             this.dic_Period_KLineData = dataPackage.CreateKLineData_RealTimes(referedPeriods.UsedKLinePeriods);
+            this.mainKLinePeriod = referedPeriods.GetMinPeriod();
+            this.mainKLineData = this.dic_Period_KLineData[mainKLinePeriod];
             this.cache_TradingDay = new CacheUtils_TradingDay(dataPackage.GetTradingDays());
         }
 
@@ -126,6 +132,19 @@ namespace com.wer.sc.data.forward
             get { return referedPeriods.UsedKLinePeriods; }
         }
 
+        public KLinePeriod MainKLinePeriod
+        {
+            get
+            {
+                return mainKLinePeriod;
+            }
+        }
+
+        public IKLineData_RealTime MainKLine
+        {
+            get { return mainKLineData; }
+        }
+
         public ForwardReferedPeriods ReferedPeriods
         {
             get { return referedPeriods; }
@@ -162,6 +181,11 @@ namespace com.wer.sc.data.forward
             this.dic_Period_KLineData = dataPackage.CreateKLineData_RealTimes(referedPeriods.UsedKLinePeriods);
             this.cache_TradingDay = new CacheUtils_TradingDay(dataPackage.GetTradingDays());
             this.TradingDay = int.Parse(xmlElem.GetAttribute("tradingDay"));
+        }
+
+        public IKLineData_RealTime GetMainKLineData()
+        {
+            return mainKLineData;
         }
 
         public virtual ITickData_Extend CurrentTickData
@@ -201,6 +225,22 @@ namespace com.wer.sc.data.forward
                 foreach (KLinePeriod period in dic_Period_KLineData.Keys)
                 {
                     return dic_Period_KLineData[period].Time;
+                }
+                return 0;
+            }
+        }
+
+        public float Price
+        {
+            get
+            {
+                if (currentTickData != null)
+                    return currentTickData.Price;
+                if (currentTimeLineData != null)
+                    return currentTimeLineData.Price;
+                foreach (KLinePeriod period in dic_Period_KLineData.Keys)
+                {
+                    return dic_Period_KLineData[period].End;
                 }
                 return 0;
             }

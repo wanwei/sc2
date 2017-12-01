@@ -61,8 +61,8 @@ namespace com.wer.sc.data.account
 
         private void HistoryDataForward_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            if (argument.TickBar.Price >= 3105) 
-                account.Open(argument.TickBar.Code, 3105, market.OrderSide.Sell, 10);
+            if (argument.TickInfo.TickBar.Price >= 3105) 
+                account.Open(argument.TickInfo.TickBar.Code, 3105, market.OrderSide.Sell, 10);
         }
     }
 }

@@ -10,11 +10,11 @@ namespace com.wer.sc.ui.comp
 {
     public class CompChart_DrawHelper : IDrawOperator
     {
-        private Dictionary<KLinePeriod, IDrawer> dic_Period_Drawer = new Dictionary<KLinePeriod, IDrawer>();
+        private Dictionary<KLinePeriod, IStrategyDrawer> dic_Period_Drawer = new Dictionary<KLinePeriod, IStrategyDrawer>();
 
-        private IDrawer drawer_TimeLine;
+        private IStrategyDrawer drawer_TimeLine;
 
-        private IDrawer drawer_Tick;
+        private IStrategyDrawer drawer_Tick;
 
         private CompChart compChart;
 
@@ -23,23 +23,23 @@ namespace com.wer.sc.ui.comp
             this.compChart = compChart;
         }
 
-        public IDrawer GetDrawer_KLine(KLinePeriod klinePeriod)
+        public IStrategyDrawer GetDrawer_KLine(KLinePeriod klinePeriod)
         {
             if (dic_Period_Drawer.ContainsKey(klinePeriod))
             {
                 return dic_Period_Drawer[klinePeriod];
             }
-            IDrawer drawer = new CompChart_Drawer(compChart);
+            IStrategyDrawer drawer = new CompChart_Drawer(compChart);
             dic_Period_Drawer.Add(klinePeriod, drawer);
             return drawer;
         }
 
-        public IDrawer GetDrawer_Tick()
+        public IStrategyDrawer GetDrawer_Tick()
         {
             return drawer_Tick;
         }
 
-        public IDrawer GetDrawer_TimeLine()
+        public IStrategyDrawer GetDrawer_TimeLine()
         {
             return drawer_TimeLine;
         }

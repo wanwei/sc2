@@ -234,7 +234,7 @@ namespace com.wer.sc.ui.comp.test
             referedPeriods.UsedKLinePeriods.Add(period);
             //referedPeriods.UsedKLinePeriods.Add(this.n)
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, period);
-            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
+            IStrategyExecutor strategyRunner = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, compChart1.StrategyHelper);
             //compChart1.StrategyHelper.DrawHelper.ClearShapes();
             //compChart1.CurrentPriceRectDrawer.cl
             //compChart1.CurrentPriceRectDrawer.ClearPriceShapes();

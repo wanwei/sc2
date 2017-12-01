@@ -149,14 +149,7 @@ namespace com.wer.sc.data
 
         public String ToString(int index)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(Arr_Time).Append(",");
-            sb.Append(Arr_Price).Append(",");
-            sb.Append(Arr_UpRange).Append(",");
-            sb.Append(Arr_UpPercent).Append(",");
-            sb.Append(Arr_Mount).Append(",");
-            sb.Append(Arr_Hold);
-            return sb.ToString();
+            return GetBar(index).ToString();
         }
     }
 }

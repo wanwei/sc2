@@ -28,7 +28,7 @@ namespace com.wer.sc.data.account
             return new Account(money, realTimeDataReader);
         }
 
-        public IAccount CreateAccount(double money, IDataForward_Code realTimeDataReader, TradeFee fee)
+        public IAccount CreateAccount(double money, IDataForward_Code realTimeDataReader, ITradeFee fee)
         {
             return new Account(money, realTimeDataReader, fee);
         }

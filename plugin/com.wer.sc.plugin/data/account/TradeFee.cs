@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace com.wer.sc.data.account
 {
-    public class TradeFee : IXmlExchange
+    public class TradeFee : IXmlExchange, ITradeFee
     {
         private Dictionary<String, TradeFee_Code> mapFee = new Dictionary<String, TradeFee_Code>();
 

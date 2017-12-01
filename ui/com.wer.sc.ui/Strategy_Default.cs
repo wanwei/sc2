@@ -44,14 +44,14 @@ namespace com.wer.sc.strategy.cnfutures
             this.Parameters.AddParameter("MA_5", "MA60", "MA60", utils.param.ParameterType.INTEGER, 60);
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
+            IKLineData klineData = currentData.CurrentData.GetKLineData(MainKLinePeriod);
             GenMa(klineData);
         }
 
@@ -79,7 +79,7 @@ namespace com.wer.sc.strategy.cnfutures
         }
 
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
@@ -94,9 +94,9 @@ namespace com.wer.sc.strategy.cnfutures
 
         private Color color_5 = ColorUtils.GetColor("#677878");
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maPrice_1, color_1);
             drawHelper.DrawPolyLine(maPrice_2, color_2);
             drawHelper.DrawPolyLine(maPrice_3, color_3);
@@ -105,7 +105,7 @@ namespace com.wer.sc.strategy.cnfutures
             drawHelper.DrawTitle(1, "MA组合(" + Param_1 + "," + Param_2 + "," + Param_3 + "," + Param_4 + "," + Param_5 + ")", color_2);
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             Param_1 = (int)this.Parameters.GetParameter(0).Value;
             Param_2 = (int)this.Parameters.GetParameter(1).Value;

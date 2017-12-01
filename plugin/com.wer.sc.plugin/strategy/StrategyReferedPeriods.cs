@@ -11,5 +11,12 @@ namespace com.wer.sc.strategy
 {
     public class StrategyReferedPeriods : ForwardReferedPeriods
     {
+        public StrategyReferedPeriods() : base()
+        {
+        }
+
+        public StrategyReferedPeriods(IList<KLinePeriod> usedKLinePeriods, bool useTick, bool useTimeLine) : base(usedKLinePeriods, useTick, useTimeLine)
+        {
+        }
     }
 }

@@ -15,17 +15,17 @@ namespace com.wer.sc.strategy.common.sample
     [Strategy("STRATEGY.SAMPLE.TRADER", "测试交易策略", "测试交易策略", "例子")]
     public class Strategy_Trader : StrategyAbstract
     {
-        private Strategy_Ma strategy_MA_1Minute;
-        private Strategy_Ma strategy_MA_15Minute;
+        private Strategy_MultiMa strategy_MA_1Minute;
+        private Strategy_MultiMa strategy_MA_15Minute;
 
         private List<IStrategy> referedStrategies = new List<IStrategy>();
 
         public Strategy_Trader()
         {
-            strategy_MA_1Minute = new Strategy_Ma();
+            strategy_MA_1Minute = new Strategy_MultiMa();
             strategy_MA_1Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
 
-            strategy_MA_15Minute = new Strategy_Ma();
+            strategy_MA_15Minute = new Strategy_MultiMa();
             strategy_MA_15Minute.MainKLinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.referedStrategies.Add(strategy_MA_1Minute);
             this.referedStrategies.Add(strategy_MA_15Minute);
@@ -36,7 +36,7 @@ namespace com.wer.sc.strategy.common.sample
             return referedStrategies;
         }
 
-        public override StrategyReferedPeriods GetStrategyPeriods()
+        public override StrategyReferedPeriods GetReferedPeriods()
         {
             StrategyReferedPeriods referPeriods = new StrategyReferedPeriods();
             referPeriods.UseTickData = false;
@@ -45,7 +45,7 @@ namespace com.wer.sc.strategy.common.sample
             return referPeriods;
         }
 
-        public override void OnBar(Object sender, StrategyOnBarArgument currentData)
+        public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
             //15分钟K线图ma5>ma10
             if (strategy_MA_15Minute.MAPrice_1 > strategy_MA_15Minute.MAPrice_2)
@@ -63,17 +63,17 @@ namespace com.wer.sc.strategy.common.sample
             }
         }
 
-        public override void OnTick(Object sender, StrategyOnTickArgument currentData)
+        public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
 
         }
 
-        public override void OnStrategyEnd(Object sender, StrategyOnEndArgument argument)
+        public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
 
         }
 
-        public override void OnStrategyStart(Object sender, StrategyOnStartArgument argument)
+        public override void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
             StrategyOperator.Trader.AutoFilter = true;
 

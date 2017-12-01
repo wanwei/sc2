@@ -67,7 +67,7 @@ namespace com.wer.sc.data.navigate
         private void DataNavigate_OnNavigateTo(object sender, DataNavigateEventArgs e)
         {
             IDataNavigate dataNavigate = (IDataNavigate)sender;
-            if (e.Time >= 20170405.093110)
+            if (e.Time >= 20170405.093010)
                 dataNavigate.Pause();
             Console.WriteLine(getKLineBar(dataNavigate));
         }

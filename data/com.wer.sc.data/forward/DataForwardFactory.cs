@@ -36,7 +36,7 @@ namespace com.wer.sc.data.forward
         public IDataForward_Code CreateDataForward_Code(IDataPackage_Code dataPackage, ForwardReferedPeriods referedPeriods, ForwardPeriod forwardPeriod)
         {
             if (forwardPeriod.IsTickForward)
-                return new DataForward_Code_Tick(dataCenter, dataPackage, referedPeriods, forwardPeriod);
+                return new DataForward_Code_Tick2(dataCenter, dataPackage, referedPeriods, forwardPeriod);
             //return new HistoryDataForward_Code_TickPeriod(dataPackage, referedPeriods.UsedKLinePeriods, forwardPeriod.KlineForwardPeriod, referedPeriods.UseTimeLineData);
             return new DataForward_Code_KLine(dataCenter, dataPackage, referedPeriods, forwardPeriod);
         }

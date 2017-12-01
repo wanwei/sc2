@@ -51,14 +51,24 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
+    <Compile Include="mock\MockStrategy.cs" />
     <Compile Include="mock\MockStrategy_Ma.cs" />
+    <Compile Include="mock\MockStrategy_Parameter.cs" />
+    <Compile Include="mock\MockStrategy_ReferOtherCode.cs" />
     <Compile Include="mock\MockStrategy_ReferOtherStrategy.cs" />
     <Compile Include="mock\MockStrategy_Simple.cs" />
+    <Compile Include="mock\MockStrategy_Tick.cs" />
     <Compile Include="mock\MockStrategy_Trade.cs" />
     <Compile Include="mock\StrategyGetter.cs" />
+    <None Include="TestCase\com\wer\sc\strategy\executorhistory" />
+    <Compile Include="StrategyTestUtils.cs" />
+    <None Include="TestCase\com\wer\sc\strategy\StrategyParameter_15Minute" />
+    <None Include="TestCase\com\wer\sc\strategy\StrategyTrade" />
     <Compile Include="TestStrategyExecutor.cs" />
+    <Compile Include="TestStrategyExecutor_History.cs" />
     <Compile Include="TestStrategyExecutor_Multi.cs" />
     <Compile Include="TestStrategyMgr.cs" />
+    <Compile Include="TestStrategy_Parameter.cs" />
     <Compile Include="TestStrategy_ReferOtherCode.cs" />
     <Compile Include="TestStrategy_ReferOtherStrategy.cs" />
     <Compile Include="TestStrategy_Trader.cs" />

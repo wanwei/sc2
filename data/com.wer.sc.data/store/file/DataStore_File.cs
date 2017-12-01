@@ -8,13 +8,15 @@ namespace com.wer.sc.data.store.file
 {
     public class DataStore_File : IDataStore
     {
+        private IDataCenter dataCenter;
         private string dataCenterPath;
 
         private DataPathUtils dataPathUtils;
 
-        public DataStore_File(string dataCenterPath)
+        public DataStore_File(IDataCenter dataCenter, string dataCenterPath)
         {
-            this.dataCenterPath = dataCenterPath;
+            this.dataCenter = dataCenter;
+            //this.dataCenterPath = dataCenterPath;
             this.dataPathUtils = new DataPathUtils(dataCenterPath);
         }
 
@@ -55,7 +57,7 @@ namespace com.wer.sc.data.store.file
 
         public IAccountStore CreateAccountStore()
         {
-            return new AccountStore_File(dataPathUtils);
+            return new AccountStore_File(dataCenter, dataPathUtils);
         }
 
         public IMainContractStore CreateMainContractStore()

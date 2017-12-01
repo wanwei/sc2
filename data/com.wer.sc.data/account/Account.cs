@@ -40,7 +40,7 @@ namespace com.wer.sc.data.account
 
         private List<OrderInfo> loopOrders = new List<OrderInfo>();
 
-        private TradeFee fee;
+        private ITradeFee fee;
 
         private TradeFee_Code defaultFee_Code = Account.DEFAULTFEECODE;
 
@@ -69,7 +69,7 @@ namespace com.wer.sc.data.account
 
         }
 
-        internal Account(double money, IDataForward_Code realTimeDataReader, TradeFee fee)
+        internal Account(double money, IDataForward_Code realTimeDataReader, ITradeFee fee)
         {
             this.money = money;
             this.initMoney = money;
@@ -273,7 +273,7 @@ namespace com.wer.sc.data.account
             }
             else if (accountSetting.SlipPrice != 0)
             {
-                TradeFee_Code fee = this.GetTradeFee_Code(code);
+                ITradeFee_Code fee = this.GetTradeFee_Code(code);
                 double minPriceChange = fee.MinPriceChange;
                 if (orderSide == OrderSide.Buy)
                     return price + (accountSetting.SlipPrice * minPriceChange);
@@ -420,7 +420,7 @@ namespace com.wer.sc.data.account
 
         #endregion
 
-        public TradeFee Fee
+        public ITradeFee Fee
         {
             get
             {
@@ -586,7 +586,7 @@ namespace com.wer.sc.data.account
         //计算买入需要花的钱
         private double CalcTradeMoney_Open(String code, double price, int hand, OpenCloseType openCloseType)
         {
-            TradeFee_Code tradeFee = GetTradeFee_Code(code);
+            ITradeFee_Code tradeFee = GetTradeFee_Code(code);
             //交易费用 TODO 按百分比收交易费用
             double handFee = tradeFee.BuyFee;
             return hand * (price * tradeFee.HandCount * (tradeFee.DepositPercent / 100) + handFee);
@@ -603,7 +603,7 @@ namespace com.wer.sc.data.account
 
         private double CalcTradeMoney_Close(PositionInfo positionInfo, double price, int mount)
         {
-            TradeFee_Code tradeFee = GetTradeFee_Code(positionInfo.InstrumentID);
+            ITradeFee_Code tradeFee = GetTradeFee_Code(positionInfo.InstrumentID);
             //交易费用
             double handFee = tradeFee.SellFee;
             double earnmoney = CalcEarnMoney(positionInfo, mount, price);
@@ -614,7 +614,7 @@ namespace com.wer.sc.data.account
         //计算该价格下最大可买数量
         private int GetMaxCanBuy(String code, double price, double percent)
         {
-            TradeFee_Code tradeFee = GetTradeFee_Code(code);
+            ITradeFee_Code tradeFee = GetTradeFee_Code(code);
             return (int)(this.money * percent / 100 / (price * tradeFee.HandCount * (tradeFee.DepositPercent / 100) + tradeFee.BuyFee));
         }
 
@@ -648,7 +648,7 @@ namespace com.wer.sc.data.account
             OrderInfo orderInfo;
             lock (lockObj)
             {
-                int position = GetPosition(code, orderSide);
+                int position = GetPosition(code, GetCloseSide(orderSide));
                 if (position == 0)
                     return;
                 orderInfo = CloseInternal(code, price, orderSide, position);
@@ -684,7 +684,7 @@ namespace com.wer.sc.data.account
 
         private bool CanClose(string code, OrderSide orderSide, int mount)
         {
-            OrderSide positionSide = orderSide == OrderSide.Buy ? OrderSide.Sell : OrderSide.Buy;
+            OrderSide positionSide = GetCloseSide(orderSide);
             int position = GetPosition(code, positionSide);
             if (position < mount)
                 return false;
@@ -697,6 +697,11 @@ namespace com.wer.sc.data.account
             if (position - orderMount < mount)
                 return false;
             return true;
+        }
+
+        private static OrderSide GetCloseSide(OrderSide orderSide)
+        {
+            return orderSide == OrderSide.Buy ? OrderSide.Sell : OrderSide.Buy;
         }
 
         private int GetPosition(string code, OrderSide orderSide)
@@ -715,11 +720,11 @@ namespace com.wer.sc.data.account
             return dic_position[code];
         }
 
-        internal TradeFee_Code GetTradeFee_Code(String code)
+        internal ITradeFee_Code GetTradeFee_Code(String code)
         {
             if (fee == null)
                 return defaultFee_Code;
-            TradeFee_Code tradeFee = fee.GetFee(code);
+            ITradeFee_Code tradeFee = fee.GetFee(code);
             return tradeFee == null ? defaultFee_Code : tradeFee;
         }
 
@@ -853,7 +858,18 @@ namespace com.wer.sc.data.account
             List<string> codes = new List<string>();
             codes.Add(dataForward_Code.Code);
             codes.AddRange(this.dataForward_Code.GetAttachedCodes());
-            fee.Save(codes, elemTradeFee);
+            SaveFee(fee, codes, elemTradeFee);
+        }
+
+        private void SaveFee(ITradeFee tradeFee, List<string> codes, XmlElement xmlElem)
+        {
+            foreach (string code in codes)
+            {
+                XmlElement subElem = xmlElem.OwnerDocument.CreateElement("tradefee");
+                xmlElem.AppendChild(subElem);
+                ITradeFee_Code tradeFee_Code = tradeFee.GetFee(code);
+                tradeFee_Code.Save(subElem);
+            }
         }
 
         private void SaveTrades(XmlElement elem)

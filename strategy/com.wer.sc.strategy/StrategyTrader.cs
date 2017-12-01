@@ -23,6 +23,7 @@ namespace com.wer.sc.strategy
         public StrategyTrader(double money, IDataForward_Code realTimeDataReader)
         {
             this.account = DataCenter.Default.AccountFactory.CreateAccount(money, realTimeDataReader);
+            this.account.AccountSetting.TradeType = AccountTradeType.IMMEDIATELY;
             this.realTimeDataReader = realTimeDataReader;
         }
 
