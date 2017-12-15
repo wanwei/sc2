@@ -15,34 +15,35 @@ namespace com.wer.sc.ui.comp
 {
     public class ChartComponentStrategyDrawer : IStrategyDrawer
     {
-        private CompChart compChart;
+        private int startPos;
+
+        private IGraphicDrawer_PriceRect drawer;
+
+        private IGraphicData graphicData;
+
+        private PriceGraphicMapping mapping;
 
         private List<StrategyShape> drawStrategyShapes = new List<StrategyShape>();
 
         private List<PriceShape> drawPriceShapes = new List<PriceShape>();
 
-        public ChartComponentStrategyDrawer(CompChart compChart)
+        public ChartComponentStrategyDrawer(IGraphicDrawer_PriceRect drawer, IGraphicData graphicData, PriceGraphicMapping mapping)
         {
-            this.compChart = compChart;
-            this.compChart.OnChartRefresh += CompChart_OnChartRefresh;
+            this.drawer = drawer;
+            this.graphicData = graphicData;
+            this.mapping = mapping;
         }
 
-        private void CompChart_OnChartRefresh(object sender, ChartRefreshArguments arg)
+        public ChartComponentStrategyDrawer(IGraphicDrawer_PriceRect drawer, IGraphicData graphicData, PriceGraphicMapping mapping, int startPos)
         {
-            if (arg.DataRefreshed)
-                this.compChart.CurrentPriceRectDrawer.ClearPriceShapes();
-            else
-                this.Refresh();
-        }
-
-        private void DrawStrategyShape(StrategyShape strategyShape)
-        {
-
+            this.drawer = drawer;
+            this.graphicData = graphicData;
+            this.mapping = mapping;
+            this.startPos = startPos;
         }
 
         private PriceShape_Point GetPoint(double time, float price)
         {
-            IGraphicData graphicData = compChart.CurrentGraphicData;
             if (graphicData is IGraphicData_Candle)
             {
                 IGraphicData_Candle candleData = (IGraphicData_Candle)graphicData;
@@ -54,7 +55,6 @@ namespace com.wer.sc.ui.comp
             {
 
             }
-            // compChart.CurrentPriceRectDrawer
             return null;
         }
 
@@ -66,14 +66,11 @@ namespace com.wer.sc.ui.comp
             label.Text = text;
             label.Color = color;
             label.Font = new Font("宋体", 10f, FontStyle.Regular);
-            compChart.CurrentPriceRectDrawer.DrawShape(label);
+            drawer.DrawShape(label);
         }
 
         public void DrawLabel(PriceLabel label)
         {
-            PriceGraphicMapping mapping = compChart.CurrentChartGraphicMapping;
-            IGraphicDrawer_PriceRect drawer = compChart.CurrentPriceRectDrawer;
-
             PriceShape_Label shape = new PriceShape_Label();
             shape.Color = label.Color;
             shape.Text = label.Text;
@@ -85,9 +82,8 @@ namespace com.wer.sc.ui.comp
 
         public void DrawLabels(List<float> positions, List<string> txts, Color color)
         {
-            IGraphicDrawer_PriceRect drawer = compChart.CurrentPriceRectDrawer;
-
             PriceShape_Label shape = new PriceShape_Label();
+
             //shape.Color = label.Color;
             //shape.Text = label.Text;
             //shape.Point = GetPoint(label.Time, label.Price);
@@ -122,7 +118,7 @@ namespace com.wer.sc.ui.comp
 
         public void DrawPolyLine(PricePolyLine polyLine)
         {
-            PriceRectangle priceRect = compChart.CurrentChartGraphicMapping.PriceRect;
+            PriceRectangle priceRect = mapping.PriceRect;
             int start = priceRect.StartIndex;
             int end = priceRect.EndIndex;
 
@@ -160,7 +156,7 @@ namespace com.wer.sc.ui.comp
 
         private void DrawPointsInternal(StrategyPoints points)
         {
-            PriceRectangle priceRect = compChart.CurrentChartGraphicMapping.PriceRect;
+            PriceRectangle priceRect = mapping.PriceRect;
             int start = priceRect.StartIndex;
             int end = priceRect.EndIndex;
 
@@ -182,17 +178,21 @@ namespace com.wer.sc.ui.comp
         {
             List<float> line = polyLine.Prices;
             Color color = polyLine.Color;
-            PriceRectangle priceRect = compChart.CurrentChartGraphicMapping.PriceRect;
-            int start = priceRect.StartIndex;
-            int end = priceRect.EndIndex;
+            PriceRectangle priceRect = mapping.PriceRect;
+            int start = priceRect.StartIndex;// - startPos + 1;
+            int end = priceRect.EndIndex + 1;// - startPos + 1;
             PriceShape_PolyLine polyline = new PriceShape_PolyLine();
             for (int i = start; i <= end; i++)
             {
-                if (i >= line.Count)
+                int index = i - startPos - 1;
+                if (index >= line.Count)
                     return;
-                if (line[i] == float.MinValue)
+                if (i < startPos)
                     continue;
-                PriceShape_Point point = new PriceShape_Point(i, line[i]);
+                float price = line[index];
+                if (price == float.MinValue)
+                    continue;
+                PriceShape_Point point = new PriceShape_Point(i, price);
                 polyline.AddPoint(point);
             }
             polyline.Color = color;
@@ -201,12 +201,12 @@ namespace com.wer.sc.ui.comp
 
         private void DrawShape(PriceShape shape)
         {
-            this.compChart.CurrentPriceRectDrawer.DrawPriceShape(shape);
+            this.drawer.DrawPriceShape(shape);
         }
 
         public void Refresh()
         {
-            this.compChart.CurrentPriceRectDrawer.ClearPriceShapes();
+            drawer.ClearPriceShapes();
             for (int i = 0; i < shapes.Count; i++)
             {
                 DrawShape(shapes[i]);
@@ -214,7 +214,6 @@ namespace com.wer.sc.ui.comp
         }
 
         private List<StrategyShape> shapes = new List<StrategyShape>();
-
         private void Record(StrategyShape shape)
         {
             this.shapes.Add(shape);
@@ -223,93 +222,93 @@ namespace com.wer.sc.ui.comp
         public void ClearShapes()
         {
             this.shapes.Clear();
-            this.compChart.CurrentPriceRectDrawer.ClearShapes();
-            this.compChart.CurrentPriceRectDrawer.ClearPriceShapes();
+            drawer.ClearShapes();
+            drawer.ClearPriceShapes();
         }
     }
 
-    //interface StrategyShape
-    //{
-    //    PriceShapeType GetShapeType();
-    //}
+    interface StrategyShape
+    {
+        PriceShapeType GetShapeType();
+    }
 
-    //class StrategyPolyLine : StrategyShape
-    //{
-    //    public List<float> Prices;
+    class StrategyPolyLine : StrategyShape
+    {
+        public List<float> Prices;
 
-    //    public Color Color;
+        public Color Color;
 
-    //    public StrategyPolyLine(List<float> prices, Color color)
-    //    {
-    //        this.Prices = prices;
-    //        this.Color = color;
-    //    }
+        public StrategyPolyLine(List<float> prices, Color color)
+        {
+            this.Prices = prices;
+            this.Color = color;
+        }
 
-    //    public PriceShapeType GetShapeType()
-    //    {
-    //        return PriceShapeType.PolyLine;
-    //    }
-    //}
+        public PriceShapeType GetShapeType()
+        {
+            return PriceShapeType.PolyLine;
+        }
+    }
 
-    //class StrategyPoints : StrategyShape
-    //{
-    //    public List<float> Points;
+    class StrategyPoints : StrategyShape
+    {
+        public List<float> Points;
 
-    //    public Color Color;
+        public Color Color;
 
-    //    public int Width;
+        public int Width;
 
-    //    public StrategyPoints(List<float> points, Color color, int width)
-    //    {
-    //        this.Points = points;
-    //        this.Color = color;
-    //        this.Width = width;
-    //    }
-    //    public PriceShapeType GetShapeType()
-    //    {
-    //        return PriceShapeType.Point;
-    //    }
-    //}
+        public StrategyPoints(List<float> points, Color color, int width)
+        {
+            this.Points = points;
+            this.Color = color;
+            this.Width = width;
+        }
+        public PriceShapeType GetShapeType()
+        {
+            return PriceShapeType.Point;
+        }
+    }
 
-    //class StrategyLabels : StrategyShape
-    //{
-    //    public List<float> Positions;
-    //    public List<string> Txts;
-    //    public Color Color;
+    class StrategyLabels : StrategyShape
+    {
+        public List<float> Positions;
+        public List<string> Txts;
+        public Color Color;
 
-    //    public StrategyLabels(List<float> positions, List<String> txts, Color color)
-    //    {
-    //        this.Positions = positions;
-    //        this.Txts = txts;
-    //        this.Color = color;
-    //    }
+        public StrategyLabels(List<float> positions, List<String> txts, Color color)
+        {
+            this.Positions = positions;
+            this.Txts = txts;
+            this.Color = color;
+        }
 
-    //    public PriceShapeType GetShapeType()
-    //    {
-    //        return PriceShapeType.Label;
-    //    }
-    //}
+        public PriceShapeType GetShapeType()
+        {
+            return PriceShapeType.Label;
+        }
+    }
 
-    //class StrategyLine : StrategyShape
-    //{
-    //    public double StartTime;
-    //    public float StartPrice;
-    //    public double EndTime;
-    //    public float EndPrice;
+    class StrategyLine : StrategyShape
+    {
+        public double StartTime;
+        public float StartPrice;
+        public double EndTime;
+        public float EndPrice;
 
-    //    public StrategyLine(double startTime, float startPrice, double endTime, float endPrice)
-    //    {
-    //        this.StartTime = startTime;
-    //        this.StartPrice = startPrice;
-    //        this.EndTime = endTime;
-    //        this.EndPrice = endPrice;
-    //    }
+        public StrategyLine(double startTime, float startPrice, double endTime, float endPrice)
+        {
+            this.StartTime = startTime;
+            this.StartPrice = startPrice;
+            this.EndTime = endTime;
+            this.EndPrice = endPrice;
+        }
 
-    //    public PriceShapeType GetShapeType()
-    //    {
-    //        return PriceShapeType.Line;
-    //    }
-    //}
+        public PriceShapeType GetShapeType()
+        {
+            return PriceShapeType.Line;
+        }
+    }
 
     //class StrategyRect : StrategyShape
     //{

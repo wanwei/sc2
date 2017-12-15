@@ -11,6 +11,11 @@ namespace com.wer.sc.comp.graphic
 {
     public class GraphicDataFactory
     {
+        public static IGraphicData_Candle CreateGraphicData_Candle()
+        {
+            return new GraphicData_Candle();
+        }
+
         public static IGraphicData_Candle CreateGraphicData_Candle(IKLineData klineData, int startIndex, int endIndex)
         {
             return new GraphicData_Candle(klineData, startIndex, endIndex);

@@ -50,6 +50,8 @@ namespace com.wer.sc.data.store.file
         {
             string path = dataPathUtils.GetKLineDataPath(code, klinePeriod);
             KLineData klineData = (KLineData)(new KLineDataStore_File_Single(path)).Load(startDate, endDate);
+            if (klineData == null)
+                return null;
             klineData.Period = klinePeriod;
             return klineData;
         }

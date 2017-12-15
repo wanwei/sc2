@@ -23,7 +23,7 @@ namespace com.wer.sc.strategy
 
         public StrategyAbstract()
         {
-            this.Parameters.AddParameter(PARAMETER_PERIOD, "计算周期", "计算周期", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);
+            //this.Parameters.AddParameter(PARAMETER_PERIOD, "计算周期", "计算周期", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);
         }
 
         public virtual void OnStart(Object sender, IStrategyOnStartArgument argument)

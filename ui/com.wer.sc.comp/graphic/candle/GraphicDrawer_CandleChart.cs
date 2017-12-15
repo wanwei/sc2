@@ -242,6 +242,7 @@ namespace com.wer.sc.comp.graphic
             Brush b = isRed ? this.ColorConfig.Brush_CandleBlockUp : this.ColorConfig.Brush_CandleBlockDown;
             if (chart.End.Equals(chart.Start))
                 b = this.ColorConfig.Brush_CandleFlat;
+            
             Pen p = new Pen(b);
             float XMiddle = priceMapping.CalcX(index);
             float YTop = priceMapping.CalcY(chart.High);
@@ -251,7 +252,7 @@ namespace com.wer.sc.comp.graphic
             //画上影线和下影线            
             g.DrawLine(p, new PointF(XMiddle, YTop), new PointF(XMiddle, YBlockTop));
             g.DrawLine(p, new PointF(XMiddle, YBottom), new PointF(XMiddle, YBlockBottom));
-
+            
             float halfBlockWidth = (blockWidth - blockPadding) / 2;
 
             float XLeft = XMiddle - halfBlockWidth;

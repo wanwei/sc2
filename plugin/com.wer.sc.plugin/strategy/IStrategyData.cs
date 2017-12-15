@@ -8,7 +8,7 @@ namespace com.wer.sc.strategy
 {
     public interface IStrategyData
     {
-        IStrategy Strategy { get; }
+        IStrategy Strategy { get; set; }
 
         IStrategyInfo StrategyInfo { get; }
     }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,10 +34,17 @@ namespace com.wer.sc.comp.graphic
             if (priceRect == null)
                 return;
             PriceGraphicMapping mapping = new PriceGraphicMapping(DisplayRect, priceRect);
+
+            graphic.SmoothingMode = SmoothingMode.AntiAlias;
+            graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphic.CompositingQuality = CompositingQuality.HighQuality;
+
             for (int i = 0; i < shapes.Count; i++)
             {
                 shapePainter.Paint(graphic, mapping, shapes[i]);
             }
+
+            graphic.SmoothingMode = SmoothingMode.None;
         }
 
         public void DrawPriceShape(PriceShape priceShape)

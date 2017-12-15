@@ -6,6 +6,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 using com.wer.sc.comp.graphic.shape;
+using System.Drawing.Drawing2D;
 
 namespace com.wer.sc.comp.graphic
 {
@@ -196,7 +197,10 @@ namespace com.wer.sc.comp.graphic
                     BufferedGraphicsContext currentContext = BufferedGraphicsManager.Current;
                     BufferedGraphics myBuffer = currentContext.Allocate(control.CreateGraphics(), control.DisplayRectangle);
                     Graphics g = myBuffer.Graphics;
-
+                    //g.SmoothingMode = SmoothingMode.AntiAlias;
+                    //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    //g.CompositingQuality = CompositingQuality.HighQuality;
+                    
                     Paint(g);
                     if (AfterGraphicPaint != null)
                         AfterGraphicPaint(this, new GraphicRefreshArgs(g));

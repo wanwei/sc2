@@ -465,11 +465,8 @@ namespace com.wer.sc.ui
             // compMain1
             // 
             //this.compMain1.Code = "RB1801";
-            this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
+            //this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compMain1.KLineBlockWidth = 5F;
-            kLinePeriod1.PeriodType = com.wer.sc.data.KLineTimeType.MINUTE;
-            this.compMain1.KlinePeriod = kLinePeriod1;
             this.compMain1.Location = new System.Drawing.Point(0, 0);
             this.compMain1.Name = "compMain1";
             this.compMain1.Size = new System.Drawing.Size(1063, 528);

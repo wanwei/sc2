@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Strageties>
+  <Assembly file="com.wer.sc.strategy.daily.dll" name="每日策略">
+  </Assembly>
+</Strageties>

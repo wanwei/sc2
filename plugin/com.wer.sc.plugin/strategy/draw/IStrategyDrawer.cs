@@ -7,39 +7,58 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy.draw
 {
+    /// <summary>
+    /// 策略绘图器
+    /// 该接口用于执行完策略的绘制图形
+    /// </summary>
     public interface IStrategyDrawer
     {
         /// <summary>
-        /// 画文本
+        /// 写该图的title，写在该图的左上角
+        /// 如：MA指标
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="color"></param>
+        /// <param name="x">绘制文本的x坐标</param>
+        /// <param name="text">绘制的文本</param>
+        /// <param name="color">使用的颜色</param>
         void DrawTitle(int x, string text, Color color);
 
         /// <summary>
-        /// 画折线，如MA等
+        /// 画折线
+        /// 该方法会在每一个bar绘制折线
+        /// 适用于一些指标的计算，如MA
+        /// 如果points里面数小于0，则不画该点
         /// </summary>
-        /// <param name="line"></param>
-        void DrawPolyLine(List<float> line, Color color);
+        /// <param name="points"></param>
+        void DrawPolyLine(List<float> points, Color color);
 
         /// <summary>
-        /// 画折线，如MA等
+        /// 画折线
+        /// 该方法在指定点画折线，适用于在图形上画直线
+        /// 如Zigzag、通道线、趋势线等。
         /// </summary>
         /// <param name="polyLine"></param>
         /// <param name="color"></param>
         void DrawPolyLine(PricePolyLine polyLine);
 
         /// <summary>
-        /// 画点
+        /// 画点，在图形的每一个bar上画点
+        /// 如果points里的数小于0，则不画该点
         /// </summary>
         /// <param name="points"></param>
         /// <param name="color"></param>
         void DrawPoints(List<float> points, Color color);
 
+        /// <summary>
+        /// 画点，在图形的每一个bar上画点
+        /// 如果points里的数小于0，则不画该点
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="color"></param>
+        /// <param name="width"></param>
         void DrawPoints(List<float> points, Color color, int width);
 
         /// <summary>
-        /// 画点
+        /// 画指定点
         /// </summary>
         /// <param name="points"></param>
         /// <param name="color"></param>
@@ -79,7 +98,9 @@ namespace com.wer.sc.strategy.draw
         /// </summary>
         void Refresh();
 
-
+        /// <summary>
+        /// 清空所有图形
+        /// </summary>
         void ClearShapes();
     }
 }

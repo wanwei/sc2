@@ -10,7 +10,8 @@ namespace com.wer.sc.strategy.draw
     public interface IDrawOperator
     {
         /// <summary>
-        /// 得到K线的画图帮助类
+        /// 得到K线的画图帮助接口
+        /// 每个K线周期都有各自的画图接口
         /// </summary>
         /// <param name="klinePeriod"></param>
         /// <returns></returns>

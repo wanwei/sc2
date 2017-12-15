@@ -18,9 +18,8 @@ namespace com.wer.sc.ui.comp.test
         {
             InitializeComponent();
 
-            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code("rb1710", 20170101, 20170501);
-            //ChartComponentInfo data = new ChartComponentInfo(dataPackage);
-            //ChartComponentView view = new ChartComponentView(this.panel1, data);
+            this.chartComponent1.Init(DataCenter.Default, "rb1710", 20170502.0930);
+            this.menuComponent1.BindChartComponent(this.chartComponent1);
         }
     }
 }

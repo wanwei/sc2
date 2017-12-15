@@ -43,39 +43,105 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompChart.cs">
+    <Compile Include="ChartComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CompChart.Designer.cs">
-      <DependentUpon>CompChart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CompChartData.cs" />
-    <Compile Include="CompChartStrategyBinder.cs" />
-    <Compile Include="CompChart_Drawer.cs" />
-    <Compile Include="CompChart_DrawHelper.cs" />
-    <Compile Include="CompCurrentInfo.cs">
+    <Compile Include="ChartComponentController.cs" />
+    <Compile Include="ChartComponentData.cs" />
+    <Compile Include="ChartComponentStrategyDrawer.cs" />
+    <Compile Include="ChartComponentDrawer.cs" />
+    <Compile Include="ChartComponentStrategy.cs" />
+    <Compile Include="CurrentInfoComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CompCurrentInfo.Designer.cs">
-      <DependentUpon>CompCurrentInfo.cs</DependentUpon>
+    <Compile Include="CurrentInfoComponent.Designer.cs">
+      <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompMain.cs">
+    <Compile Include="FormForwardSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormForwardSetting.Designer.cs">
+      <DependentUpon>FormForwardSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTime.Designer.cs">
+      <DependentUpon>FormTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CompMain.Designer.cs">
-      <DependentUpon>CompMain.cs</DependentUpon>
+    <Compile Include="MainComponent.Designer.cs">
+      <DependentUpon>MainComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompStrategyTree.cs">
+    <Compile Include="MenuComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CompStrategyTree.Designer.cs">
-      <DependentUpon>CompStrategyTree.cs</DependentUpon>
+    <Compile Include="MenuComponent.Designer.cs">
+      <DependentUpon>MenuComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="ICompChart.cs" />
-    <Compile Include="ICompChartStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ChartComponentStrategyDrawOperator.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\StrategyTreeComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="strategy\StrategyTreeComponent.Designer.cs">
+      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategy.Designer.cs">
+      <DependentUpon>FormStrategy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyDataPackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyDataPackage.Designer.cs">
+      <DependentUpon>FormStrategyDataPackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyDescription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyDescription.Designer.cs">
+      <DependentUpon>FormStrategyDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyLoader.Designer.cs">
+      <DependentUpon>FormStrategyLoader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyReport.Designer.cs">
+      <DependentUpon>FormStrategyReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyResult.Designer.cs">
+      <DependentUpon>FormStrategyResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="strategy\FormStrategyTrader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="strategy\FormStrategyTrader.Designer.cs">
+      <DependentUpon>FormStrategyTrader.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils.ui\com.wer.sc.utils.ui.csproj">
+      <Project>{ffffc645-3a82-48f2-8705-d4ee4552f1b7}</Project>
+      <Name>com.wer.sc.utils.ui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
       <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
       <Name>com.wer.sc.utils</Name>
@@ -98,17 +164,51 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CompChart.resx">
-      <DependentUpon>CompChart.cs</DependentUpon>
+    <EmbeddedResource Include="ChartComponent.resx">
+      <DependentUpon>ChartComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CompCurrentInfo.resx">
-      <DependentUpon>CompCurrentInfo.cs</DependentUpon>
+    <EmbeddedResource Include="CurrentInfoComponent.resx">
+      <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CompMain.resx">
-      <DependentUpon>CompMain.cs</DependentUpon>
+    <EmbeddedResource Include="FormForwardSetting.resx">
+      <DependentUpon>FormForwardSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CompStrategyTree.resx">
-      <DependentUpon>CompStrategyTree.cs</DependentUpon>
+    <EmbeddedResource Include="FormTime.resx">
+      <DependentUpon>FormTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainComponent.resx">
+      <DependentUpon>MainComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuComponent.resx">
+      <DependentUpon>MenuComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\StrategyTreeComponent.resx">
+      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategy.resx">
+      <DependentUpon>FormStrategy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyDataPackage.resx">
+      <DependentUpon>FormStrategyDataPackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyDescription.resx">
+      <DependentUpon>FormStrategyDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyLoader.resx">
+      <DependentUpon>FormStrategyLoader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyReport.resx">
+      <DependentUpon>FormStrategyReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyResult.resx">
+      <DependentUpon>FormStrategyResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="strategy\FormStrategyTrader.resx">
+      <DependentUpon>FormStrategyTrader.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,12 +11,30 @@ namespace com.wer.sc.strategy
 {
     public class StrategyReferedPeriods : ForwardReferedPeriods
     {
+        private KLinePeriod mainPeriod;
+
         public StrategyReferedPeriods() : base()
         {
         }
 
         public StrategyReferedPeriods(IList<KLinePeriod> usedKLinePeriods, bool useTick, bool useTimeLine) : base(usedKLinePeriods, useTick, useTimeLine)
         {
+            this.mainPeriod = GetMinPeriod();
+        }
+
+        public StrategyReferedPeriods(IList<KLinePeriod> usedKLinePeriods, KLinePeriod mainPeriod, bool useTick, bool useTimeLine) : base(usedKLinePeriods, useTick, useTimeLine)
+        {
+            this.mainPeriod = mainPeriod;
+        }
+
+        public KLinePeriod MainPeriod
+        {
+            get
+            {
+                if (mainPeriod == null)
+                    mainPeriod = GetMinPeriod();
+                return mainPeriod;
+            }
         }
     }
 }

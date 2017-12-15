@@ -8,13 +8,13 @@ using com.wer.sc.data;
 using com.wer.sc.utils;
 using com.wer.sc.strategy.draw;
 
-namespace com.wer.sc.strategy.cnfutures
+namespace com.wer.sc.strategy.common
 {
     /// <summary>
     /// 
     /// </summary>
     [Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
-    public class Strategy_Zigzag : StrategyAbstract, IStrategy
+    public class Strategy_Zigzag : StrategyAbstract
     {
         private const int LASTTYPE_UNKNOWN = 0;
         private const int LASTTYPE_LOW = -1;

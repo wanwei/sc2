@@ -17,7 +17,7 @@ namespace com.wer.sc.ui
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FormMain());
-            Application.Run(new FormChart2());
+            Application.Run(new FormChart());
         }
     }
 }

@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 namespace com.wer.sc.ui.comp
 {
     /// <summary>
-    /// 组件
+    /// 组件，可显示K线、分时线、tick线
+    /// 功能：
+    /// 1.切换显示的code
+    /// 2.切换显示的time
+    /// 3.
+    /// 
+    /// 显示K线时可以切换正显示的K线
     /// </summary>
     public interface IChartComponent
     {
-        IChartComponentView View { get; }
-
-        IChartComponentController Controller { get; }
-
-        IChartComponentInfo Data { get; }
     }
 
     /// <summary>
@@ -33,11 +34,11 @@ namespace com.wer.sc.ui.comp
     /// </summary>
     public class ChartComponentChangeArguments
     {
-        private IChartComponentInfo prevCompChartInfo;
+        private IChartComponentData prevCompChartInfo;
 
-        private IChartComponentInfo currentCompChartInfo;
+        private IChartComponentData currentCompChartInfo;
 
-        public IChartComponentInfo PrevCompChartInfo
+        public IChartComponentData PrevCompChartInfo
         {
             get
             {
@@ -45,7 +46,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public IChartComponentInfo CurrentCompChartInfo
+        public IChartComponentData CurrentCompChartInfo
         {
             get
             {
@@ -53,7 +54,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public ChartComponentChangeArguments(IChartComponentInfo prevCompChartInfo, IChartComponentInfo currentCompChartInfo)
+        public ChartComponentChangeArguments(IChartComponentData prevCompChartInfo, IChartComponentData currentCompChartInfo)
         {
             this.prevCompChartInfo = prevCompChartInfo;
             this.currentCompChartInfo = currentCompChartInfo;

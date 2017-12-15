@@ -65,7 +65,8 @@ namespace com.wer.sc.ui
                 return;
             DataGridViewRow row = this.dataGridView1.SelectedRows[0];
             string code = row.Cells[0].Value.ToString();
-            compChart.Code = code;
+            //compChart.Code = code;
+            compChart.Change(code);
         }
     }
 

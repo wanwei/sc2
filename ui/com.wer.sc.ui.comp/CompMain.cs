@@ -13,9 +13,16 @@ namespace com.wer.sc.ui.comp
 {
     public partial class CompMain : UserControl
     {
+        private CompChart compChart1;
         public CompMain()
         {
             InitializeComponent();
+            
+        }
+
+        public void Init(string code, double time, KLinePeriod klinePeriod)
+        {
+            this.compChart1.Init(code, time, klinePeriod);
             this.compCurrentInfo1.CompChartData = CompChart1.CompChartData;
         }
 
@@ -24,19 +31,19 @@ namespace com.wer.sc.ui.comp
             get { return compChart1; }
         }
 
-        [Browsable(true), DisplayName("数据中心"), Description("数据中心"), Category("自定义属性"), DefaultValue(null)]
-        public string DataCenterUri
-        {
-            get
-            {
-                return CompChart1.DataCenterUri;
-            }
+        //[Browsable(true), DisplayName("数据中心"), Description("数据中心"), Category("自定义属性"), DefaultValue(null)]
+        //public string DataCenterUri
+        //{
+        //    get
+        //    {
+        //        return CompChart1.DataCenterUri;
+        //    }
 
-            set
-            {
-                this.compChart1.DataCenterUri = value;
-            }
-        }
+        //    set
+        //    {
+        //        this.compChart1.DataCenterUri = value;
+        //    }
+        //}
 
         [Browsable(true), DisplayName("合约或股票代码"), Description("合约或股票代码"), Category("自定义属性"), DefaultValue(null)]
         public string Code
@@ -48,7 +55,7 @@ namespace com.wer.sc.ui.comp
 
             set
             {
-                this.compChart1.Code = value;
+                //this.compChart1.Code = value;
             }
         }
 
@@ -106,6 +113,6 @@ namespace com.wer.sc.ui.comp
             {
                 this.compChart1.KlinePeriod = value;
             }
-        }      
+        }
     }
 }

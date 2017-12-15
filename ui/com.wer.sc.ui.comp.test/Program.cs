@@ -16,8 +16,9 @@ namespace com.wer.sc.ui.comp.test
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormMain());
             //Application.Run(new FormChartComponent());
-            Application.Run(new FormChart2());
+            //Application.Run(new FormChart2());
             //Application.Run(new FormChart());
             //Application.Run(new FormStrategy());
         }

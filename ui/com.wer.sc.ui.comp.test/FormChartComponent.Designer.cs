@@ -28,23 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.menuComponent1 = new com.wer.sc.ui.comp.MenuComponent();
+            this.chartComponent1 = new com.wer.sc.ui.comp.ChartComponent();
             this.SuspendLayout();
             // 
-            // panel1
+            // menuComponent1
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(623, 477);
-            this.panel1.TabIndex = 0;
+            this.menuComponent1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.menuComponent1.Location = new System.Drawing.Point(0, 0);
+            this.menuComponent1.Name = "menuComponent1";
+            this.menuComponent1.Size = new System.Drawing.Size(623, 43);
+            this.menuComponent1.TabIndex = 0;
+            // 
+            // chartComponent1
+            // 
+            this.chartComponent1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartComponent1.Location = new System.Drawing.Point(0, 43);
+            this.chartComponent1.Name = "chartComponent1";
+            this.chartComponent1.Size = new System.Drawing.Size(623, 434);
+            this.chartComponent1.TabIndex = 1;
             // 
             // FormChartComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 477);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.chartComponent1);
+            this.Controls.Add(this.menuComponent1);
             this.Name = "FormChartComponent";
             this.Text = "chart组件测试";
             this.ResumeLayout(false);
@@ -53,6 +63,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private MenuComponent menuComponent1;
+        private ChartComponent chartComponent1;
     }
 }

@@ -53,9 +53,14 @@ namespace com.wer.sc.strategy
         {
             this.strategy = strategy;
             this.strategy.StrategyOperator = strategyHelper;
-            ForwardReferedPeriods rPeriods = strategy.GetReferedPeriods();
-            if (rPeriods != null)
-                this.referedPeriods = rPeriods;
+            ForwardReferedPeriods referedPeriods = strategy.GetReferedPeriods();
+            if (referedPeriods != null)
+                this.referedPeriods = referedPeriods;
+        }
+
+        public void SetStrategyPackage(IStrategyPackage strategyPackage)
+        {
+
         }
 
         private object lockObj = new object();
@@ -174,16 +179,24 @@ namespace com.wer.sc.strategy
             //执行策略
             while (!realTimeReader.IsEnd)
             {
-                try
-                {
-                    realTimeReader.Forward();
-                    if (isCancel)
-                        return false;
-                }
-                catch (Exception e)
-                {
-                    LogHelper.Warn(GetType(), e);
-                }
+                //try
+                //{
+                //    realTimeReader.Forward();
+                //    if (isCancel)
+                //        return false;
+                //}
+                ////catch (StrategyException e)
+                ////{                    
+                ////    return false;
+                ////}
+                //catch (Exception e)
+                //{
+                //    //LogHelper.Warn(GetType(), e);
+                //    throw new StrategyException(e.Message, e);
+                //}
+                realTimeReader.Forward();
+                if (isCancel)
+                    return false;
             }
             return true;
         }
@@ -252,7 +265,7 @@ namespace com.wer.sc.strategy
                     IStrategy referedStrategy = referedStrategies[i];
                     OnBar_ReferedStrategies(referedStrategy, argument);
                 }
-            }            
+            }
             strategy.OnBar(this, new StrategyOnBarArgument((ForwardOnBarArgument)argument));
         }
 

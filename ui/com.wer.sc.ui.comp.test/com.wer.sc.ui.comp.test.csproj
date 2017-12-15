@@ -46,23 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormChart2.cs">
+    <Compile Include="FormCurrentInfoComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart2.Designer.cs">
-      <DependentUpon>FormChart2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormChart.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormChart.Designer.cs">
-      <DependentUpon>FormChart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormChartComponent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormChartComponent.Designer.cs">
-      <DependentUpon>FormChartComponent.cs</DependentUpon>
+    <Compile Include="FormCurrentInfoComponent.Designer.cs">
+      <DependentUpon>FormCurrentInfoComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormForwardSetting.cs">
       <SubType>Form</SubType>
@@ -70,17 +58,17 @@
     <Compile Include="FormForwardSetting.Designer.cs">
       <DependentUpon>FormForwardSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="FormMainComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="FormMainComponent.Designer.cs">
+      <DependentUpon>FormMainComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStrategy.cs">
+    <Compile Include="FormStrategyTreeComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStrategy.Designer.cs">
-      <DependentUpon>FormStrategy.cs</DependentUpon>
+    <Compile Include="FormStrategyTreeComponent.Designer.cs">
+      <DependentUpon>FormStrategyTreeComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTime.cs">
       <SubType>Form</SubType>
@@ -88,17 +76,36 @@
     <Compile Include="FormTime.Designer.cs">
       <DependentUpon>FormTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormChartComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChartComponent.Designer.cs">
+      <DependentUpon>FormChartComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormChartComponentDrawer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChartComponentDrawer.Designer.cs">
+      <DependentUpon>FormChartComponentDrawer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategy_Default.cs" />
-    <EmbeddedResource Include="FormChart2.resx">
-      <DependentUpon>FormChart2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormChart.resx">
-      <DependentUpon>FormChart.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Strategy_MultiMa.cs" />
     <EmbeddedResource Include="FormChartComponent.resx">
       <DependentUpon>FormChartComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormChartComponentDrawer.resx">
+      <DependentUpon>FormChartComponentDrawer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCurrentInfoComponent.resx">
+      <DependentUpon>FormCurrentInfoComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormForwardSetting.resx">
       <DependentUpon>FormForwardSetting.cs</DependentUpon>
@@ -106,8 +113,11 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStrategy.resx">
-      <DependentUpon>FormStrategy.cs</DependentUpon>
+    <EmbeddedResource Include="FormMainComponent.resx">
+      <DependentUpon>FormMainComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStrategyTreeComponent.resx">
+      <DependentUpon>FormStrategyTreeComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTime.resx">
       <DependentUpon>FormTime.cs</DependentUpon>

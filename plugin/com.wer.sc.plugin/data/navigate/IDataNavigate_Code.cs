@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data.datapackage;
+using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,13 @@ namespace com.wer.sc.data.navigate
         /// </summary>
         /// <returns></returns>
         bool Forward(KLinePeriod forwardPeriod);
+
+        /// <summary>
+        /// 前进
+        /// </summary>
+        /// <param name="forwardPeriod"></param>
+        /// <returns></returns>
+        bool Forward(ForwardPeriod forwardPeriod);
 
         /// <summary>
         /// 后退
@@ -62,6 +70,11 @@ namespace com.wer.sc.data.navigate
             get { return code; }
         }
 
+        public string PrevCode
+        {
+            get { return prevCode; }
+        }
+
         public double Time
         {
             get
@@ -89,6 +102,7 @@ namespace com.wer.sc.data.navigate
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append(prevCode).Append(",").Append(code).AppendFormat(",");
             sb.Append(prevTime).Append(",").Append(time);
             return sb.ToString();
         }

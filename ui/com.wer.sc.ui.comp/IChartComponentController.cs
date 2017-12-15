@@ -37,6 +37,12 @@ namespace com.wer.sc.ui.comp
         void Change(String code, double time);
 
         /// <summary>
+        /// 视图向前进或后退，
+        /// </summary>
+        /// <param name="forwardPeriod"></param>
+        void ForwardTime(ForwardPeriod forwardPeriod);
+
+        /// <summary>
         /// 切换图中显示的图形，K线、分时线或tick线
         /// </summary>
         /// <param name="chartType"></param>
@@ -55,11 +61,6 @@ namespace com.wer.sc.ui.comp
         /// <param name="cnt"></param>
         void ForwardView(int cnt);
 
-        /// <summary>
-        /// 视图向前进或后退，
-        /// </summary>
-        /// <param name="forwardPeriod"></param>
-        void ForwardTime(ForwardPeriod forwardPeriod);
 
         /// <summary>
         /// 刷新图形，如果是K线，则返回当前时间显示的K线

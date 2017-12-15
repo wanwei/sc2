@@ -32,7 +32,7 @@ namespace com.wer.sc.ui.comp
 
         private string code;
 
-        private string dataCenterUri;
+        //private string dataCenterUri;
 
         private ChartType chartType;
 
@@ -44,25 +44,7 @@ namespace com.wer.sc.ui.comp
 
         //private int klinePeriod;
 
-        //private KLineTimeType klineTimeType;
-
-        public string DataCenterUri
-        {
-            get
-            {
-                return dataCenterUri;
-            }
-
-            set
-            {
-                if (dataCenterUri == value)
-                    return;
-                this.oldChartDataState = GetChartDataState();
-                dataCenterUri = value;
-                this.dataReader = DataReaderFactory.CreateDataReader(dataCenterUri);
-                this.IsDataRefresh = true;
-            }
-        }
+        //private KLineTimeType klineTimeType;        
 
         public string Code
         {
@@ -165,16 +147,16 @@ namespace com.wer.sc.ui.comp
 
         public bool CheckData()
         {
-            if (dataCenterUri == null)
-                return false;
+            //if (dataCenterUri == null)
+            //    return false;
             if (time == 0)
                 return false;
             if (code == null)
                 return false;
             if (klinePeriod == null)
                 return false;
-            if (dataReader == null)
-                return false;
+            //if (dataReader == null)
+            //    return false;
             return true;
         }
 
@@ -342,7 +324,7 @@ namespace com.wer.sc.ui.comp
             ChartDataState state = new ChartDataState();
             if (this.DataPackage != null)
                 state.DataPackageInfo = new DataPackageInfo(this.code, this.DataPackage.StartDate, this.DataPackage.EndDate);
-            state.dataCenterUri = this.dataCenterUri;
+            //state.dataCenterUri = this.dataCenterUri;
             state.chartType = this.chartType;
             state.time = this.time;
             state.kLineBlockWidth = this.kLineBlockWidth;

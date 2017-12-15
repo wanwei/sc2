@@ -14,7 +14,7 @@ namespace com.wer.sc.data.navigate
     /// </summary>
     public class DataNavigateFactory : IDataNavigateFactory
     {
-        internal static IDataNavigate_Code CreateDataNavigate(IDataPackage_Code dataPackage, double time)
+        public IDataNavigate_Code CreateDataNavigate_Code(IDataPackage_Code dataPackage, double time)
         {
             return new DataNavigate_Code(dataPackage, time);
         }
@@ -62,14 +62,14 @@ namespace com.wer.sc.data.navigate
             if (openDate < 0)
                 return null;
             IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
-            return CreateDataNavigate(dataPackage, time);
+            return CreateDataNavigate_Code(dataPackage, time);
         }
 
         public IDataNavigate_Code CreateDataNavigate_Code(string code, double time, int beforeDays, int afterDays)
         {
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, beforeDays, afterDays);
-            return CreateDataNavigate(dataPackage, time);
+            return CreateDataNavigate_Code(dataPackage, time);
         }
     }
 }

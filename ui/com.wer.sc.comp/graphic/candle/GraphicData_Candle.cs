@@ -22,6 +22,11 @@ namespace com.wer.sc.comp.graphic
 
         private KLinePeriod period;
 
+        public GraphicData_Candle()
+        {
+
+        }
+
         public GraphicData_Candle(IKLineData klineData, int startIndex, int endIndex)
         {
             ChangeData(klineData);

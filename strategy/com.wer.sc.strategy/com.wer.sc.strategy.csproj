@@ -54,6 +54,7 @@
     <Compile Include="StrategyOnStartArgument.cs" />
     <Compile Include="StrategyOnTickArgument.cs" />
     <Compile Include="StrategyOnTickInfo.cs" />
+    <Compile Include="StrategyPackage.cs" />
     <Compile Include="StrategyReport.cs" />
     <Compile Include="StrategyResult.cs" />
     <Compile Include="StrategyResult_Single.cs" />

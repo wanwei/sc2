@@ -9,19 +9,28 @@ namespace com.wer.sc.strategy
 {
     public class StrategyData : IStrategyData
     {
+        private IStrategyInfo strategyInfo;
+        private IStrategy strategy;
+        public StrategyData(IStrategyInfo strategyInfo, IStrategy strategy)
+        {
+            this.strategyInfo = strategyInfo;
+            this.strategy = strategy;
+        }
+
         public IStrategy Strategy
         {
             get
             {
-                throw new NotImplementedException();
+                return strategy;
             }
+            set { this.strategy = value; }
         }
 
         public IStrategyInfo StrategyInfo
         {
             get
             {
-                throw new NotImplementedException();
+                return strategyInfo;
             }
         }
     }

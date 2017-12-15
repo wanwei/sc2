@@ -1,4 +1,4 @@
-﻿namespace com.wer.sc.utils.ui.test
+﻿namespace com.wer.sc.utils.ui
 {
     partial class FormLog
     {

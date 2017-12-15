@@ -1,5 +1,8 @@
-﻿using com.wer.sc.data;
+﻿using com.wer.sc.comp.graphic;
+using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.navigate;
+using com.wer.sc.strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,42 +12,139 @@ using System.Windows.Forms;
 
 namespace com.wer.sc.ui.comp
 {
-    public class ChartComponent : IChartComponent
+    public partial class ChartComponent : UserControl
     {
-        private IChartComponentController controller;
+        private ChartComponentData prevCompData = null;
+        private ChartComponentController controller;
+        private ChartComponentDrawer drawer;
 
-        private ChartComponentInfo data;
+        private IStrategyData strategyData = null;
 
-        private IChartComponentView view;
+        private ChartComponentStrategy chartComponentStrategy = null;
 
-        public ChartComponent(IDataPackage_Code dataPackage, Control control)
+        public ChartComponent()
         {
-            this.data = new ChartComponentInfo(dataPackage);
-            this.view = new ChartComponentView(control, data);
-            //this.controller = new ChartComponentController()
+            InitializeComponent();
         }
 
-        public IChartComponentController Controller
+        public void Init(IDataCenter dataCenter, string code, double time)
+        {
+            Init(dataCenter, code, time, KLinePeriod.KLinePeriod_1Minute);
+        }
+
+        public void Init(IDataCenter dataCenter, string code, double time, KLinePeriod klinePeriod)
+        {
+            IDataNavigate dataNavigater = dataCenter.DataNavigateFactory.CreateDataNavigate(code, time);
+            IKLineData klineData = dataNavigater.GetKLineData(klinePeriod);
+            int showKLineIndex = klineData.BarPos;
+            ChartComponentData compData = new ChartComponentData(code, time, klinePeriod, showKLineIndex);
+            this.controller = new ChartComponentController(dataNavigater, compData);
+            this.drawer = new ChartComponentDrawer(this, controller);
+            //this.drawer.GraphicData_Candle.OnGraphicDataChange += GraphicData_Candle_OnGraphicDataChange;
+            this.drawer.GraphicDrawer.AfterGraphicPaint += GraphicDrawer_AfterGraphicPaint;
+        }
+
+        private void GraphicData_Candle_OnGraphicDataChange(object sender, GraphicDataChangeArgument arg)
+        {
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartComponentRefreshArguments(prevCompData, controller.ChartComponentData));
+            if (prevCompData == null)
+                prevCompData = new ChartComponentData(controller.ChartComponentData);
+            else
+                prevCompData.CopyFrom(controller.ChartComponentData);
+        }
+
+        private void GraphicDrawer_AfterGraphicPaint(object sender, GraphicRefreshArgs e)
+        {
+            if (OnChartRefresh != null)
+                OnChartRefresh(this, new ChartComponentRefreshArguments(prevCompData, controller.ChartComponentData));
+            if (prevCompData == null)
+                prevCompData = new ChartComponentData(controller.ChartComponentData);
+            else
+                prevCompData.CopyFrom(controller.ChartComponentData);
+        }
+
+        public ChartComponentController Controller
+        {
+            get { return controller; }
+        }
+
+        public ChartComponentDrawer Drawer
+        {
+            get { return drawer; }
+        }
+
+        public IStrategyData StrategyData
         {
             get
             {
-                return controller;
+                return strategyData;
+            }
+
+            set
+            {
+                strategyData = value;
+                this.chartComponentStrategy = new ChartComponentStrategy(this, strategyData);
             }
         }
 
-        public IChartComponentInfo Data
+        public ChartComponentStrategy ChartComponentStrategy
         {
             get
             {
-                return this.data;
+                return chartComponentStrategy;
             }
         }
 
-        public IChartComponentView View
+        public event DelegateOnChartComponentRefresh OnChartRefresh;
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ChartComponent
+            // 
+            this.Name = "ChartComponent";
+            this.Size = new System.Drawing.Size(656, 451);
+            this.ResumeLayout(false);
+        }
+    }
+
+    public delegate void DelegateOnChartComponentRefresh(object sender, ChartComponentRefreshArguments arg);
+
+    public class ChartComponentRefreshArguments
+    {
+        private bool dataRefreshed;
+
+        private ChartComponentData prevCompData;
+
+        private ChartComponentData compData;
+
+        public ChartComponentRefreshArguments(ChartComponentData prevCompData, ChartComponentData compData)
+        {
+            this.prevCompData = prevCompData;
+            this.compData = compData;
+            this.dataRefreshed = this.compData.Equals(prevCompData);
+        }
+
+        public bool DataRefreshed
         {
             get
             {
-                return view;
+                return dataRefreshed;
+            }
+        }
+
+        public ChartComponentData PrevCompData
+        {
+            get { return prevCompData; }
+        }
+
+        public ChartComponentData CurrentCompData
+        {
+            get
+            {
+                return compData;
             }
         }
     }

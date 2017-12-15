@@ -10,8 +10,10 @@ using System.Windows.Forms;
 namespace com.wer.sc.comp.param
 {
 
-    class ParameterControlFactory
+    public class ParameterControlFactory
     {
+        private static List<Type> list = new List<Type>();
+
         public static IParameterControl Create(IParameter parameter)
         {
             if (parameter.Options != null)
@@ -27,11 +29,16 @@ namespace com.wer.sc.comp.param
                 case ParameterType.STRING:
                     return new ParameterControl_String(parameter);
             }
-            return null;
+            return new ParameterControl_Label(parameter);
+        }
+
+        public static void Register(Type type)
+        {
+
         }
     }
 
-    interface IParameterControl
+    public interface IParameterControl
     {
         string GetKey();
 
@@ -46,9 +53,16 @@ namespace com.wer.sc.comp.param
         /// </summary>
         /// <returns></returns>
         object GetValue();
+
+        /// <summary>
+        /// 检测参数是否符合该控件
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        bool Check(IParameter parameter);
     }
 
-    abstract class ParameterControl_Abstract : IParameterControl
+    public abstract class ParameterControl_Abstract : IParameterControl
     {
         IParameter parameter;
 
@@ -62,6 +76,11 @@ namespace com.wer.sc.comp.param
         public string GetKey()
         {
             return parameter.Key;
+        }
+
+        public virtual bool Check(IParameter parameter)
+        {
+            return false;
         }
 
         public abstract object GetValue();
@@ -185,6 +204,27 @@ namespace com.wer.sc.comp.param
         public override object GetValue()
         {
             return textBox.Text;
+        }
+    }
+
+    class ParameterControl_Label : ParameterControl_Abstract
+    {
+        Label label;
+
+        public ParameterControl_Label(IParameter parameter) : base(parameter)
+        {
+            this.label = new Label();
+            this.label.Text = StringUtils.obj2Str(parameter.Value, "");
+        }
+
+        public override Control GetControl()
+        {
+            return label;
+        }
+
+        public override object GetValue()
+        {
+            return label.Text;
         }
     }
 }

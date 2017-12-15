@@ -106,15 +106,16 @@ namespace com.wer.sc.strategy
             get { return strategyPath; }
         }
 
-        //public IStrategy CreateStrategy()
-        //{
-        //    Object obj = Activator.CreateInstance(strategyClassType);
-        //    return (IStrategy)obj;
-        //}
-
-        public IStrategyData CreateStrategy()
+        public IStrategy CreateStrategy()
         {
-            throw new NotImplementedException();
+            Object obj = Activator.CreateInstance(strategyClassType);
+            return (IStrategy)obj;
+        }
+
+        public IStrategyData CreateStrategyData()
+        {
+            StrategyData strategyData = new StrategyData(this,CreateStrategy());            
+            return strategyData;
         }
 
         public static IStrategy CreateNewStrategyWithParameters(IStrategy strategy)
@@ -129,7 +130,7 @@ namespace com.wer.sc.strategy
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(strategyClassType.FullName).Append(",");
+            //sb.Append(strategyClassType.FullName).Append(",");
             sb.Append(StrategyID).Append(",");
             sb.Append(StrategyName).Append(",");
             sb.Append(StrategyDesc).Append(",");

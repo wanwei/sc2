@@ -30,6 +30,11 @@ namespace com.wer.sc.comp.graphic
             return new PointF(CalcX(pricePoint.X), CalcY(pricePoint.Y));
         }
 
+        //public PointF CalcPricePoint(PointF point)
+        //{
+        //    return new PointF(CalcPriceX(point.X), CalcPriceY(point.Y));
+        //}
+
         /// <summary>
         /// 得到index所在的位置
         /// 如果是柱状图得到块的中间位置

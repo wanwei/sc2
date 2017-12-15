@@ -104,8 +104,10 @@ namespace com.wer.sc.strategy.common.ma
         bool isLastPeriodEnd = true;
 
         public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
-        {            
+        {
             IKLineData klineData = currentData.CurrentData.GetKLineData(MainKLinePeriod);
+            if (klineData == null)
+                throw new StrategyException("没找到" + MainKLinePeriod + "K线数据");
             GenMa(klineData, isLastPeriodEnd);
             isLastPeriodEnd = currentData.CurrentData.IsPeriodEnd(MainKLinePeriod);
         }
@@ -122,7 +124,7 @@ namespace com.wer.sc.strategy.common.ma
         private void GenMa(IKLineData klineData, List<float> maList, int length, bool isPeriodStart)
         {
             int barPos = klineData.BarPos;
-            int startPos = barPos - length;
+            int startPos = barPos - length + 1;
             startPos = startPos < 0 ? 0 : startPos;
 
             float total = 0;

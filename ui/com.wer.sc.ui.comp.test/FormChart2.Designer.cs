@@ -447,9 +447,8 @@ namespace com.wer.sc.ui.comp.test
             this.menuItemRefresh.Text = "刷新";
             // 
             // compMain1
-            // 
-            this.compMain1.Code = "m1601";
-            this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
+            //             
+            //this.compMain1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compMain1.KLineBlockWidth = 5F;
             this.compMain1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
@@ -457,7 +456,6 @@ namespace com.wer.sc.ui.comp.test
             this.compMain1.Name = "compMain1";
             this.compMain1.Size = new System.Drawing.Size(791, 528);
             this.compMain1.TabIndex = 8;
-            this.compMain1.Time = 20150626.093D;
             // 
             // FormChart2
             // 

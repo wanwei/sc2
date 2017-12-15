@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.compChart1 = new com.wer.sc.ui.comp.CompChart();
             this.compCurrentInfo1 = new com.wer.sc.ui.comp.CompCurrentInfo();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
@@ -45,27 +43,12 @@
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.compChart1);
-            // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.compCurrentInfo1);
             this.splitContainer1.Size = new System.Drawing.Size(700, 544);
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // compChart1
-            // 
-            this.compChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compChart1.KLineBlockWidth = 5F;
-            this.compChart1.KlinePeriod = new data.KLinePeriod(data.KLineTimeType.MINUTE,1);
-            this.compChart1.Location = new System.Drawing.Point(0, 0);
-            this.compChart1.Name = "compChart1";
-            this.compChart1.Size = new System.Drawing.Size(441, 544);
-            this.compChart1.TabIndex = 0;
-            this.compChart1.Time = 0D;
             // 
             // compCurrentInfo1
             // 
@@ -84,7 +67,6 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "CompMain";
             this.Size = new System.Drawing.Size(700, 544);
-            this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -95,7 +77,6 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private CompChart compChart1;
         private CompCurrentInfo compCurrentInfo1;
     }
 }

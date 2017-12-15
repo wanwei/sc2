@@ -260,8 +260,8 @@ namespace com.wer.sc.ui.comp.test
                 polyLine.Points.Add(point);
             }
             polyLine.Color = Color.GreenYellow;
-            this.compChart1.Drawer_Candle.Drawer_Chart.DrawPriceShape(polyLine);
-            this.compChart1.Drawer_Candle.Paint();
+            //this.compChart1.Drawer_Candle.Drawer_Chart.DrawPriceShape(polyLine);
+            //this.compChart1.Drawer_Candle.Paint();
         }
 
         private void menuItemParameters_Click(object sender, EventArgs e)

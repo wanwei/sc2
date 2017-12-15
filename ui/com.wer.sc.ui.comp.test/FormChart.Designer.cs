@@ -289,9 +289,8 @@
             this.tb_ForwordTime.Click += new System.EventHandler(this.tb_ForwordTime_Click);
             // 
             // compChart1
-            // 
-            this.compChart1.Code = "m1601";
-            this.compChart1.DataCenterUri = "E:\\scdata\\cnfutures\\";
+            //             
+            //this.compChart1.DataCenterUri = "E:\\scdata\\cnfutures\\";
             this.compChart1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compChart1.KLineBlockWidth = 4F;
             this.compChart1.Location = new System.Drawing.Point(0, 45);

@@ -119,10 +119,6 @@
     <Compile Include="graphic\StockGraph_Abstract.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SC\ana\com.wer.sc.ana\com.wer.sc.ana.csproj">
-      <Project>{0ACF6F33-A700-47FD-AA61-5E0B3B4B8F80}</Project>
-      <Name>com.wer.sc.ana</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
       <Project>{1EE9E83B-FD37-42FA-A263-EEE93479AD45}</Project>
       <Name>com.wer.sc.data</Name>

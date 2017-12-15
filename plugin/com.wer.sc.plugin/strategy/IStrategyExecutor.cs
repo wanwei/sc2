@@ -19,6 +19,12 @@ namespace com.wer.sc.strategy
         void SetStrategy(IStrategy strategy);
 
         /// <summary>
+        /// 设置希望要执行的策略包
+        /// </summary>
+        /// <param name="strategyPackage"></param>
+        void SetStrategyPackage(IStrategyPackage strategyPackage);
+
+        /// <summary>
         /// 执行策略
         /// 该方法会在一个新的线程里执行策略
         /// </summary>

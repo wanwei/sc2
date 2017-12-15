@@ -271,7 +271,7 @@ namespace com.wer.sc.ui.comp
             bool isRefreshCompChart = IsRefreshCompChartData();
             if (isRefreshCompChart)
             {
-                this.compChart.CompChartData.ChangeDataPackage(dataPackage);
+                //this.compChart.CompChartData.DataPackage =dataPackage;
             }
             else
                 //this.compChart.Refresh();

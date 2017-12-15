@@ -17,6 +17,10 @@ namespace com.wer.sc.strategy
         /// </summary>
         string AssemblyName { get; }
 
+        string Name { get; }
+
+        string Description { get; }
+
         /// <summary>
         /// 得到策略包的完整路径
         /// </summary>

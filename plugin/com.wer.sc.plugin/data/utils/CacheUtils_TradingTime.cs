@@ -84,7 +84,7 @@ namespace com.wer.sc.data.utils
         {
             if (date < 0)
                 return false;
-            Console.WriteLine(date + "," + time);
+            //Console.WriteLine(date + "," + time);
             double todayStartTime = GetStartTime(date);
             if (todayStartTime < 0)
                 return false;

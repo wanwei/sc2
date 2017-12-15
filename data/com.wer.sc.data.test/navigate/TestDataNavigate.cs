@@ -32,7 +32,6 @@ namespace com.wer.sc.data.navigate
             Assert.AreEqual(str, dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString());
 
             dataNavigate.Change("rb1710");
-
             Console.WriteLine(dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
             Assert.AreEqual("20170405.093059,3260,3262,3252,3252,33892,1.104346E+08,2476612", dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString());
 
@@ -41,6 +40,9 @@ namespace com.wer.sc.data.navigate
 
             bool canForward = dataNavigate.Forward(KLinePeriod.KLinePeriod_5Minute);
             Console.WriteLine(getKLineBar(dataNavigate));
+
+            dataNavigate.NavigateTo(20160603.093000);
+            Console.WriteLine(dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
         }
 
         private static string getKLineBar(IDataNavigate dataNavigate)

@@ -108,7 +108,7 @@ namespace com.wer.sc.data.navigate
             }
             else
             {
-                klineData = dataPackage.CreateKLineData_RealTime(klinePeriod); //new KLineDataExtend_RealTime(this.dataPackage.GetKLineData(klinePeriod));
+                klineData = dataPackage.CreateKLineData_RealTime(klinePeriod); 
                 this.dic_Period_KLineData.Add(klinePeriod, klineData);
             }
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData, tradingDay, time, GetTickData());

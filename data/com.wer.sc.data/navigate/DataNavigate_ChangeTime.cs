@@ -19,9 +19,7 @@ namespace com.wer.sc.data.navigate
         }
 
         public static void ChangeTime_KLineData(IKLineData_RealTime klineData_RealTime, int date, double time, ITickData_Extend tickData)
-        {
-            //if (klineData_RealTime.Time == time)
-            //    return;
+        {        
             KLinePeriod klinePeriod = klineData_RealTime.Period;
             int klineIndex = IndexOfTime(klineData_RealTime, klinePeriod, time, date);
 

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace com.wer.sc.utils.ui.test
+namespace com.wer.sc.utils.ui
 {
     public partial class FormLog : Form
     {

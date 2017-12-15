@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.reader;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.data.navigate
 {
@@ -82,6 +83,20 @@ namespace com.wer.sc.data.navigate
             double time = klineData.Arr_Time[nextBarPos];
             NavigateTo(time);
             return true;
+        }
+
+        public bool Forward(ForwardPeriod forwardPeriod)
+        {
+            if (!forwardPeriod.IsTickForward)
+                return Forward(forwardPeriod.KlineForwardPeriod);
+            ITickData tickData = this.GetTickData();
+            if (tickData.BarPos >= tickData.Length - 1)
+                return Forward(KLinePeriod.KLinePeriod_1Minute);
+            double time = tickData.Arr_Time[tickData.BarPos + 1];
+            if (time != tickData.Time)            
+                return NavigateTo(time);
+            
+            return false;
         }
 
         public IKLineData GetKLineData(KLinePeriod period)

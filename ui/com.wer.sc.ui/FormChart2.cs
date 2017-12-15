@@ -29,14 +29,19 @@ namespace com.wer.sc.ui
         {
             InitializeComponent();
             this.compChart1 = compMain1.CompChart1;
-            this.compChart1.Code = "RB1805";
-            //this.compChart1.Code = "MA1801";
-            //this.compChart1.Time = 20170929.145900;
-            //this.compChart1.Time = 20171029.150000;
-            this.compChart1.Time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
-            //this.compChart1.Code = "RB1801";
-            //this.compChart1.Time = 20170930.150000;
-            this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
+            string code = "RB1805";
+            double time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
+            KLinePeriod klinePeriod = KLinePeriod.KLinePeriod_1Minute;
+            this.compMain1.Init(code, time, klinePeriod);
+            //this.compChart1.Init(code, time, klinePeriod);
+            //this.compChart1.Code = "RB1805";
+            ////this.compChart1.Code = "MA1801";
+            ////this.compChart1.Time = 20170929.145900;
+            ////this.compChart1.Time = 20171029.150000;
+            //this.compChart1.Time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
+            ////this.compChart1.Code = "RB1801";
+            ////this.compChart1.Time = 20170930.150000;
+            //this.compChart1.KlinePeriod = KLinePeriod.KLinePeriod_1Minute;
             this.compChart1.OnChartRefresh += CompChart1_OnDataRefresh;
             this.SetLbTime(this.compChart1.Time);
             this.compChart1.PaintChart();

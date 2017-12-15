@@ -113,6 +113,7 @@ namespace com.wer.sc.data.navigate
 
         public void Change(string code, double time)
         {
+            double prevTime = time;
             this.prevCodeInfo = codeInfo;
             this.codeInfo = dataReader.CodeReader.GetCodeInfo(code);
 
@@ -126,16 +127,27 @@ namespace com.wer.sc.data.navigate
             this.currentNavigate_Code.OnNavigateTo += CurrentNavigate_Code_OnNavigateTo;
             this.currentNavigate_Code.OnRealTimeChanged += CurrentNavigate_Code_OnRealTimeChanged;
             this.LastOperator = OPERATOR_NAVIGATE;
+
+            if (this.OnNavigateTo != null)           
+                this.OnNavigateTo(this, new DataNavigateEventArgs(prevCodeInfo.Code, code, prevTime, time));            
+            if (this.OnRealTimeChanged != null)
+                this.OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, time, this));            
         }
 
         private void CurrentNavigate_Code_OnRealTimeChanged(object sender, RealTimeChangedArgument argument)
         {
-
+            if (this.OnRealTimeChanged != null)
+            {
+                this.OnRealTimeChanged(sender, argument);
+            }
         }
 
         private void CurrentNavigate_Code_OnNavigateTo(object sender, DataNavigateEventArgs e)
         {
-
+            if (this.OnNavigateTo != null)
+            {
+                this.OnNavigateTo(sender, e);
+            }
         }
 
         public bool Backward(KLinePeriod forwardPeriod)
@@ -153,6 +165,26 @@ namespace com.wer.sc.data.navigate
             }
             this.LastOperator = OPERATOR_NAVIGATE;
             return canBackWard;
+        }
+
+        public bool Forward(ForwardPeriod forwardPeriod)
+        {
+            bool canForward = this.currentNavigate_Code.Forward(forwardPeriod);
+            if (!canForward)
+            {
+                int endDate = this.DataPackage.EndDate;
+                int codeEndDate = codeInfo.End;
+                if (codeEndDate == 0)
+                    codeEndDate = this.dataReader.TradingDayReader.FirstTradingDay;
+                if (endDate < codeEndDate)
+                {
+                    currentNavigate_Code = dataNavigateFactory.CreateDataNavigate_Code(Code, Time);
+                    this.LastOperator = OPERATOR_NAVIGATE;
+                    return currentNavigate_Code.Forward(forwardPeriod);
+                }
+            }
+            this.LastOperator = OPERATOR_NAVIGATE;
+            return canForward;
         }
 
         public bool Forward(KLinePeriod forwardPeriod)
@@ -268,6 +300,11 @@ namespace com.wer.sc.data.navigate
                 return;
             this.dataForward_Code.Pause();
             this.isPlaying = false;
+        }
+
+        public void ChangeByDataPackage(IDataPackage_Code dataPackage, double time)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -51,6 +51,8 @@ namespace com.wer.sc.strategy
         /// </summary>
         IParameters Parameters { get; }
 
-        IStrategyData CreateStrategy();
+        IStrategy CreateStrategy();
+
+        IStrategyData CreateStrategyData();
     }
 }

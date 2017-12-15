@@ -228,99 +228,99 @@ namespace com.wer.sc.ui.comp
         }
     }
 
-    interface StrategyShape
-    {
-        PriceShapeType GetShapeType();
-    }
-
-    class StrategyPolyLine : StrategyShape
-    {
-        public List<float> Prices;
-
-        public Color Color;
-
-        public StrategyPolyLine(List<float> prices, Color color)
-        {
-            this.Prices = prices;
-            this.Color = color;
-        }
-
-        public PriceShapeType GetShapeType()
-        {
-            return PriceShapeType.PolyLine;
-        }
-    }
-
-    class StrategyPoints : StrategyShape
-    {
-        public List<float> Points;
-
-        public Color Color;
-
-        public int Width;
-
-        public StrategyPoints(List<float> points, Color color, int width)
-        {
-            this.Points = points;
-            this.Color = color;
-            this.Width = width;
-        }
-        public PriceShapeType GetShapeType()
-        {
-            return PriceShapeType.Point;
-        }
-    }
-
-    class StrategyLabels : StrategyShape
-    {
-        public List<float> Positions;
-        public List<string> Txts;
-        public Color Color;
-
-        public StrategyLabels(List<float> positions, List<String> txts, Color color)
-        {
-            this.Positions = positions;
-            this.Txts = txts;
-            this.Color = color;
-        }
-
-        public PriceShapeType GetShapeType()
-        {
-            return PriceShapeType.Label;
-        }
-    }
-
-    class StrategyLine : StrategyShape
-    {
-        public double StartTime;
-        public float StartPrice;
-        public double EndTime;
-        public float EndPrice;
-
-        public StrategyLine(double startTime, float startPrice, double endTime, float endPrice)
-        {
-            this.StartTime = startTime;
-            this.StartPrice = startPrice;
-            this.EndTime = endTime;
-            this.EndPrice = endPrice;
-        }
-
-        public PriceShapeType GetShapeType()
-        {
-            return PriceShapeType.Line;
-        }
-    }
-
-    //class StrategyRect : StrategyShape
+    //interface StrategyShape
     //{
-    //    double startTime;
-    //    float startPrice;
-    //    double endTime;
-    //    float endPrice;
+    //    PriceShapeType GetShapeType();
+    //}
+
+    //class StrategyPolyLine : StrategyShape
+    //{
+    //    public List<float> Prices;
+
+    //    public Color Color;
+
+    //    public StrategyPolyLine(List<float> prices, Color color)
+    //    {
+    //        this.Prices = prices;
+    //        this.Color = color;
+    //    }
+
+    //    public PriceShapeType GetShapeType()
+    //    {
+    //        return PriceShapeType.PolyLine;
+    //    }
+    //}
+
+    //class StrategyPoints : StrategyShape
+    //{
+    //    public List<float> Points;
+
+    //    public Color Color;
+
+    //    public int Width;
+
+    //    public StrategyPoints(List<float> points, Color color, int width)
+    //    {
+    //        this.Points = points;
+    //        this.Color = color;
+    //        this.Width = width;
+    //    }
+    //    public PriceShapeType GetShapeType()
+    //    {
+    //        return PriceShapeType.Point;
+    //    }
+    //}
+
+    //class StrategyLabels : StrategyShape
+    //{
+    //    public List<float> Positions;
+    //    public List<string> Txts;
+    //    public Color Color;
+
+    //    public StrategyLabels(List<float> positions, List<String> txts, Color color)
+    //    {
+    //        this.Positions = positions;
+    //        this.Txts = txts;
+    //        this.Color = color;
+    //    }
+
+    //    public PriceShapeType GetShapeType()
+    //    {
+    //        return PriceShapeType.Label;
+    //    }
+    //}
+
+    //class StrategyLine : StrategyShape
+    //{
+    //    public double StartTime;
+    //    public float StartPrice;
+    //    public double EndTime;
+    //    public float EndPrice;
+
+    //    public StrategyLine(double startTime, float startPrice, double endTime, float endPrice)
+    //    {
+    //        this.StartTime = startTime;
+    //        this.StartPrice = startPrice;
+    //        this.EndTime = endTime;
+    //        this.EndPrice = endPrice;
+    //    }
 
     //    public PriceShapeType GetShapeType()
     //    {
     //        return PriceShapeType.Line;
     //    }
     //}
+
+    ////class StrategyRect : StrategyShape
+    ////{
+    ////    double startTime;
+    ////    float startPrice;
+    ////    double endTime;
+    ////    float endPrice;
+
+    ////    public PriceShapeType GetShapeType()
+    ////    {
+    ////        return PriceShapeType.Line;
+    ////    }
+    ////}
 }
