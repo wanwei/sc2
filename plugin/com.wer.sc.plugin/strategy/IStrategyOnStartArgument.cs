@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.reader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,20 @@ namespace com.wer.sc.strategy
     /// </summary>
     public interface IStrategyOnStartArgument
     {
-        /// <summary>
-        /// 得到数据长度
-        /// </summary>
-        /// <param name="klinePeriod"></param>
-        /// <returns></returns>
-        int GetKLineLength(KLinePeriod klinePeriod);
+        StrategyReferedPeriods ReferedPeriods { get; }
 
-        int GetTimeLineLength();
+        StrategyForwardPeriod ForwardPeriod { get; }
+
+        /// <summary>
+        /// 得到当前数据
+        /// </summary>
+        IRealTimeDataReader_Code CurrentData { get; }
+
+        /// <summary>
+        /// 得到其它数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        IRealTimeDataReader_Code GetOtherData(string code);
     }
 }

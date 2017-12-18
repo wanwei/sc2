@@ -1,4 +1,4 @@
-﻿using com.wer.sc.comp.graphic;
+﻿using com.wer.sc.graphic;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.navigate;
@@ -14,6 +14,7 @@ namespace com.wer.sc.ui.comp
 {
     public partial class ChartComponent : UserControl
     {
+        private IDataCenter dataCenter;
         private ChartComponentData prevCompData = null;
         private ChartComponentController controller;
         private ChartComponentDrawer drawer;
@@ -34,6 +35,7 @@ namespace com.wer.sc.ui.comp
 
         public void Init(IDataCenter dataCenter, string code, double time, KLinePeriod klinePeriod)
         {
+            this.dataCenter = dataCenter;
             IDataNavigate dataNavigater = dataCenter.DataNavigateFactory.CreateDataNavigate(code, time);
             IKLineData klineData = dataNavigater.GetKLineData(klinePeriod);
             int showKLineIndex = klineData.BarPos;
@@ -94,6 +96,11 @@ namespace com.wer.sc.ui.comp
             {
                 return chartComponentStrategy;
             }
+        }
+
+        public IDataCenter DataCenter
+        {
+            get { return dataCenter; }
         }
 
         public event DelegateOnChartComponentRefresh OnChartRefresh;

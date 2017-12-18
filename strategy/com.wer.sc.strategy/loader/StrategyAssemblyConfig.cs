@@ -11,16 +11,30 @@ namespace com.wer.sc.strategy.loader
 {
     public class StrategyAssemblyConfig
     {
-        private List<StrategyConfig> strategyConfigs = new List<StrategyConfig>();
+        private List<StrategyConfig> allStrategyConfigs = new List<StrategyConfig>();
 
+        //保存策略的所有路径
+        private List<string> strategyPaths = new List<string>();
+
+        //得到路径下所有子路径
+        private Dictionary<string, List<string>> dic_Path_SubPath = new Dictionary<string, List<string>>();
+
+        //得到路径下所有策略
+        private Dictionary<string, List<StrategyConfig>> dic_Path_Strategies = new Dictionary<string, List<StrategyConfig>>();
+
+        //Assembly的路径
         private string path;
 
+        //Assembly的全路径
         private string fullPath;
 
+        //该包的名称
         private string name;
 
+        //Assembly的描述
         private string description;
 
+        //Assembly的名称
         private string assemblyName;
 
         public string AssemblyName
@@ -57,7 +71,7 @@ namespace com.wer.sc.strategy.loader
 
         public List<StrategyConfig> StrategyConfigs
         {
-            get { return strategyConfigs; }
+            get { return allStrategyConfigs; }
         }
 
         public void Load(string file)
@@ -82,7 +96,7 @@ namespace com.wer.sc.strategy.loader
                 XmlElement xmlElem_Strategy = (XmlElement)node;
                 StrategyConfig config = new StrategyConfig();
                 config.LoadXml(xmlElem_Strategy);
-                this.strategyConfigs.Add(config);
+                this.allStrategyConfigs.Add(config);
             }
         }
 

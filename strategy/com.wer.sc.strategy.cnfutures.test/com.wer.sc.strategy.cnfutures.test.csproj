@@ -62,10 +62,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CommonData.cs" />
-    <Compile Include="import\TestStrategy_Ma.cs" />
-    <Compile Include="import\TestStrategy_Zigzag.cs" />
-    <Compile Include="TestStrategy_CnFutures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

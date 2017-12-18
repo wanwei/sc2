@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using com.wer.sc.comp.graphic.info;
-using com.wer.sc.comp.graphic;
+using com.wer.sc.graphic.info;
+using com.wer.sc.graphic;
 using com.wer.sc.data;
 
 namespace com.wer.sc.ui.comp

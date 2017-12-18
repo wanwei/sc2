@@ -1,7 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
-using com.wer.sc.strategy.draw;
 using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,7 @@ namespace com.wer.sc.strategy.common.ma
         private int Param_4;
         private int Param_5;
 
-        private List<float> maArr_1 = new List<float>();
+        private StrategyArray<float> maArr_1;
 
         public IList<float> MaArr_1
         {
@@ -39,7 +38,7 @@ namespace com.wer.sc.strategy.common.ma
             get { return maArr_1.Last(); }
         }
 
-        private List<float> maArr_2 = new List<float>();
+        private StrategyArray<float> maArr_2;
 
         public IList<float> MaArr_2
         {
@@ -51,7 +50,7 @@ namespace com.wer.sc.strategy.common.ma
             get { return maArr_2.Last(); }
         }
 
-        private List<float> maArr_3 = new List<float>();
+        private StrategyArray<float> maArr_3;
 
         public IList<float> MaArr_3
         {
@@ -63,7 +62,7 @@ namespace com.wer.sc.strategy.common.ma
             get { return maArr_3.Last(); }
         }
 
-        private List<float> maArr_4 = new List<float>();
+        private StrategyArray<float> maArr_4;
 
         public IList<float> MaArr_4
         {
@@ -75,7 +74,7 @@ namespace com.wer.sc.strategy.common.ma
             get { return maArr_4.Last(); }
         }
 
-        private List<float> maArr_5 = new List<float>();
+        private StrategyArray<float> maArr_5;
 
         public IList<float> MaArr_5
         {
@@ -89,6 +88,12 @@ namespace com.wer.sc.strategy.common.ma
 
         public Strategy_MultiMa()
         {
+            maArr_1 = new StrategyArray<float>();
+            maArr_2 = new StrategyArray<float>();
+            maArr_3 = new StrategyArray<float>();
+            maArr_4 = new StrategyArray<float>();
+            maArr_5 = new StrategyArray<float>();
+
             this.Parameters.AddParameter(PARAMKEY_MA1, "MA5", "MA5", utils.param.ParameterType.INTEGER, 5);
             this.Parameters.AddParameter(PARAMKEY_MA2, "MA10", "MA10", utils.param.ParameterType.INTEGER, 10);
             this.Parameters.AddParameter(PARAMKEY_MA3, "MA20", "MA20", utils.param.ParameterType.INTEGER, 20);
@@ -121,7 +126,7 @@ namespace com.wer.sc.strategy.common.ma
             GenMa(klineData, maArr_5, Param_5, isPeriodStart);
         }
 
-        private void GenMa(IKLineData klineData, List<float> maList, int length, bool isPeriodStart)
+        private void GenMa(IKLineData klineData, IList<float> maList, int length, bool isPeriodStart)
         {
             int barPos = klineData.BarPos;
             int startPos = barPos - length + 1;
@@ -132,10 +137,7 @@ namespace com.wer.sc.strategy.common.ma
             {
                 total += klineData.Arr_End[i];
             }
-            if (isPeriodStart || maList.Count == 0)
-                maList.Add(total / (barPos - startPos + 1));
-            else
-                maList[maList.Count - 1] = total / (barPos - startPos + 1);
+            maList[barPos] = total / (barPos - startPos + 1);
         }
 
         public override void OnTick(Object sender, IStrategyOnTickArgument currentData)

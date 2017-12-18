@@ -4,42 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.wer.sc.strategy.draw;
 using System.Drawing;
-using com.wer.sc.comp.graphic;
+using com.wer.sc.graphic;
 using com.wer.sc.data;
 using com.wer.sc.data.utils;
-using com.wer.sc.comp.graphic.shape;
+using com.wer.sc.graphic.shape;
 
 namespace com.wer.sc.ui.comp
 {
     public class ChartComponentStrategyDrawer : IStrategyDrawer
     {
-        private int startPos;
+        //画的title，存在该属性里，在图形刷新的时候重画
+        private Shape_Label title;
+        //画的图形，图形都存储在该list里，在图形刷新的时候重画
+        private List<StrategyShape> strategyShapes = new List<StrategyShape>();
 
+        //画图的面板
         private IGraphicDrawer_PriceRect drawer;
-
+        //图画数据
         private IGraphicData graphicData;
-
+        //价格和坐标的映射
         private PriceGraphicMapping mapping;
-
-        private List<StrategyShape> drawStrategyShapes = new List<StrategyShape>();
-
-        private List<PriceShape> drawPriceShapes = new List<PriceShape>();
 
         public ChartComponentStrategyDrawer(IGraphicDrawer_PriceRect drawer, IGraphicData graphicData, PriceGraphicMapping mapping)
         {
             this.drawer = drawer;
             this.graphicData = graphicData;
             this.mapping = mapping;
-        }
-
-        public ChartComponentStrategyDrawer(IGraphicDrawer_PriceRect drawer, IGraphicData graphicData, PriceGraphicMapping mapping, int startPos)
-        {
-            this.drawer = drawer;
-            this.graphicData = graphicData;
-            this.mapping = mapping;
-            this.startPos = startPos;
         }
 
         private PriceShape_Point GetPoint(double time, float price)
@@ -66,21 +57,36 @@ namespace com.wer.sc.ui.comp
             label.Text = text;
             label.Color = color;
             label.Font = new Font("宋体", 10f, FontStyle.Regular);
-            drawer.DrawShape(label);
+            this.title = label;
         }
 
-        public void DrawLabel(PriceLabel label)
+        public void DrawPoints(IList<PriceShape_Point> points)
+        {
+
+        }
+
+        public void DrawLabels(IList<PriceShape_Label> label)
+        {
+
+        }
+
+        public void DrawLines(IList<PriceShape_Line> lines)
+        {
+
+        }
+
+        public void DrawLabel(PriceShape_Label label)
         {
             PriceShape_Label shape = new PriceShape_Label();
             shape.Color = label.Color;
             shape.Text = label.Text;
-            shape.Point = GetPoint(label.Time, label.Price);
+            shape.Point = GetPoint(label.Point.X, label.Point.Y);
             if (shape.Point == null)
                 return;
             drawer.DrawPriceShape(shape);
         }
 
-        public void DrawLabels(List<float> positions, List<string> txts, Color color)
+        public void DrawLabels(IList<float> positions, IList<string> txts, Color color)
         {
             PriceShape_Label shape = new PriceShape_Label();
 
@@ -92,7 +98,7 @@ namespace com.wer.sc.ui.comp
             drawer.DrawPriceShape(shape);
         }
 
-        public void DrawLine(PriceLine line)
+        public void DrawLine(PriceShape_Line line)
         {
 
         }
@@ -102,21 +108,22 @@ namespace com.wer.sc.ui.comp
 
         }
 
-        public void DrawPoint(PricePoint points)
+        public void DrawPoint(PriceShape_Point points)
         {
 
         }
-        public void DrawPoints(List<float> points, Color color, int width)
+
+        public void DrawPoints(IList<float> points, Color color, int width)
         {
             RecordStrategyShape(new StrategyPoints(points, color, width));
         }
 
-        public void DrawPoints(List<float> points, Color color)
+        public void DrawPoints(IList<float> points, Color color)
         {
             DrawPoints(points, color, 6);
         }
 
-        public void DrawPolyLine(PricePolyLine polyLine)
+        public void DrawPolyLine(PriceShape_PolyLine polyLine)
         {
             PriceRectangle priceRect = mapping.PriceRect;
             int start = priceRect.StartIndex;
@@ -124,13 +131,12 @@ namespace com.wer.sc.ui.comp
 
             for (int i = 0; i < polyLine.Points.Count; i++)
             {
-                PricePoint point = polyLine.Points[i];
+                PriceShape_Point point = polyLine.Points[i];
 
             }
         }
 
-
-        public void DrawPolyLine(List<float> line, Color color)
+        public void DrawPolyLine(IList<float> line, Color color)
         {
             RecordStrategyShape(new StrategyPolyLine(line, color));
         }
@@ -160,7 +166,7 @@ namespace com.wer.sc.ui.comp
             int start = priceRect.StartIndex;
             int end = priceRect.EndIndex;
 
-            List<float> prices = points.Points;
+            IList<float> prices = points.Points;
             for (int i = start; i <= end; i++)
             {
                 if (i >= prices.Count)
@@ -176,23 +182,22 @@ namespace com.wer.sc.ui.comp
 
         private void DrawPolyLineInternal(StrategyPolyLine polyLine)
         {
-            List<float> line = polyLine.Prices;
+            IList<float> line = polyLine.Prices;
             Color color = polyLine.Color;
             PriceRectangle priceRect = mapping.PriceRect;
-            int start = priceRect.StartIndex;// - startPos + 1;
-            int end = priceRect.EndIndex + 1;// - startPos + 1;
+            int start = priceRect.StartIndex;
+            int end = priceRect.EndIndex + 1;
             PriceShape_PolyLine polyline = new PriceShape_PolyLine();
-            for (int i = start; i <= end; i++)
+            for (int index = start; index <= end; index++)
             {
-                int index = i - startPos - 1;
                 if (index >= line.Count)
                     return;
-                if (i < startPos)
+                if (index < 0)
                     continue;
                 float price = line[index];
                 if (price == float.MinValue)
                     continue;
-                PriceShape_Point point = new PriceShape_Point(i, price);
+                PriceShape_Point point = new PriceShape_Point(index, price);
                 polyline.AddPoint(point);
             }
             polyline.Color = color;
@@ -207,23 +212,29 @@ namespace com.wer.sc.ui.comp
         public void Refresh()
         {
             drawer.ClearPriceShapes();
-            for (int i = 0; i < shapes.Count; i++)
+            if (title != null)
+                drawer.DrawShape(title);
+            for (int i = 0; i < strategyShapes.Count; i++)
             {
-                DrawShape(shapes[i]);
+                DrawShape(strategyShapes[i]);
             }
         }
 
-        private List<StrategyShape> shapes = new List<StrategyShape>();
         private void Record(StrategyShape shape)
         {
-            this.shapes.Add(shape);
+            this.strategyShapes.Add(shape);
         }
 
         public void ClearShapes()
         {
-            this.shapes.Clear();
+            this.strategyShapes.Clear();
             drawer.ClearShapes();
             drawer.ClearPriceShapes();
+        }
+
+        public void DrawRect(PriceShape_Rect priceRect)
+        {
+            
         }
     }
 
@@ -234,11 +245,11 @@ namespace com.wer.sc.ui.comp
 
     class StrategyPolyLine : StrategyShape
     {
-        public List<float> Prices;
+        public IList<float> Prices;
 
         public Color Color;
 
-        public StrategyPolyLine(List<float> prices, Color color)
+        public StrategyPolyLine(IList<float> prices, Color color)
         {
             this.Prices = prices;
             this.Color = color;
@@ -252,13 +263,13 @@ namespace com.wer.sc.ui.comp
 
     class StrategyPoints : StrategyShape
     {
-        public List<float> Points;
+        public IList<float> Points;
 
         public Color Color;
 
         public int Width;
 
-        public StrategyPoints(List<float> points, Color color, int width)
+        public StrategyPoints(IList<float> points, Color color, int width)
         {
             this.Points = points;
             this.Color = color;
@@ -309,17 +320,4 @@ namespace com.wer.sc.ui.comp
             return PriceShapeType.Line;
         }
     }
-
-    //class StrategyRect : StrategyShape
-    //{
-    //    double startTime;
-    //    float startPrice;
-    //    double endTime;
-    //    float endPrice;
-
-    //    public PriceShapeType GetShapeType()
-    //    {
-    //        return PriceShapeType.Line;
-    //    }
-    //}
 }

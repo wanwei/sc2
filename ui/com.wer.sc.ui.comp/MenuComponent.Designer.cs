@@ -44,15 +44,19 @@ namespace com.wer.sc.ui.comp
             this.tb_KLineForward = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_ChangeTime = new System.Windows.Forms.ToolStripButton();
+            this.tb_ChangeCode = new System.Windows.Forms.ToolStripButton();
             this.tb_ForwardSetting = new System.Windows.Forms.ToolStripButton();
             this.tb_BackwordTime = new System.Windows.Forms.ToolStripButton();
             this.tb_Play = new System.Windows.Forms.ToolStripButton();
             this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btStrategy = new System.Windows.Forms.ToolStripButton();
-            this.btStrategyDataPackage = new System.Windows.Forms.ToolStripButton();
-            this.btStrategyResult = new System.Windows.Forms.ToolStripButton();
-            this.btStrategyReport = new System.Windows.Forms.ToolStripButton();
+            this.tb_Strategy = new System.Windows.Forms.ToolStripButton();
+            this.tb_StrategyDataPackage = new System.Windows.Forms.ToolStripButton();
+            this.tb_StrategyReport = new System.Windows.Forms.ToolStripButton();
+            this.tb_StrategyResult = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tb_Connect = new System.Windows.Forms.ToolStripButton();
+            this.tb_Trade = new System.Windows.Forms.ToolStripButton();
             this.tb_SwitchTimeLine = new System.Windows.Forms.ToolStripButton();
             this.tb_SwitchKLine = new System.Windows.Forms.ToolStripButton();
             this.tb_SwitchTick = new System.Windows.Forms.ToolStripButton();
@@ -81,20 +85,24 @@ namespace com.wer.sc.ui.comp
             this.tb_KLineForward,
             this.toolStripSeparator1,
             this.tb_ChangeTime,
+            this.tb_ChangeCode,
             this.tb_ForwardSetting,
             this.tb_BackwordTime,
             this.tb_Play,
             this.tb_ForwordTime,
             this.toolStripSeparator2,
-            this.btStrategy,
-            this.btStrategyDataPackage,
-            this.btStrategyReport,
-            this.btStrategyResult});
+            this.tb_Strategy,
+            this.tb_StrategyDataPackage,
+            this.tb_StrategyReport,
+            this.tb_StrategyResult,
+            this.toolStripSeparator3,
+            this.tb_Connect,
+            this.tb_Trade});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(937, 45);
             this.toolStrip1.TabIndex = 6;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.Text = "交易";
             // 
             // tb_Refresh
             // 
@@ -222,6 +230,17 @@ namespace com.wer.sc.ui.comp
             this.tb_ChangeTime.Text = "修改时间";
             this.tb_ChangeTime.Click += new System.EventHandler(this.tb_ChangeTime_Click);
             // 
+            // tb_ChangeCode
+            // 
+            this.tb_ChangeCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_ChangeCode.Image = ((System.Drawing.Image)(resources.GetObject("tb_ChangeCode.Image")));
+            this.tb_ChangeCode.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_ChangeCode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_ChangeCode.Name = "tb_ChangeCode";
+            this.tb_ChangeCode.Size = new System.Drawing.Size(28, 42);
+            this.tb_ChangeCode.Text = "修改代码";
+            this.tb_ChangeCode.Click += new System.EventHandler(this.tb_ChangeCode_Click);
+            // 
             // tb_ForwardSetting
             // 
             this.tb_ForwardSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -270,48 +289,73 @@ namespace com.wer.sc.ui.comp
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 45);
             // 
-            // btStrategy
+            // tb_Strategy
             // 
-            this.btStrategy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btStrategy.Image = ((System.Drawing.Image)(resources.GetObject("btStrategy.Image")));
-            this.btStrategy.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btStrategy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btStrategy.Name = "btStrategy";
-            this.btStrategy.Size = new System.Drawing.Size(28, 42);
-            this.btStrategy.Text = "策略";
-            this.btStrategy.Click += new System.EventHandler(this.btStrategy_Click);
+            this.tb_Strategy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_Strategy.Image = ((System.Drawing.Image)(resources.GetObject("tb_Strategy.Image")));
+            this.tb_Strategy.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_Strategy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_Strategy.Name = "tb_Strategy";
+            this.tb_Strategy.Size = new System.Drawing.Size(28, 42);
+            this.tb_Strategy.Text = "策略";
+            this.tb_Strategy.Click += new System.EventHandler(this.btStrategy_Click);
             // 
-            // btStrategyDataPackage
+            // tb_StrategyDataPackage
             // 
-            this.btStrategyDataPackage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btStrategyDataPackage.Image = ((System.Drawing.Image)(resources.GetObject("btStrategyDataPackage.Image")));
-            this.btStrategyDataPackage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btStrategyDataPackage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btStrategyDataPackage.Name = "btStrategyDataPackage";
-            this.btStrategyDataPackage.Size = new System.Drawing.Size(28, 42);
-            this.btStrategyDataPackage.Text = "数据包";
-            this.btStrategyDataPackage.Click += new System.EventHandler(this.btStrategyDataPackage_Click);
+            this.tb_StrategyDataPackage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_StrategyDataPackage.Image = ((System.Drawing.Image)(resources.GetObject("tb_StrategyDataPackage.Image")));
+            this.tb_StrategyDataPackage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_StrategyDataPackage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_StrategyDataPackage.Name = "tb_StrategyDataPackage";
+            this.tb_StrategyDataPackage.Size = new System.Drawing.Size(28, 42);
+            this.tb_StrategyDataPackage.Text = "数据包";
+            this.tb_StrategyDataPackage.Click += new System.EventHandler(this.btStrategyDataPackage_Click);
             // 
-            // btStrategyResult
+            // tb_StrategyReport
             // 
-            this.btStrategyResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btStrategyResult.Image = ((System.Drawing.Image)(resources.GetObject("btStrategyResult.Image")));
-            this.btStrategyResult.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btStrategyResult.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btStrategyResult.Name = "btStrategyResult";
-            this.btStrategyResult.Size = new System.Drawing.Size(28, 42);
-            this.btStrategyResult.Text = "策略结果";
-            this.btStrategyResult.Click += new System.EventHandler(this.btStrategyResult_Click);
+            this.tb_StrategyReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_StrategyReport.Image = ((System.Drawing.Image)(resources.GetObject("tb_StrategyReport.Image")));
+            this.tb_StrategyReport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_StrategyReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_StrategyReport.Name = "tb_StrategyReport";
+            this.tb_StrategyReport.Size = new System.Drawing.Size(28, 42);
+            this.tb_StrategyReport.Text = "回测报告";
             // 
-            // btStrategyReport
+            // tb_StrategyResult
             // 
-            this.btStrategyReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btStrategyReport.Image = ((System.Drawing.Image)(resources.GetObject("btStrategyReport.Image")));
-            this.btStrategyReport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btStrategyReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btStrategyReport.Name = "btStrategyReport";
-            this.btStrategyReport.Size = new System.Drawing.Size(28, 42);
-            this.btStrategyReport.Text = "回测报告";
+            this.tb_StrategyResult.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_StrategyResult.Image = ((System.Drawing.Image)(resources.GetObject("tb_StrategyResult.Image")));
+            this.tb_StrategyResult.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_StrategyResult.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_StrategyResult.Name = "tb_StrategyResult";
+            this.tb_StrategyResult.Size = new System.Drawing.Size(28, 42);
+            this.tb_StrategyResult.Text = "策略结果";
+            this.tb_StrategyResult.Click += new System.EventHandler(this.btStrategyResult_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 45);
+            // 
+            // tb_Connect
+            // 
+            this.tb_Connect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_Connect.Image = ((System.Drawing.Image)(resources.GetObject("tb_Connect.Image")));
+            this.tb_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_Connect.Name = "tb_Connect";
+            this.tb_Connect.Size = new System.Drawing.Size(28, 42);
+            this.tb_Connect.Text = "连接服务器";
+            // 
+            // tb_Trade
+            // 
+            this.tb_Trade.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_Trade.Image = ((System.Drawing.Image)(resources.GetObject("tb_Trade.Image")));
+            this.tb_Trade.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_Trade.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_Trade.Name = "tb_Trade";
+            this.tb_Trade.Size = new System.Drawing.Size(28, 42);
+            this.tb_Trade.Text = "toolStripButton1";
             // 
             // tb_SwitchTimeLine
             // 
@@ -384,10 +428,14 @@ namespace com.wer.sc.ui.comp
         private System.Windows.Forms.ToolStripButton tb_BackwordTime;
         private System.Windows.Forms.ToolStripButton tb_Play;
         private System.Windows.Forms.ToolStripButton tb_ForwordTime;
-        private System.Windows.Forms.ToolStripButton btStrategy;
+        private System.Windows.Forms.ToolStripButton tb_Strategy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton btStrategyResult;
-        private System.Windows.Forms.ToolStripButton btStrategyDataPackage;
-        private System.Windows.Forms.ToolStripButton btStrategyReport;
+        private System.Windows.Forms.ToolStripButton tb_StrategyResult;
+        private System.Windows.Forms.ToolStripButton tb_StrategyDataPackage;
+        private System.Windows.Forms.ToolStripButton tb_StrategyReport;
+        private System.Windows.Forms.ToolStripButton tb_ChangeCode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton tb_Connect;
+        private System.Windows.Forms.ToolStripButton tb_Trade;
     }
 }

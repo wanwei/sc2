@@ -30,7 +30,7 @@ namespace com.wer.sc.ui.comp
             this.tb_KLine1H.Tag = KLinePeriod.KLinePeriod_1Hour;
             this.tb_KLine1Day.Tag = KLinePeriod.KLinePeriod_1Day;
             //this.tb_KLine5S.Tag = KLinePeriod.KLinePeriod_5Second;
-            //this.tb_KLine15S.Tag = KLinePeriod.KLinePeriod_15Second;
+            //this.tb_KLine15S.Tag = KLinePeriod.KLinePeriod_15Second;            
         }
 
         public void BindChartComponent(ChartComponent chartComponent)
@@ -140,6 +140,12 @@ namespace com.wer.sc.ui.comp
                 return;
             }
             FormStrategyResult form = new FormStrategyResult(chartComponent, strategyResult);
+            form.ShowDialog();
+        }
+
+        private void tb_ChangeCode_Click(object sender, EventArgs e)
+        {
+            FormCodes form = new FormCodes(chartComponent);
             form.ShowDialog();
         }
     }

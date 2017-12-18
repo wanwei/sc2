@@ -57,6 +57,12 @@
     <Compile Include="CurrentInfoComponent.Designer.cs">
       <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCodes.Designer.cs">
+      <DependentUpon>FormCodes.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormForwardSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +156,10 @@
       <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
       <Name>com.wer.sc.data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\graphic\com.wer.sc.graphic\com.wer.sc.graphic.csproj">
+      <Project>{769f691f-a4c5-4819-9bc3-804c7ee16681}</Project>
+      <Name>com.wer.sc.graphic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
       <Name>com.wer.sc.plugin</Name>
@@ -158,10 +168,6 @@
       <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
       <Name>com.wer.sc.strategy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\com.wer.sc.comp\com.wer.sc.comp.csproj">
-      <Project>{9898bd8e-1db1-4ec5-9af8-220b9055981c}</Project>
-      <Name>com.wer.sc.comp</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChartComponent.resx">
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CurrentInfoComponent.resx">
       <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCodes.resx">
+      <DependentUpon>FormCodes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormForwardSetting.resx">
       <DependentUpon>FormForwardSetting.cs</DependentUpon>
@@ -210,6 +219,12 @@
     <EmbeddedResource Include="strategy\FormStrategyTrader.resx">
       <DependentUpon>FormStrategyTrader.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connected.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disconnected.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

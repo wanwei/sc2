@@ -1,7 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
-using com.wer.sc.strategy.draw;
 using com.wer.sc.utils.ui;
 using System;
 using System.Collections.Generic;

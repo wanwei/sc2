@@ -51,6 +51,7 @@
     <Compile Include="loader\StrategyInfo.cs" />
     <Compile Include="StrategyOnBarArgument.cs" />
     <Compile Include="StrategyOnBarInfo.cs" />
+    <Compile Include="StrategyOnEndArgument.cs" />
     <Compile Include="StrategyOnStartArgument.cs" />
     <Compile Include="StrategyOnTickArgument.cs" />
     <Compile Include="StrategyOnTickInfo.cs" />

@@ -1,6 +1,5 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.reader;
-using com.wer.sc.strategy.draw;
 using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;

@@ -66,17 +66,17 @@ namespace com.wer.sc.ui.comp.strategy
             IStrategy strategy = this.strategyData.StrategyInfo.CreateStrategy();
             strategy.Parameters.SetParameterValue(this.compParameters1.Parameters.GetParameterValues());
             this.strategyData.Strategy = strategy;
-            try
-            {
+            //try
+            //{
                 this.chartComponent.ChartComponentStrategy.Run();
                 this.Close();
-            }
-            catch (Exception ex)
-            {
-                FormException form = new FormException(ex);
-                form.ShowDialog();
-                //MessageBox.Show("执行策略出错：" + e.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    FormException form = new FormException(ex);
+            //    form.ShowDialog();
+            //    //MessageBox.Show("执行策略出错：" + e.Message);
+            //}
         }
 
         private void btCancel_Click(object sender, EventArgs e)

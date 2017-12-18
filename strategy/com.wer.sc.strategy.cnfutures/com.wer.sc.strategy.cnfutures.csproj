@@ -50,15 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="test\Strategy_DrawPoints.cs" />
-    <Compile Include="Strategy_CnFutures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="import\Strategy_MaList.cs" />
-    <Compile Include="import\Strategy_Zigzag.cs" />
-    <Compile Include="Strategy_Demo_TickImport.cs" />
-    <Compile Include="test\Strategy_Trade.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

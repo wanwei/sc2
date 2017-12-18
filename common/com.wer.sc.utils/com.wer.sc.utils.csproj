@@ -49,8 +49,10 @@
     <Compile Include="ByteUtils.cs" />
     <Compile Include="CharUtils.cs" />
     <Compile Include="ColorUtils.cs" />
+    <Compile Include="DynamicArray.cs" />
     <Compile Include="ItemObject.cs" />
     <Compile Include="MathUtils.cs" />
+    <Compile Include="OffsetList.cs" />
     <Compile Include="param\impl\ParameterObject.cs" />
     <Compile Include="param\IParameter.cs" />
     <Compile Include="param\IParameterOption.cs" />

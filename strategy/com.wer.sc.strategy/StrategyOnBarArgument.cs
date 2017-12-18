@@ -31,7 +31,7 @@ namespace com.wer.sc.strategy
             //}
         }
 
-        public IStrategyOnBarInfo MainBar
+        public new IStrategyOnBarInfo MainBar
         {
             get
             {
@@ -45,6 +45,16 @@ namespace com.wer.sc.strategy
             {
                 return finishedBars;
             }
+        }
+
+        public IStrategyOnBarInfo GetFinishedBar(KLinePeriod klinePeriod)
+        {
+            foreach (IStrategyOnBarInfo bar in finishedBars)
+            {
+                if (bar.KLinePeriod.Equals(klinePeriod))
+                    return bar;
+            }
+            return null;
         }
 
         public IList<IStrategyOnBarInfo> Bars

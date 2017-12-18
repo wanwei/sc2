@@ -43,7 +43,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.compParameters1 = new com.wer.sc.comp.param.CompParameters();
+            this.compParameters1 = new com.wer.sc.graphic.param.CompParameters();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -265,6 +265,6 @@
         private System.Windows.Forms.ToolStripButton btStrategyResult;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private sc.comp.param.CompParameters compParameters1;
+        private sc.graphic.param.CompParameters compParameters1;
     }
 }

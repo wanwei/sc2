@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="kline\KLineAbstract.cs" />
+    <Compile Include="kline\KLineType.cs" />
+    <Compile Include="kline\KLine_Hammer.cs" />
+    <Compile Include="kline\KLine_HangingMan.cs" />
+    <Compile Include="kline\Strategy_KLine.cs" />
     <Compile Include="ma\Strategy_MA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sample\Strategy_Query.cs" />
@@ -58,10 +63,14 @@
     <Compile Include="ma\Strategy_MultiMa.cs" />
     <Compile Include="Strategy_Zigzag.cs" />
     <Compile Include="TurnPointAnalysis.cs" />
+    <Compile Include="zigzag\Strategy_Zigzag.cs" />
+    <Compile Include="zigzag\Zigzag.cs" />
+    <Compile Include="zigzag\ZigzagPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config\strategy.common.strategyconfig" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir $(TargetDir)

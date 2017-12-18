@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -104,6 +105,26 @@
     <Compile Include="data\utils\TimeIndeierUtils.cs" />
     <Compile Include="data\utils\TradingTimeUtils.cs" />
     <Compile Include="data\update\UpdatedDataInfo.cs" />
+    <Compile Include="graphic\GraphicMarginInfo.cs" />
+    <Compile Include="graphic\GraphicPaddingInfo.cs" />
+    <Compile Include="graphic\IGraphicDrawer.cs" />
+    <Compile Include="graphic\IGraphicDrawer_PriceRect.cs" />
+    <Compile Include="graphic\PriceGraphicMapping.cs" />
+    <Compile Include="graphic\PriceRectangle.cs" />
+    <Compile Include="graphic\shape\IShape.cs" />
+    <Compile Include="graphic\shape\IPriceShape.cs" />
+    <Compile Include="graphic\shape\PriceShapeType.cs" />
+    <Compile Include="graphic\shape\PriceShape_Label.cs" />
+    <Compile Include="graphic\shape\PriceShape_Line.cs" />
+    <Compile Include="graphic\shape\Shape_Point.cs" />
+    <Compile Include="graphic\shape\PriceShape_Point.cs" />
+    <Compile Include="graphic\shape\Shape_PolyLine.cs" />
+    <Compile Include="graphic\shape\PriceShape_PolyLine.cs" />
+    <Compile Include="graphic\shape\Shape_Rect.cs" />
+    <Compile Include="graphic\shape\PriceShape_Rect.cs" />
+    <Compile Include="graphic\shape\ShapeType.cs" />
+    <Compile Include="graphic\shape\Shape_Label.cs" />
+    <Compile Include="graphic\shape\Shape_Line.cs" />
     <Compile Include="historydata\ITradingTimeReader.cs" />
     <Compile Include="IPlugin_DataUpdater.cs" />
     <Compile Include="historydata\utils\TradingSessionDetailUtils.cs" />
@@ -112,13 +133,8 @@
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginHelper.cs" />
     <Compile Include="PluginInfo.cs" />
-    <Compile Include="strategy\draw\IStrategyDrawer.cs" />
-    <Compile Include="strategy\draw\IDrawOperator.cs" />
-    <Compile Include="strategy\draw\PriceLabel.cs" />
-    <Compile Include="strategy\draw\PriceLine.cs" />
-    <Compile Include="strategy\draw\PricePoint.cs" />
-    <Compile Include="strategy\draw\PricePolyLine.cs" />
-    <Compile Include="strategy\draw\PriceRect.cs" />
+    <Compile Include="strategy\IStrategyDrawer.cs" />
+    <Compile Include="strategy\IStrategyDrawOperator.cs" />
     <Compile Include="strategy\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_Current.cs" />
@@ -199,6 +215,7 @@
     <Compile Include="strategy\IStrategyOperator.cs" />
     <Compile Include="strategy\StrategyException.cs" />
     <Compile Include="strategy\StrategyForwardPeriod.cs" />
+    <Compile Include="strategy\StrategyDynamicArray.cs" />
     <Compile Include="strategy\StrategyReferedPeriods.cs" />
   </ItemGroup>
   <ItemGroup />

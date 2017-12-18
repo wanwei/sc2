@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{769F691F-A4C5-4819-9BC3-804C7EE16681}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.graphic</RootNamespace>
+    <AssemblyName>com.wer.sc.graphic</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CurrentInfo.cs" />
+    <Compile Include="DrawMainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawMainControl.Designer.cs">
+      <DependentUpon>DrawMainControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicDrawerHelper.cs" />
+    <Compile Include="candle\GraphicData_Candle.cs" />
+    <Compile Include="candle\GraphicDrawer_Candle.cs" />
+    <Compile Include="candle\GraphicDrawer_CandleChart.cs" />
+    <Compile Include="candle\GraphicDrawer_CandleMount.cs" />
+    <Compile Include="candle\GraphicDrawer_Candle_Abstract.cs" />
+    <Compile Include="ColorConfig.cs" />
+    <Compile Include="GraphicDataFactory.cs" />
+    <Compile Include="GraphicDrawerFactory.cs" />
+    <Compile Include="GraphicDrawer_Abstract.cs" />
+    <Compile Include="GraphicDrawer_Compound.cs" />
+    <Compile Include="GraphicDrawer_PriceRect_Abstract.cs" />
+    <Compile Include="GraphicDrawer_Switch.cs" />
+    <Compile Include="IGraphicData.cs" />
+    <Compile Include="IGraphicData_Candle.cs" />
+    <Compile Include="IGraphicData_Chart.cs" />
+    <Compile Include="IGraphicData_CurrentInfo.cs" />
+    <Compile Include="IGraphicData_Tick.cs" />
+    <Compile Include="IGraphicData_TimeLine.cs" />
+    <Compile Include="IGraphicDrawer_Candle.cs" />
+    <Compile Include="info\GraphicData_CurrentInfo.cs" />
+    <Compile Include="info\GraphicDrawer_CurrentInfo.cs" />
+    <Compile Include="main\GraphicDataProvider.cs" />
+    <Compile Include="main\GraphicDrawer_Main.cs" />
+    <Compile Include="main\GraphicDrawer_Switch_CandleReal.cs" />
+    <Compile Include="PriceShapePainter.cs" />
+    <Compile Include="shape\ShapePainter.cs" />
+    <Compile Include="StockGraph_Abstract.cs" />
+    <Compile Include="timeline\GraphicData_TimeLine.cs" />
+    <Compile Include="timeline\GraphicDrawer_TimeLine.cs" />
+    <Compile Include="timeline\GraphicDrawer_TimeLineChart.cs" />
+    <Compile Include="timeline\GraphicDrawer_TimeLineMount.cs" />
+    <Compile Include="timeline\GraphicDrawer_TimeLine_Abstract.cs" />
+    <Compile Include="utils\CrossHairDrawer.cs" />
+    <Compile Include="utils\PriceGraphicArgs.cs" />
+    <Compile Include="utils\SelectPointInfo.cs" />
+    <Compile Include="param\CompParameters.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="param\CompParameters.Designer.cs">
+      <DependentUpon>CompParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="param\FormParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="param\FormParameters.Designer.cs">
+      <DependentUpon>FormParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="param\ParameterControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DrawMainControl.resx">
+      <DependentUpon>DrawMainControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="param\CompParameters.resx">
+      <DependentUpon>CompParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="param\FormParameters.resx">
+      <DependentUpon>FormParameters.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tick\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

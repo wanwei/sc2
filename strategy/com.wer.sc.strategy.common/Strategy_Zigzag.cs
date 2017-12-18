@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.utils;
-using com.wer.sc.strategy.draw;
 
 namespace com.wer.sc.strategy.common
 {
@@ -24,75 +23,79 @@ namespace com.wer.sc.strategy.common
         private const string PARAMKEY_HIGHLOWLENGTH = "HIGHLOW_LENGTH";
 
         //转折起始长度
-        private int turnLength = 2;
+        private int turnLength;
 
         //确认高低点位置的长度
-        private int highLowLength = 9;
-
-        //第一次找到的低点index
-        //private List<int> arr_Index_Bottom = new List<int>();
-
-        //private List<int> arr_Index_Top = new List<int>();
+        private int highLowLength;
 
         private List<int> arr_Index_Bottom = new List<int>();
 
         private List<int> arr_Index_Top = new List<int>();
 
         //第一次找到的低点
-        private List<float> arr_Price_Bottom = new List<float>();
+        private DynamicArray<float> arr_Price_Bottom = new DynamicArray<float>();
         //第一次找到的高点
-        private List<float> arr_Price_Top = new List<float>();
+        private DynamicArray<float> arr_Price_Top = new DynamicArray<float>();
         //最后复核后确认的低点
-        private List<float> arr_Price_SureBottom = new List<float>();
+        private DynamicArray<float> arr_Price_SureBottom = new DynamicArray<float>();
         //最后复核后确认的高点
-        private List<float> arr_Price_SureTop = new List<float>();
+        private DynamicArray<float> arr_Price_SureTop = new DynamicArray<float>();        
+        //合并后的低点
+        private DynamicArray<float> arr_Price_MergedBottom = new DynamicArray<float>();
+        //合并后的高点
+        private DynamicArray<float> arr_Price_MergedTop = new DynamicArray<float>();
 
         public Strategy_Zigzag()
         {
             this.Parameters.AddParameter(PARAMKEY_TURNLENGTH, "转折起始长度", "", utils.param.ParameterType.INTEGER, 2);
-            this.Parameters.AddParameter(PARAMKEY_HIGHLOWLENGTH, "高低点位置的长度", "", utils.param.ParameterType.INTEGER, 6);
+            this.Parameters.AddParameter(PARAMKEY_HIGHLOWLENGTH, "高低点位置的长度", "", utils.param.ParameterType.INTEGER, 5);
         }
 
         public override void OnBar(Object sender, IStrategyOnBarArgument currentData)
         {
-            CalcTurnPoints(currentData.CurrentData);
+            IList<IStrategyOnBarInfo> bars = currentData.FinishedBars;
+            for (int i = 0; i < bars.Count; i++)
+            {
+                CalcTurnPoints(bars[i]);
+            }
         }
 
         /**
         * 查找高低点算法
         * 1.找到疑似的高点低点
         * 2.和之前的高低点进行比较，确认用之前的高低点还是现在的。
+        * 3.
         */
-        private void CalcTurnPoints(IRealTimeDataReader_Code currentData)
+        private void CalcTurnPoints(IStrategyOnBarInfo bar)
         {
-            AddEmptyPoints();
-            IKLineData klineData = currentData.GetKLineData(MainKLinePeriod);
+            IKLineData klineData = bar.KLineData;
             int barPos = klineData.BarPos;
-
+            //
+            if (barPos < highLowLength)
+                return;
             IList<float> arr_HighPrice = klineData.Arr_High;
             IList<float> arr_LowPrice = klineData.Arr_Low;
 
+            //首先找到高低点
             bool hasFindLowPoint = IsPreviousBarTheLowestBar(arr_LowPrice, barPos, turnLength, highLowLength);
             bool hasFindHighPoint = IsPreviousBarTheHighestBar(arr_HighPrice, barPos, turnLength, highLowLength);
+            if (!hasFindLowPoint && !hasFindHighPoint)
+                return;
 
-            if (barPos < highLowLength)            
-                return;            
-
-            if (!hasFindLowPoint && !hasFindHighPoint)            
-                return;            
-
-            int lastType = GetLastPointType(barPos);
+            int lastPointType = GetLastPointType(barPos);
 
             int turnPointIndex = barPos - turnLength;
+            if (turnPointIndex < 0)
+                return;
             //发生在chart刚开始，之前还没有低点高点
-            if (lastType == LASTTYPE_UNKNOWN)
+            if (lastPointType == LASTTYPE_UNKNOWN)
             {
                 if (hasFindHighPoint)
                     AddHighPoint(arr_HighPrice, turnPointIndex);
                 else
                     AddLowPoint(arr_LowPrice, turnPointIndex);
             }
-            else if (lastType == LASTTYPE_HIGH)
+            else if (lastPointType == LASTTYPE_HIGH)
             {
                 if (hasFindHighPoint)
                 {
@@ -116,14 +119,6 @@ namespace com.wer.sc.strategy.common
             }
         }
 
-        private void AddEmptyPoints()
-        {
-            arr_Price_Bottom.Add(0);
-            arr_Price_Top.Add(0);
-            arr_Price_SureBottom.Add(0);
-            arr_Price_SureTop.Add(0);
-        }
-
         private bool IsPreviousBarTheLowestBar(IList<float> prices, int currentIndex, int previousLength, int checkLength)
         {
             float previousPrice = MathUtils.GetPreviousData(prices, currentIndex, previousLength);
@@ -140,7 +135,6 @@ namespace com.wer.sc.strategy.common
 
         private void AddLowPoint(IList<float> arr_LowPrice, int pointPos)
         {
-            int currentBarPos = arr_Price_Bottom.Count - 1;
             arr_Index_Bottom.Add(pointPos);
             float lowPrice = arr_LowPrice[pointPos];
             arr_Price_Bottom[pointPos] = lowPrice;
@@ -163,7 +157,6 @@ namespace com.wer.sc.strategy.common
 
         private void AddHighPoint(IList<float> arr_HighPrice, int pointPos)
         {
-            int currentBarPos = arr_Price_Top.Count - 1;
             arr_Index_Top.Add(pointPos);
             float highPrice = arr_HighPrice[pointPos];
             arr_Price_Top[pointPos] = highPrice;

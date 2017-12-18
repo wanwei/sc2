@@ -1,10 +1,10 @@
-﻿using com.wer.sc.strategy.draw;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
+using com.wer.sc.strategy;
 
 namespace com.wer.sc.ui.comp
 {
@@ -18,8 +18,6 @@ namespace com.wer.sc.ui.comp
 
         private ChartComponentDrawer compChart;
 
-        private Dictionary<KLinePeriod, int> startPos_KLine;
-
         private int startPos_TimeLine;
 
         private int startPos_Tick; 
@@ -27,7 +25,6 @@ namespace com.wer.sc.ui.comp
         public ChartComponentStrategyDrawOperator(ChartComponentDrawer compChart, Dictionary<KLinePeriod, int> startPos_KLine, int startPos_TimeLine, int startPos_Tick)
         {
             this.compChart = compChart;
-            this.startPos_KLine = startPos_KLine;
             this.startPos_TimeLine = startPos_TimeLine;
             this.startPos_Tick = startPos_Tick;
         }
@@ -39,10 +36,7 @@ namespace com.wer.sc.ui.comp
                 return dic_Period_Drawer[klinePeriod];
             }
             //每个周期单独建立drawer
-            int startPos = 0;
-            if (startPos_KLine != null && startPos_KLine.ContainsKey(klinePeriod))
-                startPos = startPos_KLine[klinePeriod];
-            IStrategyDrawer drawer = new ChartComponentStrategyDrawer(compChart.Drawer_PriceRect, compChart.GraphicData_Candle, compChart.GraphicMapping, startPos);
+            IStrategyDrawer drawer = new ChartComponentStrategyDrawer(compChart.Drawer_PriceRect, compChart.GraphicData_Candle, compChart.GraphicMapping);
             dic_Period_Drawer.Add(klinePeriod, drawer);
             return drawer;
         }

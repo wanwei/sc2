@@ -1,6 +1,6 @@
-﻿using com.wer.sc.comp.graphic;
-using com.wer.sc.comp.graphic.timeline;
-using com.wer.sc.comp.graphic.utils;
+﻿using com.wer.sc.graphic;
+using com.wer.sc.graphic.timeline;
+using com.wer.sc.graphic.utils;
 using com.wer.sc.data;
 using com.wer.sc.data.utils;
 using com.wer.sc.utils;

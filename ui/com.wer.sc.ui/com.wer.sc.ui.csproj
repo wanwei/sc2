@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>program.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,16 +103,14 @@
       <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
       <Name>com.wer.sc.strategy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\com.wer.sc.comp\com.wer.sc.comp.csproj">
-      <Project>{9898bd8e-1db1-4ec5-9af8-220b9055981c}</Project>
-      <Name>com.wer.sc.comp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\com.wer.sc.ui.comp\com.wer.sc.ui.comp.csproj">
       <Project>{9d4c7345-2142-4f0e-956b-e9d9528d8652}</Project>
       <Name>com.wer.sc.ui.comp</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="program.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

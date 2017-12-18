@@ -52,7 +52,7 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
 
-            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
             StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
 
             DateTime prevtime = DateTime.Now;
@@ -73,10 +73,10 @@ namespace com.wer.sc.strategy
             int endDate = 20170603;
             IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, start, endDate);
 
-            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = false;
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
-            data.forward.ForwardPeriod forwardPeriod = new data.forward.ForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
 

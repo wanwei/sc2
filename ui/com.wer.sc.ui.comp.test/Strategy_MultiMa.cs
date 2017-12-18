@@ -2,7 +2,6 @@
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
 using com.wer.sc.strategy;
-using com.wer.sc.strategy.draw;
 using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;

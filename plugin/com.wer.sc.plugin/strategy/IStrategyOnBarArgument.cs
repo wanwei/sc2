@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 回测K线bar结束参数
+    /// 执行策略时，当时间前进时主周期完成一个bar时
     /// </summary>
     public interface IStrategyOnBarArgument
     {
@@ -24,12 +24,23 @@ namespace com.wer.sc.strategy
         /// </summary>
         double Time { get; }
 
+        /// <summary>
+        /// 得到主周期的bar
+        /// </summary>
         IStrategyOnBarInfo MainBar { get; }
 
         /// <summary>
         /// 得到触发OnBar事件时正好结束的K线柱子
         /// </summary>
         IList<IStrategyOnBarInfo> FinishedBars { get; }
+
+        /// <summary>
+        /// 得到指定周期的已结束的bar
+        /// 如果该周期的bar未结束，则返回空
+        /// </summary>
+        /// <param name="klinePeriod"></param>
+        /// <returns></returns>
+        IStrategyOnBarInfo GetFinishedBar(KLinePeriod klinePeriod);
 
         /// <summary>
         /// 得到所有的K线柱子
