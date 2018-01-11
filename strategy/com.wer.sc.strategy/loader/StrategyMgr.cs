@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.strategy
+namespace com.wer.sc.strategy.loader
 {
     public class StrategyMgr : IStrategyAssemblyMgr
     {
@@ -51,7 +51,7 @@ namespace com.wer.sc.strategy
         {
             int index = this.assemblies.IndexOf(ass);
             this.assemblies.Remove(ass);
-            string path = ass.FullPath;
+            string path = ass.ConfigPath;
             StrategyAssembly newAss = StrategyAssembly.Create(path);
             if (newAss != null)
                 this.assemblies.Insert(index, newAss);

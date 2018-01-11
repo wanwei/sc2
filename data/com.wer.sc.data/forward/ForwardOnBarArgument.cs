@@ -49,7 +49,7 @@ namespace com.wer.sc.data.forward
             get { return klineData_BarFinished[0]; }
         }
 
-        public IRealTimeDataReader_Code CurrentData
+        public IRealTimeData_Code CurrentData
         {
             get
             {
@@ -57,7 +57,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public IRealTimeDataReader_Code GetOtherData(string code)
+        public IRealTimeData_Code GetOtherData(string code)
         {
             return dataForward_Code.GetAttachedDataReader(code);
         }

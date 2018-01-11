@@ -19,10 +19,11 @@ namespace com.wer.sc.data.navigate
         }
 
         public static void ChangeTime_KLineData(IKLineData_RealTime klineData_RealTime, int date, double time, ITickData_Extend tickData)
-        {        
+        {
             KLinePeriod klinePeriod = klineData_RealTime.Period;
             int klineIndex = IndexOfTime(klineData_RealTime, klinePeriod, time, date);
-
+            //if(tickData.TradingDay !=date)
+            //    tickData = 
             int tickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, time, true);
             if (IsPeriodEnd(klineData_RealTime, klineIndex, tickData, tickIndex))
             {
@@ -44,7 +45,7 @@ namespace com.wer.sc.data.navigate
             {
                 double klineTime = klineData_RealTime.BarPos == klineIndex ? klineData_RealTime.GetCurrentBar_Original().Time : klineData_RealTime.Arr_Time[klineIndex];
                 startTickIndex = TimeIndeierUtils.IndexOfTime_Tick(tickData, klineTime, true);
-                if (klineData_RealTime.IsTradingTimeStart(klineIndex))
+                if (klineData_RealTime.IsTradingPeriodStart(klineIndex))
                 {
                     while (!tickData.IsTradingTimeStart(startTickIndex))
                     {
@@ -79,9 +80,13 @@ namespace com.wer.sc.data.navigate
             else
             {
                 int index = TimeIndeierUtils.IndexOfTime_KLine(klineData, time);
-                if (klineData.IsTradingTimeEnd(index))
+                if (klineData.IsTradingPeriodEnd(index))
                 {
-                    double endTime = klineData.GetEndTime(index);
+                    if (klineData.IsDayEnd(index))
+                    {
+                        return index;
+                    }
+                    double endTime = klineData.GetKLinePeriodEndTime(index);
                     if (index >= klineData.Length - 1)
                         return index;
                     double nextStartTime = klineData.Arr_Time[index + 1];

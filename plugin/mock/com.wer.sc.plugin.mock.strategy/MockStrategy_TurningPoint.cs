@@ -10,7 +10,7 @@ using com.wer.sc.data.forward;
 
 namespace com.wer.sc.plugin.mock.strategy
 {
-    [Strategy("MOCK.STRATEGY.TURNINGPOINT","转折点查找", "转折点查找，测试专用")]
+    //[Strategy("MOCK.STRATEGY.TURNINGPOINT","转折点查找", "转折点查找，测试专用")]
     public class MockStrategy_TurningPoint : StrategyAbstract
     {
         public string Description

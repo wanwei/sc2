@@ -16,8 +16,8 @@ namespace com.wer.sc.data.receiver
     /// 单个股票或期货的接收器
     /// 该类实现
     /// </summary>
-    public class RealTimeDataReceiver_Code : IRealTimeDataReader_Code
-    {
+    public class RealTimeDataReceiver_Code : IRealTimeData_Code, IRealTimeDataReader
+    {        
         private string code;
 
         private int date;
@@ -51,6 +51,14 @@ namespace com.wer.sc.data.receiver
             get
             {
                 return tickData.Price;
+            }
+        }
+
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return new string[] { Code };
             }
         }
 
@@ -101,6 +109,11 @@ namespace com.wer.sc.data.receiver
         {
             //TODO 需要实现获取当日K线每个时间
             return false;
+        }
+
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
         }
     }
 }

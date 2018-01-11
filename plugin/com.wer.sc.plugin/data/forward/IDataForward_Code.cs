@@ -15,7 +15,7 @@ namespace com.wer.sc.data.forward
     /// 单支合约的历史数据导航器
     /// 
     /// </summary>
-    public interface IDataForward_Code : IRealTimeDataReader_Code, IXmlExchange
+    public interface IDataForward_Code : IRealTimeData_Code, IRealTimeDataReader, IXmlExchange
     {
         #region 数据
 
@@ -46,7 +46,7 @@ namespace com.wer.sc.data.forward
         /// <summary>
         /// 附加数据读取器，附加进来的数据用该接口读取
         /// </summary>
-        IRealTimeDataReader_Code GetAttachedDataReader(string code);
+        IRealTimeData_Code GetAttachedDataReader(string code);
 
         /// <summary>
         /// 得到附加上来的codes

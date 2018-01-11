@@ -81,7 +81,6 @@ namespace com.wer.sc.data.update
         {
             int startDate;
 
-
             if (updateFillUp)
                 startDate = codeInfo.Start;
             else

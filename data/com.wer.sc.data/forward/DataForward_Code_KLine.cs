@@ -17,6 +17,8 @@ namespace com.wer.sc.data.forward
     /// </summary>
     internal class DataForward_Code_KLine : IDataForward_Code
     {
+        private string[] listenedCodes = new string[1];
+
         private DataForForward_Code navigateData;
 
         private Dictionary<KLinePeriod, bool> dic_KLinePeriod_IsEnd = new Dictionary<KLinePeriod, bool>();
@@ -45,6 +47,7 @@ namespace com.wer.sc.data.forward
             this.navigateData.TradingDay = navigateData.StartDate;
             this.forwardPeriod = forwardPeriod;
             this.mainKLineData = this.navigateData.GetKLineData(forwardPeriod.KlineForwardPeriod);
+            this.listenedCodes[0] = mainKLineData.Code;
             this.onBarArgument = new ForwardOnBarArgument(this.barFinishedInfos, this);
             InitKLine();
         }
@@ -115,7 +118,7 @@ namespace com.wer.sc.data.forward
             return dic_Code_DataForward.Keys.ToList<String>();
         }
 
-        public IRealTimeDataReader_Code GetAttachedDataReader(string code)
+        public IRealTimeData_Code GetAttachedDataReader(string code)
         {
             if (dic_Code_DataForward.ContainsKey(code))
                 return dic_Code_DataForward[code];
@@ -213,6 +216,15 @@ namespace com.wer.sc.data.forward
                 return navigateData.DataPackage;
             }
         }
+        
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return listenedCodes;
+            }
+        }
+
         public bool Forward()
         {
             if (isEnd)
@@ -299,12 +311,12 @@ namespace com.wer.sc.data.forward
 
         private void DealTimeInfo()
         {
-            if (mainKLineData.IsTradingTimeStart(mainKLineData.BarPos))
+            if (mainKLineData.IsTradingPeriodStart(mainKLineData.BarPos))
                 isTradingTimeStart = true;
             else
                 isTradingTimeStart = false;
 
-            if (mainKLineData.IsTradingTimeEnd(mainKLineData.BarPos))
+            if (mainKLineData.IsTradingPeriodEnd(mainKLineData.BarPos))
                 isTradingTimeEnd = true;
             else
                 isTradingTimeEnd = false;
@@ -462,6 +474,11 @@ namespace com.wer.sc.data.forward
             return isPeriodEnd;
         }
 
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
+        }
+
         public void Save(XmlElement xmlElem)
         {
             
@@ -471,7 +488,6 @@ namespace com.wer.sc.data.forward
         {
             
         }
-
 
         /// <summary>
         /// 

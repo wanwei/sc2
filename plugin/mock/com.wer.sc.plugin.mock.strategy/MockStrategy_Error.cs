@@ -10,7 +10,7 @@ namespace com.wer.sc.plugin.mock.strategy
     /// <summary>
     /// 没有
     /// </summary>
-    [Strategy("MOCK.STRATEGY.Error", "未实现策略", "未实现策略")]
+    //[Strategy("MOCK.STRATEGY.Error", "未实现策略", "未实现策略")]
     public class MockStrategy_Error
     {
 

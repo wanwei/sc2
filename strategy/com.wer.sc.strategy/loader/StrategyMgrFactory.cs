@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.strategy
+namespace com.wer.sc.strategy.loader
 {
     public class StrategyMgrFactory
     {

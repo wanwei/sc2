@@ -53,7 +53,7 @@ namespace com.wer.sc.data.navigate
 
         public IDataNavigate CreateDataNavigate(string code, double time)
         {
-            return CreateDataNavigate(code, time, 100, 50);
+            return CreateDataNavigate(code, time, 500, 500);
         }
 
         public IDataNavigate_Code CreateDataNavigate_Code(string code, double time)
@@ -61,7 +61,7 @@ namespace com.wer.sc.data.navigate
             int openDate = this.dataReader.CreateTradingTimeReader(code).GetRecentTradingDay(time);
             if (openDate < 0)
                 return null;
-            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 100, 50);
+            IDataPackage_Code dataPackage = DataPackageFactory.CreateDataPackage(dataReader, code, openDate, 500, 500);
             return CreateDataNavigate_Code(dataPackage, time);
         }
 

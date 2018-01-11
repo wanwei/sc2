@@ -117,7 +117,10 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataprovider.jinshuyuan
 
                 data.arr_time[i] = fulltime;
                 data.arr_price[i] = float.Parse(dataArr[4]);
-                data.arr_mount[i] = (int)float.Parse(dataArr[11]);
+                if (i == 0)
+                    data.arr_mount[i] = (int)float.Parse(dataArr[11]);
+                else
+                    data.arr_mount[i] = (int)float.Parse(dataArr[11]) - data.arr_totalMount[i - 1];
                 data.Arr_Hold[i] = int.Parse(dataArr[13]);
                 if (i == 0)
                     data.arr_add[i] += data.Arr_Hold[i];

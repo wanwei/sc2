@@ -91,5 +91,62 @@ namespace com.wer.sc.data.navigate
             canForward = nav.Forward(KLinePeriod.KLinePeriod_1Minute);
             Assert.IsFalse(canForward);
         }
+
+        [TestMethod]
+        public void TestNavigate_Code_RB1805()
+        {
+            string code = "rb1805";
+            double time = 20171226.2100;
+            IDataNavigate_Code nav = DataCenter.Default.DataNavigateFactory.CreateDataNavigate_Code(code, time, 100, 0);
+
+            time = 20171221.2100;
+            nav.NavigateTo(time);
+
+            IKLineData klineData_1 = nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            IKLineData klineData_5 = nav.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
+            IKLineData klineData_15 = nav.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
+
+            Assert.AreEqual(klineData_1.End, klineData_15.End);
+
+            nav.Forward(KLinePeriod.KLinePeriod_1Minute);
+            klineData_1 = nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            klineData_5 = nav.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
+            klineData_15 = nav.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
+            Assert.AreEqual(klineData_1.End, klineData_5.End);
+            Assert.AreEqual(klineData_1.End, klineData_15.End);
+
+            nav.NavigateTo(20171001);
+            klineData_1 = nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            klineData_5 = nav.GetKLineData(KLinePeriod.KLinePeriod_5Minute);
+            klineData_15 = nav.GetKLineData(KLinePeriod.KLinePeriod_15Minute);
+            Assert.AreEqual(klineData_1.End, klineData_5.End);
+            Assert.AreEqual(klineData_1.End, klineData_15.End);
+            Console.WriteLine(klineData_15);
+        }
+
+        [TestMethod]
+        public void TestNavigate_Code_Day()
+        {
+            string code = "rb1805";
+            double time = 20171226.2100;
+            IDataNavigate_Code nav = DataCenter.Default.DataNavigateFactory.CreateDataNavigate_Code(code, time, 100, 0);
+            IKLineData klineData = nav.GetKLineData(KLinePeriod.KLinePeriod_1Day);
+            //for (int i = 0; i < klineData.Length; i++)
+            //{
+            //    Console.WriteLine(klineData.GetBar(i));
+            //}
+
+            time = 20171002.09;
+            nav.NavigateTo(time);
+            klineData = nav.GetKLineData(KLinePeriod.KLinePeriod_1Minute);
+            Console.WriteLine(klineData);
+            Assert.AreEqual("20170929.1459,3524,3540,3522,3538,7648,0,487716", klineData.ToString());
+
+
+            //for (int i = 0; i < klineData.Length; i++)
+            //{
+            //    Console.WriteLine(klineData.GetBar(i));
+            //}
+        }
     }
 }

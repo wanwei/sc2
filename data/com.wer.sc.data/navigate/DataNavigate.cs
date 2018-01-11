@@ -15,7 +15,7 @@ namespace com.wer.sc.data.navigate
 
         public const int OPERATOR_PLAY = 1;
 
-        private IRealTimeDataReader_Code currentRealTimeDataReader;
+        private IRealTimeData_Code currentRealTimeDataReader;
 
         private IDataForward_Code dataForward_Code;
 
@@ -257,6 +257,14 @@ namespace com.wer.sc.data.navigate
             get { return isPlaying; }
         }
 
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return new string[] { Code};
+            }
+        }
+
         public void Play()
         {
             this.isPlaying = true;
@@ -305,6 +313,11 @@ namespace com.wer.sc.data.navigate
         public void ChangeByDataPackage(IDataPackage_Code dataPackage, double time)
         {
             throw new NotImplementedException();
+        }
+
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
         }
     }
 }

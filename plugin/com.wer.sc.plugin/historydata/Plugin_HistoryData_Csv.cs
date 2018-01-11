@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.wer.sc.plugin.data;
 using com.wer.sc.utils;
 
 namespace com.wer.sc.plugin.historydata

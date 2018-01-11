@@ -48,24 +48,29 @@ namespace com.wer.sc.data.reader
             return cache.GetTradingDay(time);
         }
 
-        public TradingTime GetTradingTime(int date)
+        public ITradingTime GetTradingTime(int date)
         {
-            throw new NotImplementedException();
+            return new TradingTime(date, GetTradingTime(code, date));
+        }
+
+        public IList<ITradingTime> GetTradingTime(int start, int end)
+        {
+            return null;
         }
 
         public bool IsStartTime(double time)
         {
-            throw new NotImplementedException();
+            return cache.IsStartTime(time);
         }  
 
-        public List<double[]> GetTradingTime(string code, int date)
+        private List<double[]> GetTradingTime(string code, int date)
         {
             return cache.GetTradingTime(code, date);
         }
 
-        public KLineDataTimeInfo GetKLineDataTimeInfo(int startDate, int endDate, KLinePeriod klinePeriod)
+        public ITradingDayReader GetTradingDayReader()
         {
-            return null;
+            return cache.GetTradingDayReader();
         }
     }
 }

@@ -16,15 +16,15 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -142,6 +142,12 @@
     <Compile Include="strategy\FormStrategyTrader.Designer.cs">
       <DependentUpon>FormStrategyTrader.cs</DependentUpon>
     </Compile>
+    <Compile Include="trade\FormTrade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="trade\FormTrade.Designer.cs">
+      <DependentUpon>FormTrade.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\com.wer.sc.utils.ui\com.wer.sc.utils.ui.csproj">
@@ -218,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="strategy\FormStrategyTrader.resx">
       <DependentUpon>FormStrategyTrader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormTrade.resx">
+      <DependentUpon>FormTrade.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

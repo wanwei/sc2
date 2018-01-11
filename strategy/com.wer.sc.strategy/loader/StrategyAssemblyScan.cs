@@ -19,9 +19,9 @@ namespace com.wer.sc.strategy.loader
             for (int i = 0; i < configfiles.Length; i++)
             {
                 string file = configfiles[i];
-                StrategyAssemblyConfig config = new StrategyAssemblyConfig();
-                config.Load(file);
-                StrategyAssembly strategyAssembly = StrategyAssembly.Create(config);
+                //StrategyAssembly strategyAssembly = new StrategyAssembly();
+                //strategyAssembly.Load(file);                
+                StrategyAssembly strategyAssembly = StrategyAssembly.Create(file);
                 plugins.Add(strategyAssembly);
             }
             return plugins;

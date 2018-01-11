@@ -21,7 +21,7 @@ namespace com.wer.sc.ui.comp
             ChartComponentData compData = new ChartComponentData(code, time, klinePeriod, showKLineIndex);
             ChartComponentController controller = new ChartComponentController(dataNavigater, compData);
 
-            IRealTimeDataReader_Code reader = controller.CurrentRealTimeDataReader;
+            IRealTimeData_Code reader = controller.CurrentRealTimeDataReader;
             IKLineData currentKLine = reader.GetKLineData(klinePeriod);
             Assert.AreEqual(compData.Code, currentKLine.Code);
             Assert.AreEqual(compData.Time, currentKLine.Time);

@@ -69,7 +69,16 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             //GetTradingTime(steps, allCodes, false);
             GetTickSteps(steps, updatedDataInfo, allCodes);
             GetKLineDataSteps(steps, updatedDataInfo, allCodes);
-            //GetKLineDataSteps_Day(steps, 20171124, allCodes);
+            //GetTickDataSteps_Day_All(steps, 20170718, allCodes);
+            //GetTickDataSteps_Day_All(steps, 20170719, allCodes);
+            //GetTickDataSteps_Day_All(steps, 20170720, allCodes);
+            //GetTickDataSteps_Day_All(steps, 20170721, allCodes);
+
+            //GetKLineDataSteps_Day(steps, 20170718, allCodes);
+            //GetKLineDataSteps_Day(steps, 20170719, allCodes);
+            //GetKLineDataSteps_Day(steps, 20170720, allCodes);
+            //GetKLineDataSteps_Day(steps, 20170721, allCodes);
+
 
             //更新主力合约信息
             Step_MainFutures step_MainFutures = new Step_MainFutures(this.dataUpdateHelper);
@@ -92,6 +101,27 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                     List<int> tradingDays = new List<int>();
                     tradingDays.Add(tradingDay);
                     Step_KLineData step = new Step_KLineData(codeInfo, tradingDays, true, dataUpdateHelper);
+                    steps.Add(step);
+                }
+            }
+        }
+
+        private void GetTickDataSteps_Day_All(List<IStep> steps, int tradingDay, List<CodeInfo> allCodes)
+        {
+            List<CodeInfo> notIndexCodes = GetNotIndexCodes(allCodes);
+            List<CodeInfo> indexCodes = GetIndexCodes(allCodes);
+            GetTickDataSteps_Day(steps, tradingDay, notIndexCodes);
+            GetTickDataSteps_Day(steps, tradingDay, indexCodes);
+        }
+
+        private void GetTickDataSteps_Day(List<IStep> steps, int tradingDay, List<CodeInfo> allCodes)
+        {
+            for (int i = 0; i < allCodes.Count; i++)
+            {
+                CodeInfo codeInfo = allCodes[i];
+                if (codeInfo.End == 0 || codeInfo.End >= tradingDay)
+                {
+                    Step_TickData_CodeDate step = new Step_TickData_CodeDate(this.dataUpdateHelper, codeInfo, tradingDay, true);
                     steps.Add(step);
                 }
             }

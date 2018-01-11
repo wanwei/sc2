@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.utils;
+using System.Drawing;
 
 namespace com.wer.sc.strategy.common.zigzag
 {
     /// <summary>
     /// 
     /// </summary>
-    [Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
+    //[Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
     public class Strategy_Zigzag : StrategyAbstract
     {
         private const int LASTTYPE_UNKNOWN = 0;
@@ -23,6 +24,11 @@ namespace com.wer.sc.strategy.common.zigzag
         private const string PARAMKEY_HIGHLOWLENGTH = "HIGHLOW_LENGTH";
 
         private Zigzag zigzag;
+
+        public Zigzag Zigzag
+        {
+            get { return zigzag; }
+        }
 
         private KLinePeriod zigzagPeriod;
 
@@ -49,9 +55,19 @@ namespace com.wer.sc.strategy.common.zigzag
 
         public override void OnBar(Object sender, IStrategyOnBarArgument argument)
         {
-            IStrategyOnBarInfo bar = argument.GetFinishedBar(zigzagPeriod);
+            IStrategyOnBarInfo bar = argument.GetFinishedBar(ZigzagPeriod);
             if (bar != null)
-                zigzag.Loop(bar.KLineData, bar.BarPos);
+                zigzag.Loop(bar.BarPos);
+
+            //if (argument.Time == 20171218.0900)
+            //{
+            //    int start = bar.BarPos - 500;
+            //    int end = bar.BarPos;
+            //    for (int i = start; i < end; i++)
+            //    {
+            //        zigzag.Loop(i);
+            //    }
+            //}
         }
 
         public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
@@ -68,16 +84,10 @@ namespace com.wer.sc.strategy.common.zigzag
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
-
+            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(ZigzagPeriod);
             List<ZigzagPoint> points = this.zigzag.GetPoints();
-
-            
-            //drawHelper.DrawPoints(arr_Price_Top, System.Drawing.Color.Blue);
-            //drawHelper.DrawPoints(arr_Price_Bottom, System.Drawing.Color.White);
-
-            //drawHelper.DrawPoints(arr_Price_SureTop, System.Drawing.Color.Red);
-            //drawHelper.DrawPoints(arr_Price_SureBottom, System.Drawing.Color.Green);
+            ZigzagDrawer.DrawZigzagPoints(drawHelper, points, Color.Blue, Color.White, 8);
+            ZigzagDrawer.DrawZigzagPoints(drawHelper, this.zigzag.GetMergedPoints(), 12);
         }
     }
 }

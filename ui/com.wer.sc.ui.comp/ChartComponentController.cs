@@ -183,7 +183,7 @@ namespace com.wer.sc.ui.comp
             this.currentNavigater.Pause();
         }
 
-        public IRealTimeDataReader_Code CurrentRealTimeDataReader
+        public IRealTimeData_Code CurrentRealTimeDataReader
         {
             get
             {

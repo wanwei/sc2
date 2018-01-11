@@ -12,6 +12,8 @@ using com.wer.sc.data.forward;
 using com.wer.sc.ui.comp.strategy;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
+using com.wer.sc.ui.comp.trade;
+using com.wer.sc.plugin;
 
 namespace com.wer.sc.ui.comp
 {
@@ -29,8 +31,8 @@ namespace com.wer.sc.ui.comp
             this.tb_KLine15.Tag = KLinePeriod.KLinePeriod_15Minute;
             this.tb_KLine1H.Tag = KLinePeriod.KLinePeriod_1Hour;
             this.tb_KLine1Day.Tag = KLinePeriod.KLinePeriod_1Day;
-            //this.tb_KLine5S.Tag = KLinePeriod.KLinePeriod_5Second;
-            //this.tb_KLine15S.Tag = KLinePeriod.KLinePeriod_15Second;            
+            this.tb_KLine5S.Tag = KLinePeriod.KLinePeriod_5Second;
+            this.tb_KLine15S.Tag = KLinePeriod.KLinePeriod_15Second;
         }
 
         public void BindChartComponent(ChartComponent chartComponent)
@@ -147,6 +149,13 @@ namespace com.wer.sc.ui.comp
         {
             FormCodes form = new FormCodes(chartComponent);
             form.ShowDialog();
+        }
+
+        private void tb_Trade_Click(object sender, EventArgs e)
+        {
+            IPlugin_MarketTrader trader = null;
+            FormTrade formTrade = new FormTrade(trader);
+            formTrade.Show();
         }
     }
 }

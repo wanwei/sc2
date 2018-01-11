@@ -53,6 +53,14 @@ namespace com.wer.sc.data.datapackage
         IKLineData_Extend GetKLineData(KLinePeriod period);
 
         /// <summary>
+        /// 得到制定周期的K线
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        IKLineData_Extend GetKLineData_Second(int date, KLinePeriod period);
+
+        /// <summary>
         /// 得到当前的分时线
         /// </summary>
         /// <returns></returns>
@@ -70,6 +78,13 @@ namespace com.wer.sc.data.datapackage
         /// <param name="period"></param>
         /// <returns></returns>
         IKLineData_RealTime CreateKLineData_RealTime(KLinePeriod period);
+
+        /// <summary>
+        /// 创建一个实时秒级K线数据
+        /// </summary>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        IKLineData_RealTime CreateKLineData_RealTime_Second(int date, KLinePeriod period);
 
         /// <summary>
         /// 创建一批实时K线数据

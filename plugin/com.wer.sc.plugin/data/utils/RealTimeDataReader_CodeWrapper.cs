@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.utils
 {
-    public class RealTimeDataReader_CodeWrapper : IRealTimeDataReader_Code
+    public class RealTimeDataReader_CodeWrapper : IRealTimeData_Code
     {
-        private IRealTimeDataReader_Code realTimeDataReader_Code;
+        private IRealTimeData_Code realTimeDataReader_Code;
 
-        public RealTimeDataReader_CodeWrapper(IRealTimeDataReader_Code realTimeDataReader_Code)
+        public RealTimeDataReader_CodeWrapper(IRealTimeData_Code realTimeDataReader_Code)
         {
             this.realTimeDataReader_Code = realTimeDataReader_Code;
             this.realTimeDataReader_Code.OnRealTimeChanged += RealTimeDataReader_Code_OnRealTimeChanged;

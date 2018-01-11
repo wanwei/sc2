@@ -13,18 +13,30 @@ namespace com.wer.sc.strategy
     public interface IStrategyAssembly
     {
         /// <summary>
-        /// 得到策略包的名称
+        /// 该Assembly在dotnet中的名称
+        /// 如com.wer.sc.strategy.common
         /// </summary>
         string AssemblyName { get; }
 
+        /// <summary>
+        /// Assembly在strategyconfig中配置的名称
+        /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// Assembly在strategyconfig中配置的名称
+        /// </summary>
         string Description { get; }
 
         /// <summary>
-        /// 得到策略包的完整路径
+        /// Assembly的完整路径
         /// </summary>
         string FullPath { get; }
+
+        /// <summary>
+        /// 配置文件路径
+        /// </summary>
+        string ConfigPath { get; }
 
         /// <summary>
         /// 得到策略包所有策略信息
@@ -33,53 +45,33 @@ namespace com.wer.sc.strategy
         List<IStrategyInfo> GetAllStrategies();
 
         /// <summary>
-        /// 
+        /// 根据策略的类名获取策略信息
         /// </summary>
-        /// <param name="strategyId"></param>
+        /// <param name="strategyClsName"></param>
         /// <returns></returns>
-        IStrategyInfo GetStrategy(String strategyId);
+        IStrategyInfo GetStrategyInfo(string strategyClsName);
 
         /// <summary>
-        /// 得到所有的顶级目录
-        /// 对于C#插件，目录就是命名空间
-        /// 对于python插件，目录是现实中的目录
+        /// 获得所有子路径，传入空则获取第一层路径
         /// </summary>
+        /// <param name="path"></param>
         /// <returns></returns>
-        IList<string> GetRootPath();
+        IList<string> GetSubPath(string path);
 
         /// <summary>
-        /// 得到所有的子命名空间，如果传入空或空字符串，则返回第一层的命名空间
+        /// 获得所有子策略，传入空则获得第一层的策略
         /// </summary>
-        /// <param name="parentPath"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        IList<string> GetSubPath(string parentPath);
+        IList<IStrategyInfo> GetSubStrategyInfo(string path);
 
         /// <summary>
-        /// 得到所有的子策略
+        /// 创建策略数据
         /// </summary>
-        /// <param name="parentPath"></param>
+        /// <param name="strategyClsName"></param>
         /// <returns></returns>
-        IList<IStrategyInfo> GetSubStrategies(string parentPath);
+        IStrategyData CreateStrategyData(string strategyClsName);
 
-        /// <summary>
-        /// 创建一个新的插件对象实例
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        IStrategy CreateStrategyObject(string strategyId);
-
-        /// <summary>
-        /// 创建一个新的插件对象实例
-        /// </summary>
-        /// <param name="strategyInfo"></param>
-        /// <returns></returns>
-        IStrategy CreateStrategyObject(IStrategyInfo strategyInfo);
-    
-        /// <summary>
-        /// 根据策略名称查找策略，模糊查找
-        /// </summary>
-        /// <param name="strategyName"></param>
-        /// <returns></returns>
-        IList<IStrategyAssembly> SearchStrategyInfo(String strategyName);
+        IStrategy CreateStrategy(string strategyClsName);
     }
 }

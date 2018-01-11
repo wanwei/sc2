@@ -58,7 +58,7 @@ namespace com.wer.sc.data.forward
             }
             else if (forwardType.Equals("tick"))
             {
-                DataForward_Code_Tick dataForward = new DataForward_Code_Tick(dataCenter);
+                DataForward_Code_Tick2 dataForward = new DataForward_Code_Tick2(dataCenter);
                 dataForward.Load(xmlElem);
                 return dataForward;
             }

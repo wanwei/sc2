@@ -80,6 +80,10 @@ namespace com.wer.sc.data.utils
             reader = GetTradingSessionCache_Instrument("m0405");
             date = reader.GetRecentTradingDay(10150718.220000);
             Assert.AreEqual(-1, date);
+
+            reader = GetTradingSessionCache_Instrument("RB1805");
+            date = reader.GetRecentTradingDay(20171221.2101);
+            Assert.AreEqual(20171222, date);
         }
 
         public void TestTradingTime_GetRecentTime()

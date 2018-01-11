@@ -160,7 +160,17 @@ namespace com.wer.sc.data.transfer
             throw new NotImplementedException();
         }
 
-        public TradingTime GetTradingTime(int date)
+        public ITradingDayReader GetTradingDayReader()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITradingTime GetTradingTime(int date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ITradingTime> GetTradingTime(int start, int end)
         {
             throw new NotImplementedException();
         }

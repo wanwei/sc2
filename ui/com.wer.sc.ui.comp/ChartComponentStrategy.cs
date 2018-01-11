@@ -62,9 +62,9 @@ namespace com.wer.sc.ui.comp
             if (!arg.PrevCompData.KlinePeriod.Equals(arg.CurrentCompData.KlinePeriod) && referedPeriods == null)
             {
                 //重置当前策略
-                strategy = strategyData.StrategyInfo.CreateStrategy();
+                this.strategyData.RefreshStrategy();
+                strategy = strategyData.Strategy;
                 strategy.Parameters.SetParameterValue(strategy.Parameters.GetParameterValues());
-                strategyData.Strategy = strategy;
                 Run();
             }
             else

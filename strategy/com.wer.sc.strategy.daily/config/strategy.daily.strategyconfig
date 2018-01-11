@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Strageties>
   <Assembly file="com.wer.sc.strategy.daily.dll" name="每日策略">
+    <Strategy class="com.wer.sc.strategy.daily._20171213.Strategy_20171213" name="20171213" desc="20171213">
+    </Strategy>
+    <Strategy class="com.wer.sc.strategy.daily._20171222.Strategy_20171222" name="20171222" desc="20171222">
+    </Strategy>
   </Assembly>
 </Strageties>

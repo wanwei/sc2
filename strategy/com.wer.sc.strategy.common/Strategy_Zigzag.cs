@@ -12,7 +12,7 @@ namespace com.wer.sc.strategy.common
     /// <summary>
     /// 
     /// </summary>
-    [Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
+    //[Strategy("STRATEGY.ZIGZAG", "ZIGZAG指标", "ZIGZAG指标", "指标")]
     public class Strategy_Zigzag : StrategyAbstract
     {
         private const int LASTTYPE_UNKNOWN = 0;

@@ -11,16 +11,20 @@ namespace com.wer.sc.data.navigate
 {
     public class DataNavigate_Code : IDataNavigate_Code
     {
+        private string[] codes = new string[1];
+
         private DataForNavigate_Code dataForNavigate;
 
         internal DataNavigate_Code(DataForNavigate_Code dataForNavigate)
         {
             this.dataForNavigate = dataForNavigate;
+            codes[0] = dataForNavigate.Code;
         }
 
         public DataNavigate_Code(IDataPackage_Code dataPackage, double time)
         {
             this.dataForNavigate = new DataForNavigate_Code(dataPackage, time);
+            codes[0] = dataForNavigate.Code;
             this.NavigateTo(time);
         }
 
@@ -51,6 +55,14 @@ namespace com.wer.sc.data.navigate
         public float Price
         {
             get { return dataForNavigate.Price; }
+        }
+
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return this.codes;
+            }
         }
 
         public event DelegateOnNavigateTo OnNavigateTo;
@@ -100,7 +112,7 @@ namespace com.wer.sc.data.navigate
         }
 
         public IKLineData GetKLineData(KLinePeriod period)
-        {
+        {          
             return dataForNavigate.GetKLineData(period);
         }
 
@@ -128,6 +140,11 @@ namespace com.wer.sc.data.navigate
             if (OnNavigateTo != null)
                 OnNavigateTo(this, new DataNavigateEventArgs(Code, Code, prevTime, time));
             return canNav;
+        }
+
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
         }
     }
 }

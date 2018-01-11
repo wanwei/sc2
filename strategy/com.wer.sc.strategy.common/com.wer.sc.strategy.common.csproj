@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E2FF97D-AF89-45D3-9D9A-19842C5DC6C5}</ProjectGuid>
+    <ProjectGuid>{83E1B4B6-0B48-478A-A822-D45981B1A583}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>com.wer.sc.strategy.common</RootNamespace>
@@ -30,13 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="com.wer.sc.plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="com.wer.sc.plugin">
       <HintPath>..\..\bin\Debug\com.wer.sc.plugin.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="com.wer.sc.utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="com.wer.sc.utils">
       <HintPath>..\..\bin\Debug\com.wer.sc.utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,23 +49,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="daily\Strategy_20171211_Day.cs" />
+    <Compile Include="daily\Strategy_20171221_Night.cs" />
+    <Compile Include="daily\Strategy_20171229_Day.cs" />
+    <Compile Include="IDataLooper.cs" />
+    <Compile Include="DataLooperExecutor.cs" />
+    <Compile Include="daytrade\Strategy_DayTrade.cs" />
     <Compile Include="kline\KLineAbstract.cs" />
     <Compile Include="kline\KLineType.cs" />
     <Compile Include="kline\KLine_Hammer.cs" />
     <Compile Include="kline\KLine_HangingMan.cs" />
     <Compile Include="kline\Strategy_KLine.cs" />
+    <Compile Include="UpState.cs" />
+    <Compile Include="zb\Amplitude.cs" />
+    <Compile Include="ma\Strategy_Amplitude.cs" />
     <Compile Include="ma\Strategy_MA.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sample\Strategy_Query.cs" />
-    <Compile Include="sample\Strategy_Refer.cs" />
-    <Compile Include="sample\Strategy_Trader.cs" />
-    <Compile Include="Strategy_Default.cs" />
     <Compile Include="ma\Strategy_MultiMa.cs" />
-    <Compile Include="Strategy_Zigzag.cs" />
-    <Compile Include="TurnPointAnalysis.cs" />
+    <Compile Include="ma\Strategy_Speed.cs" />
+    <Compile Include="mount\Strategy_Mount.cs" />
+    <Compile Include="platform\Platform.cs" />
+    <Compile Include="platform\PlatformLooper.cs" />
+    <Compile Include="platform\PlatformSharp.cs" />
+    <Compile Include="platform\Strategy_Platform.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy_Default.cs" />
+    <Compile Include="zb\MA.cs" />
+    <Compile Include="zb\Speed.cs" />
+    <Compile Include="zigzag\IZigzagPoint.cs" />
     <Compile Include="zigzag\Strategy_Zigzag.cs" />
     <Compile Include="zigzag\Zigzag.cs" />
+    <Compile Include="zigzag\ZigzagDrawer.cs" />
     <Compile Include="zigzag\ZigzagPoint.cs" />
+    <Compile Include="zigzag\Zigzag_Merge.cs" />
+    <Compile Include="zigzag\Zigzag_Simple.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config\strategy.common.strategyconfig" />

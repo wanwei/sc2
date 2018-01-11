@@ -37,6 +37,11 @@ namespace com.wer.sc.data.reader
             return klineData;
         }
 
+        public IKLineData GetData(string code, int date, KLinePeriod period)
+        {
+            return GetData(code, date, date, period);
+        }
+
         public IKLineData GetData(String code, int startDate, int endDate, KLinePeriod period)
         {
             if (period.PeriodType == KLineTimeType.MINUTE)
@@ -60,8 +65,25 @@ namespace com.wer.sc.data.reader
                 IKLineData data = LoadKLineData(code, startDate, endDate, new KLinePeriod(KLineTimeType.DAY, 1));
                 return DataTransfer_KLine2KLine.Transfer(data, period, null);
             }
+            if (period.PeriodType == KLineTimeType.SECOND)
+            {
+                //return LoadKLineData_Second(code, startDate, endDate, period);
+                return dataReaderExtend.GetKLineData_Second(code, startDate, endDate, period);
+            }
             //return LoadKLineData(code, startDate, endDate, period);
             throw new ArgumentException("暂未实现");
+        }
+
+        public IKLineData_Extend GetData_Extend(string code, int date, KLinePeriod period)
+        {
+            return GetData_Extend(code, date, date, period);
+        }
+
+        public IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, KLinePeriod period)
+        {
+            if (period.PeriodType == KLineTimeType.SECOND)
+                return dataReaderExtend.GetKLineDataExtend_Second(code, startDate, endDate, period);
+            return GetData_Extend(code, startDate, endDate, 0, 0, period);
         }
 
         public IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period)
@@ -78,6 +100,31 @@ namespace com.wer.sc.data.reader
             klineData.Period = period;
             return klineData;
         }
+
+        //private IKLineData LoadKLineData_Second(string code, int startDate, int endDate, KLinePeriod period)
+        //{
+        //    IList<int> dates = this.dataReader.TradingDayReader.GetTradingDays(startDate, endDate);
+        //    List<IKLineData> klineDataList = new List<IKLineData>();
+        //    for (int i = 0; i < dates.Count; i++)
+        //    {
+        //        int date = dates[i];
+        //        IKLineData klineData = LoadKLineData_Second(code, date, period);
+        //        if (klineData != null)
+        //            klineDataList.Add(klineData);
+        //    }
+        //    return KLineData.Merge(klineDataList);
+        //}
+
+        //private IKLineData LoadKLineData_Second(string code, int date, KLinePeriod period)
+        //{
+        //    TickData tickData = dataReader.TickDataReader.GetTickData(code, date);
+        //    if (tickData == null)
+        //        return null;
+        //    float lastEndPrice = dataReaderExtend.GetLastEndPrice(code, date);
+        //    int lastEndHold = dataReaderExtend.GetLastEndHold(code, date);
+        //    IList<double[]> tradingPeriods = dataReader.CreateTradingTimeReader(code).GetTradingTime(date).TradingPeriods;
+        //    return DataTransfer_Tick2KLine.Transfer(tickData, tradingPeriods, period, lastEndPrice, lastEndHold);
+        //}
 
         public int GetFirstDate(String code, KLinePeriod period)
         {

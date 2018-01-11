@@ -15,7 +15,7 @@ namespace com.wer.sc.data
 
         private ISet<int> set_TradingTimeEndBar = new HashSet<int>();
 
-        public TickData_Extend(ITickData tickData, TradingTime tradingTime)
+        public TickData_Extend(ITickData tickData, ITradingTime tradingTime)
         {
             this.tickData = tickData;
             for (int i = 0; i < tradingTime.PeriodCount - 1; i++)
@@ -28,7 +28,7 @@ namespace com.wer.sc.data
             set_TradingTimeEndBar.Add(tickData.Length - 1);
         }
 
-        private int FindEndBarPos(ITickData tickData, TradingTime tradingTime, int periodIndex)
+        private int FindEndBarPos(ITickData tickData, ITradingTime tradingTime, int periodIndex)
         {
             double endTime = tradingTime.GetPeriodTime(periodIndex)[1];
             double nextStartTime = tradingTime.GetPeriodTime(periodIndex + 1)[0];

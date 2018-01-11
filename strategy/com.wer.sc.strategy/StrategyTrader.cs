@@ -16,7 +16,7 @@ namespace com.wer.sc.strategy
 
         private IAccount account;
 
-        private IRealTimeDataReader_Code realTimeDataReader;
+        private IRealTimeData_Code realTimeDataReader;
 
         private Dictionary<String, StrategyTrader_Code> dic_Code_Trader = new Dictionary<string, StrategyTrader_Code>();
 
@@ -35,7 +35,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IRealTimeDataReader_Code RealTimeDataReader
+        public IRealTimeData_Code RealTimeDataReader
         {
             get
             {

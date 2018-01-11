@@ -54,6 +54,14 @@ namespace com.wer.sc.strategy
             StrategyReferedPeriods referedPeriods = strategy.GetReferedPeriods();
             if (referedPeriods != null)
                 this.referedPeriods = referedPeriods;
+            IList<IStrategy> referedStrategies = this.strategy.GetReferedStrategies();
+            if (referedStrategies != null)
+            {
+                for (int i = 0; i < referedStrategies.Count; i++)
+                {
+                    referedStrategies[i].StrategyOperator = strategyHelper;
+                }
+            }
         }
 
         public void SetStrategyPackage(IStrategyPackage strategyPackage)
@@ -163,7 +171,7 @@ namespace com.wer.sc.strategy
             try
             {
                 IStrategyOnEndArgument argument = new StrategyOnEndArgument(dataForward);
-                this.strategy.OnEnd(this, argument);
+                ExecuteReferStrategyEnd(strategy, argument);
                 this.BuildStrategyReport();
                 if (ExecuteFinished != null)
                     ExecuteFinished(this.strategy, new StrategyExecuteFinishedArguments(this.report));

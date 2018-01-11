@@ -74,7 +74,7 @@ namespace com.wer.sc.data.utils
         {
             if (tradingDay < 0)
                 return false;
-            TradingTime tradingSession = GetTradingTime(tradingDay);
+            ITradingTime tradingSession = GetTradingTime(tradingDay);
             if (tradingSession == null)
                 return false;
             return time >= tradingSession.OpenTime && time <= tradingSession.CloseTime;
@@ -132,11 +132,28 @@ namespace com.wer.sc.data.utils
             return instrumentId;
         }
 
-        public TradingTime GetTradingTime(int date)
+        public ITradingDayReader GetTradingDayReader()
+        {
+            return GetTradingDayCache();
+        }
+
+        public ITradingTime GetTradingTime(int date)
         {
             if (dic_TradingDay_TradingSession.ContainsKey(date))
                 return dic_TradingDay_TradingSession[date];
             return null;
+        }
+
+        public IList<ITradingTime> GetTradingTime(int start, int end)
+        {            
+            IList<int> tradingDays = GetTradingDayCache().GetTradingDays(start, end);
+            List<ITradingTime> tradingTimeArr = new List<ITradingTime>();
+            for (int i = 0; i < tradingDays.Count; i++)
+            {
+                int tradingDay = tradingDays[i];
+                tradingTimeArr.Add(GetTradingTime(tradingDay));
+            }
+            return tradingTimeArr;
         }
 
         public int GetRecentTradingDay(double time)
@@ -149,7 +166,7 @@ namespace com.wer.sc.data.utils
             if (dic_StartTime_TradingDay.ContainsKey(time))
                 return dic_StartTime_TradingDay[time];
             int tradingDay = (int)time;
-            if (tradingDay > this.tradingDays.Last<int>()&&!findForward)
+            if (tradingDay > this.tradingDays.Last<int>() && !findForward)
             {
                 return this.tradingDays[tradingDays.Count - 1];
             }
@@ -157,11 +174,19 @@ namespace com.wer.sc.data.utils
             {
                 return this.tradingDays[0];
             }
-            TradingTime tradingTime = GetTradingTime(tradingDay);
+            ITradingTime tradingTime = GetTradingTime(tradingDay);
             if (tradingTime != null)
             {
                 if (time >= tradingTime.OpenTime && time <= tradingTime.CloseTime)
                     return tradingDay;
+                if (time > tradingTime.CloseTime)
+                {
+                    int nTradingDay = GetTradingDayCache().GetNextTradingDay(tradingDay);
+                    ITradingTime ntradingTime = GetTradingTime(nTradingDay);
+                    if (ntradingTime != null && time >= ntradingTime.OpenTime && time <= ntradingTime.CloseTime)
+                        return nTradingDay;
+                }
+
                 if (findForward)
                 {
                     if (time > tradingTime.CloseTime)
@@ -193,7 +218,7 @@ namespace com.wer.sc.data.utils
             int tradingDay = GetRecentTradingDay(time, findForward);
             if (tradingDay < 0)
                 return -1;
-            TradingTime tradingTime = GetTradingTime(tradingDay);
+            ITradingTime tradingTime = GetTradingTime(tradingDay);
             if (tradingTime.OpenTime <= time && tradingTime.CloseTime >= time)
             {
                 double[] timeArr = tradingTime.GetPeriodTime(0);

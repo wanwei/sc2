@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStrategyLoader));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btRefresh = new System.Windows.Forms.ToolStripButton();
-            this.compStrategyTree1 = new com.wer.sc.ui.comp.strategy.StrategyTreeComponent();
+            this.strategyTreeComponent1 = new com.wer.sc.ui.comp.strategy.StrategyTreeComponent();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,23 +56,24 @@
             this.btRefresh.Text = "刷新策略树";
             this.btRefresh.Click += new System.EventHandler(this.btRefresh_Click);
             // 
-            // compStrategyTree1
+            // strategyTreeComponent1
             // 
-            this.compStrategyTree1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compStrategyTree1.Location = new System.Drawing.Point(0, 27);
-            this.compStrategyTree1.Name = "compStrategyTree1";
-            this.compStrategyTree1.Size = new System.Drawing.Size(478, 377);
-            this.compStrategyTree1.TabIndex = 2;
+            this.strategyTreeComponent1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.strategyTreeComponent1.Location = new System.Drawing.Point(0, 27);
+            this.strategyTreeComponent1.Name = "strategyTreeComponent1";
+            this.strategyTreeComponent1.Size = new System.Drawing.Size(478, 377);
+            this.strategyTreeComponent1.TabIndex = 2;
             // 
             // FormStrategyLoader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(478, 404);
-            this.Controls.Add(this.compStrategyTree1);
+            this.Controls.Add(this.strategyTreeComponent1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FormStrategyLoader";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "选择策略";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -84,6 +85,6 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btRefresh;
-        private StrategyTreeComponent compStrategyTree1;
+        private StrategyTreeComponent strategyTreeComponent1;
     }
 }

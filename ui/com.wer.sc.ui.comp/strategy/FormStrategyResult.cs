@@ -21,6 +21,7 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategyResult(ChartComponent compChart, IStrategyQueryResult strategyResult)
         {
             InitializeComponent();
+            this.ShowIcon = false;
             this.compChart = compChart;
             this.strategyResult = strategyResult;
             this.Init();

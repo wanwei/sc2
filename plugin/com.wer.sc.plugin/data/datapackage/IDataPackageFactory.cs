@@ -79,5 +79,13 @@ namespace com.wer.sc.data.datapackage
         /// <param name="xmlElem"></param>
         /// <returns></returns>
         IDataPackage_Code CreateDataPackage_Code(XmlElement xmlElem);
+
+        /// <summary>
+        /// 创建单支股票或期货的实时数据包
+        /// </summary>        
+        /// <param name="code"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        //IRealTimeDataPackage_Code CreateRealTimeDataPackage_Code(string code, double time);
     }
 }

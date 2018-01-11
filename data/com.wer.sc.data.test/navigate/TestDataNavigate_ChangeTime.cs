@@ -23,7 +23,7 @@ namespace com.wer.sc.data.navigate
 
         string code = "RB1710";
 
-        [TestMethod]
+        //[TestMethod]
         public void TestNavigate_ChangeTime()
         {
             int start = 20170601;
@@ -62,7 +62,7 @@ namespace com.wer.sc.data.navigate
             DataNavigate_ChangeTime.ChangeTime_TickData(tickData, time);
             Assert.AreEqual(argument.TickInfo.TickBar.ToString(), tickData.ToString());
 
-            IRealTimeDataReader_Code realTimeData = ((IRealTimeDataReader_Code)sender);
+            IRealTimeData_Code realTimeData = ((IRealTimeData_Code)sender);
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_1Minute, tradingDay, time, tickData);
             Assert.AreEqual(realTimeData.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString(), klineData_1Minute.ToString());
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_5Minute, tradingDay, time, tickData);

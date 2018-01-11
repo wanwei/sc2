@@ -76,15 +76,7 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="label"></param>
         void DrawLabel(PriceShape_Label label);
-
-        /// <summary>
-        /// 写文字
-        /// </summary>
-        /// <param name="positions"></param>
-        /// <param name="txts"></param>
-        /// <param name="color"></param>
-        void DrawLabels(IList<float> positions, IList<string> txts, Color color);
-
+      
         /// <summary>
         /// 写文字
         /// </summary>

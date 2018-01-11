@@ -16,6 +16,8 @@ namespace com.wer.sc.data.update
 
         private List<int> tradingDays;
 
+        private bool overwrite;
+
         private IPlugin_HistoryData historyData;
 
         private ITickDataStore tickDataStore;
@@ -31,6 +33,16 @@ namespace com.wer.sc.data.update
             this.historyData = historyData;
             this.tickDataStore = tickDataStore;
         }
+
+        public Step_UpdateTickData(string code, List<int> tradingDays, IPlugin_HistoryData historyData, ITickDataStore tickDataStore,bool overwrite)
+        {
+            this.code = code;
+            this.tradingDays = tradingDays;
+            this.historyData = historyData;
+            this.tickDataStore = tickDataStore;
+            this.overwrite = overwrite;
+        }
+
 
         public Step_UpdateTickData(string code, List<int> tradingDays, IPlugin_HistoryData historyData, ITickDataStore tickDataStore, UpdatedDataInfo updatedDataInfo, IUpdateInfoStore updateInfoStore) : this(code, tradingDays, historyData, tickDataStore)
         {
@@ -60,7 +72,7 @@ namespace com.wer.sc.data.update
         }
 
         public string Proceed()
-        {
+        {           
             if (tradingDays == null || tradingDays.Count == 0)
                 return "";
             int lastTradingDay = 0;
@@ -68,6 +80,12 @@ namespace com.wer.sc.data.update
             {
                 int tradingDay = tradingDays[i];
                 if (tickDataStore.Exist(code, tradingDay)) {
+                    if (overwrite)
+                    {
+                        TickData wtickData = (TickData)historyData.GetTickData(code, tradingDay);
+                        tickDataStore.Save(code, tradingDay, wtickData);
+                        continue;
+                    }
                     lastTradingDay = tradingDay;
                     continue;
                 }

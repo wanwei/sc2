@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy.common.ma
 {
-    [Strategy("STRATEGY.MA", "计算均线", "用来计算和显示MA线", "基础策略")]
+    //[Strategy("STRATEGY.MA", "计算均线", "用来计算和显示MA线", "基础策略")]
     public class Strategy_MultiMa : StrategyAbstract
     {
         private const string PARAMKEY_MA1 = "MA_1";
@@ -113,20 +113,20 @@ namespace com.wer.sc.strategy.common.ma
             IKLineData klineData = currentData.CurrentData.GetKLineData(MainKLinePeriod);
             if (klineData == null)
                 throw new StrategyException("没找到" + MainKLinePeriod + "K线数据");
-            GenMa(klineData, isLastPeriodEnd);
+            GenMa(klineData);
             isLastPeriodEnd = currentData.CurrentData.IsPeriodEnd(MainKLinePeriod);
         }
 
-        private void GenMa(IKLineData klineData, bool isPeriodStart)
+        private void GenMa(IKLineData klineData)
         {
-            GenMa(klineData, maArr_1, Param_1, isPeriodStart);
-            GenMa(klineData, maArr_2, Param_2, isPeriodStart);
-            GenMa(klineData, maArr_3, Param_3, isPeriodStart);
-            GenMa(klineData, maArr_4, Param_4, isPeriodStart);
-            GenMa(klineData, maArr_5, Param_5, isPeriodStart);
+            GenMa(klineData, maArr_1, Param_1);
+            GenMa(klineData, maArr_2, Param_2);
+            GenMa(klineData, maArr_3, Param_3);
+            GenMa(klineData, maArr_4, Param_4);
+            GenMa(klineData, maArr_5, Param_5);
         }
 
-        private void GenMa(IKLineData klineData, IList<float> maList, int length, bool isPeriodStart)
+        private void GenMa(IKLineData klineData, IList<float> maList, int length)
         {
             int barPos = klineData.BarPos;
             int startPos = barPos - length + 1;

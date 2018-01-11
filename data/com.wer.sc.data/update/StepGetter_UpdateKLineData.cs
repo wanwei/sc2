@@ -60,8 +60,11 @@ namespace com.wer.sc.data.update
 
             for (int i = 0; i < instruments.Count; i++)
             {
-                CodeInfo instrument = instruments[i];
-                AddSteps_KLineData_Instrument(steps, instrument, cache);
+                CodeInfo codeInfo = instruments[i];
+                if (codeInfo.End == 0 || codeInfo.End >= 20170718)
+                {
+                    AddSteps_KLineData_Instrument(steps, codeInfo, cache);
+                }                
             }
         }
 

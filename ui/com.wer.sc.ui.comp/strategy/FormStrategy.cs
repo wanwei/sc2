@@ -20,8 +20,6 @@ namespace com.wer.sc.ui.comp.strategy
 
         private IStrategyData strategyData;
 
-        //private IStrategy strategy;
-
         private IDataPackage_Code dataPackage;
 
         public IStrategyData StrategyData
@@ -46,6 +44,7 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategy(ChartComponent chartComponent)
         {
             InitializeComponent();
+            this.ShowIcon = false;
             this.chartComponent = chartComponent;
             this.dataPackage = chartComponent.Controller.CurrentNavigater.DataPackage;
             this.Init(chartComponent.StrategyData);
@@ -57,19 +56,22 @@ namespace com.wer.sc.ui.comp.strategy
                 return;
             this.StrategyData = strategyData;
             //this.strategy = this.StrategyData.Strategy;
+            //if (this.strategyData.Strategy != null && this.strategyData.Strategy.Parameters)
             this.compParameters1.Parameters = this.strategyData.Strategy.Parameters;
         }
 
         private void btExecutor_Click(object sender, EventArgs e)
         {
-            this.compParameters1.Parameters.GetParameterValues();
-            IStrategy strategy = this.strategyData.StrategyInfo.CreateStrategy();
-            strategy.Parameters.SetParameterValue(this.compParameters1.Parameters.GetParameterValues());
-            this.strategyData.Strategy = strategy;
+            if (this.compParameters1.Parameters != null)
+            {
+                this.compParameters1.Parameters.GetParameterValues();
+                IStrategy strategy = this.strategyData.Strategy;
+                strategy.Parameters.SetParameterValue(this.compParameters1.Parameters.GetParameterValues());
+            }
             //try
             //{
-                this.chartComponent.ChartComponentStrategy.Run();
-                this.Close();
+            this.chartComponent.ChartComponentStrategy.Run();
+            this.Close();
             //}
             //catch (Exception ex)
             //{
@@ -108,7 +110,7 @@ namespace com.wer.sc.ui.comp.strategy
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                StrategyInfo strategyInfo = form.SelectedStrategy;
+                IStrategyInfo strategyInfo = form.SelectedStrategy;
                 IStrategyData strategyData = strategyInfo.CreateStrategyData();
                 this.chartComponent.StrategyData = strategyData;
                 Init(strategyData);
@@ -149,6 +151,25 @@ namespace com.wer.sc.ui.comp.strategy
             //}
             //FormStrategyTrader form = new FormStrategyTrader(binder.CompChart, report.StrategyTrader);
             //form.ShowDialog();
+        }
+
+        private void btRefresh_Click(object sender, EventArgs e)
+        {
+            IStrategyAssemblyMgr mgr = StrategyCenter.Default.GetStrategyMgr();
+            if (this.strategyData == null)
+            {
+                mgr.Refresh();
+                return;
+            }
+            string assemblyId = this.strategyData.StrategyInfo.StrategyAssembly.AssemblyName;
+            string className = this.strategyData.StrategyInfo.ClassName;
+            mgr.Refresh();
+
+            IStrategyInfo strategyInfo = mgr.GetStrategyAssembly(assemblyId).GetStrategyInfo(className);
+            IStrategyData strategyData = strategyInfo.CreateStrategyData();
+            this.chartComponent.StrategyData = strategyData;
+            this.Init(strategyData);
+            MessageBox.Show("策略刷新成功");
         }
     }
 }

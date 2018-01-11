@@ -49,14 +49,14 @@ namespace com.wer.sc.data.forward
         /// <summary>
         /// 获得回测的股票或期货在当前历史时间的实时数据
         /// </summary>
-        IRealTimeDataReader_Code CurrentData { get; }
+        IRealTimeData_Code CurrentData { get; }
 
         /// <summary>
         /// 获得其它股票或期货在当前历史时间的实时数据
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        IRealTimeDataReader_Code GetOtherData(string code);
+        IRealTimeData_Code GetOtherData(string code);
     }
 
     /// <summary>
@@ -105,14 +105,14 @@ namespace com.wer.sc.data.forward
         /// <summary>
         /// 
         /// </summary>
-        IRealTimeDataReader_Code CurrentData { get; }
+        IRealTimeData_Code CurrentData { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        IRealTimeDataReader_Code GetOtherData(string code);
+        IRealTimeData_Code GetOtherData(string code);
     }
 
     public interface IForwardKLineBarInfo

@@ -22,6 +22,7 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategyTrader(ChartComponent compChart, IStrategyTrader strategyTrader)
         {
             InitializeComponent();
+            this.ShowIcon = false;
             this.compChart = compChart;
             this.strategyTrader = strategyTrader;
 

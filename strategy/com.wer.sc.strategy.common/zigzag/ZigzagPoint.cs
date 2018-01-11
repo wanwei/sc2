@@ -15,15 +15,23 @@ namespace com.wer.sc.strategy.common.zigzag
 
         private bool isHigh;
 
-        private bool isSurePoint;
-
         private bool isMergedPoint;
+
+        //private List<ZigzagPoint> mergedPoints;
 
         public ZigzagPoint(IKLineData klineData, int barPos, bool isHigh)
         {
             this.klineData = klineData;
             this.barPos = barPos;
             this.isHigh = isHigh;
+        }
+
+        public float Price
+        {
+            get
+            {
+                return isHigh ? GetBar().High : GetBar().Low;
+            }
         }
 
         public IKLineBar GetBar()
@@ -47,19 +55,6 @@ namespace com.wer.sc.strategy.common.zigzag
             }
         }
 
-        public bool IsSurePoint
-        {
-            get
-            {
-                return isSurePoint;
-            }
-
-            set
-            {
-                isSurePoint = value;
-            }
-        }
-
         public bool IsMergedPoint
         {
             get
@@ -71,6 +66,28 @@ namespace com.wer.sc.strategy.common.zigzag
             {
                 isMergedPoint = value;
             }
+        }
+
+        //public void AddMergePoint(ZigzagPoint point)
+        //{
+        //    if (this.mergedPoints == null)
+        //        this.mergedPoints = new List<ZigzagPoint>();
+        //    this.mergedPoints.Add(point);
+        //}
+
+        //public List<ZigzagPoint> MergedPoints
+        //{
+        //    get { return mergedPoints; }
+        //}
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(isHigh ? "high" : "low").Append(",");
+            sb.Append(barPos).Append(",");
+            sb.Append(Price).Append(",");
+            sb.Append(GetBar().Time);
+            return sb.ToString();
         }
     }
 }

@@ -32,6 +32,9 @@ namespace com.wer.sc.ui.comp
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuComponent));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tb_SwitchTimeLine = new System.Windows.Forms.ToolStripButton();
+            this.tb_SwitchKLine = new System.Windows.Forms.ToolStripButton();
+            this.tb_SwitchTick = new System.Windows.Forms.ToolStripButton();
             this.tb_Refresh = new System.Windows.Forms.ToolStripButton();
             this.tb_KLine1 = new System.Windows.Forms.ToolStripButton();
             this.tb_KLine5 = new System.Windows.Forms.ToolStripButton();
@@ -57,9 +60,6 @@ namespace com.wer.sc.ui.comp
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_Connect = new System.Windows.Forms.ToolStripButton();
             this.tb_Trade = new System.Windows.Forms.ToolStripButton();
-            this.tb_SwitchTimeLine = new System.Windows.Forms.ToolStripButton();
-            this.tb_SwitchKLine = new System.Windows.Forms.ToolStripButton();
-            this.tb_SwitchTick = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,6 +103,42 @@ namespace com.wer.sc.ui.comp
             this.toolStrip1.Size = new System.Drawing.Size(937, 45);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "交易";
+            // 
+            // tb_SwitchTimeLine
+            // 
+            this.tb_SwitchTimeLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_SwitchTimeLine.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchTimeLine.Image")));
+            this.tb_SwitchTimeLine.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_SwitchTimeLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_SwitchTimeLine.Name = "tb_SwitchTimeLine";
+            this.tb_SwitchTimeLine.Size = new System.Drawing.Size(28, 42);
+            this.tb_SwitchTimeLine.Tag = com.wer.sc.ui.comp.ChartType.TimeLine;
+            this.tb_SwitchTimeLine.Text = "分时线";
+            this.tb_SwitchTimeLine.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
+            // 
+            // tb_SwitchKLine
+            // 
+            this.tb_SwitchKLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_SwitchKLine.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchKLine.Image")));
+            this.tb_SwitchKLine.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_SwitchKLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_SwitchKLine.Name = "tb_SwitchKLine";
+            this.tb_SwitchKLine.Size = new System.Drawing.Size(28, 42);
+            this.tb_SwitchKLine.Tag = com.wer.sc.ui.comp.ChartType.KLine;
+            this.tb_SwitchKLine.Text = "K线";
+            this.tb_SwitchKLine.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
+            // 
+            // tb_SwitchTick
+            // 
+            this.tb_SwitchTick.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tb_SwitchTick.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchTick.Image")));
+            this.tb_SwitchTick.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tb_SwitchTick.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tb_SwitchTick.Name = "tb_SwitchTick";
+            this.tb_SwitchTick.Size = new System.Drawing.Size(28, 42);
+            this.tb_SwitchTick.Tag = com.wer.sc.ui.comp.ChartType.Tick;
+            this.tb_SwitchTick.Text = "闪电线";
+            this.tb_SwitchTick.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
             // 
             // tb_Refresh
             // 
@@ -356,42 +392,7 @@ namespace com.wer.sc.ui.comp
             this.tb_Trade.Name = "tb_Trade";
             this.tb_Trade.Size = new System.Drawing.Size(28, 42);
             this.tb_Trade.Text = "toolStripButton1";
-            // 
-            // tb_SwitchTimeLine
-            // 
-            this.tb_SwitchTimeLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tb_SwitchTimeLine.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchTimeLine.Image")));
-            this.tb_SwitchTimeLine.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tb_SwitchTimeLine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tb_SwitchTimeLine.Name = "tb_SwitchTimeLine";
-            this.tb_SwitchTimeLine.Size = new System.Drawing.Size(28, 42);
-            this.tb_SwitchTimeLine.Tag = com.wer.sc.ui.comp.ChartType.TimeLine;
-            this.tb_SwitchTimeLine.Text = "分时线";
-            this.tb_SwitchTimeLine.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
-            // 
-            // tb_SwitchKLine
-            // 
-            this.tb_SwitchKLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tb_SwitchKLine.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchKLine.Image")));
-            this.tb_SwitchKLine.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tb_SwitchKLine.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tb_SwitchKLine.Name = "tb_SwitchKLine";
-            this.tb_SwitchKLine.Size = new System.Drawing.Size(28, 42);
-            this.tb_SwitchKLine.Tag = com.wer.sc.ui.comp.ChartType.KLine;
-            this.tb_SwitchKLine.Text = "K线";
-            this.tb_SwitchKLine.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
-            // 
-            // tb_SwitchTick
-            // 
-            this.tb_SwitchTick.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tb_SwitchTick.Image = ((System.Drawing.Image)(resources.GetObject("tb_SwitchTick.Image")));
-            this.tb_SwitchTick.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tb_SwitchTick.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tb_SwitchTick.Name = "tb_SwitchTick";
-            this.tb_SwitchTick.Size = new System.Drawing.Size(28, 42);
-            this.tb_SwitchTick.Tag = com.wer.sc.ui.comp.ChartType.Tick;
-            this.tb_SwitchTick.Text = "闪电线";
-            this.tb_SwitchTick.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
+            this.tb_Trade.Click += new System.EventHandler(this.tb_Trade_Click);
             // 
             // MenuComponent
             // 

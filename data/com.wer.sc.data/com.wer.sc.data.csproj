@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="account\Account.cs" />
     <Compile Include="account\AccountFactory.cs" />
+    <Compile Include="market\Plugin_MarketData_Simu.cs" />
+    <Compile Include="market\Plugin_MarketTrader_Simu.cs" />
     <Compile Include="account\TradeFee.cs" />
     <Compile Include="account\TradeFee_Code.cs" />
     <Compile Include="account\TradeFee_Variety.cs" />
@@ -54,11 +56,11 @@
     <Compile Include="datapackage\DataPackage_Code.cs" />
     <Compile Include="forward\DataForwardUtils_Tick.cs" />
     <Compile Include="forward\DataForForward_CodeIndeier.cs" />
+    <Compile Include="forward\DataForward_AttachCode_Tick.cs" />
     <Compile Include="forward\DataForward_Code_KLine.cs" />
     <Compile Include="forward\DataForForward_Code.cs" />
     <Compile Include="forward\DataForward.cs" />
     <Compile Include="forward\DataForwardFactory.cs" />
-    <Compile Include="forward\DataForward_Code_Tick.cs" />
     <Compile Include="forward\ForwardOnBarArgument.cs" />
     <Compile Include="forward\ForwardBarInfo.cs" />
     <Compile Include="forward\ForwardOnTickArgument.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="forward\utils\KLineToTickIndeier.cs" />
     <Compile Include="forward\utils\TimeLineToKLineIndeier.cs" />
     <Compile Include="forward\utils\TimeLineToTickIndeier.cs" />
+    <Compile Include="market\Plugin_Market_Simu.cs" />
     <Compile Include="navigate\DataForNavigate_Code.cs" />
     <Compile Include="navigate\DataNavigate.cs" />
     <Compile Include="navigate\DataNavigateFactory.cs" />

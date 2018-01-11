@@ -25,8 +25,15 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyAssembly GetStrategyAssembly(String assemblyName);
 
+        /// <summary>
+        /// 刷新所有策略包（重新装载所有策略）
+        /// </summary>
         void Refresh();
 
+        /// <summary>
+        /// 刷新指定策略包
+        /// </summary>
+        /// <param name="strategyAssembly"></param>
         void Refresh(IStrategyAssembly strategyAssembly);
     }
 }

@@ -10,7 +10,7 @@ using com.wer.sc.data.forward;
 
 namespace com.wer.sc.plugin.mock.strategy
 {
-    [Strategy("MOCK.STRATEGY.MA", "MA指标", "MA指标，测试专用")]
+    //[Strategy("MOCK.STRATEGY.MA", "MA指标", "MA指标，测试专用")]
     public class MockStrategy_Ma : StrategyAbstract
     {
         private StrategyReferedPeriods strategyPeriods;

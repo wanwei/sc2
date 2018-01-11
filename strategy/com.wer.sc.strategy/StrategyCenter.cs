@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.strategy.loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;

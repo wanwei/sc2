@@ -38,7 +38,7 @@ namespace com.wer.sc.data.forward
             this.dataForward_Code = dataForward_Code;
         }
 
-        public IRealTimeDataReader_Code CurrentData
+        public IRealTimeData_Code CurrentData
         {
             get
             {
@@ -46,7 +46,7 @@ namespace com.wer.sc.data.forward
             }
         }
 
-        public IRealTimeDataReader_Code GetOtherData(string code)
+        public IRealTimeData_Code GetOtherData(string code)
         {
             return dataForward_Code.GetAttachedDataReader(code);
         }

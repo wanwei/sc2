@@ -15,6 +15,7 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategyReport()
         {
             InitializeComponent();
+            this.ShowIcon = false;
         }
     }
 }

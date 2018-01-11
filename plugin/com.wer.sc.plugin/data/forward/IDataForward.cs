@@ -21,11 +21,6 @@ namespace com.wer.sc.data.forward
         bool Forward();
 
         /// <summary>
-        /// 得到当前时间
-        /// </summary>
-        double Time { get; }
-
-        /// <summary>
         /// 前进周期
         /// </summary>
         ForwardPeriod ForwardPeriod { get; }

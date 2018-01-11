@@ -28,8 +28,8 @@ namespace com.wer.sc.data.forward.utils
             this.dic_TickIndex_KLineIndex.Clear();
             this.dic_KLineStart_KLineEnd.Clear();
             int tradingDay = tickData.TradingDay;
-            int startIndex = klineData.GetTradingDayStartIndex(tradingDay);
-            int endIndex = klineData.GetTradingDayEndIndex(tradingDay);
+            int startIndex = klineData.GetDayStartBarPos(tradingDay);
+            int endIndex = klineData.GetDayEndBarPos(tradingDay);
             int barPos = startIndex;
 
             double endKLineTime = GetEndTime(klineData, barPos);
@@ -79,8 +79,8 @@ namespace com.wer.sc.data.forward.utils
         {
             if (klineData.Period.PeriodType >= KLineTimeType.DAY)
                 return klineData.Time;
-            double endTime = klineData.GetEndTime(barPos);
-            if (barPos < klineData.Length - 1 && klineData.IsTradingTimeEnd(barPos))
+            double endTime = klineData.GetKLinePeriodEndTime(barPos);
+            if (barPos < klineData.Length - 1 && klineData.IsTradingPeriodEnd(barPos))
             {
                 endTime = (endTime + klineData.Arr_Time[barPos + 1]) / 2;
             }

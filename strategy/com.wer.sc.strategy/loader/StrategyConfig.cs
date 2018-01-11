@@ -8,16 +8,25 @@ using System.Xml;
 
 namespace com.wer.sc.strategy.loader
 {
-    public class StrategyConfig
+    public abstract class StrategyConfig
     {
+        internal string strategyPath;
+
         private string className;
 
         private string name;
 
         private string desc;
 
+        private bool isError;
+
+        private string errorInfo;
+
         private IParameters parameters;
 
+        /// <summary>
+        /// 策略对应的类
+        /// </summary>
         public string ClassName
         {
             get
@@ -26,6 +35,9 @@ namespace com.wer.sc.strategy.loader
             }
         }
 
+        /// <summary>
+        /// 策略的名称
+        /// </summary>
         public string Name
         {
             get
@@ -34,7 +46,10 @@ namespace com.wer.sc.strategy.loader
             }
         }
 
-        public string Desc
+        /// <summary>
+        /// 策略的描述
+        /// </summary>
+        public string Description
         {
             get
             {
@@ -42,6 +57,9 @@ namespace com.wer.sc.strategy.loader
             }
         }
 
+        /// <summary>
+        /// 策略的默认参数
+        /// </summary>
         public IParameters Parameters
         {
             get
@@ -49,6 +67,33 @@ namespace com.wer.sc.strategy.loader
                 return parameters;
             }
         }
+
+        public bool IsError
+        {
+            get
+            {
+                return isError;
+            }
+
+            set
+            {
+                isError = value;
+            }
+        }
+
+        public string ErrorInfo
+        {
+            get
+            {
+                return errorInfo;
+            }
+
+            set
+            {
+                errorInfo = value;
+            }
+        }
+
 
         public void Load(string file)
         {
@@ -67,7 +112,15 @@ namespace com.wer.sc.strategy.loader
             {
                 this.parameters = ParameterFactory.CreateParameters();
                 this.parameters.Load((XmlElement)nodeList[0]);
-            }          
+            }
+        }
+
+        public string StrategyPath
+        {
+            get
+            {
+                return strategyPath;
+            }
         }
     }
 }

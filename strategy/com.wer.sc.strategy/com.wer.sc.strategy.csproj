@@ -22,9 +22,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,13 +42,12 @@
   <ItemGroup>
     <Compile Include="loader\StrategyAssembly.cs" />
     <Compile Include="loader\StrategyAssemblyConfig.cs" />
-    <Compile Include="loader\StrategyAssemblyScan2.cs" />
     <Compile Include="loader\StrategyAssemblyScan.cs" />
     <Compile Include="loader\StrategyConfig.cs" />
+    <Compile Include="loader\StrategyInfo.cs" />
     <Compile Include="StrategyCenter.cs" />
     <Compile Include="loader\StrategyMgr.cs" />
     <Compile Include="loader\StrategyMgrFactory.cs" />
-    <Compile Include="loader\StrategyInfo.cs" />
     <Compile Include="StrategyOnBarArgument.cs" />
     <Compile Include="StrategyOnBarInfo.cs" />
     <Compile Include="StrategyOnEndArgument.cs" />

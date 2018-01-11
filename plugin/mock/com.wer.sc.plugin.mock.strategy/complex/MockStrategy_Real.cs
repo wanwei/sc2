@@ -10,7 +10,7 @@ using com.wer.sc.data.forward;
 
 namespace com.wer.sc.plugin.mock.strategy.complex
 {
-    [Strategy("MOCK.STRATEGY.COMPLEX.REAL", "复杂策略", "复杂策略，测试专用")]
+    //[Strategy("MOCK.STRATEGY.COMPLEX.REAL", "复杂策略", "复杂策略，测试专用")]
     public class MockStrategy_Real : StrategyAbstract
     {
 

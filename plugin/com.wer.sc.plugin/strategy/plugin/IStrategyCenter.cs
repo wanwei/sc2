@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 策略中心
+    /// 策略中心，接口功能：
+    /// 1.获得所有策略
+    /// 2.创建策略执行器
     /// </summary>
     public interface IStrategyCenter
     {
@@ -22,7 +24,5 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <returns></returns>
         IStrategyExecutorFactory_History GetStrategyExecutorFactory_History();
-
-        //IStrategyExecutorFactory_History GetStrategyExecutorFactory();
     }
 }

@@ -10,7 +10,7 @@ using com.wer.sc.data.forward;
 
 namespace com.wer.sc.plugin.mock.strategy
 {
-    [Strategy("MOCK.STRATEGY.VOLUME","量能过滤", "量能过滤，测试专用")]
+    //[Strategy("MOCK.STRATEGY.VOLUME","量能过滤", "量能过滤，测试专用")]
     public class MockStrategy_Volume : StrategyAbstract
     {
         public override StrategyReferedPeriods GetReferedPeriods()

@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy.common
 {
     /// <summary>
-    /// 转折点分析，如下分析：
-    /// 1.清理脉冲信号
-    /// 2.找出平台区域
-    /// 3.合并中继转折点
+    /// 当前状态
     /// </summary>
-    public class TurnPointAnalysis
+    public enum UpState
     {
+        Up = 0,
 
+        Down = 1,
+
+        UpDown = 2,
+
+        DownUp = 3
     }
 }

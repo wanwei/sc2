@@ -1,7 +1,6 @@
 ﻿using com.wer.sc.data.store;
 using com.wer.sc.data.utils;
 using com.wer.sc.plugin;
-using com.wer.sc.plugin.historydata.utils;
 using com.wer.sc.utils.update;
 using System;
 using System.Collections.Generic;
@@ -46,6 +45,34 @@ namespace com.wer.sc.data.update
             List<IStep> steps = new List<IStep>();
             AddSteps_TickData(steps);
             return steps;
+            //return GetSteps_TradingDay();
+        }
+
+        public List<IStep> GetSteps_TradingDay()
+        {
+            List<IStep> steps = new List<IStep>();
+            List<CodeInfo> allInstruments = historyData.GetInstruments();
+            AddSteps_TickData_TradingDay(steps, allInstruments, 20170718);
+            AddSteps_TickData_TradingDay(steps, allInstruments, 20170719);
+            AddSteps_TickData_TradingDay(steps, allInstruments, 20170720);
+            AddSteps_TickData_TradingDay(steps, allInstruments, 20170721);
+            return steps;
+        }
+
+        private void AddSteps_TickData_TradingDay(List<IStep> steps, IList<CodeInfo> codes, int tradingDay)
+        {
+            ITickDataStore tickDataStore = dataStore.CreateTickDataStore();
+            for (int i = 0; i < codes.Count; i++)
+            {
+                CodeInfo codeInfo = codes[i];
+                if (codeInfo.End == 0 || codeInfo.End >= tradingDay)
+                {
+                    List<int> tradingDays = new List<int>();
+                    tradingDays.Add(tradingDay);
+                    Step_UpdateTickData step = new Step_UpdateTickData(codeInfo.Code, tradingDays, historyData, tickDataStore, true);
+                    steps.Add(step);
+                }
+            }
         }
 
         private void AddSteps_TickData(List<IStep> steps)
@@ -68,10 +95,10 @@ namespace com.wer.sc.data.update
                 int lastTradingDay = instrument.End;
                 if (lastTradingDay <= 0)
                     lastTradingDay = tradingDayCache.LastTradingDay;
-                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(instrument.Code);              
+                int lastUpdatedDate = updatedDataInfo.GetLastUpdatedTickData(instrument.Code);
                 if (lastUpdatedDate < instrument.Start)
-                    lastUpdatedDate = tradingDayCache.GetPrevTradingDay(instrument.Start);                
-                
+                    lastUpdatedDate = tradingDayCache.GetPrevTradingDay(instrument.Start);
+
                 List<int> allDays;
                 if (!isFillUp)
                 {
@@ -87,7 +114,7 @@ namespace com.wer.sc.data.update
                     int firstNewTradingDay = newTradingDays.Count == 0 ? allTradingDays[allTradingDays.Count - 1] : newTradingDays[0];
                     if (firstNewTradingDay > endDate)
                         continue;
-                    
+
                     IList<int> tradingDays = tradingDayCache.GetTradingDays(lastUpdatedDate, endDate);
                     if (tradingDays == null || tradingDays.Count == 0)
                         continue;

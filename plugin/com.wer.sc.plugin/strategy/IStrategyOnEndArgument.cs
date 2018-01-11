@@ -13,14 +13,14 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 得到当前数据
         /// </summary>
-        IRealTimeDataReader_Code CurrentData { get; }
+        IRealTimeData_Code CurrentData { get; }
 
         /// <summary>
         /// 得到其它数据
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        IRealTimeDataReader_Code GetOtherData(string code);
+        IRealTimeData_Code GetOtherData(string code);
 
     }
 }

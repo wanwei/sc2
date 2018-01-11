@@ -54,7 +54,7 @@ namespace com.wer.sc.strategy
             OnBar_(currentData.CurrentData);
         }
 
-        public abstract void OnBar_(IRealTimeDataReader_Code currentData);
+        public abstract void OnBar_(IRealTimeData_Code currentData);
 
         public override void OnTick(Object sender, IStrategyOnTickArgument currentData)
         {
@@ -64,7 +64,7 @@ namespace com.wer.sc.strategy
             OnTick_(currentData.CurrentData);
         }
 
-        public abstract void OnTick_(IRealTimeDataReader_Code currentData);
+        public abstract void OnTick_(IRealTimeData_Code currentData);
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {

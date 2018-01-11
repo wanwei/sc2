@@ -16,6 +16,8 @@ namespace com.wer.sc.graphic.shape
 
         PolyLine,
 
-        Rect
+        Rect,
+
+        Custom
     }
 }

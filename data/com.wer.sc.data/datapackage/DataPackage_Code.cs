@@ -123,6 +123,57 @@ namespace com.wer.sc.data.datapackage
             return klineData;
         }
 
+        public IKLineData_Extend GetKLineData_Second(int date, KLinePeriod period)
+        {
+            if (dic_Period_SecondKLineData.ContainsKey(period))
+            {
+                KLineDataSecond klineData = dic_Period_SecondKLineData[period];
+                if (date == klineData.Date)
+                    return klineData.KlineData;
+            }
+            IKLineData_Extend klineData_Extend = dataReader.KLineDataReader.GetData_Extend(code, date, period);
+            KLineDataSecond klineDataSecond = new KLineDataSecond();
+            klineDataSecond.Date = date;
+            klineDataSecond.KlineData = klineData_Extend;
+            dic_Period_SecondKLineData[period] = klineDataSecond;
+            return klineData_Extend;
+        }
+
+        private Dictionary<KLinePeriod, KLineDataSecond> dic_Period_SecondKLineData = new Dictionary<KLinePeriod, KLineDataSecond>();
+
+        class KLineDataSecond
+        {
+            private int date;
+
+            private IKLineData_Extend klineData;
+
+            public int Date
+            {
+                get
+                {
+                    return date;
+                }
+
+                set
+                {
+                    date = value;
+                }
+            }
+
+            public IKLineData_Extend KlineData
+            {
+                get
+                {
+                    return klineData;
+                }
+
+                set
+                {
+                    klineData = value;
+                }
+            }
+        }
+
         /// <summary>
         /// 得到当前的分时线
         /// </summary>
@@ -154,6 +205,12 @@ namespace com.wer.sc.data.datapackage
         public IKLineData_RealTime CreateKLineData_RealTime(KLinePeriod period)
         {
             IKLineData_Extend klineData = GetKLineData(period);
+            return new KLineDataExtend_RealTime(klineData);
+        }
+
+        public IKLineData_RealTime CreateKLineData_RealTime_Second(int date, KLinePeriod period)
+        {
+            IKLineData_Extend klineData = GetKLineData_Second(date, period);
             return new KLineDataExtend_RealTime(klineData);
         }
 

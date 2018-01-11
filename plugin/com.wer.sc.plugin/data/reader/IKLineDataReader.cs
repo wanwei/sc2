@@ -14,6 +14,15 @@
         IKLineData GetAllData(string code, KLinePeriod period);
 
         /// <summary>
+        /// 获得当日所有K线
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="date"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        IKLineData GetData(string code, int date, KLinePeriod period);
+
+        /// <summary>
         /// 得到一张合约一段时间的K线数据
         /// </summary>
         /// <param name="code"></param>
@@ -35,6 +44,34 @@
         /// <returns></returns>
         IKLineData GetData(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period);
 
+        /// <summary>
+        /// 得到一张合约一天的K线数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        IKLineData_Extend GetData_Extend(string code, int date, KLinePeriod period);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, KLinePeriod period);
+
+        /// <summary>
+        /// 得到一张合约一段时间的K线数据
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="minBeforeBarCount"></param>
+        /// <param name="minAfterBarCount"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
         IKLineData_Extend GetData_Extend(string code, int startDate, int endDate, int minBeforeBarCount, int minAfterBarCount, KLinePeriod period);
 
         /// <summary>

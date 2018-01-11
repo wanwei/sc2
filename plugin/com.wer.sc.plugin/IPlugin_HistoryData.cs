@@ -1,5 +1,4 @@
 ﻿using com.wer.sc.data;
-using com.wer.sc.plugin.data;
 using com.wer.sc.plugin.historydata;
 using System;
 using System.Collections.Generic;

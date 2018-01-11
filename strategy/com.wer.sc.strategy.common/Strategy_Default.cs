@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy.common
 {
-    [Strategy("STRATEGY.DEFAULT", "默认策略", "默认策略，用来显示MA线等", "")]
+    //[Strategy("STRATEGY.DEFAULT", "默认策略", "默认策略，用来显示MA线等", "")]
     public class Strategy_Default : StrategyAbstract
     {
         private int Param_1;

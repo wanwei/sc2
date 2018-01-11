@@ -85,7 +85,7 @@ namespace com.wer.sc.data
 
         public IList<double[]> GetTradingTime(int tradingDay)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public bool IsPeriodStart(int barPos)

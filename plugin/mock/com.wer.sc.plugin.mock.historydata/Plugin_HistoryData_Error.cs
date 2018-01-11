@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
-using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.plugin.mock.historydata
 {

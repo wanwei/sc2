@@ -41,16 +41,16 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.compParameters1 = new com.wer.sc.graphic.param.CompParameters();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -79,7 +79,8 @@
             this.btRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btRefresh.Name = "btRefresh";
             this.btRefresh.Size = new System.Drawing.Size(28, 28);
-            this.btRefresh.Text = "toolStripButton1";
+            this.btRefresh.Text = "刷新策略";
+            this.btRefresh.Click += new System.EventHandler(this.btRefresh_Click);
             // 
             // btChangeStrategy
             // 
@@ -182,28 +183,6 @@
             this.panel1.Size = new System.Drawing.Size(782, 481);
             this.panel1.TabIndex = 14;
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.panel1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.progressBar1);
-            this.splitContainer1.Panel2.Controls.Add(this.btExecutor);
-            this.splitContainer1.Panel2.Controls.Add(this.btCancel);
-            this.splitContainer1.Size = new System.Drawing.Size(782, 522);
-            this.splitContainer1.SplitterDistance = 481;
-            this.splitContainer1.TabIndex = 11;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.compParameters1);
@@ -226,6 +205,28 @@
             this.compParameters1.Size = new System.Drawing.Size(776, 446);
             this.compParameters1.TabIndex = 11;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.progressBar1);
+            this.splitContainer1.Panel2.Controls.Add(this.btExecutor);
+            this.splitContainer1.Panel2.Controls.Add(this.btCancel);
+            this.splitContainer1.Size = new System.Drawing.Size(782, 522);
+            this.splitContainer1.SplitterDistance = 481;
+            this.splitContainer1.TabIndex = 11;
+            // 
             // FormStrategy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -233,17 +234,18 @@
             this.ClientSize = new System.Drawing.Size(782, 553);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormStrategy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "策略";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

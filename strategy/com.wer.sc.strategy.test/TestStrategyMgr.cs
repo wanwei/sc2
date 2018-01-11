@@ -1,6 +1,7 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
+using com.wer.sc.strategy.loader;
 using com.wer.sc.utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -52,33 +53,33 @@ namespace com.wer.sc.strategy
 
         private void AssertMockStrategy_Ma(IStrategyInfo strategy)
         {
-            Assert.AreEqual(STRATEGY_MA, strategy.StrategyID);
-            Assert.AreEqual("MA指标", strategy.StrategyName);
-            Assert.AreEqual("MA指标，测试专用", strategy.StrategyDesc);
+            //Assert.AreEqual(STRATEGY_MA, strategy.StrategyID);
+            Assert.AreEqual("MA指标", strategy.Name);
+            Assert.AreEqual("MA指标，测试专用", strategy.Description);
             Assert.AreEqual("com.wer.sc.plugin.mock.strategy.MockStrategy_Ma", strategy.StrategyClassType.FullName);
         }
 
         private void AssertMockStrategy_TurningPoint(IStrategyInfo strategy)
         {
-            Assert.AreEqual(STRATEGY_TURNINGPOINT, strategy.StrategyID);
-            Assert.AreEqual("转折点查找", strategy.StrategyName);
-            Assert.AreEqual("转折点查找，测试专用", strategy.StrategyDesc);
+            //Assert.AreEqual(STRATEGY_TURNINGPOINT, strategy.StrategyID);
+            Assert.AreEqual("转折点查找", strategy.Name);
+            Assert.AreEqual("转折点查找，测试专用", strategy.Description);
             Assert.AreEqual("com.wer.sc.plugin.mock.strategy.MockStrategy_TurningPoint", strategy.StrategyClassType.FullName);
         }
 
         private void AssertMockStrategy_Volume(IStrategyInfo strategy)
         {
-            Assert.AreEqual(STRATEGY_VOLUME, strategy.StrategyID);
-            Assert.AreEqual("量能过滤", strategy.StrategyName);
-            Assert.AreEqual("量能过滤，测试专用", strategy.StrategyDesc);
+            //Assert.AreEqual(STRATEGY_VOLUME, strategy.StrategyID);
+            Assert.AreEqual("量能过滤", strategy.Name);
+            Assert.AreEqual("量能过滤，测试专用", strategy.Description);
             Assert.AreEqual("com.wer.sc.plugin.mock.strategy.MockStrategy_Volume", strategy.StrategyClassType.FullName);
         }
 
         private void AssertMockStrategy_Complex(IStrategyInfo strategy)
         {
-            Assert.AreEqual("MOCK.STRATEGY.COMPLEX.REAL", strategy.StrategyID);
-            Assert.AreEqual("复杂策略", strategy.StrategyName);
-            Assert.AreEqual("复杂策略，测试专用", strategy.StrategyDesc);
+            //Assert.AreEqual("MOCK.STRATEGY.COMPLEX.REAL", strategy.StrategyID);
+            Assert.AreEqual("复杂策略", strategy.Name);
+            Assert.AreEqual("复杂策略，测试专用", strategy.Description);
             Assert.AreEqual("com.wer.sc.plugin.mock.strategy.complex.MockStrategy_Real", strategy.StrategyClassType.FullName);
         }
 
@@ -110,11 +111,11 @@ namespace com.wer.sc.strategy
             //string path2 = "com.wer.sc.plugin.mock.zb";
             //string path3 = "com.wer.sc.plugin.mock.strategy.complex";
 
-            IList<IStrategyInfo> strategyInfos = assembly1.GetSubStrategies("");
+            IList<IStrategyInfo> strategyInfos = null;//assembly1.GetSubStrategies("");
             //Assert.AreEqual(2, strategyInfos.Count);
-            AssertMockStrategy_TurningPoint(assembly1.GetStrategy(STRATEGY_TURNINGPOINT));
-            AssertMockStrategy_Volume(assembly1.GetStrategy(STRATEGY_VOLUME));
-            AssertMockStrategy_Ma(assembly1.GetStrategy(STRATEGY_MA));
+            AssertMockStrategy_TurningPoint(assembly1.GetStrategyInfo(STRATEGY_TURNINGPOINT));
+            AssertMockStrategy_Volume(assembly1.GetStrategyInfo(STRATEGY_VOLUME));
+            AssertMockStrategy_Ma(assembly1.GetStrategyInfo(STRATEGY_MA));
 
             //strategyInfos = assembly1.GetSubStrategies(path2);
             //Assert.AreEqual(1, strategyInfos.Count);
@@ -178,11 +179,11 @@ namespace com.wer.sc.strategy
         {
             IStrategyAssemblyMgr strategyMgr = GetStrategyMgr();
             IStrategyAssembly assembly1 = strategyMgr.GetStrategyAssembly(assemblyName1);
-            IStrategy strategy_ma = assembly1.CreateStrategyObject(STRATEGY_MA);
+            IStrategy strategy_ma = assembly1.CreateStrategy(STRATEGY_MA);
             AssertMockStrategy_Ma_Object1(strategy_ma);
 
             IStrategyAssembly assembly2 = strategyMgr.GetStrategyAssembly(assemblyName2);
-            IStrategy strategy_ma2 = assembly2.CreateStrategyObject(STRATEGY_MA);
+            IStrategy strategy_ma2 = assembly2.CreateStrategy(STRATEGY_MA);
             AssertMockStrategy_Ma_Object2(strategy_ma2);
         }
     }

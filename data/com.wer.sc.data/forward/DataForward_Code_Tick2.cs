@@ -18,6 +18,7 @@ namespace com.wer.sc.data.forward
     {
         private bool isInit = false;
 
+        private string[] listenedCodes = new string[1];
         private IDataCenter dataCenter;
         private IDataPackage_Code dataPackage;
         private ForwardReferedPeriods referedPeriods;
@@ -76,6 +77,7 @@ namespace com.wer.sc.data.forward
 
         private void PrepareData()
         {
+            this.listenedCodes[0] = this.dataForForward_Code.Code;
             this.dataForForward_Code.TradingDay = dataPackage.StartDate;
             this.forwardDataIndeier = new ForwardDataIndeier(dataForForward_Code);
             this.onBarArgument = new ForwardOnBarArgument(barFinishedInfos, this);
@@ -152,7 +154,7 @@ namespace com.wer.sc.data.forward
             if (IsPeriodEnd(dataForForward_Code.MainKLinePeriod))
             {
                 IKLineData_RealTime mainKlineData = dataForForward_Code.MainKLine;
-                if (mainKlineData.IsTradingTimeEnd(mainKlineData.BarPos))
+                if (mainKlineData.IsTradingPeriodEnd(mainKlineData.BarPos))
                     return true;
             }
             return false;
@@ -541,6 +543,14 @@ namespace com.wer.sc.data.forward
             }
         }
 
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return listenedCodes;
+            }
+        }
+
         #endregion
 
         #region 附加Code
@@ -557,7 +567,7 @@ namespace com.wer.sc.data.forward
             dataForward_AttachCode.ForwardNextDay(dataForForward_Code.TradingDay, this.Time);
         }
 
-        public IRealTimeDataReader_Code GetAttachedDataReader(string code)
+        public IRealTimeData_Code GetAttachedDataReader(string code)
         {
             throw new NotImplementedException();
         }
@@ -592,5 +602,64 @@ namespace com.wer.sc.data.forward
         }
 
         #endregion
+
+        internal static int FindNextKLineIndex(IKLineData_RealTime klineData, double time)
+        {
+            int prevBarPos = klineData.BarPos;
+            int barPos = prevBarPos;
+            if (barPos == klineData.Length - 1)
+                return barPos;
+
+            while (barPos < klineData.Length)
+            {
+                double currentEndTime = GetEndTime(klineData, barPos);
+                if (currentEndTime > time)
+                {
+                    return barPos;
+                }
+                barPos++;
+            }
+
+            return barPos - 1;
+        }
+
+        private static double GetEndTime(IKLineData_RealTime klineData, int barPos)
+        {
+            if (klineData.Period.PeriodType >= KLineTimeType.DAY)
+                return klineData.Time;
+            double endTime = klineData.GetKLinePeriodEndTime(barPos);
+            if (barPos < klineData.Length - 1 && klineData.IsTradingPeriodEnd(barPos))
+            {
+                endTime = (endTime + klineData.Arr_Time[barPos + 1]) / 2;
+            }
+            return endTime;
+        }
+
+        internal static int FindNextTimeLineIndex(ITimeLineData_RealTime timelineData, double time)
+        {
+            int prevBarPos = timelineData.BarPos;
+            int barPos = prevBarPos;
+            if (barPos == timelineData.Length - 1)
+                return barPos;
+
+            while (barPos < timelineData.Length)
+            {
+                double startTime = timelineData.Arr_Time[barPos];
+                if (barPos != 0 && timelineData.IsTradingTimeStart(barPos))
+                    startTime = timelineData.Arr_Time[barPos - 1];
+                if (startTime > time)
+                {
+                    return barPos;
+                }
+                barPos++;
+            }
+
+            return barPos - 1;
+        }
+
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
+        }
     }
 }

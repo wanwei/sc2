@@ -46,6 +46,9 @@ namespace com.wer.sc.data
         /// <returns></returns>
         double[] GetPeriodTime(int index);
 
+        /// <summary>
+        /// 得到当日的所有交易周期
+        /// </summary>
         List<double[]> TradingPeriods { get; }
 
         /// <summary>
@@ -53,13 +56,5 @@ namespace com.wer.sc.data
         /// 有夜盘的合约一般会过夜
         /// </summary>
         bool IsOverNight { get; }
-
-        /// <summary>
-        /// 计算当日的时间周期
-        /// 该方法用来计算
-        /// </summary>
-        /// <param name="targetPeriod"></param>
-        /// <returns></returns>
-        //List<double> CalcTimeList(KLinePeriod targetPeriod);
     }
 }

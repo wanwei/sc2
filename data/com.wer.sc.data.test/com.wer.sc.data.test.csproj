@@ -59,6 +59,8 @@
     <Compile Include="datacenter\TestDataCenter.cs" />
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />
+    <Compile Include="datapackage\TestDataPackage.cs" />
+    <Compile Include="datapackage\TestRealTimeDataPackage_Code.cs" />
     <Compile Include="forward\CommonData.cs" />
     <Compile Include="forward\TestDataForForward_CodeIndeier.cs" />
     <Compile Include="forward\TestHistoryDataForward.cs" />
@@ -78,9 +80,10 @@
     <Compile Include="market\impl\TestAccountTrade.cs" />
     <Compile Include="market\TestAccount.cs" />
     <Compile Include="market\TestMarketTrader_Code.cs" />
+    <Compile Include="market\TestPlugin_MarketTrader_Simu.cs" />
     <Compile Include="navigate\TestDataNavigate.cs" />
-    <Compile Include="navigate\TestDataNavigate_Code.cs" />
     <Compile Include="navigate\TestDataNavigate_ChangeTime.cs" />
+    <Compile Include="navigate\TestDataNavigate_Code.cs" />
     <Compile Include="navigate\TestDataNavigate_Code_TimeLine.cs" />
     <Compile Include="navigate\TestDataNavigate_Night.cs" />
     <Compile Include="reader\DataCenterUri.cs" />
@@ -110,6 +113,8 @@
     <None Include="TestCase\com\wer\sc\data\forward\utils\ForwardDataIndeier" />
     <None Include="TestCase\com\wer\sc\data\forward\utils\forward_kline" />
     <None Include="TestCase\com\wer\sc\data\forward\utils\klinetotick2" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_RB1801_20170801_5Second" />
+    <None Include="TestCase\com\wer\sc\data\reader\KLineData_RB1801_20170801_15Second" />
     <None Include="TestCase\com\wer\sc\data\store\file\Store_AccountFee" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick" />
     <None Include="TestCase\com\wer\sc\data\forward\forward_tick_timeinfo" />

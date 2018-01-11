@@ -35,18 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="com.wer.sc.data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\com.wer.sc.data.dll</HintPath>
-    </Reference>
-    <Reference Include="com.wer.sc.plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\com.wer.sc.plugin.dll</HintPath>
-    </Reference>
-    <Reference Include="com.wer.sc.strategy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\com.wer.sc.strategy.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -63,12 +51,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\com.wer.sc.strategy.cnfutures\com.wer.sc.strategy.cnfutures.csproj">
-      <Project>{b6c505f7-29d3-48d5-a292-cf22620e86a4}</Project>
-      <Name>com.wer.sc.strategy.cnfutures</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

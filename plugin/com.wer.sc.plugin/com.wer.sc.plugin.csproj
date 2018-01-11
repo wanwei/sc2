@@ -69,6 +69,7 @@
     <Compile Include="data\ITradingTime.cs" />
     <Compile Include="data\KLineData_Extend.cs" />
     <Compile Include="data\KLineDataTimeInfo.cs" />
+    <Compile Include="data\KLineData_Extend2.cs" />
     <Compile Include="data\MainContractInfo.cs" />
     <Compile Include="data\market\AccountFeeInfo.cs" />
     <Compile Include="data\KLinePriceType.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="data\navigate\IDataNavigateFactory.cs" />
     <Compile Include="data\navigate\IDataNavigate_Code.cs" />
     <Compile Include="data\reader\IMainContractReader.cs" />
-    <Compile Include="data\reader\IRealTimeDataReader_Code.cs" />
+    <Compile Include="data\reader\IRealTimeData_Code.cs" />
     <Compile Include="data\StoreDataTypes.cs" />
     <Compile Include="data\StoreMethod.cs" />
     <Compile Include="data\TickData_Extend.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="data\utils\CsvUtils_Instrument.cs" />
     <Compile Include="data\utils\CsvUtils_TradingTime.cs" />
     <Compile Include="data\utils\KLineDataUtils.cs" />
-    <Compile Include="data\utils\RealTimeDataReader_CodeWrapper.cs" />
     <Compile Include="data\utils\TimeIndeier.cs" />
     <Compile Include="data\utils\TimeIndeierUtils.cs" />
     <Compile Include="data\utils\TradingTimeUtils.cs" />
@@ -135,12 +135,12 @@
     <Compile Include="PluginInfo.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
     <Compile Include="strategy\IStrategyDrawOperator.cs" />
-    <Compile Include="strategy\IStrategyData.cs" />
+    <Compile Include="strategy\plugin\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_Current.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_History.cs" />
     <Compile Include="strategy\IStrategyExecutorInfo.cs" />
-    <Compile Include="strategy\IStrategyCenter.cs" />
+    <Compile Include="strategy\plugin\IStrategyCenter.cs" />
     <Compile Include="strategy\IStrategyPackage.cs" />
     <Compile Include="strategy\plugin\IStrategyInfo.cs" />
     <Compile Include="strategy\IStrategyOnBarArgument.cs" />
@@ -153,7 +153,6 @@
     <Compile Include="strategy\IStrategyTrader.cs" />
     <Compile Include="strategy\IStrategyQueryResult_Single.cs" />
     <Compile Include="strategy\StrategyAbstract.cs" />
-    <Compile Include="strategy\plugin\StrategyAttribute.cs" />
     <Compile Include="strategy\plugin\IStrategyAssembly.cs" />
     <Compile Include="strategy\plugin\IStrategyAssemblyMgr.cs" />
     <Compile Include="data\market\ConnectionInfo.cs" />

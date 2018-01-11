@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonData.cs" />
+    <Compile Include="loader\TestStrategyAssemblyConfig.cs" />
     <Compile Include="mock\MockStrategy.cs" />
     <Compile Include="mock\MockStrategy_Ma.cs" />
     <Compile Include="mock\MockStrategy_Parameter.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="mock\StrategyGetter.cs" />
     <None Include="TestCase\com\wer\sc\strategy\executorhistory" />
     <Compile Include="StrategyTestUtils.cs" />
+    <None Include="TestCase\com\wer\sc\strategy\loader\strategy.common.strategyconfig" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyParameter_15Minute" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyTrade" />
     <Compile Include="TestStrategyExecutor.cs" />

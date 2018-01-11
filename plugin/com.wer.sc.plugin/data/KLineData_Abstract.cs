@@ -218,7 +218,7 @@ namespace com.wer.sc.data
             return period;
         }
 
-        public static IKLineData Merge(List<IKLineData> dataList)
+        public static IKLineData Merge(IList<IKLineData> dataList)
         {
             int len = 0;
             for (int i = 0; i < dataList.Count; i++)

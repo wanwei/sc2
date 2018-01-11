@@ -51,15 +51,8 @@ namespace com.wer.sc.data.reader
 
         public ITradingDayReader GetTradingDayReader(string code)
         {
-            throw new NotImplementedException();
+            return CreateTradingTimeReader(code).GetTradingDayReader();
         }
-
-        //public ITradingSessionReader_Code CreateTradingSessionReader(string code)
-        //{
-        //    List<TradingSession> sessions = tradingSessionStore.Load(code);
-        //    CacheUtils_TradingSession cache = new CacheUtils_TradingSession(code, sessions);
-        //    return cache;
-        //}
 
         public ITradingTimeReader_Code CreateTradingTimeReader(string code)
         {

@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data
 {
-    public class KLineData_Extend : IKLineData_Extend
+    public class KLineData_Extend //: IKLineData_Extend
     {
         private IKLineData klineData;
 
         private KLineDataTimeInfo timeInfo;
 
+        public KLineData_Extend(IKLineData klineData, ITradingTime tradingTime)
+        {
+
+        }
+
         public KLineData_Extend(IKLineData klineData, KLineDataTimeInfo timeInfo)
         {
             this.timeInfo = timeInfo;
-            this.klineData = klineData;
+            this.klineData = klineData;            
         }
+
+        #region IKLineData的实现
 
         public IList<float> Arr_BlockHeight
         {
@@ -369,11 +376,13 @@ namespace com.wer.sc.data
             return klineData.ToString();
         }
 
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IList<int> GetTradingTimeEndBarPoses()
+        public IList<int> GetAllTradingTimeEndBarPoses()
         {
             return timeInfo.TradingTimeEndBarPoses;
         }
@@ -382,7 +391,7 @@ namespace com.wer.sc.data
         /// 得到交易日
         /// </summary>
         /// <returns></returns>
-        public IList<int> GetTradingDayEndBarPoses()
+        public IList<int> GetAllTradingDayEndBarPoses()
         {
             return timeInfo.DayEndBarPoses;
         }
@@ -397,17 +406,17 @@ namespace com.wer.sc.data
             return timeInfo.IsDayEnd(barPos);
         }
 
-        public bool IsTradingTimeStart(int barPos)
+        public bool IsTradingPeriodStart(int barPos)
         {
             return timeInfo.IsPeriodStart(barPos);
         }
 
-        public bool IsTradingTimeEnd(int barPos)
+        public bool IsTradingPeriodEnd(int barPos)
         {
             return timeInfo.IsPeriodEnd(barPos);
         }
 
-        public double GetEndTime(int barPos)
+        public double GetKLinePeriodEndTime(int barPos)
         {
             return timeInfo.GetKLineTime(barPos)[1];
         }

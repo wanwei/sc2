@@ -13,37 +13,48 @@ namespace com.wer.sc.ui.comp.strategy
 {
     public partial class StrategyTreeComponent : UserControl
     {
+        private IStrategyCenter strategyCenter;
+
         public StrategyTreeComponent()
         {
             InitializeComponent();
-            RefreshTree();
+            //RefreshTree();
         }
 
         public void RefreshTree()
         {
-            try
+            if (strategyCenter == null)
+                return;
+            IList<IStrategyAssembly> assemblies = strategyCenter.GetStrategyMgr().GetAllStrategyAssemblies();
+            if (assemblies == null)
+                return;
+            this.treeStrategy.Nodes.Clear();
+            for (int i = 0; i < assemblies.Count; i++)
             {
-                IList<IStrategyAssembly> assemblies = StrategyCenter.Default.GetStrategyMgr().GetAllStrategyAssemblies();
-                if (assemblies == null)
-                    return;
-                this.treeStrategy.Nodes.Clear();
-                for (int i = 0; i < assemblies.Count; i++)
-                {
-                    IStrategyAssembly ass = assemblies[i];
-                    TreeNode treeNode = this.treeStrategy.Nodes.Add(ass.Name);
-                    CompStrategyTreeBuilder builder = new CompStrategyTreeBuilder(treeStrategy);
-                    builder.AddSubNodesByAssembly(treeNode, ass);
-                }
-            }
-            catch (Exception e)
-            {
-
+                IStrategyAssembly ass = assemblies[i];
+                TreeNode treeNode = this.treeStrategy.Nodes.Add(ass.Name);
+                CompStrategyTreeBuilder builder = new CompStrategyTreeBuilder(treeStrategy);
+                builder.AddSubNodesByAssembly(ass, treeNode);
             }
         }
 
         public TreeView TreeStrategy
         {
             get { return treeStrategy; }
+        }
+
+        public IStrategyCenter StrategyCenter
+        {
+            get
+            {
+                return strategyCenter;
+            }
+
+            set
+            {
+                strategyCenter = value;
+                RefreshTree();
+            }
         }
     }
 
@@ -56,19 +67,36 @@ namespace com.wer.sc.ui.comp.strategy
             this.treeStrategy = treeView;
         }
 
-        public void AddSubNodesByAssembly(TreeNode treeNode, IStrategyAssembly ass)
+        public void AddSubNodesByAssembly(IStrategyAssembly ass, TreeNode treeNode)
         {
-            List<IStrategyInfo> strategies = ass.GetAllStrategies();
-            InitPathStrategies(strategies);
+            AddSubNodes(ass, "", treeNode);
+        }
 
-            List<string> pathList = dic_Path_Strategies.Keys.ToList();
-            pathList.Sort();
-            for (int i = 0; i < pathList.Count; i++)
+        private void AddSubNodes(IStrategyAssembly assembly, string path, TreeNode treeNode)
+        {
+            IList<string> subPaths = assembly.GetSubPath(path);
+            for (int i = 0; i < subPaths.Count; i++)
             {
-                string path = pathList[i];
-                List<IStrategyInfo> strategiesInPath = dic_Path_Strategies[path];
-                TreeNode subNode = treeNode.Nodes.Add(path);
-                AddStrategies(subNode, strategiesInPath);
+                string subPath = subPaths[i];
+                string pathName = subPath.Substring(subPath.LastIndexOf("\\") + 1);
+                TreeNode subNode = treeNode.Nodes.Add(pathName);
+                subNode.Tag = subPath;
+                AddSubNodes(assembly, subPaths[i], subNode);
+            }
+
+            IList<IStrategyInfo> strategies = assembly.GetSubStrategyInfo(path);
+            for (int i = 0; i < strategies.Count; i++)
+            {
+                IStrategyInfo strategyInfo = strategies[i];
+                TreeNode subNode = treeNode.Nodes.Add(strategyInfo.Name);
+                subNode.Tag = strategyInfo;
+                if (strategyInfo.IsError)
+                {
+                    subNode.Text += ":" + strategyInfo.ErrorInfo;
+                    subNode.ForeColor = Color.Red;
+                }
+                else
+                    subNode.ForeColor = Color.Yellow;
             }
         }
 
@@ -77,7 +105,7 @@ namespace com.wer.sc.ui.comp.strategy
             for (int i = 0; i < strategies.Count; i++)
             {
                 IStrategyInfo strategy = strategies[i];
-                string name = strategy.StrategyName;
+                string name = strategy.Name;
                 TreeNode subNode = parentNode.Nodes.Add(name);
                 subNode.ForeColor = Color.Yellow;
                 subNode.Tag = strategy;

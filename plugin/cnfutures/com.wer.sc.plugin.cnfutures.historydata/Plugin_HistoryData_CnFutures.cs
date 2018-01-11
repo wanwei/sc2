@@ -8,7 +8,6 @@ using com.wer.sc.plugin.historydata;
 using com.wer.sc.data;
 using com.wer.sc.utils;
 using System.IO;
-using com.wer.sc.plugin.data;
 
 namespace com.wer.sc.plugin.cnfutures.historydata
 {

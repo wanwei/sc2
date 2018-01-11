@@ -13,15 +13,17 @@ namespace com.wer.sc.ui.comp.strategy
 {
     public partial class FormStrategyLoader : Form
     {
-        private StrategyInfo strategy;
+        private IStrategyInfo strategy;
 
         public FormStrategyLoader()
         {
             InitializeComponent();
-            this.compStrategyTree1.TreeStrategy.NodeMouseDoubleClick += TreeStrategy_NodeMouseDoubleClick;
+            this.ShowIcon = false;
+            this.strategyTreeComponent1.StrategyCenter = StrategyCenter.Default;
+            this.strategyTreeComponent1.TreeStrategy.NodeMouseDoubleClick += TreeStrategy_NodeMouseDoubleClick;
         }
 
-        public StrategyInfo SelectedStrategy
+        public IStrategyInfo SelectedStrategy
         {
             get
             {
@@ -33,10 +35,15 @@ namespace com.wer.sc.ui.comp.strategy
         {
             TreeNode treeNode = e.Node;
             object tag = treeNode.Tag;
-            if (tag == null || (!(tag is StrategyInfo)))            
+            if (tag == null || (!(tag is IStrategyInfo)))
                 return;
+            this.strategy = (IStrategyInfo)tag;
+            if (strategy.IsError)
+            {
+                MessageBox.Show("选中策略有错误");
+                return;
+            }
 
-            this.strategy = (StrategyInfo)tag;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

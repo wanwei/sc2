@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace com.wer.sc.data.forward
 {
     public class DataForward : IDataForward
-    {
+    {        
         private IDataPackage_Code[] dataPackage;
 
         private ForwardReferedPeriods[] referedPeriods;
@@ -167,6 +167,14 @@ namespace com.wer.sc.data.forward
             }
         }
 
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return codes;
+            }
+        }
+
         /// <summary>
         /// 得到前进时包含的所有code
         /// </summary>
@@ -188,7 +196,7 @@ namespace com.wer.sc.data.forward
             return value;
         }
 
-        public IRealTimeDataReader_Code GetRealTimeData(string code)
+        public IRealTimeData_Code GetRealTimeData(string code)
         {
             return GetHistoryDataForward(code);
         }
@@ -204,6 +212,8 @@ namespace com.wer.sc.data.forward
         /// 按照AllCodes里合约的顺序依次响应该事件
         /// </summary>
         public event DelegateOnBar OnBar;
+
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 
     public class NextTimeCalc

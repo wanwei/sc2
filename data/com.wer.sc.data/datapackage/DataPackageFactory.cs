@@ -50,17 +50,20 @@ namespace com.wer.sc.data.datapackage
 
         internal static IDataPackage_Code CreateDataPackage(IDataReader dataReader, string code, int openDate, int beforeDays, int afterDays, int minKlineBefore, int minKlineAfter)
         {
+            ITradingTimeReader_Code tradingTimeReader = dataReader.CreateTradingTimeReader(code);            
             ITradingDayReader tradingDayReader = dataReader.TradingDayReader;
 
             int index = dataReader.TradingDayReader.GetTradingDayIndex(openDate);
             int startIndex = index - beforeDays;
             startIndex = startIndex < 0 ? 0 : startIndex;
             int startDate = tradingDayReader.GetTradingDay(startIndex);
+            startDate = tradingTimeReader.GetRecentTradingDay(startDate, true);
 
             int endIndex = index + afterDays;
             if (endIndex >= tradingDayReader.GetAllTradingDays().Count)
                 endIndex = tradingDayReader.GetAllTradingDays().Count - 1;
             int endDate = tradingDayReader.GetTradingDay(endIndex);
+            endDate = tradingTimeReader.GetRecentTradingDay(endDate, false);
             return CreateDataPackage(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
         }
 
@@ -107,5 +110,10 @@ namespace com.wer.sc.data.datapackage
             dataPackage.Load(xmlElem);
             return dataPackage;
         }
+
+        //public IRealTimeDataPackage_Code CreateRealTimeDataPackage_Code(string code, double time)
+        //{
+        //    return null;
+        //}
     }
 }

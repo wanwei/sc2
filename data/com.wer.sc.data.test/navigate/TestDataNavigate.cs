@@ -50,7 +50,7 @@ namespace com.wer.sc.data.navigate
             return dataNavigate.GetKLineData(KLinePeriod.KLinePeriod_1Minute).ToString();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestNavigate_Play()
         {
             string code = "rb1710";

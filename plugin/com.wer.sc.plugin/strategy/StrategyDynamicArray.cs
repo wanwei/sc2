@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     public class StrategyArray<T> : DynamicArray<T>
-    {
-        private IKLineData klineData;
-
+    {        
         public StrategyArray()
         {
         }        

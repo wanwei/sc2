@@ -8,215 +8,95 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.strategy
+namespace com.wer.sc.strategy.loader
 {
-    public class StrategyAssembly : IStrategyAssembly
+    public class StrategyAssembly : StrategyAssemblyConfig, IStrategyAssembly
     {
-        private string assemblyName;
+        private Assembly assembly;
 
-        private string name;
+        private bool isError;
 
-        private string description;
-
-        private string fullPath;
-
-        private IList<String> rootPaths = new List<String>();
-
-        private Dictionary<string, IList<String>> dic_Parent_SubPath = new Dictionary<string, IList<string>>();
-
-        private Dictionary<string, IList<IStrategyInfo>> dic_Parent_SubStrategies = new Dictionary<string, IList<IStrategyInfo>>();
-
-        private List<IStrategyInfo> strategyInfos = new List<IStrategyInfo>();
-
-        private Dictionary<Type, StrategyInfo> dic_Type_StrategyInfo = new Dictionary<Type, StrategyInfo>();
-
-        private Dictionary<String, StrategyInfo> dic_Id_StrategyInfo = new Dictionary<string, StrategyInfo>();
+        private string errorInfo;
 
         public StrategyAssembly()
         {
         }
 
-        /// <summary>
-        /// 得到策略包的名称
-        /// </summary>
-        public string AssemblyName
+        public bool IsError
         {
             get
             {
-                return assemblyName;
+                return isError;
             }
         }
 
-        /// <summary>
-        /// 得到策略包的完整路径
-        /// </summary>
-        public string FullPath { get { return fullPath; } }
-
-        public string Name { get { return name; } }
-
-        public string Description { get { return description; } }
-
-        /// <summary>
-        /// 得到所有策略信息
-        /// </summary>
-        /// <returns></returns>
-        public List<IStrategyInfo> GetAllStrategies()
+        public string ErrorInfo
         {
-            return strategyInfos;
-        }
-
-        public IStrategyInfo GetStrategy(String strategyId)
-        {
-            StrategyInfo value;
-            bool b = dic_Id_StrategyInfo.TryGetValue(strategyId, out value);
-            return b ? value : null;
-        }
-
-        private void AddStrategyInfo(StrategyInfo strategyInfo)
-        {
-            strategyInfos.Add(strategyInfo);
-            dic_Id_StrategyInfo.Add(strategyInfo.StrategyID, strategyInfo);
-            dic_Type_StrategyInfo.Add(strategyInfo.StrategyClassType, strategyInfo);
-        }
-
-        private void InitPaths()
-        {
-            List<string> roots = new List<string>();
-            for (int i = 0; i < strategyInfos.Count; i++)
+            get
             {
-                IStrategyInfo strategyInfo = strategyInfos[i];
-                string path = strategyInfo.StrategyClassType.Namespace;
-                AddSubStrategies(strategyInfo, path);
-                string root = AddPathLoop(path);
-                if (!roots.Contains(root))
-                    roots.Add(root);
-            }
-            for (int i = 0; i < roots.Count; i++)
-            {
-                rootPaths.Add(GetRootPath(roots[i]));
+                return errorInfo;
             }
         }
 
-        private string GetRootPath(String root)
-        {
-            string rootPath = root;
 
-            IList<String> subPaths = dic_Parent_SubPath[rootPath];
-            int cnt = subPaths.Count;
-            while (cnt == 1)
+        public static StrategyAssembly Create(string file)
+        {
+            StrategyAssembly strategyAssembly = new StrategyAssembly();
+            strategyAssembly.Load(file);
+
+            if (!File.Exists(strategyAssembly.FullPath))
             {
-                rootPath = subPaths[0];
-                if (!dic_Parent_SubPath.ContainsKey(rootPath))
-                    break;
-                subPaths = dic_Parent_SubPath[rootPath];
-                cnt = subPaths.Count;
+                strategyAssembly.isError = true;
+                strategyAssembly.errorInfo = "无法找到Assembly" + strategyAssembly.AssemblyName;
+                return strategyAssembly;
             }
-            return rootPath;
-        }
-
-        private string AddPathLoop(string path)
-        {
-            string parent = GetParent(path);
-            while (parent != null)
+            byte[] buffer = File.ReadAllBytes(strategyAssembly.FullPath);
+            Assembly ass = Assembly.Load(buffer);
+            if (ass == null)
             {
-                AddSubPath(path, parent);
-                path = parent;
-                parent = GetParent(path);
+                strategyAssembly.isError = true;
+                strategyAssembly.errorInfo = strategyAssembly.AssemblyName + "装载失败";
+                return strategyAssembly;
             }
-            return path;
-        }
+            strategyAssembly.assembly = ass;
 
-        private void AddSubStrategies(IStrategyInfo strategyInfo, string parentPath)
-        {
-            if (dic_Parent_SubStrategies.ContainsKey(parentPath))
+            List<IStrategyInfo> strategies = strategyAssembly.GetAllStrategies();
+            foreach (StrategyInfo config in strategies)
             {
-                dic_Parent_SubStrategies[parentPath].Add(strategyInfo);
-                return;
-            }
-            List<IStrategyInfo> strategies = new List<IStrategyInfo>();
-            strategies.Add(strategyInfo);
-            dic_Parent_SubStrategies.Add(parentPath, strategies);
-        }
+                string clsName = config.ClassName;
+                Type classType = ass.GetType(clsName, false, true);
 
-        private void AddSubPath(string path, string parent)
-        {
-            if (dic_Parent_SubPath.ContainsKey(parent))
-            {
-                IList<string> currentPaths = dic_Parent_SubPath[parent];
-                if (!currentPaths.Contains(path))
-                    currentPaths.Add(path);
-                return;
-            }
-            List<string> paths = new List<string>();
-            paths.Add(path);
-            dic_Parent_SubPath.Add(parent, paths);
-        }
-
-        private string GetParent(string path)
-        {
-            int index = path.LastIndexOf('.');
-            if (index < 0)
-                return null;
-            return path.Substring(0, index);
-        }
-
-        private void CheckRoot(string path, IList<String> currentRootPaths)
-        {
-            for (int i = 0; i < currentRootPaths.Count; i++)
-            {
-                string rootPath = currentRootPaths[i];
-                if (path == rootPath || IsParent(path, rootPath))
-                    return;
-                if (IsParent(rootPath, path))
+                if (classType == null)
                 {
-                    currentRootPaths.RemoveAt(i);
-                    currentRootPaths.Add(path);
-                    return;
+                    config.IsError = true;
+                    config.ErrorInfo = "类型" + clsName + "不存在";
+                    continue;
                 }
+                config.strategyType = classType;
+                Type inheritType = classType.GetInterface(typeof(IStrategy).FullName);
+                if (inheritType == null)
+                {
+                    config.IsError = true;
+                    config.ErrorInfo = "类型" + clsName + "没有实现IStrategy";
+                    continue;
+                }                
             }
-            currentRootPaths.Add(path);
+            return strategyAssembly;
         }
 
-        private bool IsParent(string path, string parentPath)
+        public IStrategy CreateStrategy(string strategyClsName)
         {
-            if (path == parentPath)
-                return false;
-            return parentPath.IndexOf(path) == 0;
+            if (assembly == null)
+                InitAssembly();
+            object obj = assembly.CreateInstance(strategyClsName);
+            //object obj = Activator.CreateInstance(strategyClsName);
+            return (IStrategy)obj;
         }
 
-        /// <summary>
-        /// 得到所有的顶级目录
-        /// 对于C#插件，目录就是命名空间
-        /// 对于python插件，目录是现实中的目录
-        /// </summary>
-        /// <returns></returns>
-        public IList<string> GetRootPath()
+        private void InitAssembly()
         {
-            return rootPaths;
-        }
-
-        /// <summary>
-        /// 得到所有的子命名空间，如果传入空或空字符串，则返回第一层的命名空间
-        /// </summary>
-        /// <param name="parentPath"></param>
-        /// <returns></returns>
-        public IList<string> GetSubPath(string parentPath)
-        {
-            IList<string> value;
-            bool b = dic_Parent_SubPath.TryGetValue(parentPath, out value);
-            return b ? value : null;
-        }
-
-        /// <summary>
-        /// 得到所有的子策略
-        /// </summary>
-        /// <param name="parentPath"></param>
-        /// <returns></returns>
-        public IList<IStrategyInfo> GetSubStrategies(string parentPath)
-        {
-            IList<IStrategyInfo> value;
-            bool b = dic_Parent_SubStrategies.TryGetValue(parentPath, out value);
-            return b ? value : null;
+            byte[] buffer = System.IO.File.ReadAllBytes(FullPath);
+            this.assembly = Assembly.Load(buffer);
         }
 
         /// <summary>
@@ -228,7 +108,10 @@ namespace com.wer.sc.strategy
         {
             if (strategyInfo == null)
                 return null;
-            return (IStrategy)Activator.CreateInstance(strategyInfo.StrategyClassType);
+            object obj = Activator.CreateInstance(strategyInfo.StrategyClassType);
+            return (IStrategy)obj;
+            //assembly.CreateInstance("", false, BindingFlags.CreateInstance, null, null, null, null);
+            //return (IStrategy)assembly.CreateInstance(strategyInfo.StrategyClassType.ToString());
         }
 
         /// <summary>
@@ -236,139 +119,14 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IStrategy CreateStrategyObject(string strategyId)
+        public IStrategy CreateStrategyObject(string strategyClassName)
         {
-            return CreateStrategyObject(GetStrategy(strategyId));
+            return CreateStrategyObject(GetStrategyInfo(strategyClassName));
         }
 
-        ///// <summary>
-        ///// 得到一个默认的插件对象实例
-        ///// </summary>
-        ///// <param name="strategyInfo"></param>
-        ///// <returns></returns>
-        //public IStrategy GetStrategyObject(StrategyInfo strategyInfo)
-        //{
-        //    if (strategyInfo == null)
-        //        return null;
-        //    return null;
-        //}
-
-        ///// <summary>
-        ///// 得到一个默认的插件对象实例
-        ///// </summary>
-        ///// <param name="strategyId"></param>
-        ///// <returns></returns>
-        //public IStrategy GetStrategyObject(string strategyId)
-        //{
-        //    return GetStrategyObject(GetStrategy(strategyId));
-        //}
-
-        /// <summary>
-        /// 根据策略名称查找策略，模糊查找
-        /// </summary>
-        /// <param name="strategyName"></param>
-        /// <returns></returns>
-        public IList<IStrategyAssembly> SearchStrategyInfo(String strategyName)
+        public IStrategyData CreateStrategyData(string strategyClsName)
         {
-            return null;
-        }
-
-        internal static StrategyAssembly Create(StrategyAssemblyConfig strategyAssemblyConfig)
-        {
-            StrategyAssembly strategyAssembly = new StrategyAssembly();
-            strategyAssembly.fullPath = strategyAssemblyConfig.FullPath;
-            strategyAssembly.name = strategyAssemblyConfig.Name;
-            strategyAssembly.assemblyName = strategyAssemblyConfig.AssemblyName;
-            strategyAssembly.description = strategyAssemblyConfig.Description;
-
-            if (!File.Exists(strategyAssemblyConfig.FullPath))
-            {
-                return strategyAssembly;
-            }
-            byte[] buffer = System.IO.File.ReadAllBytes(strategyAssemblyConfig.FullPath);
-            Assembly ass = Assembly.Load(buffer);
-            if (ass == null)
-                return null;
-
-            foreach (StrategyConfig config in strategyAssemblyConfig.StrategyConfigs)
-            {
-                string clsName = config.ClassName;
-                Type classType = ass.GetType(clsName, false, true);
-
-                bool isError = false;
-                string errorInfo = "";
-                if (classType == null)
-                {
-                    isError = true;
-                    errorInfo = "类型" + clsName + "不存在";
-                    StrategyInfo strategyInfo = new StrategyInfo(strategyAssembly, classType, clsName, config.Name, config.Desc, "", isError, errorInfo);
-                    strategyAssembly.AddStrategyInfo(strategyInfo);
-                    continue;
-                }
-
-                Type inheritType = classType.GetInterface(typeof(IStrategy).FullName);
-                if (inheritType == null) {
-                    isError = true;
-                    errorInfo = "类型" + clsName + "没有实现IStrategy";
-                    StrategyInfo strategyInfo = new StrategyInfo(strategyAssembly, classType, clsName, config.Name, config.Desc, "", isError, errorInfo);
-                    strategyAssembly.AddStrategyInfo(strategyInfo);
-                    continue;
-                }
-
-                StrategyInfo strategyInfoRight = new StrategyInfo(strategyAssembly, classType, clsName, config.Name, config.Desc, "", isError, errorInfo);
-                strategyAssembly.AddStrategyInfo(strategyInfoRight);
-            }
-            return strategyAssembly;
-        }
-
-        internal static StrategyAssembly Create(string path)
-        {
-            //try
-            //{
-            StrategyAssembly strategyAssembly = new StrategyAssembly();
-            byte[] buffer = System.IO.File.ReadAllBytes(path);
-            Assembly ass = Assembly.Load(buffer);
-            //Assembly ass = Assembly.LoadFrom(path);
-            if (ass == null)
-                return null;
-
-            strategyAssembly.fullPath = path;
-            strategyAssembly.assemblyName = ass.GetName().Name;
-            Type[] types = ass.GetTypes();
-            for (int i = 0; i < types.Length; i++)
-            {
-                Type classType = types[i];
-                //类上定义了特性才行
-                Type attributeType = typeof(StrategyAttribute);
-                if (!classType.IsDefined(attributeType, false))
-                    continue;
-
-                Type inheritType = classType.GetInterface(typeof(IStrategy).FullName);
-                if (inheritType == null)
-                    continue;
-
-                var attributes = classType.GetCustomAttributes();
-                foreach (var attribute in attributes)
-                {
-                    if (attribute.GetType() == attributeType)
-                    {
-                        string id = (String)attribute.GetType().GetProperty("ID").GetValue(attribute);
-                        String name = (String)attribute.GetType().GetProperty("Name").GetValue(attribute);
-                        string desc = (String)attribute.GetType().GetProperty("Desc").GetValue(attribute);
-                        string spath = (String)attribute.GetType().GetProperty("Path").GetValue(attribute);
-                        StrategyInfo strategyInfo = new StrategyInfo(strategyAssembly, classType, id, name, desc, spath);
-                        strategyAssembly.AddStrategyInfo(strategyInfo);
-                    }
-                }
-            }
-            strategyAssembly.InitPaths();
-            return strategyAssembly;
-            //}
-            //catch (Exception e)
-            //{
-            //    //Console.WriteLine(e.Data);
-            //    return null;
-            //}
+            return new StrategyData(GetStrategyInfo(strategyClsName));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace com.wer.sc.strategy
             this.dataForward = dataForward;
         }
 
-        public IRealTimeDataReader_Code CurrentData
+        public IRealTimeData_Code CurrentData
         {
             get
             {
@@ -25,7 +25,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IRealTimeDataReader_Code GetOtherData(string code)
+        public IRealTimeData_Code GetOtherData(string code)
         {
             return dataForward.GetAttachedDataReader(code);
         }

@@ -1,9 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Strageties>
   <Assembly file="com.wer.sc.strategy.common.dll" name="基础策略">
-    <Strategy class="com.wer.sc.strategy.common.ma.Strategy_MultiMa" name="均线策略" desc="均线策略">
-    </Strategy>
-    <Strategy class="com.wer.sc.strategy.common.Strategy_Zigzag" name="zigzag策略" desc="zigzag策略">
-    </Strategy>
+    <Path name="均线">
+      <Strategy class="com.wer.sc.strategy.common.ma.Strategy_MultiMa" name="均线策略" desc="均线策略">
+      </Strategy>
+    </Path>
+    <Path name="转折点查找">
+      <Strategy class="com.wer.sc.strategy.common.zigzag.Strategy_Zigzag" name="zigzag策略" desc="zigzag策略">
+      </Strategy>
+    </Path>
+    <Path name="量能分析">
+      <Strategy class="com.wer.sc.strategy.common.mount" name="量能过滤" desc="量能过滤">
+      </Strategy>
+    </Path>
+    <Path name="每日策略">
+      <Strategy class="com.wer.sc.strategy.daily._20171222.Strategy_20171222" name="20171222" desc="20171222">
+      </Strategy>
+    </Path>
   </Assembly>
 </Strageties>

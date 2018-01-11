@@ -101,6 +101,13 @@ namespace com.wer.sc.data.navigate
         /// <returns></returns>
         public IKLineData GetKLineData(KLinePeriod klinePeriod)
         {
+            if (klinePeriod.PeriodType == KLineTimeType.SECOND)
+            {
+                IKLineData_RealTime klineData_Second = dataPackage.CreateKLineData_RealTime_Second(tradingDay, klinePeriod);
+                DataNavigate_ChangeTime.ChangeTime_KLineData(klineData_Second, tradingDay, time, GetTickData());
+                return klineData_Second;
+            }
+
             IKLineData_RealTime klineData;
             if (this.dic_Period_KLineData.ContainsKey(klinePeriod))
             {
@@ -108,7 +115,7 @@ namespace com.wer.sc.data.navigate
             }
             else
             {
-                klineData = dataPackage.CreateKLineData_RealTime(klinePeriod); 
+                klineData = dataPackage.CreateKLineData_RealTime(klinePeriod);
                 this.dic_Period_KLineData.Add(klinePeriod, klineData);
             }
             DataNavigate_ChangeTime.ChangeTime_KLineData(klineData, tradingDay, time, GetTickData());

@@ -16,11 +16,12 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategyDescription(IStrategyData strategyData)
         {
             InitializeComponent();
-
-            this.lbStrategyId.Text = strategyData.StrategyInfo.StrategyID;
-            this.lbStrategyType.Text = strategyData.StrategyInfo.StrategyClassType.ToString();
-            this.lbStrategyName.Text = strategyData.StrategyInfo.StrategyName;
-            this.lbStrategyDesc.Text = strategyData.StrategyInfo.StrategyDesc;
+            this.ShowIcon = false;
+            if (strategyData == null)
+                return;            
+            this.lbStrategyType.Text = strategyData.StrategyInfo.ClassName;
+            this.lbStrategyName.Text = strategyData.StrategyInfo.Name;
+            this.lbStrategyDesc.Text = strategyData.StrategyInfo.Description;
             this.lbAssembly.Text = strategyData.StrategyInfo.StrategyAssembly.AssemblyName;
             this.lbAssemblyPath.Text = strategyData.StrategyInfo.StrategyAssembly.FullPath;
         }

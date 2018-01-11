@@ -16,7 +16,8 @@ namespace com.wer.sc.ui.comp.strategy
         public FormStrategyDataPackage(IDataPackage_Code dataPackage)
         {
             InitializeComponent();
-
+            this.ShowIcon = false;
+            //this.Icon = Co;
             this.lbCode.Text = dataPackage.Code;
             this.lbStart.Text = dataPackage.StartDate.ToString();
             this.lbEnd.Text = dataPackage.EndDate.ToString();

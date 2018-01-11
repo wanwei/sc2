@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.ui.comp
 {
-    [Strategy("STRATEGY.MA", "计算均线", "用来计算和显示MA线", "基础策略")]
+    //[Strategy("STRATEGY.MA", "计算均线", "用来计算和显示MA线", "基础策略")]
     public class Strategy_MultiMa : StrategyAbstract
     {
         private const string PARAMKEY_MA1 = "MA_1";

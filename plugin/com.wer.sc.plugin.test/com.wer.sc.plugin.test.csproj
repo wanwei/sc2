@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="data\TestKLineTimeInfo.cs" />
     <Compile Include="data\utils\TestCacheUtils_CodeInfo.cs" />
     <Compile Include="data\utils\TestCacheUtils_TradingDay.cs" />
     <Compile Include="data\utils\TestCacheUtils_TradingTime.cs" />
@@ -87,6 +88,10 @@
     <Compile Include="TestPluginMgr.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1EE9E83B-FD37-42FA-A263-EEE93479AD45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\com.wer.sc.plugin.loader\com.wer.sc.plugin.loader.csproj">
       <Project>{194a5fa2-cd06-4099-b8a9-af64e4d9602a}</Project>
       <Name>com.wer.sc.plugin.loader</Name>

@@ -20,12 +20,26 @@ namespace com.wer.sc.data.reader
         string GetCode();
 
         /// <summary>
+        /// 得到交易日数据
+        /// </summary>
+        /// <returns></returns>
+        ITradingDayReader GetTradingDayReader();
+
+        /// <summary>
         /// 得到当日的交易时间
         /// </summary>
         /// <param name="code"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        TradingTime GetTradingTime(int date);
+        ITradingTime GetTradingTime(int date);
+
+        /// <summary>
+        /// 得到一段时间内的交易时间
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        IList<ITradingTime> GetTradingTime(int start, int end);
 
         /// <summary>
         /// 得到指定时间对应的交易日期，如果该时间不在交易时间内，则返回-1

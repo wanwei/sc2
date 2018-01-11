@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.plugin;
-using com.wer.sc.plugin.data;
 using com.wer.sc.plugin.historydata;
 using com.wer.sc.data;
 

@@ -35,17 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="com.wer.sc.data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="com.wer.sc.data">
       <HintPath>..\..\bin\Debug\com.wer.sc.data.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="com.wer.sc.plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="com.wer.sc.plugin">
       <HintPath>..\..\bin\Debug\com.wer.sc.plugin.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="com.wer.sc.utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="com.wer.sc.utils">
       <HintPath>..\..\bin\Debug\com.wer.sc.utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -66,14 +66,8 @@
     <Compile Include="sample\TestStrategy_Query.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="zigzag\zigzag" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\com.wer.sc.strategy.common\com.wer.sc.strategy.common.csproj">
-      <Project>{2e2ff97d-af89-45d3-9d9a-19842c5dc6c5}</Project>
-      <Name>com.wer.sc.strategy.common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

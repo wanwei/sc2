@@ -96,6 +96,32 @@ namespace com.wer.sc.data.reader
             //ITradingTimeReader_Code reader = dataReader.CreateTradingTimeReader("rb1801");
         }
 
+        [TestMethod]
+        public void TestGetKLine_Second()
+        {
+            IDataReader dataReader = DataCenter.Default.DataReader;
+            IKLineData klineData = dataReader.KLineDataReader.GetData("rb1801", 20170801, KLinePeriod.KLinePeriod_5Second);
+            //AssertUtils.PrintKLineData(klineData);
+            AssertUtils.AssertEqual_KLineData("KLineData_RB1801_20170801_5Second", GetType(), klineData);
+
+            klineData = dataReader.KLineDataReader.GetData("rb1801", 20170801, KLinePeriod.KLinePeriod_15Second);
+            //AssertUtils.PrintKLineData(klineData);
+            AssertUtils.AssertEqual_KLineData("KLineData_RB1801_20170801_15Second", GetType(), klineData);
+        }
+
+        [TestMethod]
+        public void TestGetKLineExtend_Second()
+        {
+            IDataReader dataReader = DataCenter.Default.DataReader;
+            IKLineData_Extend klineData = dataReader.KLineDataReader.GetData_Extend("rb1801", 20170801, KLinePeriod.KLinePeriod_5Second);
+            //AssertUtils.PrintKLineData(klineData);
+            AssertUtils.AssertEqual_KLineData("KLineData_RB1801_20170801_5Second", GetType(), klineData);
+            
+            klineData = dataReader.KLineDataReader.GetData_Extend("rb1801", 20170801, KLinePeriod.KLinePeriod_15Second);
+            //AssertUtils.PrintKLineData(klineData);
+            AssertUtils.AssertEqual_KLineData("KLineData_RB1801_20170801_15Second", GetType(), klineData);
+        }
+
         //[TestMethod]
         //public void TestKLineDataReaderGetAll()
         //{

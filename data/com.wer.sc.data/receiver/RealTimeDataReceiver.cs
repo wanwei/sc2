@@ -114,5 +114,5 @@ namespace com.wer.sc.data.receiver
         }
     }
 
-    public delegate void DelegateOnRealTimeDataProceed(object sender, string code, IRealTimeDataReader_Code currentData);
+    public delegate void DelegateOnRealTimeDataProceed(object sender, string code, IRealTimeData_Code currentData);
 }

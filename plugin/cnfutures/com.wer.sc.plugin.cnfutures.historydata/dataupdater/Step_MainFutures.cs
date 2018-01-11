@@ -78,6 +78,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             {
                 int tradingDay = contractInfo.End;
                 int nextTradingDay = reader.GetNextTradingDay(tradingDay);
+                if (nextTradingDay < 0)
+                {
+                    contracts.AddRange(cache.GetMainContractInfos(variety));
+                    return;
+                }
                 List<int> allTradingDays = reader.GetAllTradingDays();
                 IList<int> tradingDays = reader.GetTradingDays(nextTradingDay, allTradingDays[allTradingDays.Count - 1]);
                 MainFutures mf = scan.Scan(variety, tradingDays);

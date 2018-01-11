@@ -13,9 +13,19 @@ namespace com.wer.sc.strategy
     public interface IStrategyInfo
     {
         /// <summary>
-        /// 得到插件所在的Assembly
+        /// 获得策略类名
         /// </summary>
-        IStrategyAssembly StrategyAssembly { get; }
+        string ClassName { get; }
+
+        /// <summary>
+        /// 策略名称，strategyconfig里配置的name
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        /// 策略描述，strategyconfig里配置的desc
+        /// </summary>
+        string Description { get; }
 
         /// <summary>
         /// 是否是错误的策略
@@ -27,32 +37,33 @@ namespace com.wer.sc.strategy
         /// </summary>
         string ErrorInfo { get; }
 
+        string StrategyPath { get; }
+
         /// <summary>
-        /// 
+        /// 得到策略的缺省参数，在strategyconfig里配置的参数
+        /// </summary>
+        IParameters Parameters { get; }
+
+        /// <summary>
+        /// 获得实现策略的type，如果IsError为true，则返回空
         /// </summary>
         Type StrategyClassType { get; }
 
         /// <summary>
-        /// 插件ID
+        /// 得到插件所在的Assembly
         /// </summary>
-        string StrategyID { get; }
+        IStrategyAssembly StrategyAssembly { get; }
 
         /// <summary>
-        /// 插件名称
+        /// 创建策略数据
         /// </summary>
-        string StrategyName { get; }
-
-        string StrategyDesc { get; }
-
-        string StrategyPath { get; }
-
-        /// <summary>
-        /// 得到策略的缺省参数
-        /// </summary>
-        IParameters Parameters { get; }
-
-        IStrategy CreateStrategy();
-
+        /// <returns></returns>
         IStrategyData CreateStrategyData();
+
+        /// <summary>
+        /// 创建策略
+        /// </summary>
+        /// <returns></returns>
+        IStrategy CreateStrategy();
     }
 }

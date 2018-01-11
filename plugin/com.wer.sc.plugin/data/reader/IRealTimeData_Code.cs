@@ -15,21 +15,16 @@ namespace com.wer.sc.data.reader
     /// 最小精确到tick数据。
     /// 该读取器看到的数据和用期货和股票软件看到的数据是一样的。
     /// </summary>
-    public interface IRealTimeDataReader_Code
+    public interface IRealTimeData_Code 
     {
         /// <summary>
-        /// 得到代码
+        /// 得到股票代码
         /// </summary>
         /// <returns></returns>
         string Code { get; }
 
         /// <summary>
-        /// 得到当前时间
-        /// </summary>
-        double Time { get; }
-
-        /// <summary>
-        /// 价格
+        /// 得到股票当前价格
         /// </summary>
         float Price { get; }
 
@@ -46,14 +41,7 @@ namespace com.wer.sc.data.reader
         /// <param name="period"></param>
         /// <returns></returns>
         bool IsPeriodEnd(KLinePeriod period);
-
-        /// <summary>
-        /// 到周期结束还有多少秒
-        /// </summary>
-        /// <param name="period"></param>
-        /// <returns></returns>
-        //int SecondToPeriodEnd(KLinePeriod period);
-
+  
         /// <summary>
         /// 得到当前的分时线
         /// </summary>
@@ -66,58 +54,6 @@ namespace com.wer.sc.data.reader
         /// <returns></returns>
         ITickData GetTickData();
 
-        event DelegateOnRealTimeChanged OnRealTimeChanged;
-    }
-
-    public delegate void DelegateOnRealTimeChanged(Object sender, RealTimeChangedArgument argument);
-
-    public class RealTimeChangedArgument
-    {
-        private double prevTime;
-
-        private double time;
-
-        private bool tradingDayChanged;
-
-        private IRealTimeDataReader_Code realTimeDataReader;
-
-        public RealTimeChangedArgument(double prevTime, double time, IRealTimeDataReader_Code realTimeDataReader)
-        {
-            this.prevTime = prevTime;
-            this.time = time;
-            this.realTimeDataReader = realTimeDataReader;
-        }
-
-        public double PrevTime
-        {
-            get
-            {
-                return prevTime;
-            }
-        }
-
-        public double Time
-        {
-            get
-            {
-                return time;
-            }
-        }
-
-        public IRealTimeDataReader_Code RealTimeDataReader
-        {
-            get
-            {
-                return realTimeDataReader;
-            }
-        }
-
-        public bool TradingDayChanged
-        {
-            get
-            {
-                return tradingDayChanged;
-            }            
-        }
+        //event DelegateOnRealTimeChanged OnRealTimeChanged;
     }
 }
