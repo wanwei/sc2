@@ -6,6 +6,25 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.account
 {
+    public class AccountTradeTypeUtils
+    {
+        public static string GetName(AccountTradeType tradeType)
+        {
+            switch (tradeType)
+            {
+                case AccountTradeType.IMMEDIATELY:
+                    return "立即成交";
+                case AccountTradeType.MARKETPRICE:
+                    return "市价成交";
+                case AccountTradeType.DELAYTIME:
+                    return "延时成交";
+                case AccountTradeType.DELAYTICK:
+                    return "延迟tick成交";
+            }
+            return null;
+        }
+    }
+
     public enum AccountTradeType
     {
         /// <summary>

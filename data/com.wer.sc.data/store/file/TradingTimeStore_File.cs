@@ -17,16 +17,16 @@ namespace com.wer.sc.data.store.file
             this.dataPathUtils = dataPathUtils;
         }
 
-        public void Save(string code, IList<TradingTime> tradingTimes)
+        public void Save(string code, IList<ITradingTime> tradingTimes)
         {
             string path = dataPathUtils.GetTradingTimePath(code);            
-            TextExchangeUtils.Write<TradingTime>(path, tradingTimes);
+            TextExchangeUtils.Write<ITradingTime>(path, tradingTimes);
         }
 
-        public List<TradingTime> Load(string code)
+        public IList<ITradingTime> Load(string code)
         {
             string path = dataPathUtils.GetTradingTimePath(code);
-            return TextExchangeUtils.Load<TradingTime>(path, typeof(TradingTime));
+            return TextExchangeUtils.Load<ITradingTime>(path, typeof(TradingTime));
         }
 
         public void Delete(string code)

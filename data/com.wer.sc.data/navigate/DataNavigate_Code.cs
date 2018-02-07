@@ -105,14 +105,14 @@ namespace com.wer.sc.data.navigate
             if (tickData.BarPos >= tickData.Length - 1)
                 return Forward(KLinePeriod.KLinePeriod_1Minute);
             double time = tickData.Arr_Time[tickData.BarPos + 1];
-            if (time != tickData.Time)            
+            if (time != tickData.Time)
                 return NavigateTo(time);
-            
+
             return false;
         }
 
         public IKLineData GetKLineData(KLinePeriod period)
-        {          
+        {
             return dataForNavigate.GetKLineData(period);
         }
 

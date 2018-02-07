@@ -26,8 +26,6 @@ namespace com.wer.sc.strategy
     ///     OnBar   接收数据时形成一个新的K线柱子触发该事件
     ///     OnStrategyStart 策略准备完成，开始接收数据前触发该方法
     ///     OnStrategyEnd   策略所有数据接收并处理完成后触发该方法
-    /// 3.用户操作：
-    ///     StrategyOperator  策略操作接口，用户可以执行画图，交易等操作
     /// </summary>
     public interface IStrategy
     {       
@@ -88,13 +86,11 @@ namespace com.wer.sc.strategy
         /// <param name="currentData"></param>
         void OnBar(Object sender, IStrategyOnBarArgument currentData);
 
-        Object GetData(string key);
-
         /// <summary>
-        /// 获得和设置执行策略操作类
-        /// 此处设置方法用作
-        /// 得到策略执行时用到的一些函数，还有绘图使用的一些方法。
+        /// 
         /// </summary>
-        IStrategyOperator StrategyOperator { get; set; }
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Object GetData(string key);
     }
 }

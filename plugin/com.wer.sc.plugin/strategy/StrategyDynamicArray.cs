@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     public class StrategyArray<T> : DynamicArray<T>
-    {        
+    {
         public StrategyArray()
         {
         }        

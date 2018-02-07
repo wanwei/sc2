@@ -135,9 +135,9 @@ namespace com.wer.sc.data.market.impl
             }
         }
 
-        private DelegateOnReturnInvestorPosition onReturnInvestorPosition;
+        private DelegateOnRspInvestorPosition onReturnInvestorPosition;
 
-        public DelegateOnReturnInvestorPosition OnReturnInvestorPosition
+        public DelegateOnRspInvestorPosition OnReturnInvestorPosition
         {
             get
             {

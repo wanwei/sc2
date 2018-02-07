@@ -62,7 +62,12 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return plugin_HistoryData.GetTradingSessions(code);
         }
 
-        public IList<TradingTime> GetTradingTime(String code)
+        public IList<ITradingTime> GetTradingTime()
+        {
+            return plugin_HistoryData.GetTradingTime();
+        }
+
+        public IList<ITradingTime> GetTradingTime(String code)
         {
             return plugin_HistoryData.GetTradingTime(code);
         }

@@ -33,6 +33,12 @@ namespace com.wer.sc.plugin
         List<int> GetTradingDays();
 
         /// <summary>
+        /// 得到该市场默认的开盘时间
+        /// </summary>
+        /// <returns></returns>
+        List<TradingSession> GetTradingSessions();
+
+        /// <summary>
         /// 得到所有交易日的交易时间
         /// 实现该方法的原因：
         /// 系统需要有一个方法来获取指定日期的K线，比如获取20130106的1分钟K线
@@ -52,13 +58,13 @@ namespace com.wer.sc.plugin
         /// <param name="code"></param>
         /// <param name="tradingDay"></param>
         /// <returns></returns>
-        IList<TradingTime> GetTradingTime(string code);
+        IList<ITradingTime> GetTradingTime(string code);
 
         /// <summary>
         /// 得到该市场默认的开盘时间
         /// </summary>
         /// <returns></returns>
-        TradingTime GetDefaultTradingTime();
+        ITradingTime GetDefaultTradingTime();
       
         /// <summary>
         /// 得到股票或期货的Tick数据

@@ -16,12 +16,21 @@ namespace com.wer.sc.data.reader
         List<MainContractInfo> GetMainContractInfos(string variety);
 
         /// <summary>
+        /// 获得一张合约一段时间内的主力合约
+        /// </summary>
+        /// <param name="variety"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        List<MainContractInfo> GetMainContractInfos(string variety, int startDate, int endDate);
+
+        /// <summary>
         /// 获得主力合约
         /// </summary>
         /// <param name="variety"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        MainContractInfo GetMainContractInfo(string variety, int date);        
+        MainContractInfo GetMainContractInfo(string variety, int date);
 
         /// <summary>
         /// 得到下一个主合约

@@ -29,7 +29,7 @@ namespace com.wer.sc.data
 
         private IDataNavigateFactory dataNavigateFactory;
 
-        private IAccountFactory accountFactory;
+        private IAccountManager accountFactory;
 
         internal DataCenter(DataCenterInfo config)
         {
@@ -38,7 +38,7 @@ namespace com.wer.sc.data
             this.dataPackageFactory = new DataPackageFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(this);
-            this.accountFactory = new AccountFactory(this);
+            this.accountFactory = new AccountManager(this, this.dataStore.CreateAccountStore());
         }
 
         internal DataCenter(DataCenterInfo config, IDataStore dataStore, IDataReader dataReaderFactory)
@@ -49,7 +49,7 @@ namespace com.wer.sc.data
             this.dataPackageFactory = new DataPackageFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(this);
-            this.accountFactory = new AccountFactory(this);
+            this.accountFactory = new AccountManager(this,this.dataStore.CreateAccountStore());
         }
 
         public DataCenterInfo Config
@@ -139,7 +139,7 @@ namespace com.wer.sc.data
             }
         }
 
-        public IAccountFactory AccountFactory
+        public IAccountManager AccountManager
         {
             get
             {

@@ -40,6 +40,10 @@ namespace com.wer.sc.data.reader
 
     public class RealTimeChangedArgument
     {
+        //private string prevCode;
+
+        //private string code;
+
         private double prevTime;
 
         private double time;
@@ -78,7 +82,6 @@ namespace com.wer.sc.data.reader
                 return realTimeDataReader;
             }
         }
-
         public bool TradingDayChanged
         {
             get

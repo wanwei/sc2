@@ -59,8 +59,8 @@
     <Compile Include="datacenter\TestDataCenter.cs" />
     <Compile Include="datacenter\TestDataCenterConfig.cs" />
     <Compile Include="datacenter\TestDataCenterManager.cs" />
+    <Compile Include="datapackage\TestCodePackageFactory.cs" />
     <Compile Include="datapackage\TestDataPackage.cs" />
-    <Compile Include="datapackage\TestRealTimeDataPackage_Code.cs" />
     <Compile Include="forward\CommonData.cs" />
     <Compile Include="forward\TestDataForForward_CodeIndeier.cs" />
     <Compile Include="forward\TestHistoryDataForward.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="reader\DataCenterUri.cs" />
     <Compile Include="reader\TestCodeReader.cs" />
     <Compile Include="reader\TestIKLineDataReader.cs" />
+    <Compile Include="reader\TestMainContractReader.cs" />
     <Compile Include="reader\TestTickDataReader.cs" />
     <Compile Include="reader\TestTimeLineDataReader.cs" />
     <Compile Include="realtime\TestKLineData_RealTime.cs" />
@@ -123,6 +124,7 @@
     <None Include="TestCase\com\wer\sc\data\forward\forwardcodeindeier" />
     <None Include="TestCase\com\wer\sc\data\forward\utils\klinetotick" />
     <None Include="TestCase\com\wer\sc\data\forward\utils\ForwardDataIndeier2" />
+    <None Include="TestCase\com\wer\sc\data\reader\MainContract" />
     <Compile Include="TestDataCenter.cs" />
     <Compile Include="TestXmlSaveLoad.cs" />
     <Compile Include="update\TestUpdatedDataInfo.cs" />

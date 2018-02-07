@@ -1,6 +1,7 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
+using com.wer.sc.graphic;
 using com.wer.sc.strategy;
 using com.wer.sc.utils;
 using System;
@@ -153,7 +154,7 @@ namespace com.wer.sc.ui.comp
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(MainKLinePeriod);
+            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maArr_1, color_1);
             drawHelper.DrawPolyLine(maArr_2, color_2);
             drawHelper.DrawPolyLine(maArr_3, color_3);

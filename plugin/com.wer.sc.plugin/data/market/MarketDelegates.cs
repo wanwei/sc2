@@ -50,8 +50,12 @@ namespace com.wer.sc.data.market
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="trade"></param>
-    public delegate void DelegateOnReturnInvestorPosition(object sender, ref PositionInfo trade);
-    
+    public delegate void DelegateOnRspInvestorPosition(object sender, ref IList<PositionInfo> positions);
+
+    public delegate void DelegateOnRspTrade(object sender, ref IList<TradeInfo> trades);
+
+    public delegate void DelegateOnRspOrder(object sender, ref IList<OrderInfo> orders);
+
     /// <summary>
     /// 返回账号
     /// </summary>

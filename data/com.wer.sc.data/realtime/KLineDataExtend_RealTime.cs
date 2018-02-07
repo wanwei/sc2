@@ -197,5 +197,25 @@ namespace com.wer.sc.data.realtime
         {
             return klineData_Extend.GetTimeToKLinePeriodEnd();
         }
+
+        public int HolidayDayCount()
+        {
+            return klineData_Extend.HolidayDayCount();
+        }
+
+        public int HolidayDayCount(int barPos)
+        {
+            return klineData_Extend.HolidayDayCount(barPos);
+        }
+
+        public int HaltDayCount()
+        {
+            return klineData_Extend.HaltDayCount();
+        }
+
+        public int HaltDayCount(int barPos)
+        {
+            return klineData_Extend.HaltDayCount(barPos);
+        }
     }
 }

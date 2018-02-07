@@ -22,7 +22,7 @@ namespace com.wer.sc.data.utils
             openTime.Add(new double[] { 20150110.103000, 20150110.113000 });
             openTime.Add(new double[] { 20150110.133000, 20150110.150000 });
 
-            List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, new KLinePeriod(KLineTimeType.SECOND, 1));
+            List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList(openTime, new KLinePeriod(KLineTimeType.SECOND, 1));
             //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_15Minute);
             //List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(openTime, KLinePeriod.KLinePeriod_1Hour);
             for (int i = 0; i < klineTimeList.Count; i++)

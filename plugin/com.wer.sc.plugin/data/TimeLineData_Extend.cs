@@ -10,7 +10,7 @@ namespace com.wer.sc.data
     {
         private ITimeLineData timeLineData;
 
-        private List<double[]> startEndInfo;
+        private IList<double[]> startEndInfo;
 
         private IList<int> tradingTimeStartBarPos;
 
@@ -18,7 +18,7 @@ namespace com.wer.sc.data
 
         private ISet<int> set_TradingTimeStartBarPos;
 
-        public TimeLineData_Extend(ITimeLineData timeLineData, List<double[]> tradingTimeStartEndInfo)
+        public TimeLineData_Extend(ITimeLineData timeLineData, IList<double[]> tradingTimeStartEndInfo)
         {
             this.timeLineData = timeLineData;
             this.startEndInfo = tradingTimeStartEndInfo;
@@ -41,7 +41,7 @@ namespace com.wer.sc.data
             tradingTimeEndBarPos.Add(timeLineData.Length - 1);
         }
 
-        private ISet<double> GetSet_TradingTimeStart(List<double[]> tradingTimeStartEndInfo)
+        private ISet<double> GetSet_TradingTimeStart(IList<double[]> tradingTimeStartEndInfo)
         {
             ISet<double> set = new HashSet<double>();
             for (int i = 0; i < tradingTimeStartEndInfo.Count; i++)

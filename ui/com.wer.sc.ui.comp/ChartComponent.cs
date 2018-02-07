@@ -14,6 +14,8 @@ namespace com.wer.sc.ui.comp
 {
     public partial class ChartComponent : UserControl
     {
+        private bool connectedServer;
+
         private IDataCenter dataCenter;
         private ChartComponentData prevCompData = null;
         private ChartComponentController controller;
@@ -101,6 +103,19 @@ namespace com.wer.sc.ui.comp
         public IDataCenter DataCenter
         {
             get { return dataCenter; }
+        }
+
+        public bool ConnectedServer
+        {
+            get
+            {
+                return connectedServer;
+            }
+
+            set
+            {
+                connectedServer = value;
+            }
         }
 
         public event DelegateOnChartComponentRefresh OnChartRefresh;

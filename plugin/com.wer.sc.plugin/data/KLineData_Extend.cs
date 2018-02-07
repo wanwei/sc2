@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +7,33 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data
 {
-    public class KLineData_Extend //: IKLineData_Extend
+    public class KLineData_Extend : IKLineData_Extend
     {
+        private IKLineDataTradingTimeInfo_Periods currentTradingPeriods;
+
         private IKLineData klineData;
 
-        private KLineDataTimeInfo timeInfo;
+        private IList<ITradingTime> tradingTimes;
 
-        public KLineData_Extend(IKLineData klineData, ITradingTime tradingTime)
+        private Dictionary<int, ITradingTime> dic_TradingDay_TradingTime = new Dictionary<int, ITradingTime>();
+
+        private KLineDataTradingTimeInfo klineTimeInfo;
+
+        private List<int> tradingDayEndBarPoses;
+
+        private List<int> tradingPeriodEndBarPoses;
+
+        public KLineData_Extend(IKLineData klineData, IList<ITradingTime> tradingTimes)
         {
-
-        }
-
-        public KLineData_Extend(IKLineData klineData, KLineDataTimeInfo timeInfo)
-        {
-            this.timeInfo = timeInfo;
-            this.klineData = klineData;            
+            this.klineData = klineData;
+            this.tradingTimes = tradingTimes;
+            for (int i = 0; i < tradingTimes.Count; i++)
+            {
+                ITradingTime tradingTime = tradingTimes[i];
+                dic_TradingDay_TradingTime.Add(tradingTime.TradingDay, tradingTime);
+            }
+            this.klineTimeInfo = new KLineDataTradingTimeInfo(klineData, tradingTimes);
+            this.currentTradingPeriods = klineTimeInfo.GetTradingPeriodsByBarPos(klineData.BarPos);
         }
 
         #region IKLineData的实现
@@ -154,7 +167,13 @@ namespace com.wer.sc.data
 
             set
             {
+                if (value < 0 || value >= klineData.Length)
+                    return;
                 klineData.BarPos = value;
+                if (this.currentTradingPeriods == null
+                    || (this.currentTradingPeriods.StartPos > value
+                    || this.currentTradingPeriods.EndPos < value))
+                    this.currentTradingPeriods = GetTradingPeriodsByBarPos(value);
             }
         }
 
@@ -378,57 +397,434 @@ namespace com.wer.sc.data
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IList<int> GetAllTradingTimeEndBarPoses()
+        #region IKLineData_Extend Day部分的实现
+
+        private IKLineDataTradingTimeInfo_Periods GetTradingPeriodsByBarPos(int barPos)
         {
-            return timeInfo.TradingTimeEndBarPoses;
+            return klineTimeInfo.GetTradingPeriodsByBarPos(barPos);
         }
 
         /// <summary>
-        /// 得到交易日
+        /// 得到当前barPos对应的交易日
+        /// </summary>
+        public int TradingDay
+        {
+            get
+            {
+                return this.currentTradingPeriods.KlineTimeInfo_Day.TradingDay;
+            }
+        }
+
+        /// <summary>
+        /// 得到该K线的所有交易日
+        /// </summary>
+        /// <returns></returns>
+        public IList<int> GetAllTradingDays()
+        {
+            return this.klineTimeInfo.TradingDays;
+        }
+
+        /// <summary>
+        /// 得到指定交易日在K线上开始位置的BarPos
+        /// </summary>
+        /// <param name="tradingDay"></param>
+        /// <returns></returns>
+        public int GetDayStartBarPosByTradingDay(int tradingDay)
+        {
+            return this.klineTimeInfo.GetKLineTimeInfo_Day(tradingDay).StartPos;
+        }
+
+        /// <summary>
+        /// 得到指定交易日在K线上结束位置的BarPos
+        /// </summary>
+        /// <param name="tradingDay"></param>
+        /// <returns></returns>
+        public int GetDayEndBarPosByTradingDay(int tradingDay)
+        {
+            return this.klineTimeInfo.GetKLineTimeInfo_Day(tradingDay).EndPos;
+        }
+
+        /// <summary>
+        /// 得到当前交易日的所有barCount
+        /// </summary>
+        /// <returns></returns>
+        public int GetDayBarCount()
+        {
+            return currentTradingPeriods.KlineTimeInfo_Day.BarCount;
+        }
+
+        /// <summary>
+        /// 获得当前barpos所在交易日的第一个K线的BarPos
+        /// </summary>
+        /// <returns></returns>
+        public int GetDayStartBarPos()
+        {
+            return currentTradingPeriods.KlineTimeInfo_Day.StartPos;
+        }
+
+        /// <summary>
+        /// 获得指定barpos所在交易日的第一个K线的BarPos
+        /// </summary>
+        /// <param name="tradingDay"></param>
+        /// <returns></returns>
+        public int GetDayStartBarPos(int tradingDay)
+        {
+            return klineTimeInfo.GetKLineTimeInfo_Day(tradingDay).StartPos;
+        }
+
+        /// <summary>
+        /// 获得当前barpos所在交易日的最后一根K线的BarPos
+        /// </summary>
+        /// <returns></returns>
+        public int GetDayEndBarPos()
+        {
+            return currentTradingPeriods.KlineTimeInfo_Day.EndPos;
+        }
+
+        /// <summary>
+        /// 获得指定barpos所在交易日的最后一根K线的BarPos
+        /// </summary>
+        /// <param name="tradingDay"></param>
+        /// <returns></returns>
+        public int GetDayEndBarPos(int tradingDay)
+        {
+            return klineTimeInfo.GetKLineTimeInfo_Day(tradingDay).EndPos;
+        }
+
+        /// <summary>
+        /// 得到当前BarPos所在交易日的交易时间
+        /// </summary>
+        /// <returns></returns>
+        public ITradingTime GetTradingTime()
+        {
+            int tradingDay = TradingDay;
+            if (dic_TradingDay_TradingTime.ContainsKey(tradingDay))
+                return dic_TradingDay_TradingTime[tradingDay];
+            return null;
+        }
+
+        /// <summary>
+        /// 得到指定BarPos所在交易日的交易时间
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public ITradingTime GetTradingTime(int barPos)
+        {
+            int tradingDay = GetTradingPeriodsByBarPos(barPos).KlineTimeInfo_Day.TradingDay;
+            if (dic_TradingDay_TradingTime.ContainsKey(tradingDay))
+                return dic_TradingDay_TradingTime[tradingDay];
+            return null;
+        }
+
+        /// <summary>
+        /// 当前BarPos是否是一天的开始
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDayStart()
+        {
+            if (currentTradingPeriods.PeriodIndex != 0)
+                return false;
+            return (currentTradingPeriods.StartPos == currentTradingPeriods.KlineTimeInfo_Day.StartPos);
+        }
+
+        /// <summary>
+        /// 指定的barPos是否是一天的开始
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public bool IsDayStart(int barPos)
+        {
+            IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
+            if (tradingPeriods.PeriodIndex != 0)
+                return false;
+            return (tradingPeriods.StartPos == currentTradingPeriods.KlineTimeInfo_Day.StartPos);
+        }
+
+        /// <summary>
+        /// 当前的
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDayEnd()
+        {
+            if (currentTradingPeriods.PeriodIndex != currentTradingPeriods.KlineTimeInfo_Day.TradingPeriods.Count - 1)
+                return false;
+            return (currentTradingPeriods.EndPos == currentTradingPeriods.KlineTimeInfo_Day.EndPos);
+        }
+
+        /// <summary>
+        /// 是否是一天结束
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public bool IsDayEnd(int barPos)
+        {
+            IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
+            if (tradingPeriods.PeriodIndex != tradingPeriods.KlineTimeInfo_Day.TradingPeriods.Count - 1)
+                return false;
+            return (tradingPeriods.EndPos == tradingPeriods.KlineTimeInfo_Day.EndPos);
+        }
+
+        /// <summary>
+        /// 当前BarPos对应的交易日离前一个交易日相差几天
+        /// </summary>
+        /// <returns></returns>
+        public int HolidayDayCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 指定barPos对应的交易日离之前交易日相差几个交易日
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public int HolidayDayCount(int barPos)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 停牌日数量
+        /// </summary>
+        /// <returns></returns>
+        public int HaltDayCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 停牌日数量
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public int HaltDayCount(int barPos)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 得到所有交易日结束的barpos
         /// </summary>
         /// <returns></returns>
         public IList<int> GetAllTradingDayEndBarPoses()
         {
-            return timeInfo.DayEndBarPoses;
+            if (tradingDayEndBarPoses == null)
+            {
+                tradingDayEndBarPoses = new List<int>(this.klineTimeInfo.TradingDayInfos.Count);
+                for (int i = 0; i < this.klineTimeInfo.TradingDayInfos.Count; i++)
+                {
+                    IKLineDataTradingTimeInfo_Day timeInfo_Day = this.klineTimeInfo.TradingDayInfos[i];
+                    tradingDayEndBarPoses.Add(timeInfo_Day.EndPos);
+                }
+            }
+            return tradingDayEndBarPoses;
         }
 
-        public bool IsDayStart(int barPos)
+        #endregion
+
+        #region TradingPeriod
+
+        /// <summary>
+        /// 得到当前BarPos所在的交易周期
+        /// </summary>
+        public double[] GetTradingPeriods()
         {
-            return timeInfo.IsDayStart(barPos);
+            ITradingTime tradingTime = GetTradingTime();
+            return tradingTime.GetPeriodTime(currentTradingPeriods.PeriodIndex);
         }
 
-        public bool IsDayEnd(int barPos)
+        /// <summary>
+        /// 得到指定BarPos所在的交易周期
+        /// </summary>
+        public double[] GetTradingPeriods(int barPos)
         {
-            return timeInfo.IsDayEnd(barPos);
+            ITradingTime tradingTime = GetTradingTime(barPos);
+            int periodIndex = GetTradingPeriodsByBarPos(barPos).PeriodIndex;
+            return tradingTime.TradingPeriods[periodIndex];
         }
 
+        /// <summary>
+        /// 得到当前交易周期的bar的数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsBarCount()
+        {
+            return currentTradingPeriods.BarCount;
+        }
+
+        /// <summary>
+        /// 得到当前交易周期的bar的数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsBarCount(int barPos)
+        {
+            return GetTradingPeriodsByBarPos(barPos).BarCount;
+        }
+
+        /// <summary>
+        /// 获得当前barpos所在交易时段的第一个K线的BarPos
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsStartBarPos()
+        {
+            return currentTradingPeriods.StartPos;
+        }
+
+        /// <summary>
+        /// 获得指定barpos所在交易时段的第一个K线的BarPos
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public int GetTradingPeriodsStartBarPos(int barPos)
+        {
+            return GetTradingPeriodsByBarPos(barPos).StartPos;
+        }
+
+        /// <summary>
+        /// 获得当前barpos所在交易时段的最后一根K线的BarPos
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsEndBarPos()
+        {
+            return currentTradingPeriods.EndPos;
+        }
+
+        /// <summary>
+        /// 获得指定barpos所在交易时段的最后一根K线的BarPos
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public int GetTradingPeriodsEndBarPos(int barPos)
+        {
+            return GetTradingPeriodsByBarPos(barPos).EndPos;
+        }
+
+        /// <summary>
+        /// 得到当前BarPos在交易时段的Index
+        /// </summary>
+        /// <returns></returns>
+        public int GetIndexInTradingPeriods()
+        {
+            int startBarPos = currentTradingPeriods.StartPos;
+            return BarPos - startBarPos;
+        }
+
+        /// <summary>
+        /// 得到指定BarPos在交易时段的Index
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public int GetIndexInTradingPeriods(int barPos)
+        {
+            IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
+            int startBarPos = tradingPeriods.StartPos;
+            return barPos - startBarPos;
+        }
+
+        /// <summary>
+        /// 得到当前barPos所在交易时段是交易日的第几个交易时段
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsIndexInTradingDay()
+        {
+            return currentTradingPeriods.PeriodIndex;
+        }
+
+        /// <summary>
+        /// 得到指定barPos所在交易时段是交易日的第几个交易时段
+        /// </summary>
+        /// <returns></returns>
+        public int GetTradingPeriodsIndexInTradingDay(int barPos)
+        {
+            return GetTradingPeriodsByBarPos(barPos).PeriodIndex;
+        }
+
+        /// <summary>
+        /// 得到当前BarPos是否是一个开盘周期的开始
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public bool IsTradingPeriodStart()
+        {
+            return currentTradingPeriods.StartPos == BarPos;
+        }
+
+        /// <summary>
+        /// 得到指定barpos是否是一个开盘周期的开始
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
         public bool IsTradingPeriodStart(int barPos)
         {
-            return timeInfo.IsPeriodStart(barPos);
+            IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
+            return tradingPeriods.StartPos == barPos;
         }
 
+        /// <summary>
+        /// 得到当前BarPos是否是一个开盘周期结束
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        public bool IsTradingPeriodEnd()
+        {
+            return currentTradingPeriods.EndPos == BarPos;
+        }
+
+        /// <summary>
+        /// 得到指定BarPos是否是一个开盘周期结束
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
         public bool IsTradingPeriodEnd(int barPos)
         {
-            return timeInfo.IsPeriodEnd(barPos);
+            IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
+            return tradingPeriods.EndPos == barPos;
         }
 
+        /// <summary>
+        /// 得到所有交易时间结束的barpos
+        /// </summary>
+        /// <returns></returns>
+        public IList<int> GetAllTradingTimeEndBarPoses()
+        {
+            if (tradingPeriodEndBarPoses == null)
+            {
+                tradingPeriodEndBarPoses = new List<int>();
+                for (int i = 0; i < klineTimeInfo.TradingDayInfos.Count; i++)
+                {
+                    IKLineDataTradingTimeInfo_Day timeInfo_Day = klineTimeInfo.TradingDayInfos[i];
+                    for (int j = 0; j < timeInfo_Day.TradingPeriods.Count; j++)
+                    {
+                        tradingPeriodEndBarPoses.Add(timeInfo_Day.TradingPeriods[j].EndPos);
+                    }
+                }
+            }
+            return tradingPeriodEndBarPoses;
+        }
+
+        #endregion
+
+        #region KLinePeriod
+
+        /// <summary>
+        /// 得到距离这个bar结束的时间
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan GetTimeToKLinePeriodEnd()
+        {
+            return default(TimeSpan);
+        }
+
+        /// <summary>
+        /// 得到这个bar的结束时间
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
         public double GetKLinePeriodEndTime(int barPos)
         {
-            return timeInfo.GetKLineTime(barPos)[1];
+            return 1;
         }
 
-        public int GetTradingDayStartIndex(int tradingDay)
-        {
-            return timeInfo.GetDayStartPos(tradingDay);
-        }
-
-        public int GetTradingDayEndIndex(int tradingDay)
-        {
-            return timeInfo.GetDayEndPos(tradingDay);
-        }
-    }
+        #endregion
+    }   
 }

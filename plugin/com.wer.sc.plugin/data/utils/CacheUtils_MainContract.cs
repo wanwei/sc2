@@ -53,6 +53,30 @@ namespace com.wer.sc.data.utils
             return dic_Variety_Contracts[variety];
         }
 
+        public List<MainContractInfo> GetMainContractInfos(string variety, int startDate, int endDate)
+        {
+            List<MainContractInfo> mainContractInfos = new List<MainContractInfo>();
+            List<MainContractInfo> allContracts = GetMainContractInfos(variety);
+            bool isFirst = true;
+            for (int i = 0; i < allContracts.Count; i++)
+            {
+                MainContractInfo currentContract = allContracts[i];
+                if (currentContract.End < startDate)
+                    continue;
+                MainContractInfo contract = new MainContractInfo();
+                contract.CopyFrom(currentContract);
+                if (isFirst)
+                {
+                    contract.Start = startDate;
+                    isFirst = false;
+                }
+                if (contract.End > endDate)
+                    contract.End = endDate;
+                mainContractInfos.Add(contract);
+            }
+            return mainContractInfos;
+        }
+
         public MainContractInfo GetNextMainContractInfo(string variety, int date)
         {
             if (!dic_Variety_Contracts.ContainsKey(variety))

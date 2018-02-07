@@ -27,7 +27,7 @@ namespace com.wer.sc.data.reader
             this.tradingDayReader = new CacheUtils_TradingDay(dataStore.CreateTradingDayStore().Load());
             this.tradingSessionStore = dataStore.CreateTradingSessionStore();
             this.tradingTimeStore = dataStore.CreateTradingTimeStore();
-            this.tickDataReader = new TickDataReader(dataStore,this);
+            this.tickDataReader = new TickDataReader(dataStore, this);
             this.klineDataReader = new KLineDataReader(dataStore, this);
             this.timeLineDataReader = new TimeLineDataReader(this);
             this.mainContractReader = new MainContractReader(dataStore);
@@ -56,7 +56,7 @@ namespace com.wer.sc.data.reader
 
         public ITradingTimeReader_Code CreateTradingTimeReader(string code)
         {
-            List<TradingTime> sessions = tradingTimeStore.Load(code);
+            IList<ITradingTime> sessions = tradingTimeStore.Load(code);
             CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, sessions);
             return cache;
         }
@@ -82,6 +82,14 @@ namespace com.wer.sc.data.reader
             get
             {
                 return timeLineDataReader;
+            }
+        }
+
+        public IMainContractReader MainContractReader
+        {
+            get
+            {
+                return mainContractReader;
             }
         }
     }

@@ -13,11 +13,11 @@ namespace com.wer.sc.data.market
     {
         public void Test()
         {
-            IAccountFactory fac = DataCenter.Default.AccountFactory;
+            IAccountManager fac = DataCenter.Default.AccountManager;
             IAccount account = fac.CreateAccount(100000);
             account.AccountSetting.TradeType = AccountTradeType.IMMEDIATELY;
             Plugin_MarketTrader_Simu trader = new Plugin_MarketTrader_Simu(account);
-            
+
             OrderInfo order = new OrderInfo();
             order.Instrumentid = "rb1805";
             order.OpenClose = OpenCloseType.Open;

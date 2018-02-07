@@ -96,6 +96,14 @@ namespace com.wer.sc.data
             return -1;
         }
 
+        public void CopyFrom(MainContractInfo contractInfo)
+        {
+            this.code = contractInfo.code;
+            this.variety = contractInfo.variety;
+            this.start = contractInfo.start;
+            this.end = contractInfo.end;            
+        }
+
         public override string ToString()
         {
             return SaveToString();

@@ -311,17 +311,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return dataLoader_TradingSessionDetail;
         }
 
-        private Dictionary<string, Dictionary<int, TradingTime>> dic_Code_TradingTimeCache = new Dictionary<string, Dictionary<int, TradingTime>>();
+        private Dictionary<string, Dictionary<int, ITradingTime>> dic_Code_TradingTimeCache = new Dictionary<string, Dictionary<int, ITradingTime>>();
 
         public ITradingTime GetTradingTime(string code, int date)
         {
             if (dic_Code_TradingTimeCache.ContainsKey(code))
                 return dic_Code_TradingTimeCache[code][date];
-            IList<TradingTime> tradingTimes = updatedDataLoader.GetTradingTime(code);
-            Dictionary<int, TradingTime> dic = new Dictionary<int, TradingTime>();
+            IList<ITradingTime> tradingTimes = updatedDataLoader.GetTradingTime(code);
+            Dictionary<int, ITradingTime> dic = new Dictionary<int, ITradingTime>();
             for (int i = 0; i < tradingTimes.Count; i++)
             {
-                TradingTime tradingTime = tradingTimes[i];
+                ITradingTime tradingTime = tradingTimes[i];
                 dic.Add(tradingTime.TradingDay, tradingTime);
             }
             dic_Code_TradingTimeCache.Add(code, dic);
@@ -353,7 +353,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return this.updatedDataLoader.GetTradingSessions(code);
         }
 
-        public IList<TradingTime> GetUpdatedTradingTime(string code)
+        public IList<ITradingTime> GetUpdatedTradingTime(string code)
         {
             return this.updatedDataLoader.GetTradingTime(code);
         }

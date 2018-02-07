@@ -32,7 +32,7 @@ namespace com.wer.sc.data.transfer
 
         private static CacheUtils_TradingTime GetTradingSessionCache(string code)
         {
-            IList<TradingTime> tradingSessions = MockDataLoader.GetTradingTimeList(code);
+            IList<ITradingTime> tradingSessions = MockDataLoader.GetTradingTimeList(code);
             CacheUtils_TradingTime cache = new CacheUtils_TradingTime(code, tradingSessions);
             return cache;
         }

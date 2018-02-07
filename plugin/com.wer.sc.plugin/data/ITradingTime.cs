@@ -49,7 +49,7 @@ namespace com.wer.sc.data
         /// <summary>
         /// 得到当日的所有交易周期
         /// </summary>
-        List<double[]> TradingPeriods { get; }
+        IList<double[]> TradingPeriods { get; }
 
         /// <summary>
         /// 该期货合约的一天是否过夜

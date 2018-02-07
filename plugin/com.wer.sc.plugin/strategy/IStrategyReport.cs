@@ -22,6 +22,6 @@ namespace com.wer.sc.strategy
 
         IStrategyQueryResult StrategyResult { get; }
 
-        IStrategyTrader StrategyTrader { get; }
+        //IStrategyTrader StrategyTrader { get; }
     }
 }

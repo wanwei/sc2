@@ -7,6 +7,7 @@ using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.utils;
 using System.Drawing;
+using com.wer.sc.graphic;
 
 namespace com.wer.sc.strategy.common.zigzag
 {
@@ -84,7 +85,7 @@ namespace com.wer.sc.strategy.common.zigzag
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IStrategyDrawer drawHelper = StrategyOperator.DrawOperator.GetDrawer_KLine(ZigzagPeriod);
+            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(ZigzagPeriod);
             List<ZigzagPoint> points = this.zigzag.GetPoints();
             ZigzagDrawer.DrawZigzagPoints(drawHelper, points, Color.Blue, Color.White, 8);
             ZigzagDrawer.DrawZigzagPoints(drawHelper, this.zigzag.GetMergedPoints(), 12);

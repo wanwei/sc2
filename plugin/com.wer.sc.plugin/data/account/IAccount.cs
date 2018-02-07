@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data.market;
+using com.wer.sc.data.reader;
 using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,23 @@ namespace com.wer.sc.data.account
     /// </summary>
     public interface IAccount : IXmlExchange
     {
+        /// <summary>
+        /// 绑定一个交易数据读取器
+        /// 绑定交易数据读取器后会侦听该读取器，当时间发生变化时会根据股票价格变化确定是否成交
+        /// </summary>
+        /// <param name="realTimeDataReader"></param>
+        void BindRealTimeReader(IRealTimeDataReader realTimeDataReader);
+
+        /// <summary>
+        /// 取消绑定实时数据获取器
+        /// </summary>
+        void UnBind();
+
+        /// <summary>
+        /// 得到绑定的实时数据读取器，如果没有绑定，则返回空
+        /// </summary>
+        IRealTimeDataReader RealTimeDataReader { get; }
+
         /// <summary>
         /// 账号设置
         /// </summary>
@@ -42,6 +60,11 @@ namespace com.wer.sc.data.account
         /// 获得账号的描述信息
         /// </summary>
         String Description { get; }
+
+        /// <summary>
+        /// 返回当前时间
+        /// </summary>
+        double Time { get; }
 
         /// <summary>
         /// 以当前价格发送开仓委托
@@ -104,7 +127,7 @@ namespace com.wer.sc.data.account
         /// 取消委托
         /// </summary>
         /// <param name="orderid"></param>
-        void CancelOrder(string orderid);
+        OrderInfo CancelOrder(string orderid);
 
         /// <summary>
         /// 得到当前委托

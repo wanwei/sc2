@@ -59,6 +59,7 @@
     </Compile>
     <None Include="TestCase\com\wer\sc\utils\param\Parameters" />
     <Compile Include="TestDynamicArray.cs" />
+    <Compile Include="TestEnumUtils.cs" />
     <Compile Include="TestLogHelper.cs" />
     <Compile Include="TestOpenTimeUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

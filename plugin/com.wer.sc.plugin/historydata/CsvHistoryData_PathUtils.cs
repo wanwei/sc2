@@ -57,9 +57,19 @@ namespace com.wer.sc.plugin.historydata
             return csvDataPath + "\\mainfutures.csv";
         }
 
+        public static String GetTradingSessionPath(String csvDataPath)
+        {
+            return csvDataPath + "\\tradingsession.csv";
+        }
+
         public static String GetTradingSessionPath(String csvDataPath, String code)
         {
             return csvDataPath + "\\" + code + "\\" + code + "_tradingsession" + ".csv";
+        }
+
+        public static String GetTradingTimePath(String csvDataPath)
+        {
+            return csvDataPath + "\\tradingtime.csv";
         }
 
         public static String GetTradingTimePath(String csvDataPath, String code)

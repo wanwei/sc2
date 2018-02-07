@@ -16,27 +16,27 @@ namespace com.wer.sc.data.utils
 
         private CacheUtils_TradingDay tradingDayCache;
 
-        private IList<TradingTime> tradingSessionList;
+        private IList<ITradingTime> tradingSessionList;
 
         private List<int> tradingDays;
 
         private List<double> startTimes;
 
-        private Dictionary<int, TradingTime> dic_TradingDay_TradingSession;
+        private Dictionary<int, ITradingTime> dic_TradingDay_TradingSession;
 
         private Dictionary<double, int> dic_StartTime_TradingDay;
 
-        public CacheUtils_TradingTime(string instrumentId, IList<TradingTime> tradingSessionList)
+        public CacheUtils_TradingTime(string instrumentId, IList<ITradingTime> tradingSessionList)
         {
             this.instrumentId = instrumentId;
             this.tradingSessionList = tradingSessionList;
             this.tradingDays = new List<int>(tradingSessionList.Count);
             this.startTimes = new List<double>(tradingSessionList.Count);
-            this.dic_TradingDay_TradingSession = new Dictionary<int, TradingTime>(tradingSessionList.Count);
+            this.dic_TradingDay_TradingSession = new Dictionary<int, ITradingTime>(tradingSessionList.Count);
             this.dic_StartTime_TradingDay = new Dictionary<double, int>(tradingSessionList.Count);
             for (int i = 0; i < tradingSessionList.Count; i++)
             {
-                TradingTime tradingSession = tradingSessionList[i];
+                ITradingTime tradingSession = tradingSessionList[i];
                 this.tradingDays.Add(tradingSession.TradingDay);
                 this.startTimes.Add(tradingSession.OpenTime);
                 this.dic_TradingDay_TradingSession.Add(tradingSession.TradingDay, tradingSession);
@@ -106,7 +106,7 @@ namespace com.wer.sc.data.utils
 
         public double GetStartTime(int date)
         {
-            TradingTime value;
+            ITradingTime value;
             bool exist = dic_TradingDay_TradingSession.TryGetValue(date, out value);
             return exist ? value.OpenTime : -1;
         }

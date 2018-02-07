@@ -52,10 +52,10 @@ namespace com.wer.sc.data.update
         {
             List<IStep> steps = new List<IStep>();
             List<CodeInfo> allInstruments = historyData.GetInstruments();
-            AddSteps_TickData_TradingDay(steps, allInstruments, 20170718);
-            AddSteps_TickData_TradingDay(steps, allInstruments, 20170719);
-            AddSteps_TickData_TradingDay(steps, allInstruments, 20170720);
-            AddSteps_TickData_TradingDay(steps, allInstruments, 20170721);
+            AddSteps_TickData_TradingDay(steps, allInstruments, 20180102);
+            //AddSteps_TickData_TradingDay(steps, allInstruments, 20170719);
+            //AddSteps_TickData_TradingDay(steps, allInstruments, 20170720);
+            //AddSteps_TickData_TradingDay(steps, allInstruments, 20170721);
             return steps;
         }
 

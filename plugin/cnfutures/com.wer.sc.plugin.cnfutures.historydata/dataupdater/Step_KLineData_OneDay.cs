@@ -99,7 +99,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 return msg;
             }
 
-            List<double[]> tradingPeriod = dataUpdateHelper.GetTradingTime(codeInfo.Code, date).TradingPeriods;
+            IList<double[]> tradingPeriod = dataUpdateHelper.GetTradingTime(codeInfo.Code, date).TradingPeriods;
             //List<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList_Full(tradingPeriod, KLinePeriod.KLinePeriod_1Minute);
             //timeListGetter.GetKLineTimeList(code, date, klinePeriod);
             this.klineData = DataTransfer_Tick2KLine.Transfer(tickData, tradingPeriod, KLinePeriod.KLinePeriod_1Minute, lastEndPrice, lastEndHold);

@@ -16,11 +16,11 @@ namespace com.wer.sc.data
         public void TestGetKLineTimeInfo_Day()
         {
             string code = "rb1805";
-            int start = 20171015;
+            int start = 20170928;
             int end = 20171020;
             IKLineData klineData = DataCenter.Default.DataReader.KLineDataReader.GetData(code, start, end, KLinePeriod.KLinePeriod_1Minute);            
             IList<ITradingTime> tradingTimes = DataCenter.Default.DataReader.CreateTradingTimeReader(code).GetTradingTime(start, end);
-            KLineTimeInfo klineTimeInfo = new KLineTimeInfo(klineData, tradingTimes);
+            KLineDataTradingTimeInfo klineTimeInfo = new KLineDataTradingTimeInfo(klineData, tradingTimes);
 
             AssertUtils.PrintList(klineTimeInfo.TradingDays);
             Console.WriteLine();
@@ -31,7 +31,7 @@ namespace com.wer.sc.data
             //}
             Console.WriteLine(klineTimeInfo);
 
-            KLineTimeInfo_TradingPeriods periods = klineTimeInfo.GetTradingPeriodsByBarPos(350);
+            IKLineDataTradingTimeInfo_Periods periods = klineTimeInfo.GetTradingPeriodsByBarPos(350);
             Assert.AreEqual("TradingPeriods:0,345,464", periods.ToString());
             //Console.WriteLine(periods);
         }

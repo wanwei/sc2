@@ -44,7 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="account\Account.cs" />
-    <Compile Include="account\AccountFactory.cs" />
+    <Compile Include="account\AccountManager.cs" />
+    <Compile Include="datapackage\CodePackage.cs" />
+    <Compile Include="datapackage\CodePackageFactory.cs" />
+    <Compile Include="datapackage\CodePackageInfo.cs" />
     <Compile Include="market\Plugin_MarketData_Simu.cs" />
     <Compile Include="market\Plugin_MarketTrader_Simu.cs" />
     <Compile Include="account\TradeFee.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="navigate\DataNavigate_ChangeTime.cs" />
     <Compile Include="navigate\DataNavigate_Code.cs" />
     <Compile Include="reader\MainContractReader.cs" />
+    <Compile Include="reader\RealTimeData_Code_Null.cs" />
     <Compile Include="reader\TradingTimeReader.cs" />
     <Compile Include="realtime\KLineDataExtend_RealTime.cs" />
     <Compile Include="realtime\TickData_RealTime.cs" />

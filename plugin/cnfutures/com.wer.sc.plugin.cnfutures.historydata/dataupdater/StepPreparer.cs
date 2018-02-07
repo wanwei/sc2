@@ -64,17 +64,17 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             List<CodeInfo> allCodes = step_CodeInfo.GetAllCodes();
             steps.Add(step_CodeInfo);
             steps.Add(new Step_TradingDay(dataUpdateHelper));
-
             GetTradingTime(steps, allCodes, false);
-            //GetTradingTime(steps, allCodes, false);
+            //GetTradingTime(steps, allCodes, true);
             GetTickSteps(steps, updatedDataInfo, allCodes);
             GetKLineDataSteps(steps, updatedDataInfo, allCodes);
-            //GetTickDataSteps_Day_All(steps, 20170718, allCodes);
+
+            //GetTickDataSteps_Day_All(steps, 20180102, allCodes);
             //GetTickDataSteps_Day_All(steps, 20170719, allCodes);
             //GetTickDataSteps_Day_All(steps, 20170720, allCodes);
             //GetTickDataSteps_Day_All(steps, 20170721, allCodes);
 
-            //GetKLineDataSteps_Day(steps, 20170718, allCodes);
+            //GetKLineDataSteps_Day(steps, 20180102, allCodes);
             //GetKLineDataSteps_Day(steps, 20170719, allCodes);
             //GetKLineDataSteps_Day(steps, 20170720, allCodes);
             //GetKLineDataSteps_Day(steps, 20170721, allCodes);

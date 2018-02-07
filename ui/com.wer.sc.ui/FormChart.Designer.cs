@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChart));
-            this.menuComponent1 = new com.wer.sc.ui.comp.MenuComponent();
+            this.menuComponent1 = new com.wer.sc.ui.comp.ToolStripComponent();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainComponent1 = new com.wer.sc.ui.comp.MainComponent();
@@ -92,7 +92,7 @@
 
         #endregion
 
-        private comp.MenuComponent menuComponent1;
+        private comp.ToolStripComponent menuComponent1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lbTime;
         private comp.MainComponent mainComponent1;

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCompCodeTree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCompCodeTree.Designer.cs">
+      <DependentUpon>FormCompCodeTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCurrentInfoComponent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,12 @@
     </Compile>
     <Compile Include="FormMainComponent.Designer.cs">
       <DependentUpon>FormMainComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNumberUpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNumberUpDown.Designer.cs">
+      <DependentUpon>FormNumberUpDown.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStrategyTreeComponent.cs">
       <SubType>Form</SubType>
@@ -104,6 +116,9 @@
     <EmbeddedResource Include="FormChartComponentDrawer.resx">
       <DependentUpon>FormChartComponentDrawer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCompCodeTree.resx">
+      <DependentUpon>FormCompCodeTree.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCurrentInfoComponent.resx">
       <DependentUpon>FormCurrentInfoComponent.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMainComponent.resx">
       <DependentUpon>FormMainComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNumberUpDown.resx">
+      <DependentUpon>FormNumberUpDown.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStrategyTreeComponent.resx">
       <DependentUpon>FormStrategyTreeComponent.cs</DependentUpon>
@@ -153,6 +171,10 @@
     <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
       <Project>{1EE9E83B-FD37-42FA-A263-EEE93479AD45}</Project>
       <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.mockdata\com.wer.sc.mockdata.csproj">
+      <Project>{4645ED74-ABF5-449E-8C75-16A2C8CE5612}</Project>
+      <Name>com.wer.sc.mockdata</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
       <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.account;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
@@ -30,27 +31,27 @@ namespace com.wer.sc.strategy
 
         private IDataPackage_Code dataPackage;
 
-        private StrategyOperator strategyHelper;
+        private StrategyHelper strategyHelper;
 
         private IStrategyReport report;
 
-        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyOperator(null))
+        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
         {
 
         }
 
-        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyHelper)
+        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyHelper)
         {
             this.dataPackage = dataPackage;
             this.referedPeriods = referedPeriods;
             this.forwardPeriod = forwardPeriod;
-            this.strategyHelper = (StrategyOperator)strategyHelper;
+            this.strategyHelper = (StrategyHelper)strategyHelper;
         }
 
         public void SetStrategy(IStrategy strategy)
         {
             this.strategy = strategy;
-            this.strategy.StrategyOperator = strategyHelper;
+            InitStrategy(this.strategy);
             StrategyReferedPeriods referedPeriods = strategy.GetReferedPeriods();
             if (referedPeriods != null)
                 this.referedPeriods = referedPeriods;
@@ -59,9 +60,16 @@ namespace com.wer.sc.strategy
             {
                 for (int i = 0; i < referedStrategies.Count; i++)
                 {
-                    referedStrategies[i].StrategyOperator = strategyHelper;
+                    InitStrategy(referedStrategies[i]);
+                    //referedStrategies[i].StrategyOperator = strategyHelper;
                 }
             }
+        }
+
+        private void InitStrategy(IStrategy strategy)
+        {
+            if (strategy is StrategyAbstract)
+                ((StrategyAbstract)strategy).StrategyOperator = strategyHelper;
         }
 
         public void SetStrategyPackage(IStrategyPackage strategyPackage)
@@ -97,8 +105,10 @@ namespace com.wer.sc.strategy
                 dataForward.OnBar += RealTimeReader_OnBar;
                 dataForward.OnTick += RealTimeReader_OnTick;
 
-                StrategyTrader trader = new StrategyTrader(100000, dataForward);
-                this.strategyHelper.Trader = trader.GetStrategyTrader(dataPackage.Code);
+                IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000);
+                account.BindRealTimeReader(dataForward);
+                StrategyTrader_History trader = new StrategyTrader_History(account);
+                this.strategyHelper.Trader = trader;//.GetStrategyTrader(dataPackage.Code);
 
                 ExecuteStrategyStart(dataForward);
                 if (isCancel)
@@ -129,7 +139,7 @@ namespace com.wer.sc.strategy
             report.forwardPeriod = forwardPeriod;
             report.parameters = strategy.Parameters;
             report.strategyResult = strategyHelper.Results;
-            report.strategyTrader = strategyHelper.Trader.OwnerTrader;
+            //report.strategyTrader = strategyHelper.Trader.OwnerTrader;
             this.report = report;
         }
 

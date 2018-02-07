@@ -1,7 +1,6 @@
 ﻿using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
 using com.wer.sc.ui.comp;
-using com.wer.sc.utils.ui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +20,8 @@ namespace com.wer.sc.ui.comp.strategy
         private IStrategyData strategyData;
 
         private IDataPackage_Code dataPackage;
+
+        private PreparedDataForStrategy preparedData;
 
         public IStrategyData StrategyData
         {
@@ -55,9 +56,12 @@ namespace com.wer.sc.ui.comp.strategy
             if (strategyData == null)
                 return;
             this.StrategyData = strategyData;
-            //this.strategy = this.StrategyData.Strategy;
-            //if (this.strategyData.Strategy != null && this.strategyData.Strategy.Parameters)
             this.compParameters1.Parameters = this.strategyData.Strategy.Parameters;
+        }
+
+        private void InitPreparedData()
+        {
+
         }
 
         private void btExecutor_Click(object sender, EventArgs e)
@@ -170,6 +174,72 @@ namespace com.wer.sc.ui.comp.strategy
             this.chartComponent.StrategyData = strategyData;
             this.Init(strategyData);
             MessageBox.Show("策略刷新成功");
+        }
+    }
+
+    /// <summary>
+    /// 策略用来执行的数据
+    /// </summary>
+    class PreparedDataForStrategy
+    {
+        private bool choosedByMainContract;
+
+        private IList<string> codes;
+
+        private int start;
+
+        private int end;
+
+        public bool ChoosedByMainContract
+        {
+            get
+            {
+                return choosedByMainContract;
+            }
+
+            set
+            {
+                choosedByMainContract = value;
+            }
+        }
+
+        public IList<string> Codes
+        {
+            get
+            {
+                return codes;
+            }
+
+            set
+            {
+                codes = value;
+            }
+        }
+
+        public int Start
+        {
+            get
+            {
+                return start;
+            }
+
+            set
+            {
+                start = value;
+            }
+        }
+
+        public int End
+        {
+            get
+            {
+                return end;
+            }
+
+            set
+            {
+                end = value;
+            }
         }
     }
 }

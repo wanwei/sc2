@@ -67,6 +67,16 @@ namespace com.wer.sc.plugin.historydata
         }
 
         /// <summary>
+        /// 得到该市场默认的开盘时间
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<TradingSession> GetTradingSessions()
+        {
+            return CsvUtils_TradingSession.Load(CsvHistoryData_PathUtils.GetTradingSessionPath(GetCsvDataPath()));
+        }
+
+
+        /// <summary>
         /// 得到所有开盘日的开盘时间
         /// 实现该方法的原因：
         /// 系统需要有一个方法来获取指定日期的K线，比如获取20130106的1分钟K线
@@ -83,15 +93,20 @@ namespace com.wer.sc.plugin.historydata
             return CsvUtils_TradingSession.Load(CsvHistoryData_PathUtils.GetTradingSessionPath(GetCsvDataPath(), code));
         }
 
-        public virtual TradingTime GetDefaultTradingTime()
+        public virtual ITradingTime GetDefaultTradingTime()
         {
-            List<TradingTime> tts = CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetDefaultTradingTimePath(GetCsvDataPath()));
+            List<ITradingTime> tts = CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetDefaultTradingTimePath(GetCsvDataPath()));
             if (tts == null || tts.Count == 0)
                 return null;
             return tts[0];
         }
 
-        public virtual IList<TradingTime> GetTradingTime(string code)
+        public virtual IList<ITradingTime> GetTradingTime()
+        {
+            return CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetTradingTimePath(GetCsvDataPath()));
+        }
+
+        public virtual IList<ITradingTime> GetTradingTime(string code)
         {
             return CsvUtils_TradingTime.Load(CsvHistoryData_PathUtils.GetTradingTimePath(GetCsvDataPath(), code));
         }
@@ -163,7 +178,7 @@ namespace com.wer.sc.plugin.historydata
             IKLineData oneMinuteKLine = GetKLineData(code, KLinePeriod.KLinePeriod_1Minute, openDates, lastEndPrice, lastEndHold);
             if (oneMinuteKLine.Length == 0)
                 return null;
-            IList<TradingTime> sessions = GetTradingTime(code);
+            IList<ITradingTime> sessions = GetTradingTime(code);
             if (sessions == null)
                 return null;
             return DataTransfer_KLine2KLine.Transfer(oneMinuteKLine, klinePeriod, new CacheUtils_TradingTime(code, GetTradingTime(code)));
@@ -184,8 +199,8 @@ namespace com.wer.sc.plugin.historydata
                 }
                 else
                 {
-                    List<double[]> tradingTime = GetTradingTime(code, openDate);
-                    IList<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList_Full(tradingTime, klinePeriod);
+                    IList<double[]> tradingTime = GetTradingTime(code, openDate);
+                    IList<double[]> klineTimes = TradingTimeUtils.GetKLineTimeList(tradingTime, klinePeriod);
                     klineData = DataTransfer_Tick2KLine.GetEmptyKLineData(klineTimes, lastEndPrice, lastEndHold);
                     klineDataList.Add(klineData);
                 }
@@ -213,14 +228,14 @@ namespace com.wer.sc.plugin.historydata
             return klineDays;
         }
 
-        private List<double[]> GetTradingTime(string code, int date)
+        private IList<double[]> GetTradingTime(string code, int date)
         {
-            IList<TradingTime> tradingTime = GetTradingTime(code);
+            IList<ITradingTime> tradingTime = GetTradingTime(code);
             if (tradingTime != null)
             {
                 for (int i = 0; i < tradingTime.Count; i++)
                 {
-                    TradingTime tt = tradingTime[i];
+                    ITradingTime tt = tradingTime[i];
                     if (tt.TradingDay == date)
                     {
                         return tt.TradingPeriods;

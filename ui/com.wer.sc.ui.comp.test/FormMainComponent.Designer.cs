@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuComponent1 = new com.wer.sc.ui.comp.MenuComponent();
+            this.menuComponent1 = new com.wer.sc.ui.comp.ToolStripComponent();
             this.mainComponent1 = new com.wer.sc.ui.comp.MainComponent();
             this.SuspendLayout();
             // 
@@ -63,7 +63,7 @@
 
         #endregion
 
-        private MenuComponent menuComponent1;
+        private ToolStripComponent menuComponent1;
         private MainComponent mainComponent1;
     }
 }

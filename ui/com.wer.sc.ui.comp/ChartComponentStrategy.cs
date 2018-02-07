@@ -1,7 +1,7 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.graphic;
 using com.wer.sc.strategy;
-using com.wer.sc.utils.ui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace com.wer.sc.ui.comp
 
         private IStrategyExecutor strategyExecutor;
         //画图器
-        private IDrawOperator drawOperator;
+        private IStrategyDrawer drawOperator;
 
         private ChartComponent compChart;
 
@@ -105,8 +105,8 @@ namespace com.wer.sc.ui.comp
                 dic_KLinePeriod_StartPos.Add(period, dataPackage.GetKLineData(period).BarPos);
             }
 
-            drawOperator = new ChartComponentStrategyDrawOperator(this.compChart.Drawer, dic_KLinePeriod_StartPos, 0, 0);
-            IStrategyOperator strategyOperator = new StrategyOperator(drawOperator);
+            drawOperator = new ChartComponentStrategyDrawer(this.compChart.Drawer, dic_KLinePeriod_StartPos, 0, 0);
+            IStrategyHelper strategyOperator = new StrategyHelper(drawOperator);
             strategyExecutor = executorFactory.CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
 
             strategyExecutor.SetStrategy(strategy);            
@@ -119,7 +119,7 @@ namespace com.wer.sc.ui.comp
             ChartType chartType = compData.ChartType;
             if (chartType == ChartType.KLine)
             {
-                IStrategyDrawer drawer = drawOperator.GetDrawer_KLine(compData.KlinePeriod);
+                IShapeDrawer_PriceRect drawer = drawOperator.GetDrawer_KLine(compData.KlinePeriod);
                 drawer.Refresh();
             }
             else if (chartType == ChartType.TimeLine)

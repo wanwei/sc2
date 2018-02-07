@@ -38,7 +38,6 @@ namespace com.wer.sc.strategy.loader
             }
         }
 
-
         public static StrategyAssembly Create(string file)
         {
             StrategyAssembly strategyAssembly = new StrategyAssembly();

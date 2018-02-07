@@ -34,6 +34,9 @@
             this.btMainComponent = new System.Windows.Forms.Button();
             this.btStrategyTreeComponent = new System.Windows.Forms.Button();
             this.btStrategy = new System.Windows.Forms.Button();
+            this.btNumberUpDown = new System.Windows.Forms.Button();
+            this.btCodePackage = new System.Windows.Forms.Button();
+            this.btCodeTree = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btChartComponentStrategyDrawer
@@ -101,11 +104,47 @@
             this.btStrategy.Text = "Strategy";
             this.btStrategy.UseVisualStyleBackColor = true;
             // 
+            // btNumberUpDown
+            // 
+            this.btNumberUpDown.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btNumberUpDown.Location = new System.Drawing.Point(587, 63);
+            this.btNumberUpDown.Name = "btNumberUpDown";
+            this.btNumberUpDown.Size = new System.Drawing.Size(479, 56);
+            this.btNumberUpDown.TabIndex = 6;
+            this.btNumberUpDown.Text = "NumberUpDown";
+            this.btNumberUpDown.UseVisualStyleBackColor = true;
+            this.btNumberUpDown.Click += new System.EventHandler(this.btNumberUpDown_Click);
+            // 
+            // btCodePackage
+            // 
+            this.btCodePackage.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btCodePackage.Location = new System.Drawing.Point(587, 162);
+            this.btCodePackage.Name = "btCodePackage";
+            this.btCodePackage.Size = new System.Drawing.Size(479, 56);
+            this.btCodePackage.TabIndex = 7;
+            this.btCodePackage.Text = "CodePackage";
+            this.btCodePackage.UseVisualStyleBackColor = true;
+            this.btCodePackage.Click += new System.EventHandler(this.btCodePackage_Click);
+            // 
+            // btCodeTree
+            // 
+            this.btCodeTree.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btCodeTree.Location = new System.Drawing.Point(587, 261);
+            this.btCodeTree.Name = "btCodeTree";
+            this.btCodeTree.Size = new System.Drawing.Size(479, 56);
+            this.btCodeTree.TabIndex = 8;
+            this.btCodeTree.Text = "CodeTree";
+            this.btCodeTree.UseVisualStyleBackColor = true;
+            this.btCodeTree.Click += new System.EventHandler(this.btCodeTree_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 640);
+            this.ClientSize = new System.Drawing.Size(1161, 640);
+            this.Controls.Add(this.btCodeTree);
+            this.Controls.Add(this.btCodePackage);
+            this.Controls.Add(this.btNumberUpDown);
             this.Controls.Add(this.btStrategy);
             this.Controls.Add(this.btStrategyTreeComponent);
             this.Controls.Add(this.btMainComponent);
@@ -126,5 +165,8 @@
         private System.Windows.Forms.Button btMainComponent;
         private System.Windows.Forms.Button btStrategyTreeComponent;
         private System.Windows.Forms.Button btStrategy;
+        private System.Windows.Forms.Button btNumberUpDown;
+        private System.Windows.Forms.Button btCodePackage;
+        private System.Windows.Forms.Button btCodeTree;
     }
 }

@@ -22,9 +22,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,7 +33,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,20 +47,58 @@
     </Compile>
     <Compile Include="ChartComponentController.cs" />
     <Compile Include="ChartComponentData.cs" />
-    <Compile Include="ChartComponentStrategyDrawer.cs" />
     <Compile Include="ChartComponentDrawer.cs" />
     <Compile Include="ChartComponentStrategy.cs" />
+    <Compile Include="ChartComponentShapeDrawer.cs" />
+    <Compile Include="ChartComponentStrategyDrawer.cs" />
+    <Compile Include="CompCodePackage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompCodePackage.Designer.cs">
+      <DependentUpon>CompCodePackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompCodeTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompCodeTree.Designer.cs">
+      <DependentUpon>CompCodeTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompStrategyTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompStrategyTree.Designer.cs">
+      <DependentUpon>CompStrategyTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="CurrentInfoComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CurrentInfoComponent.Designer.cs">
       <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCodes.cs">
+    <Compile Include="data\ChartComponentData.cs" />
+    <Compile Include="FormCodePackageSelected.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCodes.Designer.cs">
-      <DependentUpon>FormCodes.cs</DependentUpon>
+    <Compile Include="FormCodePackageSelected.Designer.cs">
+      <DependentUpon>FormCodePackageSelected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCodePackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCodePackage.Designer.cs">
+      <DependentUpon>FormCodePackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\FormAccountAna.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="trade\FormAccountAna.Designer.cs">
+      <DependentUpon>FormAccountAna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCodeSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCodeSelect.Designer.cs">
+      <DependentUpon>FormCodeSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="FormForwardSetting.cs">
       <SubType>Form</SubType>
@@ -81,25 +118,18 @@
     <Compile Include="MainComponent.Designer.cs">
       <DependentUpon>MainComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuComponent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MenuComponent.Designer.cs">
-      <DependentUpon>MenuComponent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ChartComponentStrategyDrawOperator.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="strategy\StrategyTreeComponent.cs">
+    <Compile Include="ToolStripComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="strategy\StrategyTreeComponent.Designer.cs">
-      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    <Compile Include="ToolStripComponent.Designer.cs">
+      <DependentUpon>ToolStripComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\FormStrategy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,11 +166,41 @@
     <Compile Include="strategy\FormStrategyResult.Designer.cs">
       <DependentUpon>FormStrategyResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="strategy\FormStrategyTrader.cs">
+    <Compile Include="strategy\StrategyTreeComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="strategy\StrategyTreeComponent.Designer.cs">
+      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\AccountTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="trade\AccountTree.Designer.cs">
+      <DependentUpon>AccountTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\FormAccount.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="strategy\FormStrategyTrader.Designer.cs">
-      <DependentUpon>FormStrategyTrader.cs</DependentUpon>
+    <Compile Include="trade\FormAccount.Designer.cs">
+      <DependentUpon>FormAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\FormAccountDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="trade\FormAccountDetail.Designer.cs">
+      <DependentUpon>FormAccountDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\FormNewAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="trade\FormNewAccount.Designer.cs">
+      <DependentUpon>FormNewAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="trade\FormNewAccountPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="trade\FormNewAccountPath.Designer.cs">
+      <DependentUpon>FormNewAccountPath.cs</DependentUpon>
     </Compile>
     <Compile Include="trade\FormTrade.cs">
       <SubType>Form</SubType>
@@ -148,42 +208,40 @@
     <Compile Include="trade\FormTrade.Designer.cs">
       <DependentUpon>FormTrade.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\common\com.wer.sc.utils.ui\com.wer.sc.utils.ui.csproj">
-      <Project>{ffffc645-3a82-48f2-8705-d4ee4552f1b7}</Project>
-      <Name>com.wer.sc.utils.ui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
-      <Project>{6A9E6268-E856-4072-8B74-06F710D5CA33}</Project>
-      <Name>com.wer.sc.utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
-      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
-      <Name>com.wer.sc.data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\graphic\com.wer.sc.graphic\com.wer.sc.graphic.csproj">
-      <Project>{769f691f-a4c5-4819-9bc3-804c7ee16681}</Project>
-      <Name>com.wer.sc.graphic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
-      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
-      <Name>com.wer.sc.plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\strategy\com.wer.sc.strategy\com.wer.sc.strategy.csproj">
-      <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
-      <Name>com.wer.sc.strategy</Name>
-    </ProjectReference>
+    <Compile Include="NumberUpDown.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NumberUpDown.Designer.cs">
+      <DependentUpon>NumberUpDown.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChartComponent.resx">
       <DependentUpon>ChartComponent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CompCodePackage.resx">
+      <DependentUpon>CompCodePackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompCodeTree.resx">
+      <DependentUpon>CompCodeTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompStrategyTree.resx">
+      <DependentUpon>CompStrategyTree.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CurrentInfoComponent.resx">
       <DependentUpon>CurrentInfoComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCodes.resx">
-      <DependentUpon>FormCodes.cs</DependentUpon>
+    <EmbeddedResource Include="FormCodePackage.resx">
+      <DependentUpon>FormCodePackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCodePackageSelected.resx">
+      <DependentUpon>FormCodePackageSelected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormAccountAna.resx">
+      <DependentUpon>FormAccountAna.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCodeSelect.resx">
+      <DependentUpon>FormCodeSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormForwardSetting.resx">
       <DependentUpon>FormForwardSetting.cs</DependentUpon>
@@ -194,15 +252,12 @@
     <EmbeddedResource Include="MainComponent.resx">
       <DependentUpon>MainComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuComponent.resx">
-      <DependentUpon>MenuComponent.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="strategy\StrategyTreeComponent.resx">
-      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    <EmbeddedResource Include="ToolStripComponent.resx">
+      <DependentUpon>ToolStripComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="strategy\FormStrategy.resx">
       <DependentUpon>FormStrategy.cs</DependentUpon>
@@ -222,18 +277,52 @@
     <EmbeddedResource Include="strategy\FormStrategyResult.resx">
       <DependentUpon>FormStrategyResult.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="strategy\FormStrategyTrader.resx">
-      <DependentUpon>FormStrategyTrader.cs</DependentUpon>
+    <EmbeddedResource Include="strategy\StrategyTreeComponent.resx">
+      <DependentUpon>StrategyTreeComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\AccountTree.resx">
+      <DependentUpon>AccountTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormAccount.resx">
+      <DependentUpon>FormAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormAccountDetail.resx">
+      <DependentUpon>FormAccountDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormNewAccount.resx">
+      <DependentUpon>FormNewAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="trade\FormNewAccountPath.resx">
+      <DependentUpon>FormNewAccountPath.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="trade\FormTrade.resx">
       <DependentUpon>FormTrade.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NumberUpDown.resx">
+      <DependentUpon>NumberUpDown.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\connected.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\disconnected.ico" />
+    <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\data\com.wer.sc.data\com.wer.sc.data.csproj">
+      <Project>{1ee9e83b-fd37-42fa-a263-eee93479ad45}</Project>
+      <Name>com.wer.sc.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\graphic\com.wer.sc.graphic\com.wer.sc.graphic.csproj">
+      <Project>{769f691f-a4c5-4819-9bc3-804c7ee16681}</Project>
+      <Name>com.wer.sc.graphic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\plugin\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\strategy\com.wer.sc.strategy\com.wer.sc.strategy.csproj">
+      <Project>{f2d6838b-e678-43bd-b4f4-53ea52febb05}</Project>
+      <Name>com.wer.sc.strategy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

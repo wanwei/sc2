@@ -128,10 +128,10 @@ namespace com.wer.sc.data.navigate
             this.currentNavigate_Code.OnRealTimeChanged += CurrentNavigate_Code_OnRealTimeChanged;
             this.LastOperator = OPERATOR_NAVIGATE;
 
-            if (this.OnNavigateTo != null)           
-                this.OnNavigateTo(this, new DataNavigateEventArgs(prevCodeInfo.Code, code, prevTime, time));            
+            if (this.OnNavigateTo != null)
+                this.OnNavigateTo(this, new DataNavigateEventArgs(prevCodeInfo.Code, code, prevTime, time));
             if (this.OnRealTimeChanged != null)
-                this.OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, time, this));            
+                this.OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, time, this));
         }
 
         private void CurrentNavigate_Code_OnRealTimeChanged(object sender, RealTimeChangedArgument argument)
@@ -261,7 +261,7 @@ namespace com.wer.sc.data.navigate
         {
             get
             {
-                return new string[] { Code};
+                return new string[] { Code };
             }
         }
 

@@ -103,6 +103,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.graphic.test", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.strategy.common", "strategy\com.wer.sc.strategy.common\com.wer.sc.strategy.common.csproj", "{83E1B4B6-0B48-478A-A822-D45981B1A583}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.strategy.sample", "strategy\com.wer.sc.strategy.sample\com.wer.sc.strategy.sample.csproj", "{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -277,6 +279,10 @@ Global
 		{83E1B4B6-0B48-478A-A822-D45981B1A583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83E1B4B6-0B48-478A-A822-D45981B1A583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83E1B4B6-0B48-478A-A822-D45981B1A583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -326,5 +332,6 @@ Global
 		{769F691F-A4C5-4819-9BC3-804C7EE16681} = {6E7F5C6D-FB13-4D03-AD4B-9E148C7591AD}
 		{D73E948E-CCF3-4D29-818C-11DD30D9EEEE} = {6E7F5C6D-FB13-4D03-AD4B-9E148C7591AD}
 		{83E1B4B6-0B48-478A-A822-D45981B1A583} = {F720E9F8-DFFA-42F0-B81F-7D34EE9F5BAD}
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277} = {F720E9F8-DFFA-42F0-B81F-7D34EE9F5BAD}
 	EndGlobalSection
 EndGlobal

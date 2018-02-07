@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="attr\RemarkAttribute.cs" />
+    <Compile Include="BooleanUtils.cs" />
     <Compile Include="ByteUtils.cs" />
     <Compile Include="CharUtils.cs" />
     <Compile Include="ColorUtils.cs" />
     <Compile Include="DynamicArray.cs" />
+    <Compile Include="EnumUtils.cs" />
     <Compile Include="ItemObject.cs" />
     <Compile Include="MathUtils.cs" />
     <Compile Include="OffsetList.cs" />

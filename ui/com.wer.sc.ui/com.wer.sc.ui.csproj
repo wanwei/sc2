@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormChart3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChart3.Designer.cs">
+      <DependentUpon>FormChart3.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +63,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormChart3.resx">
+      <DependentUpon>FormChart3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
     </EmbeddedResource>

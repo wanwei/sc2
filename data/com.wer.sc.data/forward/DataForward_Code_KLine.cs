@@ -216,7 +216,7 @@ namespace com.wer.sc.data.forward
                 return navigateData.DataPackage;
             }
         }
-        
+
         public IList<string> ListenedCodes
         {
             get
@@ -305,7 +305,7 @@ namespace com.wer.sc.data.forward
             if (OnRealTimeChanged != null)
                 OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
 
-        
+
             return true;
         }
 
@@ -476,17 +476,19 @@ namespace com.wer.sc.data.forward
 
         public IRealTimeData_Code GetRealTimeData(string code)
         {
-            return this;
+            if (string.Equals(Code, code, StringComparison.CurrentCultureIgnoreCase))
+                return this;
+            return RealTimeData_Code_Null.Instance;
         }
 
         public void Save(XmlElement xmlElem)
         {
-            
+
         }
 
         public void Load(XmlElement xmlElem)
         {
-            
+
         }
 
         /// <summary>

@@ -24,6 +24,9 @@ namespace com.wer.sc.plugin.cnfutures.config
 
             tradingSessionDetail = dataLoader.GetTradingTime("rb1005", 20100106);
             AssertUtils.AssertEqual_List<double[]>("tradingsessiondetail_sqearly", GetType(), tradingSessionDetail);
+
+            tradingSessionDetail = dataLoader.GetTradingTime(20100104);
+            AssertUtils.PrintLineList(tradingSessionDetail);
         }
     }
 }

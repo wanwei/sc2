@@ -21,7 +21,7 @@ namespace com.wer.sc.data.account
             int endDate = 20170605;
             IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             historyDataForward.OnTick += HistoryDataForward_OnTick;
-            account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
+            account = DataCenter.Default.AccountManager.CreateAccount(100000, historyDataForward);
             account.AccountSetting.TradeType = AccountTradeType.DELAYTICK;
             account.AccountSetting.AutoFilter = true;
             account.AccountSetting.DelayTick = 2;
@@ -44,7 +44,7 @@ namespace com.wer.sc.data.account
             int endDate = 20170605;
             IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             historyDataForward.OnTick += HistoryDataForward_OnTick;
-            account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
+            account = DataCenter.Default.AccountManager.CreateAccount(100000, historyDataForward);
             account.AccountSetting.TradeType = AccountTradeType.DELAYTICK;
             account.AccountSetting.AutoFilter = true;
             account.AccountSetting.DelayTick = 4;

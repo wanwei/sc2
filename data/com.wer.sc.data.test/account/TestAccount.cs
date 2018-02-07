@@ -21,7 +21,7 @@ namespace com.wer.sc.data.account
             int endDate = 20170605;
             IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             historyDataForward.Forward();
-            IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
+            IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000, historyDataForward);
             account.AccountSetting.TradeType = AccountTradeType.MARKETPRICE;
             account.OnReturnOrder += Account_OnReturnOrder;
             account.OnReturnTrade += Account_OnReturnTrade;
@@ -66,7 +66,7 @@ namespace com.wer.sc.data.account
             int startDate = 20170601;
             int endDate = 20170605;
             IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, false);
-            IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
+            IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000, historyDataForward);
             account.OnReturnOrder += Account_OnReturnOrder;
             account.OnReturnTrade += Account_OnReturnTrade;
             account.Open(code, 3099, market.OrderSide.Buy, 10);

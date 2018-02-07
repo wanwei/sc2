@@ -42,16 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\account\AccountAnaResult.cs" />
     <Compile Include="data\account\AccountSetting.cs" />
+    <Compile Include="data\account\AccountSlipType.cs" />
     <Compile Include="data\account\AccountTradeType.cs" />
     <Compile Include="data\account\IAccount.cs" />
-    <Compile Include="data\account\IAccountFactory.cs" />
+    <Compile Include="data\account\IAccountManager.cs" />
     <Compile Include="data\account\ITradeFee.cs" />
     <Compile Include="data\account\ITradeFee_Code.cs" />
     <Compile Include="data\datapackage\IDataPackage.cs" />
     <Compile Include="data\datapackage\IDataPackage_Code.cs" />
     <Compile Include="data\datapackage\IDataPackageFactory.cs" />
     <Compile Include="data\forward\IDataForForward_Code.cs" />
+    <Compile Include="data\IKLineDataTradingTimeInfo.cs" />
     <Compile Include="data\ITimeLineData_RealTime.cs" />
     <Compile Include="data\forward\Delegate.cs" />
     <Compile Include="data\forward\ForwardPeriod.cs" />
@@ -67,13 +70,14 @@
     <Compile Include="data\ITickData_Extend.cs" />
     <Compile Include="data\ITimeLineData_Extend.cs" />
     <Compile Include="data\ITradingTime.cs" />
-    <Compile Include="data\KLineData_Extend.cs" />
+    <Compile Include="data\KLineDataTradingTimeInfo.cs" />
     <Compile Include="data\KLineDataTimeInfo.cs" />
-    <Compile Include="data\KLineData_Extend2.cs" />
+    <Compile Include="data\KLineData_Extend.cs" />
     <Compile Include="data\MainContractInfo.cs" />
     <Compile Include="data\market\AccountFeeInfo.cs" />
     <Compile Include="data\KLinePriceType.cs" />
     <Compile Include="data\market\ConnectionStatus.cs" />
+    <Compile Include="data\market\IMarketFactory.cs" />
     <Compile Include="data\market\InstLifePhaseType.cs" />
     <Compile Include="data\market\InstrumentInfo.cs" />
     <Compile Include="data\market\LoginInfo.cs" />
@@ -133,8 +137,8 @@
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginHelper.cs" />
     <Compile Include="PluginInfo.cs" />
+    <Compile Include="graphic\IShapeDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
-    <Compile Include="strategy\IStrategyDrawOperator.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_Current.cs" />
@@ -149,9 +153,9 @@
     <Compile Include="strategy\IStrategyOnTickArgument.cs" />
     <Compile Include="strategy\IStrategyReport.cs" />
     <Compile Include="strategy\IStrategyQueryResult.cs" />
-    <Compile Include="strategy\IStrategyTrader2.cs" />
     <Compile Include="strategy\IStrategyTrader.cs" />
     <Compile Include="strategy\IStrategyQueryResult_Single.cs" />
+    <Compile Include="strategy\IStrategyResultManager.cs" />
     <Compile Include="strategy\StrategyAbstract.cs" />
     <Compile Include="strategy\plugin\IStrategyAssembly.cs" />
     <Compile Include="strategy\plugin\IStrategyAssemblyMgr.cs" />
@@ -211,7 +215,7 @@
     <Compile Include="data\KLinePeriod.cs" />
     <Compile Include="data\utils\TimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="strategy\IStrategyOperator.cs" />
+    <Compile Include="strategy\IStrategyHelper.cs" />
     <Compile Include="strategy\StrategyException.cs" />
     <Compile Include="strategy\StrategyForwardPeriod.cs" />
     <Compile Include="strategy\StrategyDynamicArray.cs" />

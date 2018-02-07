@@ -130,16 +130,59 @@ namespace com.wer.sc.data.market
 
     public enum ExecType : byte
     {
+        /// <summary>
+        /// 新建
+        /// </summary>
         New,
+
+        /// <summary>
+        /// 被停止
+        /// </summary>
         Stopped,
+
+        /// <summary>
+        /// 被拒绝
+        /// </summary>
         Rejected,
+
+        /// <summary>
+        /// 过期
+        /// </summary>
         Expired,
+
+        /// <summary>
+        /// 成交
+        /// </summary>
         Trade,
+
+        /// <summary>
+        /// 取消被挂起
+        /// </summary>
         PendingCancel,
+
+        /// <summary>
+        /// 被取消
+        /// </summary>
         Cancelled,
+
+        /// <summary>
+        /// 取消被拒绝
+        /// </summary>
         CancelReject,
+
+        /// <summary>
+        /// 挂起替换
+        /// </summary>
         PendingReplace,
+
+        /// <summary>
+        /// 替换？
+        /// </summary>
         Replace,
+
+        /// <summary>
+        /// 替换被拒绝
+        /// </summary>
         ReplaceReject,
     };
 }

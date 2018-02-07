@@ -27,7 +27,7 @@ namespace com.wer.sc.strategy
             return CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
         }
 
-        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator)
+        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator)
         {
             IDataPackage_Code dataPackage_Code = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate, 200, 0);
             return CreateExecutorByDataPackage(dataPackage_Code, referedPeriods, forwardPeriod);
@@ -38,7 +38,7 @@ namespace com.wer.sc.strategy
             return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
         }
 
-        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator)
+        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator)
         {
             return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
         }

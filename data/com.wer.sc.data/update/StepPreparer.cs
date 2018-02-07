@@ -55,7 +55,7 @@ namespace com.wer.sc.data.update
             //确定是否保存每个品种的交易时间
             if (dataCenterConfig.StoredDataTypes.IsStoreTradingSession)
                 AddSteps_TradingSessions(steps);
-            steps.AddRange(new StepGetter_UpdateKLineData_Vaieties(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods).GetSteps());
+            //steps.AddRange(new StepGetter_UpdateKLineData_Vaieties(historyData, dataStore, dataCenterConfig.StoredDataTypes.StoreKLinePeriods).GetSteps());
             //确定是否保存tick数据
             // if (dataCenterConfig.StoredDataTypes.IsStoreTick)
             steps.AddRange(new StepGetter_UpdateTickData(historyData, dataStore, isFillUp, updateDataInfo, updateInfoStore, newTradingDays).GetSteps());

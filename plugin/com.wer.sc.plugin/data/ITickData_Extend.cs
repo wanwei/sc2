@@ -11,6 +11,8 @@ namespace com.wer.sc.data
     /// </summary>
     public interface ITickData_Extend : ITickData
     {
+
+
         /// <summary>
         /// 得到所有交易时间的结束barpos
         /// </summary>

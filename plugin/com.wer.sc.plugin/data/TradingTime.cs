@@ -72,7 +72,7 @@ namespace com.wer.sc.data
             return tradingPeriods[index];
         }
 
-        public List<double[]> TradingPeriods
+        public IList<double[]> TradingPeriods
         {
             get { return tradingPeriods; }
         }

@@ -17,7 +17,7 @@ namespace com.wer.sc.strategy
 
         private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
 
-        private IStrategyOperator strategyHelper;
+        private IStrategyHelper strategyHelper;
 
         private IParameters parameters = ParameterFactory.CreateParameters();
 
@@ -40,7 +40,7 @@ namespace com.wer.sc.strategy
 
         public abstract void OnTick(Object sender, IStrategyOnTickArgument currentData);
 
-        public IStrategyOperator StrategyOperator
+        public IStrategyHelper StrategyOperator
         {
             get { return strategyHelper; }
             set { strategyHelper = value; }

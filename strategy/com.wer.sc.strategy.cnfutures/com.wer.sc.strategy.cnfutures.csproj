@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy_Trade.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

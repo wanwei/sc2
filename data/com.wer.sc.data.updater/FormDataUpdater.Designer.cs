@@ -48,7 +48,7 @@
             this.Controls.Add(this.controlMultiUpdate1);
             this.Name = "FormDataUpdater";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormDataUpdater";
+            this.Text = "数据更新";
             this.ResumeLayout(false);
 
         }

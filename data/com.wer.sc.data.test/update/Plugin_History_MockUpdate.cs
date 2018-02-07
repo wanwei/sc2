@@ -27,7 +27,7 @@ namespace com.wer.sc.data.update
             return csvDataPath;
         }
 
-        public override TradingTime GetDefaultTradingTime()
+        public override ITradingTime GetDefaultTradingTime()
         {
             throw new NotImplementedException();
         }

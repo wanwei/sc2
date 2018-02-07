@@ -9,6 +9,10 @@
       <Strategy class="com.wer.sc.strategy.common.zigzag.Strategy_Zigzag" name="zigzag策略" desc="zigzag策略">
       </Strategy>
     </Path>
+    <Path name="尖顶查找">
+      <Strategy class="com.wer.sc.strategy.common.peak.Strategy_Peak" name="peak查找" desc="peak查找">
+      </Strategy>
+    </Path>
     <Path name="量能分析">
       <Strategy class="com.wer.sc.strategy.common.mount" name="量能过滤" desc="量能过滤">
       </Strategy>

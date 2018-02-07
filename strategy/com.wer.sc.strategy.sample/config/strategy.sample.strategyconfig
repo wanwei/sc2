@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Strageties>
+  <Assembly file="com.wer.sc.strategy.sample.dll" name="例子">
+    <Strategy class="com.wer.sc.strategy.sample.draw.Strategy_Draw" name="绘图策略" desc="">
+    </Strategy>
+    <Path name="交易">
+      <Strategy class="com.wer.sc.strategy.sample.trade.Strategy_Trade_MA" name="均线交易" desc="">
+      </Strategy>
+    </Path>
+  </Assembly>
+</Strageties>

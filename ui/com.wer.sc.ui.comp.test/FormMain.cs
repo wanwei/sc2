@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data.datapackage;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,6 +45,34 @@ namespace com.wer.sc.ui.comp.test
         private void btStrategyTreeComponent_Click(object sender, EventArgs e)
         {
             FormStrategyTreeComponent form = new FormStrategyTreeComponent();
+            form.ShowDialog();
+        }
+
+        private void btNumberUpDown_Click(object sender, EventArgs e)
+        {
+            FormNumberUpDown form = new FormNumberUpDown();
+            form.ShowDialog();
+        }
+
+        private void btCodePackage_Click(object sender, EventArgs e)
+        {
+            CodePackageInfo codePackage = new CodePackageInfo();
+            codePackage.Start = 20160101;
+            codePackage.End = 20170101;
+            codePackage.ChoosedByCatelog = false;
+            codePackage.ChoosedByMainContract = true;
+            codePackage.Codes.Add("RB");
+            FormCodePackage form = new FormCodePackage(codePackage);
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                MessageBox.Show(codePackage.ToString());
+            }
+        }
+
+        private void btCodeTree_Click(object sender, EventArgs e)
+        {
+            FormCompCodeTree form = new FormCompCodeTree();
             form.ShowDialog();
         }
     }

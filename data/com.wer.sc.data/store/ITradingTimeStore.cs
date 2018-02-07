@@ -13,14 +13,14 @@ namespace com.wer.sc.data.store
         /// </summary>
         /// <param name="code"></param>
         /// <param name="codes"></param>
-        void Save(string code, IList<TradingTime> codes);
+        void Save(string code, IList<ITradingTime> codes);
 
         /// <summary>
         /// 装载一个品种的交易时间数据
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        List<TradingTime> Load(string code);
+        IList<ITradingTime> Load(string code);
 
         /// <summary>
         /// 删除一个品种的交易时间数据

@@ -12,12 +12,12 @@ namespace com.wer.sc.data.utils
         public void TestTradingTimeSaveLoad()
         {
             string path = TestCaseManager.GetTestCasePath(GetType(), "CsvUtils_TradingTime");
-            List<TradingTime> TradingTime = CsvUtils_TradingTime.Load(path);
+            List<ITradingTime> TradingTime = CsvUtils_TradingTime.Load(path);
 
             string outputPath = TestCaseManager.GetTestCasePath(GetType(), "TradingTime_Output.csv");
             CsvUtils_TradingTime.Save(outputPath, TradingTime);
 
-            List<TradingTime> newTradingTime = CsvUtils_TradingTime.Load(outputPath);
+            List<ITradingTime> newTradingTime = CsvUtils_TradingTime.Load(outputPath);
             AssertUtils.AssertEqual_List_ToString(TradingTime, newTradingTime);
         }
     }

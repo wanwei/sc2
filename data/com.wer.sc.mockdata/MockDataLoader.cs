@@ -29,7 +29,7 @@ namespace com.wer.sc.mockdata
         //    return mockData.GetTradingSessions(code);
         //}
 
-        public static IList<TradingTime> GetTradingTimeList(String code)
+        public static IList<ITradingTime> GetTradingTimeList(String code)
         {
             return mockData.GetTradingTime(code);
         }

@@ -10,7 +10,7 @@ namespace com.wer.sc.data.utils
 {
     public class CsvUtils_TradingTime
     {
-        public static void Save(string path, List<TradingTime> data)
+        public static void Save(string path, IList<ITradingTime> data)
         {
             if (data == null)
                 return;
@@ -23,7 +23,7 @@ namespace com.wer.sc.data.utils
             File.WriteAllLines(path, contents);
         }
 
-        public static List<TradingTime> Load(string path)
+        public static List<ITradingTime> Load(string path)
         {
             if (!File.Exists(path))
                 return null;
@@ -31,15 +31,15 @@ namespace com.wer.sc.data.utils
             return LoadByLines(lines);
         }
 
-        public static List<TradingTime> LoadByContent(string content)
+        public static List<ITradingTime> LoadByContent(string content)
         {
             string[] lines = content.Split('\r');
             return LoadByLines(lines);
         }
 
-        public static List<TradingTime> LoadByLines(string[] lines)
+        public static List<ITradingTime> LoadByLines(string[] lines)
         {
-            List<TradingTime> data = new List<TradingTime>(lines.Length);
+            List<ITradingTime> data = new List<ITradingTime>(lines.Length);
             for (int i = 0; i < lines.Length; i++)
             {
                 String line = lines[i].Trim();

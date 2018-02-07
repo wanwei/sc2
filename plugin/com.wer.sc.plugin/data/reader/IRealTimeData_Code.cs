@@ -41,7 +41,7 @@ namespace com.wer.sc.data.reader
         /// <param name="period"></param>
         /// <returns></returns>
         bool IsPeriodEnd(KLinePeriod period);
-  
+
         /// <summary>
         /// 得到当前的分时线
         /// </summary>

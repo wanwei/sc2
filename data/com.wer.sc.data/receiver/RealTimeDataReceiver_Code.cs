@@ -17,7 +17,7 @@ namespace com.wer.sc.data.receiver
     /// 该类实现
     /// </summary>
     public class RealTimeDataReceiver_Code : IRealTimeData_Code, IRealTimeDataReader
-    {        
+    {
         private string code;
 
         private int date;

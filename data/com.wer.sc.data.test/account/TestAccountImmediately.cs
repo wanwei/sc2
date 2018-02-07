@@ -15,7 +15,7 @@ namespace com.wer.sc.data.account
         public void TestTrade_Immediately()
         {
             string code = "RB1710";         
-            IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000);
+            IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000);
             account.AccountSetting.TradeType = AccountTradeType.IMMEDIATELY;
             account.Open(code, 3099, market.OrderSide.Buy, 10);
             account.Open(code, 3095, market.OrderSide.Buy, 10);
@@ -29,7 +29,7 @@ namespace com.wer.sc.data.account
         public void TestTrade_Immediately2()
         {
             string code = "RB1710";
-            IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000);
+            IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000);
             account.Open(code, 3099, market.OrderSide.Buy, 10);
             account.Close(code, 3102, market.OrderSide.Sell, 10);
             account.Open(code, 3095, market.OrderSide.Buy, 10);            

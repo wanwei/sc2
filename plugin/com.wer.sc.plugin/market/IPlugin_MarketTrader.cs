@@ -75,9 +75,23 @@ namespace com.wer.sc.plugin
         void QueryPosition();
 
         /// <summary>
+        /// 查询所有委托
+        /// </summary>
+        void QueryOrders();
+
+        /// <summary>
+        /// 查询所有交易
+        /// </summary>
+        void QueryTrades();
+
+        /// <summary>
         /// 设置或获取持仓信息回调
         /// </summary>
-        DelegateOnReturnInvestorPosition OnReturnInvestorPosition { get; set; }
+        DelegateOnRspInvestorPosition OnRspInvestorPosition { get; set; }
+
+        DelegateOnRspOrder OnRspOrder { get; set; }
+
+        DelegateOnRspTrade OnRspTrade { get; set; }
 
         /// <summary>
         /// 查询账户信息

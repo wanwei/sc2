@@ -72,10 +72,10 @@ namespace com.wer.sc.plugin.cnfutures.market
         public void Connect(ConnectionInfo connectionInfo)
         {
             Console.WriteLine(connectionInfo);
-            api_Quote.Server.BrokerID = connectionInfo.GetValue("BrokerId");
-            api_Quote.Server.Address = connectionInfo.GetValue("DataServer");
-            api_Quote.User.UserID = connectionInfo.GetValue("UserID");
-            api_Quote.User.Password = connectionInfo.GetValue("Passwd");
+            api_Quote.Server.BrokerID = ObjectUtils.ToString(connectionInfo.GetValue("BrokerId"));
+            api_Quote.Server.Address = ObjectUtils.ToString(connectionInfo.GetValue("DataServer"));
+            api_Quote.User.UserID = ObjectUtils.ToString(connectionInfo.GetValue("UserID"));
+            api_Quote.User.Password = ObjectUtils.ToString(connectionInfo.GetValue("Passwd"));
 
             api_Quote.OnConnectionStatus = XApi_OnConnectionStatus;
             api_Quote.OnRtnDepthMarketData = XApi_OnRtnDepthMarketData;

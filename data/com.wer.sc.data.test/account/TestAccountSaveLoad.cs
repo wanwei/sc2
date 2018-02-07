@@ -31,7 +31,7 @@ namespace com.wer.sc.data.account
             int endDate = 20170605;
             IDataForward_Code historyDataForward = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
             historyDataForward.Forward();
-            IAccount account = DataCenter.Default.AccountFactory.CreateAccount(100000, historyDataForward);
+            IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000, historyDataForward);
             account.AccountSetting.TradeType = AccountTradeType.MARKETPRICE;
             account.OnReturnOrder += Account_OnReturnOrder;
             account.OnReturnTrade += Account_OnReturnTrade;
@@ -60,15 +60,18 @@ namespace com.wer.sc.data.account
             XmlElement root = GetXmlRoot();
             account.Save(root);
 
-            Account account2 = (Account)DataCenter.Default.AccountFactory.CreateAccount(root);
+            Account account2 = (Account)DataCenter.Default.AccountManager.CreateAccount(root);
             //Console.WriteLine(account);
             //Console.WriteLine(account2);
             Assert.AreEqual(XmlUtils.ToString(account), XmlUtils.ToString(account2));
 
-            IDataForward_Code historyDataForward2 = account2.DataForward_Code;
+            IDataForward_Code historyDataForward2 = ForwardDataGetter.GetHistoryDataForward_Code(code, startDate, endDate, true);
+            historyDataForward2.NavigateTo(account2.Time);
+            account2.BindRealTimeReader(historyDataForward2);
+            //IDataForward_Code historyDataForward2 = account2.DataForward_Code;
             for (int i = 0; i < 100; i++)
                 historyDataForward2.Forward();
-            Console.WriteLine(account2);      
+            Console.WriteLine(account2);
         }
 
         private void Account_OnReturnOrder(object sender, ref market.OrderInfo order)

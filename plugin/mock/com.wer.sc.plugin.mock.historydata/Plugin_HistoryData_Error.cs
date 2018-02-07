@@ -58,17 +58,17 @@ namespace com.wer.sc.plugin.mock.historydata
             throw new NotImplementedException();
         }
 
-        public TradingTime GetDefaultTradingTime()
+        public ITradingTime GetDefaultTradingTime()
         {
             throw new NotImplementedException();
         }
 
-        public TradingTime GetTradingTime(string code, int tradingDay)
+        public ITradingTime GetTradingTime(string code, int tradingDay)
         {
             throw new NotImplementedException();
         }
 
-        public IList<TradingTime> GetTradingTime(string code)
+        public IList<ITradingTime> GetTradingTime(string code)
         {
             throw new NotImplementedException();
         }
@@ -84,6 +84,11 @@ namespace com.wer.sc.plugin.mock.historydata
         }
 
         public IList<MainContractInfo> GetMainContractInfos()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TradingSession> GetTradingSessions()
         {
             throw new NotImplementedException();
         }

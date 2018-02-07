@@ -25,6 +25,13 @@ namespace com.wer.sc.utils
 
         public const char TYPE_BLOB = 'o'; // blob类型
 
+        public static String ToString(Object obj)
+        {
+            if (obj == null)
+                return "";
+            return obj.ToString();
+        }
+
         public static Object String2Object(String value, char type)
         {
             if (value == null || value == "")

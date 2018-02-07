@@ -113,7 +113,7 @@ namespace com.wer.sc.data.reader
             //int startPos = timeInfo.GetDayStartPos(startDate);
             //klineData.BarPos = startPos;
             IList<ITradingTime> tradingTimeArr = this.dataReader.CreateTradingTimeReader(code).GetTradingTime(startDate, endDate);
-            return new KLineData_Extend2(klineData, tradingTimeArr);
+            return new KLineData_Extend(klineData, tradingTimeArr);
         }
 
         public IKLineData GetKLineData_Second(string code, int startDate, int endDate, KLinePeriod period)
@@ -197,7 +197,7 @@ namespace com.wer.sc.data.reader
             {
                 int tradingDay = tradingDays[i];
                 ITradingTime time = tradingTimeReader_Code.GetTradingTime(tradingDay);
-                List<double[]> periods = time.TradingPeriods;
+                IList<double[]> periods = time.TradingPeriods;
                 periodArr[i] = periods;
             }
 
@@ -210,10 +210,9 @@ namespace com.wer.sc.data.reader
             int realEndDate;
             IKLineData klineData = GetDataInternal(code, startDate, endDate, minBeforeBarCount, minAfterBarCount, period, out realStartDate, out realEndDate);
             IList<ITradingTime> tradingTimeArr = this.dataReader.CreateTradingTimeReader(code).GetTradingTime(realStartDate, realEndDate);
-            //KLineDataTimeInfo timeInfo = GetKLineDataTimeInfo(code, realStartDate, realEndDate, period);
-            //int startPos = timeInfo.GetDayStartPos(startDate);
-            //klineData.BarPos = startPos;
-            KLineData_Extend2 klineDataExtend = new KLineData_Extend2(klineData, tradingTimeArr);
+            KLineData_Extend klineDataExtend = new KLineData_Extend(klineData, tradingTimeArr);
+            int startPos = klineDataExtend.GetDayStartBarPosByTradingDay(startDate);
+            klineDataExtend.BarPos = startPos;
             return klineDataExtend;
         }
     }

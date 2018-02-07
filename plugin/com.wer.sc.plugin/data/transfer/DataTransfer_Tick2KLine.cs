@@ -23,7 +23,7 @@ namespace com.wer.sc.data.transfer
         {
             if (tickData == null)
                 return null;
-            List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList_Full(tradingPeriod, klinePeriod);
+            List<double[]> klineTimeList = TradingTimeUtils.GetKLineTimeList(tradingPeriod, klinePeriod);
             DataTransfer_Tick2KLine transfer = new DataTransfer_Tick2KLine(tickData, klineTimeList, yesterdayEndPrice, yesterdayEndHold);
             return transfer.CalcKLineData();
         }

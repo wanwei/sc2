@@ -47,7 +47,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
 
         public string Proceed()
         {
-            List<TradingTime> result = GetAllTradingTime();
+            List<ITradingTime> result = GetAllTradingTime();
             if (result == null)
             {
                 return code + "的交易时间已经是最新的，不需要更新";
@@ -61,11 +61,11 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
         /// 得到该合约的所有开盘时间，如果返回空，则表示现在数据已经是最新的
         /// </summary>
         /// <returns></returns>
-        public List<TradingTime> GetAllTradingTime()
+        public List<ITradingTime> GetAllTradingTime()
         {
-            IList<TradingTime> updatedTradingSessionList;
+            IList<ITradingTime> updatedTradingSessionList;
             if (forceUpdate)
-                updatedTradingSessionList = new List<TradingTime>();
+                updatedTradingSessionList = new List<ITradingTime>();
             else
                 updatedTradingSessionList = this.dataUpdateHelper.GetUpdatedTradingTime(code);
             CodeInfo codeInfo = this.dataUpdateHelper.GetCodeInfo(code);
@@ -91,22 +91,22 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 return null;
 
             List<int> openDates = openDateReader.GetAllTradingDays();
-            List<TradingTime> updateStartTimes = CalcDayOpenTime(code, openDates, firstCodeTradingDayIndex, lastCodeTradingDayIndex);
+            List<ITradingTime> updateStartTimes = CalcDayOpenTime(code, openDates, firstCodeTradingDayIndex, lastCodeTradingDayIndex);
             if (updateStartTimes == null || updateStartTimes.Count == 0)
                 return null;
 
             return GetTradingSessionDataResult(updatedTradingSessionList, updateStartTimes);
         }
 
-        private List<TradingTime> GetTradingSessionDataResult(IList<TradingTime> updatedTradingSessionList, List<TradingTime> updateTradingSessionList)
+        private List<ITradingTime> GetTradingSessionDataResult(IList<ITradingTime> updatedTradingSessionList, IList<ITradingTime> updateTradingSessionList)
         {
             HashSet<int> set_TradingDay = new HashSet<int>();
-            List<TradingTime> result = new List<TradingTime>();
+            List<ITradingTime> result = new List<ITradingTime>();
             if (updatedTradingSessionList != null)
             {
                 for (int i = 0; i < updatedTradingSessionList.Count; i++)
                 {
-                    TradingTime session = updatedTradingSessionList[i];
+                    ITradingTime session = updatedTradingSessionList[i];
                     if (set_TradingDay.Contains(session.TradingDay))
                         continue;
                     set_TradingDay.Add(session.TradingDay);
@@ -117,7 +117,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
                 return result;
             for (int i = 0; i < updateTradingSessionList.Count; i++)
             {
-                TradingTime session = updateTradingSessionList[i];
+                ITradingTime session = updateTradingSessionList[i];
                 if (set_TradingDay.Contains(session.TradingDay))
                     continue;
                 set_TradingDay.Add(session.TradingDay);
@@ -126,9 +126,9 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return result;
         }
 
-        private List<TradingTime> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)
+        private List<ITradingTime> CalcDayOpenTime(string code, List<int> openDates, int startIndex, int endIndex)
         {
-            List<TradingTime> dayTradingTimeArr = new List<TradingTime>();
+            List<ITradingTime> dayTradingTimeArr = new List<ITradingTime>();
             for (int i = startIndex; i <= endIndex; i++)
             {
                 int date = openDates[i];
@@ -197,7 +197,7 @@ namespace com.wer.sc.plugin.cnfutures.historydata.dataupdater
             return dataUpdateHelper.GetTradingSessionDetailReader().GetTradingTime(code, date);
         }
 
-        private int GetLastUpdatedIndex(IList<TradingTime> dayStartTimes)
+        private int GetLastUpdatedIndex(IList<ITradingTime> dayStartTimes)
         {
             if (dayStartTimes == null || dayStartTimes.Count == 0)
                 return -1;

@@ -35,7 +35,7 @@ namespace com.wer.sc.ui.comp.strategy
             if (this.strategyTrader.GetAllCodes().Count == 0)
                 return;
             string code = this.strategyTrader.GetAllCodes()[0];
-            IStrategyTrader_Code trader = this.strategyTrader.GetStrategyTrader(code);
+            IStrategyTrader trader = this.strategyTrader.GetStrategyTrader(code);
 
             IList<TradeInfo> trades = trader.CurrentTradeInfo;
             for (int i = 0; i < trades.Count; i++)

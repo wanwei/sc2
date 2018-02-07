@@ -117,10 +117,36 @@ namespace com.wer.sc.data
         bool IsDayEnd(int barPos);
 
         /// <summary>
+        /// 当前交易日离前一个交易日相差几天
+        /// </summary>
+        /// <returns></returns>
+        int HolidayDayCount();
+
+        /// <summary>
+        /// 指定barPos对应的交易日离之前交易日相差几个交易日
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        int HolidayDayCount(int barPos);
+
+        /// <summary>
+        /// 停牌日数量
+        /// </summary>
+        /// <returns></returns>
+        int HaltDayCount();
+
+        /// <summary>
+        /// 停牌日数量
+        /// </summary>
+        /// <param name="barPos"></param>
+        /// <returns></returns>
+        int HaltDayCount(int barPos);
+
+        /// <summary>
         /// 得到所有交易日结束的barpos
         /// </summary>
         /// <returns></returns>
-        IList<int> GetAllTradingDayEndBarPoses();
+        IList<int> GetAllTradingDayEndBarPoses();        
 
         #endregion
 

@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data
 {
+    /// <summary>
+    /// 数据中心接口
+    /// 
+    /// 数据获取的入口，每个数据中心包含K线、分时线等大量的数据信息
+    /// </summary>
     public interface IDataCenter
     {
         /// <summary>
         /// 得到数据中心信息
+        /// 包括数据存储的位置方式等信息
         /// </summary>
         IDataCenterInfo DataCenterInfo { get; }
 
@@ -25,7 +31,7 @@ namespace com.wer.sc.data
         IDataReader DataReader { get; }              
 
         /// <summary>
-        /// 得到数据包工厂
+        /// 得到数据包创建工厂
         /// </summary>
         IDataPackageFactory DataPackageFactory { get; }
 
@@ -36,7 +42,7 @@ namespace com.wer.sc.data
         IDataNavigateFactory DataNavigateFactory { get; }
 
         /// <summary>
-        /// 得到数据前进器工厂
+        /// 得到历史数据前进器工厂
         /// </summary>
         /// <returns></returns>
         IDataForwardFactory HistoryDataForwardFactory { get; }
@@ -44,6 +50,6 @@ namespace com.wer.sc.data
         /// <summary>
         /// 得到账号工厂
         /// </summary>
-        IAccountFactory AccountFactory { get; }
+        IAccountManager AccountManager { get; }
     }
 }

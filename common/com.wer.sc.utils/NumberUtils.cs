@@ -54,5 +54,32 @@ namespace com.wer.sc.utils
                 return defaultValue;
             }
         }
+
+        public static int ParseInt(object obj)
+        {
+            if (obj == null)
+                return 0;
+            if (obj is int)
+                return (int)obj;
+            return int.Parse(obj.ToString());
+        }
+
+        public static double ParseFloat(object obj)
+        {
+            if (obj == null)
+                return 0;
+            if (obj is float)
+                return (float)obj;
+            return float.Parse(obj.ToString());
+        }
+
+        public static double ParseDouble(object obj)
+        {
+            if (obj == null)
+                return 0;
+            if (obj is double)
+                return (double)obj;
+            return double.Parse(obj.ToString());
+        }
     }
 }

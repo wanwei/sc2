@@ -10,6 +10,6 @@ namespace com.wer.sc.strategy
     {
         IStrategyExecutor CreateExecutor(string code, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod);
 
-        IStrategyExecutor CreateExecutor(string code, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator);
+        IStrategyExecutor CreateExecutor(string code, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator);
     }
 }

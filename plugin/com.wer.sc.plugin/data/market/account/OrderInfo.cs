@@ -135,6 +135,7 @@ namespace com.wer.sc.data.market
             sb.Append(Price).Append(",");
             sb.Append(Volume).Append(",");
             sb.Append(Direction).Append(",");
+            sb.Append(ExecType).Append(",");
             sb.Append(Type);
             return sb.ToString();
         }

@@ -23,7 +23,7 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod);
 
-        IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator);
+        IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator);
 
         /// <summary>
         /// 创建一个策略执行器
@@ -34,6 +34,6 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod);
 
-        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyOperator strategyOperator);
+        IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator);
     }
 }

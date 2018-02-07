@@ -41,7 +41,7 @@ namespace com.wer.sc.mockdata
             return @"E:\FUTURES\CSV\DATACENTERSOURCE\";
         }
 
-        public override TradingTime GetDefaultTradingTime()
+        public override ITradingTime GetDefaultTradingTime()
         {
             return null;
         }

@@ -41,6 +41,11 @@ namespace com.wer.sc.plugin.cnfutures.config
             Load(doc);
         }
 
+        public List<double[]> GetTradingTime(int date)
+        {
+            return GetTradingSessionDetail("DL", "MARKET", date);
+        }
+
         public List<double[]> GetTradingTime(String code, int date)
         {
             return GetTradingSessionDetail(GetCodeMarket(code), GetVariety(code), date);

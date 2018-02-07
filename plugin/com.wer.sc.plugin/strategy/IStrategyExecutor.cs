@@ -83,17 +83,17 @@ namespace com.wer.sc.strategy
 
     public class StrategyExecuteArguments
     {
-        private IStrategyOperator strategyHelper;
+        private IStrategyHelper strategyHelper;
 
         private IStrategy strategy;
 
-        public StrategyExecuteArguments(IStrategyOperator strategyHelper, IStrategy strategy)
+        public StrategyExecuteArguments(IStrategyHelper strategyHelper, IStrategy strategy)
         {
             this.strategyHelper = strategyHelper;
             this.strategy = strategy;
         }
 
-        public IStrategyOperator StrategyHelper
+        public IStrategyHelper StrategyHelper
         {
             get
             {

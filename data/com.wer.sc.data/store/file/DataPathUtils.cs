@@ -95,9 +95,14 @@ namespace com.wer.sc.data.store.file
             return dataPath + "\\TRADE\\ACCOUNT\\";
         }
 
-        public String GetAccountPath(string accountID)
+        public String GetAccountPath(string path, string accountName)
         {
-            return GetAccountPath() + accountID + ".account";
+            return GetAccountPath() + path + "\\" + accountName + ".account";
+        }
+
+        public String GetAccountPath(string path)
+        {
+            return GetAccountPath() + path;
         }
 
         public string GetFeePath()

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.strategy.cnfutur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.strategy.cnfutures.test", "strategy\com.wer.sc.strategy.cnfutures.test\com.wer.sc.strategy.cnfutures.test.csproj", "{C712DEBD-6885-4805-96F7-7AEAD0006745}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.wer.sc.strategy.sample", "strategy\com.wer.sc.strategy.sample\com.wer.sc.strategy.sample.csproj", "{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C712DEBD-6885-4805-96F7-7AEAD0006745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C712DEBD-6885-4805-96F7-7AEAD0006745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C712DEBD-6885-4805-96F7-7AEAD0006745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8E91AD-0BDA-4309-A61E-F5AD3C672277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

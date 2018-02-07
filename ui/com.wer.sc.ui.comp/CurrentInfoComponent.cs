@@ -64,7 +64,7 @@ namespace com.wer.sc.ui.comp
 
         private void ChartComponentController_OnDataChanged(object sender, ChartComponentDataChangeArgument arg)
         {
-            if (this.chartComponentController.CurrentRealTimeDataReader == null)
+            if (this.chartComponentController.CurrentRealTimeDataReader_Code == null)
                 return;
             ITickData tickData = GetTickData();
             CurrentInfo currentInfo = GetCurrentInfo(tickData);
@@ -74,9 +74,9 @@ namespace com.wer.sc.ui.comp
 
         private ITickData GetTickData()
         {
-            if (this.chartComponentController.CurrentRealTimeDataReader == null)
+            if (this.chartComponentController.CurrentRealTimeDataReader_Code == null)
                 return null;
-            return this.chartComponentController.CurrentRealTimeDataReader.GetTickData();
+            return this.chartComponentController.CurrentRealTimeDataReader_Code.GetTickData();
         }
 
         private CurrentInfo GetCurrentInfo(ITickData tick)
@@ -104,7 +104,7 @@ namespace com.wer.sc.ui.comp
 
             //////RealDataInfo r = reals[reals.Count - 1];
             //////ChartInfo chart = charts[0];
-            ITimeLineData realData = chartComponentController.CurrentRealTimeDataReader.GetTimeLineData();
+            ITimeLineData realData = chartComponentController.CurrentRealTimeDataReader_Code.GetTimeLineData();
 
             ITimeLineBar realChart = realData.GetCurrentBar();
             chartinfo.upRange = Math.Round(realChart.UpRange, 2);

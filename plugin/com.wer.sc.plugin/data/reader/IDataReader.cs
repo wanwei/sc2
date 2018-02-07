@@ -63,5 +63,10 @@ namespace com.wer.sc.data.reader
         /// </summary>
         /// <returns></returns>
         ITickDataReader TickDataReader { get; }
+
+        /// <summary>
+        /// 得到主合约读取器
+        /// </summary>
+        IMainContractReader MainContractReader { get; }
     }
 }

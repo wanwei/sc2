@@ -10,6 +10,7 @@ using XAPI;
 using System.IO;
 using System.Reflection;
 using com.wer.sc.data.market;
+using com.wer.sc.utils;
 
 namespace com.wer.sc.plugin.cnfutures.market
 {
@@ -32,10 +33,10 @@ namespace com.wer.sc.plugin.cnfutures.market
         /// </summary>
         public void Connect(ConnectionInfo connectionInfo)
         {
-            api_Trade.Server.BrokerID = connectionInfo.GetValue("BrokerId");
-            api_Trade.Server.Address = connectionInfo.GetValue("TradeServer");
-            api_Trade.User.UserID = connectionInfo.GetValue("UserID");
-            api_Trade.User.Password = connectionInfo.GetValue("Passwd");
+            api_Trade.Server.BrokerID = ObjectUtils.ToString(connectionInfo.GetValue("BrokerId"));
+            api_Trade.Server.Address = ObjectUtils.ToString(connectionInfo.GetValue("TradeServer"));
+            api_Trade.User.UserID = ObjectUtils.ToString(connectionInfo.GetValue("UserID"));
+            api_Trade.User.Password = ObjectUtils.ToString(connectionInfo.GetValue("Passwd"));
 
             api_Trade.OnConnectionStatus = XApi_OnConnectionStatus;
             api_Trade.OnRspQryInstrument = XApi_OnRspQryInstrument;
@@ -119,8 +120,8 @@ namespace com.wer.sc.plugin.cnfutures.market
         {
             if (onReturnInvestorPosition != null)
             {
-                PositionInfo positionInfo = StructTransfer.TransferPositionInfo(position);
-                onReturnInvestorPosition(this, ref positionInfo);
+                //PositionInfo positionInfo = StructTransfer.TransferPositionInfo(position);
+                //onReturnInvestorPosition(this, ref positionInfo);
             }
         }
 
@@ -216,9 +217,9 @@ namespace com.wer.sc.plugin.cnfutures.market
             }
         }
 
-        private DelegateOnReturnInvestorPosition onReturnInvestorPosition;
+        private DelegateOnRspInvestorPosition onReturnInvestorPosition;
 
-        public DelegateOnReturnInvestorPosition OnReturnInvestorPosition
+        public DelegateOnRspInvestorPosition OnRspInvestorPosition
         {
             get
             {
@@ -228,6 +229,32 @@ namespace com.wer.sc.plugin.cnfutures.market
             set
             {
                 onReturnInvestorPosition = value;
+            }
+        }
+
+        public DelegateOnRspOrder OnRspOrder
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public DelegateOnRspTrade OnRspTrade
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
             }
         }
         #endregion
@@ -274,7 +301,18 @@ namespace com.wer.sc.plugin.cnfutures.market
         /// </summary>
         public void QueryPosition()
         {
+            ReqQueryField query = new ReqQueryField();            
+            api_Trade.ReqQuery(QueryType.ReqQryQuote, ref query);
+        }
 
+        public void QueryOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void QueryTrades()
+        {
+            throw new NotImplementedException();
         }
     }
 }

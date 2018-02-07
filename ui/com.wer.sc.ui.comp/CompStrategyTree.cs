@@ -79,7 +79,7 @@ namespace com.wer.sc.ui.comp
             for (int i = 0; i < strategies.Count; i++)
             {
                 IStrategyInfo strategy = strategies[i];
-                string name = strategy.StrategyName;
+                string name = strategy.Name;
                 TreeNode subNode = parentNode.Nodes.Add(name);
                 subNode.ForeColor = Color.White;
                 subNode.Tag = strategy;

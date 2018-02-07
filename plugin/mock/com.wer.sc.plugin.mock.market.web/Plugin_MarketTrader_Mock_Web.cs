@@ -49,7 +49,7 @@ namespace com.wer.sc.plugin.mock.market
             }
         }
 
-        public DelegateOnReturnInvestorPosition OnReturnInvestorPosition
+        public DelegateOnRspInvestorPosition OnRspInvestorPosition
         {
             get
             {
@@ -76,6 +76,32 @@ namespace com.wer.sc.plugin.mock.market
         }
 
         public DelegateOnReturnTrade OnReturnTrade
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public DelegateOnRspOrder OnRspOrder
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public DelegateOnRspTrade OnRspTrade
         {
             get
             {
@@ -124,6 +150,16 @@ namespace com.wer.sc.plugin.mock.market
         }
 
         public string SendOrder(OrderInfo order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void QueryOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void QueryTrades()
         {
             throw new NotImplementedException();
         }

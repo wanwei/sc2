@@ -60,6 +60,7 @@
     <Compile Include="kline\KLine_Hammer.cs" />
     <Compile Include="kline\KLine_HangingMan.cs" />
     <Compile Include="kline\Strategy_KLine.cs" />
+    <Compile Include="peak\Strategy_Peak.cs" />
     <Compile Include="UpState.cs" />
     <Compile Include="zb\Amplitude.cs" />
     <Compile Include="ma\Strategy_Amplitude.cs" />

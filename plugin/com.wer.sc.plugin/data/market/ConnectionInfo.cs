@@ -14,7 +14,7 @@ namespace com.wer.sc.data.market
     /// </summary>
     public class ConnectionInfo : ICloneable
     {
-        public Dictionary<string, string> Data = new Dictionary<string, string>();
+        public Dictionary<string, Object> Data = new Dictionary<string, Object>();
 
         /// <summary>
         /// 连接ID
@@ -23,9 +23,9 @@ namespace com.wer.sc.data.market
         {
             get
             {
-                string id = null;
+                object id = null;
                 Data.TryGetValue("ID", out id);
-                return id;
+                return id == null ? "" : id.ToString();
             }
         }
 
@@ -36,9 +36,9 @@ namespace com.wer.sc.data.market
         {
             get
             {
-                string name = null;
+                object name = null;
                 Data.TryGetValue("NAME", out name);
-                return name;
+                return name == null ? "" : name.ToString();
             }
         }
 
@@ -49,20 +49,20 @@ namespace com.wer.sc.data.market
         {
             get
             {
-                string desc = null;
+                object desc = null;
                 Data.TryGetValue("DESC", out desc);
-                return desc;
+                return desc == null ? "" : desc.ToString();
             }
         }
 
-        public void AddValue(string key, string value)
+        public void AddValue(string key, Object value)
         {
             if (key == null)
                 return;
             this.Data.Add(key.ToUpper(), value);
         }
 
-        public string GetValue(string key)
+        public Object GetValue(string key)
         {
             if (key == null)
                 return null;

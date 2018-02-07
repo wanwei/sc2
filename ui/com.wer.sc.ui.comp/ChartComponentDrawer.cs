@@ -117,7 +117,7 @@ namespace com.wer.sc.ui.comp
         private GraphicDrawer_Candle InitGraphicDrawer_Candle()
         {
             this.drawer_Candle = new GraphicDrawer_Candle();
-            IKLineData klineData = this.compDataController.CurrentRealTimeDataReader.GetKLineData(compData.KlinePeriod);
+            IKLineData klineData = this.compDataController.CurrentRealTimeDataReader_Code.GetKLineData(compData.KlinePeriod);
             this.graphicData_Candle = GraphicDataFactory.CreateGraphicData_Candle(klineData, 0, klineData.BarPos);
             this.graphicData_Candle.OnGraphicDataChange += GraphicData_Candle_OnGraphicDataChange;
             this.drawer_Candle.DataProvider = graphicData_Candle;
@@ -132,7 +132,7 @@ namespace com.wer.sc.ui.comp
         private GraphicDrawer_TimeLine InitGraphicDrawer_TimeLine()
         {
             this.drawer_TimeLine = new GraphicDrawer_TimeLine();
-            ITimeLineData timeLineData = compDataController.CurrentRealTimeDataReader.GetTimeLineData();
+            ITimeLineData timeLineData = compDataController.CurrentRealTimeDataReader_Code.GetTimeLineData();
 
             int barPos = TimeIndeierUtils.IndexOfTime_TimeLine(timeLineData, compData.Time);
             timeLineData.BarPos = barPos;
@@ -194,7 +194,7 @@ namespace com.wer.sc.ui.comp
 
         private void RefreshCandleDrawer()
         {
-            IKLineData klineData = compDataController.CurrentRealTimeDataReader.GetKLineData(compData.KlinePeriod);
+            IKLineData klineData = compDataController.CurrentRealTimeDataReader_Code.GetKLineData(compData.KlinePeriod);
             klineData.BarPos = compData.ShowKLineIndex;
             this.graphicData_Candle.ChangeData(klineData);
             this.graphicDrawer.Switch(0);
@@ -202,7 +202,7 @@ namespace com.wer.sc.ui.comp
 
         private void RefreshTimeLineDrawer()
         {
-            ITimeLineData timeLineData = compDataController.CurrentRealTimeDataReader.GetTimeLineData();
+            ITimeLineData timeLineData = compDataController.CurrentRealTimeDataReader_Code.GetTimeLineData();
 
             this.graphicData_TimeLine = GraphicDataFactory.CreateGraphicData_TimeLine(timeLineData);
             this.drawer_TimeLine.DataProvider = graphicData_TimeLine;
