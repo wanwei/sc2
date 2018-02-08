@@ -130,7 +130,7 @@ namespace com.wer.sc.data.forward
             IDataForward_Code klineDataForward = GetDataForward(code, start, endDate);
             klineDataForward.OnBar += KlineDataForward_OnBar;
             list_OnBar.Add(KLinePeriod.KLinePeriod_1Minute + ":" + klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
-            //Console.WriteLine(KLinePeriod.KLinePeriod_1Minute + ":" + klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
+            Console.WriteLine(KLinePeriod.KLinePeriod_1Minute + ":" + klineDataForward.GetKLineData(KLinePeriod.KLinePeriod_1Minute));
             while (klineDataForward.Forward())
             {
             }
@@ -144,9 +144,9 @@ namespace com.wer.sc.data.forward
             {
                 IForwardKLineBarInfo info = argument.AllFinishedBars[i];
                 Assert.AreEqual(info.KLineBar.End, info.KLineData.End);
-                //Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);
+                Console.WriteLine(info.KLinePeriod + ":" + info.KLineBar);                
+                list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);
                 AddContent(info.KLinePeriod, info.KLineBar.ToString());
-                //list_OnBar.Add(info.KLinePeriod + ":" + info.KLineBar);
             }
             //Print((IDataForward_Code)sender);
             //AddToList(list_OnBar, (IHistoryDataForward_Code)sender);

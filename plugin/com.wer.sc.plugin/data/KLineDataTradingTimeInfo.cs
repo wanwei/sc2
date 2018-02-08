@@ -9,12 +9,15 @@ namespace com.wer.sc.data
 {
     /// <summary>
     /// K线的交易时间信息
-    /// 该类能够得到交易时段和K线bar的对应关系    
+    /// 该类能够得到交易时段和K线bar的对应关系
+    /// 
     /// </summary>
     public class KLineDataTradingTimeInfo : IKLineDataTradingTimeInfo
     {
+        //所有的交易日
         private List<int> tradingDays = new List<int>();
 
+        //每个交易日的交易时段信息
         private Dictionary<int, IKLineDataTradingTimeInfo_Day> dic_TradingDay_KLineTimeInfo = new Dictionary<int, IKLineDataTradingTimeInfo_Day>();
 
         private List<IKLineDataTradingTimeInfo_Day> timeInfo_DayList = new List<IKLineDataTradingTimeInfo_Day>();
@@ -39,6 +42,29 @@ namespace com.wer.sc.data
         /// <param name="klineData"></param>
         /// <param name="tradingTimes"></param>
         public KLineDataTradingTimeInfo(IKLineData klineData, IList<ITradingTime> tradingTimes)
+        {
+            if (klineData.Period.Equals(KLinePeriod.KLinePeriod_1Day))
+                Init_Day(klineData, tradingTimes);
+            else
+                Init(klineData, tradingTimes);
+        }
+
+        private void Init_Day(IKLineData klineData, IList<ITradingTime> tradingTimes)
+        {
+            for (int i = 0; i < tradingTimes.Count; i++)
+            {
+                ITradingTime tradingTime = tradingTimes[i];
+                int tradingDay = (int)klineData.GetBar(i).Time;
+                KLineDataTradingTimeInfo_Day timeInfo = new KLineDataTradingTimeInfo_Day(tradingDay);
+                timeInfo.StartPos = i;
+                timeInfo.EndPos = i;                
+                this.dic_TradingDay_KLineTimeInfo.Add(timeInfo.TradingDay, timeInfo);
+                this.timeInfo_DayList.Add(timeInfo);
+                tradingDays.Add(tradingTime.TradingDay);
+            }
+        }
+
+        private void Init(IKLineData klineData, IList<ITradingTime> tradingTimes)
         {
             int currentKLineBarPos = 0;
             for (int i = 0; i < tradingTimes.Count; i++)
