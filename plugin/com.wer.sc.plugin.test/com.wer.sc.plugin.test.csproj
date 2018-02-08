@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="data\TestKLineDataExtend.cs" />
     <Compile Include="data\TestKLineTimeInfo.cs" />
     <Compile Include="data\utils\TestCacheUtils_CodeInfo.cs" />
     <Compile Include="data\utils\TestCacheUtils_TradingDay.cs" />

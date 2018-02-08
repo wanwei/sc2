@@ -60,8 +60,8 @@ namespace com.wer.sc.data.forward.utils
                 if (period.PeriodType >= KLineTimeType.DAY)
                 {
                     if (period.Period == 1)
-                    {                        
-                        //if (mainKlineData.IsDayEnd(mainIndex))
+                    {
+                        //if (mainKLine.IsDayEnd(mainIndex))
                         if (mainKLine.IsDayStart(mainIndex))
                         {
                             int currentDayIndex = GetCurrentIndex(period);

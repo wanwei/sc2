@@ -26,7 +26,7 @@ namespace com.wer.sc.strategy
             executor.SetStrategy(strategy);
             //executor.Execute();
             executor.Run();
-
+            //AssertUtils.PrintLineList(strategy.PrintData);
             AssertUtils.AssertEqual_List("executorhistory", GetType(), strategy.PrintData);
         }
 

@@ -40,6 +40,6 @@ namespace com.wer.sc.utils
                 sb.Append(arr[i]);
             }
             return sb.ToString();
-        }
+        }        
     }
 }

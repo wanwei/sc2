@@ -50,6 +50,7 @@
     <Compile Include="loader\StrategyMgrFactory.cs" />
     <Compile Include="StrategyExecuteDataPackageExecutor.cs" />
     <Compile Include="StrategyExecuteDataPackageInfo.cs" />
+    <Compile Include="StrategyExecutor_HistoryMulti.cs" />
     <Compile Include="StrategyOnBarArgument.cs" />
     <Compile Include="StrategyOnBarInfo.cs" />
     <Compile Include="StrategyOnEndArgument.cs" />

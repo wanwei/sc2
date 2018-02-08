@@ -21,7 +21,7 @@ namespace com.wer.sc.ui.comp.strategy
 
         private IDataPackage_Code dataPackage;
 
-        private PreparedDataForStrategy preparedData;
+        private CodePackageInfo codePackageInfo;
 
         public IStrategyData StrategyData
         {

@@ -1,15 +1,17 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.datapackage
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CodePackageInfo
+    public class CodePackageInfo : IXmlExchange
     {
         private bool choosedByMainContract;
 
@@ -91,6 +93,27 @@ namespace com.wer.sc.data.datapackage
                 sb.Append(codes[i]).Append(",");
             }
             return sb.ToString();
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("start", start.ToString());
+            xmlElem.SetAttribute("end", end.ToString());
+            xmlElem.SetAttribute("maincontract", ChoosedByMainContract.ToString());
+            xmlElem.SetAttribute("catelog", ChoosedByCatelog.ToString());
+            xmlElem.SetAttribute("codes", ListUtils.ToString(codes));
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.start = int.Parse(xmlElem.GetAttribute("start"));
+            this.end = int.Parse(xmlElem.GetAttribute("end"));
+            this.choosedByMainContract = this.choosedByMainContract = bool.Parse(xmlElem.GetAttribute("maincontract"));
+            this.ChoosedByCatelog = this.choosedByMainContract = bool.Parse(xmlElem.GetAttribute("catelog"));
+
+            string codesStr = xmlElem.GetAttribute("codes");
+            string[] arr = codesStr.Split(',');
+            this.codes.AddRange(arr);
         }
     }
 }

@@ -524,7 +524,7 @@ namespace com.wer.sc.data
         {
             if (currentTradingPeriods.PeriodIndex != 0)
                 return false;
-            return (currentTradingPeriods.StartPos == currentTradingPeriods.KlineTimeInfo_Day.StartPos);
+            return currentTradingPeriods.StartPos == BarPos && (currentTradingPeriods.StartPos == currentTradingPeriods.KlineTimeInfo_Day.StartPos);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace com.wer.sc.data
             IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
             if (tradingPeriods.PeriodIndex != 0)
                 return false;
-            return (tradingPeriods.StartPos == currentTradingPeriods.KlineTimeInfo_Day.StartPos);
+            return tradingPeriods.StartPos == barPos && (tradingPeriods.StartPos == tradingPeriods.KlineTimeInfo_Day.StartPos);
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace com.wer.sc.data
         {
             if (currentTradingPeriods.PeriodIndex != currentTradingPeriods.KlineTimeInfo_Day.TradingPeriods.Count - 1)
                 return false;
-            return (currentTradingPeriods.EndPos == currentTradingPeriods.KlineTimeInfo_Day.EndPos);
+            return currentTradingPeriods.EndPos == BarPos && (currentTradingPeriods.EndPos == currentTradingPeriods.KlineTimeInfo_Day.EndPos);
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace com.wer.sc.data
             IKLineDataTradingTimeInfo_Periods tradingPeriods = GetTradingPeriodsByBarPos(barPos);
             if (tradingPeriods.PeriodIndex != tradingPeriods.KlineTimeInfo_Day.TradingPeriods.Count - 1)
                 return false;
-            return (tradingPeriods.EndPos == tradingPeriods.KlineTimeInfo_Day.EndPos);
+            return tradingPeriods.EndPos == barPos && (tradingPeriods.EndPos == tradingPeriods.KlineTimeInfo_Day.EndPos);
         }
 
         /// <summary>
@@ -822,9 +822,10 @@ namespace com.wer.sc.data
         /// <returns></returns>
         public double GetKLinePeriodEndTime(int barPos)
         {
-            return 1;
+            double time = Arr_Time[barPos];
+            return TimeUtils.AddTime(time, this.Period.Period, this.Period.PeriodType);
         }
 
         #endregion
-    }   
+    }
 }

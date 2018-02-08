@@ -45,16 +45,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.compParameters1 = new com.wer.sc.graphic.param.CompParameters();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btModifyData = new System.Windows.Forms.Button();
-            this.lbEnd = new System.Windows.Forms.Label();
-            this.lbStart = new System.Windows.Forms.Label();
-            this.lbCode = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -231,14 +224,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.checkBox1);
-            this.tabPage2.Controls.Add(this.btModifyData);
-            this.tabPage2.Controls.Add(this.lbEnd);
-            this.tabPage2.Controls.Add(this.lbStart);
-            this.tabPage2.Controls.Add(this.lbCode);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.compCodePackage1);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -246,76 +232,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "数据";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // btModifyData
-            // 
-            this.btModifyData.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btModifyData.Location = new System.Drawing.Point(55, 221);
-            this.btModifyData.Name = "btModifyData";
-            this.btModifyData.Size = new System.Drawing.Size(116, 41);
-            this.btModifyData.TabIndex = 19;
-            this.btModifyData.Text = "修改";
-            this.btModifyData.UseVisualStyleBackColor = true;
-            // 
-            // lbEnd
-            // 
-            this.lbEnd.AutoSize = true;
-            this.lbEnd.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbEnd.Location = new System.Drawing.Point(192, 179);
-            this.lbEnd.Name = "lbEnd";
-            this.lbEnd.Size = new System.Drawing.Size(106, 24);
-            this.lbEnd.TabIndex = 18;
-            this.lbEnd.Text = "结束时间";
-            // 
-            // lbStart
-            // 
-            this.lbStart.AutoSize = true;
-            this.lbStart.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbStart.Location = new System.Drawing.Point(192, 132);
-            this.lbStart.Name = "lbStart";
-            this.lbStart.Size = new System.Drawing.Size(106, 24);
-            this.lbStart.TabIndex = 17;
-            this.lbStart.Text = "开始时间";
-            // 
-            // lbCode
-            // 
-            this.lbCode.AutoSize = true;
-            this.lbCode.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbCode.Location = new System.Drawing.Point(192, 90);
-            this.lbCode.Name = "lbCode";
-            this.lbCode.Size = new System.Drawing.Size(58, 24);
-            this.lbCode.TabIndex = 16;
-            this.lbCode.Text = "品种";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(51, 179);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 24);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "结束时间";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(51, 132);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(106, 24);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "开始时间";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(51, 90);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 24);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "品种";
             // 
             // tabPage3
             // 
@@ -349,16 +265,13 @@
             this.splitContainer1.SplitterDistance = 481;
             this.splitContainer1.TabIndex = 11;
             // 
-            // checkBox1
+            // compCodePackage1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox1.Location = new System.Drawing.Point(55, 45);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(191, 24);
-            this.checkBox1.TabIndex = 20;
-            this.checkBox1.Text = "是否只选取主合约";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.compCodePackage1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compCodePackage1.Location = new System.Drawing.Point(3, 3);
+            this.compCodePackage1.Name = "compCodePackage1";
+            this.compCodePackage1.Size = new System.Drawing.Size(768, 446);
+            this.compCodePackage1.TabIndex = 0;
             // 
             // FormStrategy
             // 
@@ -377,7 +290,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -407,13 +319,6 @@
         private graphic.param.CompParameters compParameters1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Label lbEnd;
-        private System.Windows.Forms.Label lbStart;
-        private System.Windows.Forms.Label lbCode;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btModifyData;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private CompCodePackage compCodePackage1;
     }
 }
