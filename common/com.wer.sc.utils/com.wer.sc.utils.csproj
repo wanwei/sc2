@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\..\DLL\log4net.dll</HintPath>
@@ -52,6 +61,7 @@
     <Compile Include="ColorUtils.cs" />
     <Compile Include="DynamicArray.cs" />
     <Compile Include="EnumUtils.cs" />
+    <Compile Include="IDataRow.cs" />
     <Compile Include="ItemObject.cs" />
     <Compile Include="MathUtils.cs" />
     <Compile Include="OffsetList.cs" />

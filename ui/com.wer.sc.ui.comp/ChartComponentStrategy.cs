@@ -109,8 +109,26 @@ namespace com.wer.sc.ui.comp
             IStrategyHelper strategyOperator = new StrategyHelper(drawOperator);
             strategyExecutor = executorFactory.CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
 
-            strategyExecutor.SetStrategy(strategy);            
-            strategyExecutor.Run();
+            strategyExecutor.SetStrategy(strategy);
+            //strategyExecutor.Run();
+            strategyExecutor.ExecuteFinished += StrategyExecutor_ExecuteFinished;
+            strategyExecutor.Execute();
+        }
+
+        public event StrategyExecuteFinished ExecuteFinished;
+
+        private void StrategyExecutor_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        {
+            IStrategyTrader trader = strategyExecutor.StrategyReport.StrategyTrader;
+            if (trader != null)
+            {
+                if (trader is StrategyTrader_History)
+                {
+                    compChart.Account = ((StrategyTrader_History)trader).Account;
+                }
+            }
+            if (ExecuteFinished != null)
+                ExecuteFinished(strategy, arg);
         }
 
         public void Refresh()
@@ -127,6 +145,5 @@ namespace com.wer.sc.ui.comp
             else if (chartType == ChartType.Tick)
                 drawOperator.GetDrawer_Tick().Refresh();
         }
-
     }
 }

@@ -120,6 +120,11 @@ namespace com.wer.sc.ui.comp
             this.currentNavigater.Backward(forwardPeriod);
         }
 
+        public void ForwardTime(ForwardPeriod forwardPeriod)
+        {
+            this.currentNavigater.Forward(forwardPeriod);
+        }        
+
         /// <summary>
         /// 切换图中显示的图形，K线、分时线或tick线
         /// </summary>

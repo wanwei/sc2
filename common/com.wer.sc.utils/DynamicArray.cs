@@ -39,6 +39,8 @@ namespace com.wer.sc.utils
                 int realIndex = RealIndex(index);
                 if (realIndex < 0)
                     return default(T);
+                if (realIndex >= list.Count)
+                    return default(T);
                 return list[realIndex];
             }
 

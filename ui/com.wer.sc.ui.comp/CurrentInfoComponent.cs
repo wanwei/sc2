@@ -105,11 +105,13 @@ namespace com.wer.sc.ui.comp
             //////RealDataInfo r = reals[reals.Count - 1];
             //////ChartInfo chart = charts[0];
             ITimeLineData realData = chartComponentController.CurrentRealTimeDataReader_Code.GetTimeLineData();
-
-            ITimeLineBar realChart = realData.GetCurrentBar();
-            chartinfo.upRange = Math.Round(realChart.UpRange, 2);
-            chartinfo.upPercent = realChart.UpPercent;
-            chartinfo.upSpeed = 0;
+            if (realData != null)
+            {
+                ITimeLineBar realChart = realData.GetCurrentBar();
+                chartinfo.upRange = Math.Round(realChart.UpRange, 2);
+                chartinfo.upPercent = realChart.UpPercent;
+                chartinfo.upSpeed = 0;
+            }
             //chartinfo.open = realData.StartPrice;
             //chartinfo.high = chart.HighPrice;
             //chartinfo.low = chart.LowPrice;

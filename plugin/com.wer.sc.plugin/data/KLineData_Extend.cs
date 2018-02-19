@@ -25,6 +25,8 @@ namespace com.wer.sc.data
 
         public KLineData_Extend(IKLineData klineData, IList<ITradingTime> tradingTimes)
         {
+            if (klineData == null)
+                return;
             this.klineData = klineData;
             this.tradingTimes = tradingTimes;
             for (int i = 0; i < tradingTimes.Count; i++)

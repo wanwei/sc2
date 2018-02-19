@@ -140,7 +140,7 @@ namespace com.wer.sc.ui.comp
             DrawShape(shape);
         }
 
-        private void DrawShape(StrategyShape shape)
+        private void DrawShape2(StrategyShape shape)
         {
             switch (shape.GetShapeType())
             {
@@ -149,8 +149,11 @@ namespace com.wer.sc.ui.comp
                     break;
                 case PriceShapeType.Point:
                     DrawPointsInternal((StrategyPoints)shape);
-                    break;
+                    break;                
+                //case PriceShapeType.Rect:
+                    //DrawRect()
             }
+            
         }
 
         private void DrawPointsInternal(StrategyPoints points)
@@ -200,7 +203,7 @@ namespace com.wer.sc.ui.comp
         private void DrawShape(PriceShape shape)
         {
             if (shape is StrategyShape)
-                this.DrawShape((StrategyShape)shape);
+                this.DrawShape2((StrategyShape)shape);
             else
             {
                 PriceRectangle priceRect = mapping.PriceRect;

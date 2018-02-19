@@ -180,5 +180,10 @@ namespace com.wer.sc.ui.comp.trade
             FormAccountDetail formDetail = new FormAccountDetail(name, account);
             formDetail.ShowDialog();
         }
+
+        private void btOpenFolder_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

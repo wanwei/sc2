@@ -16,7 +16,7 @@ namespace com.wer.sc.strategy
     public class TestStrategyExecutor_History
     {
         [TestMethod]
-        public void TestExecuteStrategy()
+        public void TestRunStrategy()
         {
             string code = "rb1710";
             int start = 20170601;
@@ -28,6 +28,25 @@ namespace com.wer.sc.strategy
             executor.Run();
             //AssertUtils.PrintLineList(strategy.PrintData);
             AssertUtils.AssertEqual_List("executorhistory", GetType(), strategy.PrintData);
+        }
+
+        [TestMethod]
+        public void TestExecuteStrategy()
+        {
+            string code = "rb1710";
+            int start = 20170601;
+            int end = 20170603;
+            IStrategyExecutor executor = StrategyTestUtils.GetExecutor(code, start, end);
+            MockStrategy strategy = new MockStrategy();
+            executor.SetStrategy(strategy);
+            executor.ExecuteFinished += Executor_ExecuteFinished;
+            executor.Execute();
+            //AssertUtils.AssertEqual_List("executorhistory", GetType(), strategy.PrintData);
+        }
+
+        private void Executor_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        {
+            AssertUtils.AssertEqual_List("executorhistory", GetType(), ((MockStrategy)strategy).PrintData);
         }
 
         //public static IStrategyExecutor GetExecutor(string code, int start, int end)

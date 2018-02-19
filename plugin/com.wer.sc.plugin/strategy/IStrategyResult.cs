@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public interface IStrategyReport
+    /// <summary>
+    /// 策略执行结果
+    /// </summary>
+    public interface IStrategyResult
     {
         string Code { get; }
 
@@ -20,8 +23,8 @@ namespace com.wer.sc.strategy
 
         IParameters Parameters { get; }
 
-        IStrategyQueryResult StrategyResult { get; }
+        IStrategyQueryResultManager StrategyResult { get; }
 
-        //IStrategyTrader StrategyTrader { get; }
+        IStrategyTrader StrategyTrader { get; }
     }
 }

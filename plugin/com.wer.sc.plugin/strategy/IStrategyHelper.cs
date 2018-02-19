@@ -24,8 +24,8 @@ namespace com.wer.sc.strategy
         IStrategyTrader Trader { get; }
 
         /// <summary>
-        /// 
+        /// 查询结果管理器
         /// </summary>
-        IStrategyResultManager ResultManager { get; }        
+        IStrategyQueryResultManager QueryResultManager { get; }
     }
 }

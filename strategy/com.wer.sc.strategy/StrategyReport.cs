@@ -11,7 +11,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略报告
     /// </summary>
-    public class StrategyReport : IStrategyReport
+    public class StrategyReport : IStrategyResult
     {
         internal string code;
 
@@ -23,7 +23,7 @@ namespace com.wer.sc.strategy
 
         internal IParameters parameters;
 
-        internal IStrategyQueryResult strategyResult;
+        internal IStrategyQueryResultManager strategyResultManager;
 
         internal IStrategyTrader strategyTrader;
 
@@ -67,11 +67,11 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IStrategyQueryResult StrategyResult
+        public IStrategyQueryResultManager StrategyResult
         {
             get
             {
-                return strategyResult;
+                return strategyResultManager;
             }
         }
 

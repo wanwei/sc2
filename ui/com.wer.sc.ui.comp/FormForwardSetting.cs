@@ -44,7 +44,7 @@ namespace com.wer.sc.ui.comp
         {
             InitializeComponent();
 
-            //this.cbTimeType.Items.Add("TICK");
+            this.cbTimeType.Items.Add("TICK");
             this.cbTimeType.Items.Add("秒");
             this.cbTimeType.Items.Add("分钟");
             this.cbTimeType.Items.Add("小时");
@@ -70,11 +70,8 @@ namespace com.wer.sc.ui.comp
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //bool isTickForward = this.cbTimeType.SelectedIndex == 0;
-                //if (isTickForward)
-                //    this.forwardPeriod = new ForwardPeriod(true, null);
-                //else
-                this.forwardPeriod = new ForwardPeriod(false, new KLinePeriod(GetKLineTimeType(), int.Parse(tbPeriod.Text)));
+                bool isTickForward = this.cbTimeType.SelectedIndex == 0;
+                this.forwardPeriod = new ForwardPeriod(isTickForward, new KLinePeriod(GetKLineTimeType(), int.Parse(tbPeriod.Text)));
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -88,15 +85,15 @@ namespace com.wer.sc.ui.comp
 
         private KLineTimeType GetKLineTimeType()
         {
-            if (this.cbTimeType.SelectedIndex == 0)
-                return KLineTimeType.SECOND;
             if (this.cbTimeType.SelectedIndex == 1)
-                return KLineTimeType.MINUTE;
+                return KLineTimeType.SECOND;
             if (this.cbTimeType.SelectedIndex == 2)
-                return KLineTimeType.HOUR;
+                return KLineTimeType.MINUTE;
             if (this.cbTimeType.SelectedIndex == 3)
-                return KLineTimeType.DAY;
+                return KLineTimeType.HOUR;
             if (this.cbTimeType.SelectedIndex == 4)
+                return KLineTimeType.DAY;
+            if (this.cbTimeType.SelectedIndex == 5)
                 return KLineTimeType.WEEK;
             return KLineTimeType.MINUTE;
         }
@@ -104,15 +101,15 @@ namespace com.wer.sc.ui.comp
         private void SetComboboxSelectedIndex(KLineTimeType timeType)
         {
             if (timeType == KLineTimeType.SECOND)
-                this.cbTimeType.SelectedIndex = 0;
-            else if (timeType == KLineTimeType.MINUTE)
                 this.cbTimeType.SelectedIndex = 1;
-            else if (timeType == KLineTimeType.HOUR)
+            else if (timeType == KLineTimeType.MINUTE)
                 this.cbTimeType.SelectedIndex = 2;
-            else if (timeType == KLineTimeType.DAY)
+            else if (timeType == KLineTimeType.HOUR)
                 this.cbTimeType.SelectedIndex = 3;
-            else if (timeType == KLineTimeType.WEEK)
+            else if (timeType == KLineTimeType.DAY)
                 this.cbTimeType.SelectedIndex = 4;
+            else if (timeType == KLineTimeType.WEEK)
+                this.cbTimeType.SelectedIndex = 5;
         }
     }
 }

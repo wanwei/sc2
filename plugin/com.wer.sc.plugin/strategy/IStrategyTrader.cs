@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.market;
+﻿using com.wer.sc.data.account;
+using com.wer.sc.data.market;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,6 +96,9 @@ namespace com.wer.sc.strategy
         /// <param name="orderid"></param>
         void CancelOrder(string orderid);
 
-        //IAccount
+        /// <summary>
+        /// 得到策略交易账户
+        /// </summary>
+        IAccount Account { get; }
    }
 }

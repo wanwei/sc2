@@ -17,7 +17,8 @@ namespace com.wer.sc.ui
         {
             InitializeComponent();
             AppDomain.CurrentDomain.AppendPrivatePath(@"strategy");
-            string code = "RB1805";
+            //string code = "sz000932";
+            string code = "rb1805";
             double time = double.Parse(DateTime.Now.ToString("yyyyMMdd.HHmmss"));
             this.mainComponent1.Init(DataCenter.Default, code, time);
             this.menuComponent1.BindChartComponent(this.mainComponent1.ChartComponent);

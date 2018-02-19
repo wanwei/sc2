@@ -166,6 +166,8 @@ namespace com.wer.sc.data.utils
             if (dic_StartTime_TradingDay.ContainsKey(time))
                 return dic_StartTime_TradingDay[time];
             int tradingDay = (int)time;
+            if (this.tradingDays.Count == 0)
+                return tradingDay;
             if (tradingDay > this.tradingDays.Last<int>() && !findForward)
             {
                 return this.tradingDays[tradingDays.Count - 1];

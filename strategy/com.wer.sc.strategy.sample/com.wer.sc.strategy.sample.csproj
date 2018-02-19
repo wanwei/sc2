@@ -24,10 +24,19 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\strategy\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\strategy\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="com.wer.sc.plugin">
@@ -61,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="refer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\com.wer.sc.strategy\com.wer.sc.strategy.csproj">
+      <Project>{F2D6838B-E678-43BD-B4F4-53EA52FEBB05}</Project>
+      <Name>com.wer.sc.strategy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

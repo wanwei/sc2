@@ -58,7 +58,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 得到策略执行报告，策略执行完才能获得
         /// </summary>
-        IStrategyReport StrategyReport { get; }
+        IStrategyResult StrategyReport { get; }
 
         /// <summary>
         /// 得到执行器相关信息
@@ -112,14 +112,14 @@ namespace com.wer.sc.strategy
 
     public class StrategyExecuteFinishedArguments
     {
-        private IStrategyReport report;
+        private IStrategyResult report;
 
-        public StrategyExecuteFinishedArguments(IStrategyReport report)
+        public StrategyExecuteFinishedArguments(IStrategyResult report)
         {
             this.report = report;
         }
 
-        public IStrategyReport Report
+        public IStrategyResult Report
         {
             get
             {

@@ -33,7 +33,7 @@ namespace com.wer.sc.strategy
 
         private StrategyHelper strategyHelper;
 
-        private IStrategyReport report;
+        private IStrategyResult report;
 
         public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
         {
@@ -122,7 +122,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IStrategyReport StrategyReport
+        public IStrategyResult StrategyReport
         {
             get
             {
@@ -138,8 +138,8 @@ namespace com.wer.sc.strategy
             report.endDate = dataPackage.EndDate;
             report.forwardPeriod = forwardPeriod;
             report.parameters = strategy.Parameters;
-            report.strategyResult = strategyHelper.Results;
-            //report.strategyTrader = strategyHelper.Trader.OwnerTrader;
+            report.strategyResultManager = strategyHelper.QueryResultManager;
+            report.strategyTrader = strategyHelper.Trader;
             this.report = report;
         }
 

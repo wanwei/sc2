@@ -29,6 +29,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -139,6 +147,7 @@
     <Compile Include="PluginInfo.cs" />
     <Compile Include="graphic\IShapeDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
+    <Compile Include="strategy\IStrategyResultRow.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory_Current.cs" />
@@ -151,11 +160,11 @@
     <Compile Include="strategy\IStrategyOnEndArgument.cs" />
     <Compile Include="strategy\IStrategyOnStartArgument.cs" />
     <Compile Include="strategy\IStrategyOnTickArgument.cs" />
-    <Compile Include="strategy\IStrategyReport.cs" />
+    <Compile Include="strategy\IStrategyResult.cs" />
     <Compile Include="strategy\IStrategyQueryResult.cs" />
     <Compile Include="strategy\IStrategyTrader.cs" />
-    <Compile Include="strategy\IStrategyQueryResult_Single.cs" />
-    <Compile Include="strategy\IStrategyResultManager.cs" />
+    <Compile Include="strategy\IStrategyQueryResultRow.cs" />
+    <Compile Include="strategy\IStrategyQueryResultManager.cs" />
     <Compile Include="strategy\StrategyAbstract.cs" />
     <Compile Include="strategy\plugin\IStrategyAssembly.cs" />
     <Compile Include="strategy\plugin\IStrategyAssemblyMgr.cs" />

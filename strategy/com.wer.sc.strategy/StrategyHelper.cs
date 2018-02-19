@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     public class StrategyHelper : IStrategyHelper
-    {
-        private StrategyResult results = new StrategyResult();
-
+    {        
         private IStrategyDrawer drawHelper;
 
         private IStrategyTrader strategyTrader_Code;
+
+        private IStrategyQueryResultManager queryResultManager = new StrategyQueryResultManager();
 
         public StrategyHelper(IStrategyDrawer drawHelper)
         {
@@ -40,33 +40,14 @@ namespace com.wer.sc.strategy
             {
                 strategyTrader_Code = value;
             }
-        }
+        }        
 
-        public IStrategyQueryResult Results
+        public IStrategyQueryResultManager QueryResultManager
         {
             get
             {
-                return results;
+                return queryResultManager;
             }
-        }
-
-        public IStrategyResultManager ResultManager
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public void AddStrategyResult(IStrategyQueryResult_Single strategyResult)
-        {            
-            this.results.StrategyResults.Add(strategyResult);
-        }
-
-        public void AddStrategyResult(string code, double time, string name, string desc)
-        {
-            IStrategyQueryResult_Single result = new StrategyResult_Single(code, time, name, desc);
-            this.results.StrategyResults.Add(result);
-        }
+        }        
     }
 }

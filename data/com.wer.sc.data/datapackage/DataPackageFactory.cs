@@ -63,7 +63,7 @@ namespace com.wer.sc.data.datapackage
             if (endIndex >= tradingDayReader.GetAllTradingDays().Count)
                 endIndex = tradingDayReader.GetAllTradingDays().Count - 1;
             int endDate = tradingDayReader.GetTradingDay(endIndex);
-            endDate = tradingTimeReader.GetRecentTradingDay(endDate, false);
+            //endDate = tradingTimeReader.GetRecentTradingDay(endDate, false);
             return CreateDataPackage(dataReader, code, startDate, endDate, minKlineBefore, minKlineAfter);
         }
 

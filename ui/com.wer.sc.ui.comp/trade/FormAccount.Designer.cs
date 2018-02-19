@@ -34,13 +34,14 @@
             this.itemNewAccount = new System.Windows.Forms.ToolStripMenuItem();
             this.itemNewPath = new System.Windows.Forms.ToolStripMenuItem();
             this.itemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemAccountDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.accountTree1 = new com.wer.sc.ui.comp.trade.AccountTree();
             this.btCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
-            this.itemAccountDetail = new System.Windows.Forms.ToolStripMenuItem();
-            this.accountTree1 = new com.wer.sc.ui.comp.trade.AccountTree();
+            this.btOpenFolder = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -58,35 +59,43 @@
             this.itemDelete,
             this.itemAccountDetail});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(176, 128);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(139, 100);
             // 
             // itemNewAccount
             // 
             this.itemNewAccount.Name = "itemNewAccount";
-            this.itemNewAccount.Size = new System.Drawing.Size(175, 24);
+            this.itemNewAccount.Size = new System.Drawing.Size(138, 24);
             this.itemNewAccount.Text = "新建账号";
             this.itemNewAccount.Click += new System.EventHandler(this.itemNewAccount_Click);
             // 
             // itemNewPath
             // 
             this.itemNewPath.Name = "itemNewPath";
-            this.itemNewPath.Size = new System.Drawing.Size(175, 24);
+            this.itemNewPath.Size = new System.Drawing.Size(138, 24);
             this.itemNewPath.Text = "新建目录";
             this.itemNewPath.Click += new System.EventHandler(this.itemNewPath_Click);
             // 
             // itemDelete
             // 
             this.itemDelete.Name = "itemDelete";
-            this.itemDelete.Size = new System.Drawing.Size(175, 24);
+            this.itemDelete.Size = new System.Drawing.Size(138, 24);
             this.itemDelete.Text = "删除";
             this.itemDelete.Click += new System.EventHandler(this.itemDelete_Click);
+            // 
+            // itemAccountDetail
+            // 
+            this.itemAccountDetail.Name = "itemAccountDetail";
+            this.itemAccountDetail.Size = new System.Drawing.Size(138, 24);
+            this.itemAccountDetail.Text = "账户详情";
+            this.itemAccountDetail.Click += new System.EventHandler(this.itemAccountDetail_Click);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.btOpenFolder});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(473, 31);
@@ -122,6 +131,15 @@
             this.splitContainer1.SplitterDistance = 324;
             this.splitContainer1.TabIndex = 2;
             // 
+            // accountTree1
+            // 
+            this.accountTree1.ContextMenuStrip = this.contextMenuStrip1;
+            this.accountTree1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountTree1.Location = new System.Drawing.Point(0, 0);
+            this.accountTree1.Name = "accountTree1";
+            this.accountTree1.Size = new System.Drawing.Size(473, 324);
+            this.accountTree1.TabIndex = 1;
+            // 
             // btCancel
             // 
             this.btCancel.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -144,21 +162,15 @@
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);
             // 
-            // itemAccountDetail
+            // btOpenFolder
             // 
-            this.itemAccountDetail.Name = "itemAccountDetail";
-            this.itemAccountDetail.Size = new System.Drawing.Size(175, 24);
-            this.itemAccountDetail.Text = "账户详情";
-            this.itemAccountDetail.Click += new System.EventHandler(this.itemAccountDetail_Click);
-            // 
-            // accountTree1
-            // 
-            this.accountTree1.ContextMenuStrip = this.contextMenuStrip1;
-            this.accountTree1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accountTree1.Location = new System.Drawing.Point(0, 0);
-            this.accountTree1.Name = "accountTree1";
-            this.accountTree1.Size = new System.Drawing.Size(473, 324);
-            this.accountTree1.TabIndex = 1;
+            this.btOpenFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btOpenFolder.Image = ((System.Drawing.Image)(resources.GetObject("btOpenFolder.Image")));
+            this.btOpenFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btOpenFolder.Name = "btOpenFolder";
+            this.btOpenFolder.Size = new System.Drawing.Size(24, 28);
+            this.btOpenFolder.Text = "从文件加载";
+            this.btOpenFolder.Click += new System.EventHandler(this.btOpenFolder_Click);
             // 
             // FormAccount
             // 
@@ -194,5 +206,6 @@
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem itemAccountDetail;
+        private System.Windows.Forms.ToolStripButton btOpenFolder;
     }
 }

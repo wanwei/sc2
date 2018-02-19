@@ -20,7 +20,7 @@ namespace com.wer.sc.strategy.mock
         private List<IStrategy> referedStrategies = new List<IStrategy>();
 
         public MockStrategy_Trade()
-        {
+        {            
             this.referedStrategy_MA10 = new MockStrategy_Ma();
             this.referedStrategy_MA20 = new MockStrategy_Ma();
             this.referedStrategy_MA10.Parameters.SetParameterValue(MockStrategy_Ma.PARAMKEY_MA, 10);
@@ -59,7 +59,7 @@ namespace com.wer.sc.strategy.mock
 
         public override void OnStart(object sender, IStrategyOnStartArgument argument)
         {
-
+            this.StrategyOperator.Trader.AutoFilter = true;
         }
 
         public override void OnTick(object sender, IStrategyOnTickArgument currentData)

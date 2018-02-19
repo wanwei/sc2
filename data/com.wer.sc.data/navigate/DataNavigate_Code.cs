@@ -48,13 +48,20 @@ namespace com.wer.sc.data.navigate
         {
             get
             {
+                if (isTickForward)
+                    return dataForward.Time;
                 return dataForNavigate.Time;
             }
         }
 
         public float Price
         {
-            get { return dataForNavigate.Price; }
+            get
+            {
+                if (isTickForward)
+                    return dataForward.Price;
+                return dataForNavigate.Price;
+            }
         }
 
         public IList<string> ListenedCodes
@@ -101,28 +108,29 @@ namespace com.wer.sc.data.navigate
         {
             if (!forwardPeriod.IsTickForward)
                 return Forward(forwardPeriod.KlineForwardPeriod);
-            ITickData tickData = this.GetTickData();
-            if (tickData.BarPos >= tickData.Length - 1)
-                return Forward(KLinePeriod.KLinePeriod_1Minute);
-            double time = tickData.Arr_Time[tickData.BarPos + 1];
-            if (time != tickData.Time)
-                return NavigateTo(time);
-
-            return false;
+            IDataForward_Code dataForward = GetDataForward();
+            isTickForward = true;
+            return dataForward.Forward();
         }
 
         public IKLineData GetKLineData(KLinePeriod period)
         {
+            if (isTickForward)
+                return dataForward.GetKLineData(period);
             return dataForNavigate.GetKLineData(period);
         }
 
         public ITickData GetTickData()
         {
+            if (isTickForward)
+                return dataForward.GetTickData();
             return dataForNavigate.GetTickData();
         }
 
         public ITimeLineData GetTimeLineData()
         {
+            if (isTickForward)
+                return dataForward.GetTimeLineData();
             return dataForNavigate.GetTimeLineData();
         }
 
@@ -133,6 +141,7 @@ namespace com.wer.sc.data.navigate
 
         public bool NavigateTo(double time)
         {
+            this.isTickForward = false;
             double prevTime = time;
             bool canNav = this.dataForNavigate.NavigateTo(time);
             if (OnRealTimeChanged != null)
@@ -144,7 +153,48 @@ namespace com.wer.sc.data.navigate
 
         public IRealTimeData_Code GetRealTimeData(string code)
         {
+            if (!code.Equals(this.Code))
+                return null;
             return this;
+        }
+
+        //现在是否是基于tick前进
+        private bool isTickForward = false;
+
+        private IDataForward_Code dataForward;
+
+        private IDataForward_Code GetDataForward()
+        {
+            if (isTickForward)
+            {
+                return dataForward;
+            }
+            if (this.dataForward != null)
+            {
+                this.dataForward.NavigateTo(Time);
+                return this.dataForward;
+            }
+            ForwardPeriod forwardPeriod = new ForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+            ForwardReferedPeriods referedPeriods = new ForwardReferedPeriods();
+            referedPeriods.UseTickData = true;
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_15Minute);
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Hour);
+            referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
+            this.dataForward = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(this.DataPackage, referedPeriods, forwardPeriod);
+            this.dataForward.Forward();
+            this.dataForward.NavigateTo(this.Time);
+            this.dataForward.OnRealTimeChanged += DataForward_OnRealTimeChanged;
+            return this.dataForward;
+        }
+
+        private void DataForward_OnRealTimeChanged(object sender, RealTimeChangedArgument argument)
+        {
+            if (OnRealTimeChanged != null)
+                OnRealTimeChanged(this, new RealTimeChangedArgument(argument.PrevTime, this.Time, this));
+            if (OnNavigateTo != null)
+                OnNavigateTo(this, new DataNavigateEventArgs(Code, Code, argument.PrevTime, argument.Time));
         }
     }
 }

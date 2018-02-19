@@ -30,6 +30,20 @@ namespace com.wer.sc.utils
             return sb.ToString();
         }
 
+        //public static String ToString<T>(List<T> arr)
+        //{
+        //    if (arr == null)
+        //        return "";
+        //    StringBuilder sb = new StringBuilder();
+        //    for (int i = 0; i < arr.Count; i++)
+        //    {
+        //        if (i != 0)
+        //            sb.Append(",");
+        //        sb.Append(arr[i]);
+        //    }
+        //    return sb.ToString();
+        //}
+
         public static String ToString(String[] arr)
         {
             StringBuilder sb = new StringBuilder();

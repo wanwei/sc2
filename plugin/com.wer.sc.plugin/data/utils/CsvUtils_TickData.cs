@@ -51,7 +51,16 @@ namespace com.wer.sc.data.utils
                 if (dataArr.Length < 5)
                     continue;
                 data.arr_time[i] = double.Parse(dataArr[0]);
-                data.arr_price[i] = float.Parse(dataArr[1]);
+                if (dataArr[1] == "")
+                    continue;
+                try
+                {
+                    data.arr_price[i] = float.Parse(dataArr[1]);
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
                 data.arr_mount[i] = int.Parse(dataArr[2]);
                 data.arr_totalMount[i] = int.Parse(dataArr[3]);
                 data.arr_add[i] = int.Parse(dataArr[4]);

@@ -28,8 +28,7 @@ namespace com.wer.sc.ui.comp
         //交易插件
         private IPlugin_MarketTrader marketTrader;
 
-        //账号
-        private IAccount account;
+
 
         public ToolStripComponent()
         {
@@ -93,12 +92,13 @@ namespace com.wer.sc.ui.comp
 
         private void tb_BackwordTime_Click(object sender, EventArgs e)
         {
+            //this.chartComponent.Controller.BackwardTime(forwardPeriod.KlineForwardPeriod);
             this.chartComponent.Controller.BackwardTime(forwardPeriod.KlineForwardPeriod);
         }
 
         private void tb_ForwordTime_Click(object sender, EventArgs e)
         {
-            this.chartComponent.Controller.ForwardTime(forwardPeriod.KlineForwardPeriod);
+            this.chartComponent.Controller.ForwardTime(forwardPeriod);
         }
 
         private void tb_ForwardSetting_Click(object sender, EventArgs e)
@@ -109,16 +109,34 @@ namespace com.wer.sc.ui.comp
             if (dialogResult == DialogResult.OK)
             {
                 this.forwardPeriod = formForwardSetting.ForwardPeriod;
+                if (this.forwardPeriod.IsTickForward)
+                {
+                    this.tb_BackwordTime.Enabled = false;
+                    this.tb_BackwordTime.Text = "不支持tick后退";
+                    this.tb_ForwordTime.Text = "前进一个tick";
+                }
+                else
+                {
+                    this.tb_BackwordTime.Enabled = true;
+                    this.tb_BackwordTime.Text = "后退" + forwardPeriod.KlineForwardPeriod;
+                    this.tb_ForwordTime.Text = "前进" + forwardPeriod.KlineForwardPeriod;
+                }
             }
         }
 
         private void tb_ChangeTime_Click(object sender, EventArgs e)
         {
-            FormTime ft = new FormTime(chartComponent.Controller.ChartComponentData.Time);
+            //FormTime ft = new FormTime(chartComponent.Controller.ChartComponentData.Time);
+            //DialogResult result = ft.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+            //    this.chartComponent.Controller.Change(ft.Time);
+            //}
+            FormCodeTime ft = new FormCodeTime(chartComponent.Controller.ChartComponentData.Code, chartComponent.Controller.ChartComponentData.Time);
             DialogResult result = ft.ShowDialog();
             if (result == DialogResult.OK)
             {
-                this.chartComponent.Controller.Change(ft.Time);
+                this.chartComponent.Controller.Change(ft.Code, ft.Time);
             }
         }
 
@@ -143,8 +161,8 @@ namespace com.wer.sc.ui.comp
                 MessageBox.Show("没有执行的策略");
                 return;
             }
-            IStrategyQueryResult strategyResult = componentStrategy.StrategyExecutor.StrategyReport.StrategyResult;
-            if (strategyResult == null || strategyResult.StrategyResults.Count == 0)
+            IStrategyQueryResultManager strategyResult = componentStrategy.StrategyExecutor.StrategyReport.StrategyResult;
+            if (strategyResult == null || strategyResult.GetQueryResults().Count == 0)
             {
                 MessageBox.Show("没有查询结果");
                 return;
@@ -170,7 +188,8 @@ namespace com.wer.sc.ui.comp
                     DialogResult result = formAccount.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        this.account = formAccount.SelectedAccount;
+                        chartComponent.Account = formAccount.SelectedAccount;
+                        IAccount account = chartComponent.Account;
                         if (account.Time > 0)
                         {
                             string code = null;
@@ -193,16 +212,22 @@ namespace com.wer.sc.ui.comp
             formTrade.Show();
         }
 
+        public IAccount Account
+        {
+            get { return chartComponent.Account; }
+            set { chartComponent.Account = value; }
+        }
+
         private void btLogout_Click(object sender, EventArgs e)
         {
-            if (this.marketTrader != null || this.account != null)
+            if (this.marketTrader != null || this.Account != null)
             {
                 if (this.marketTrader != null)
                 {
                     this.marketTrader.DisConnect();
                     this.marketTrader = null;
                 }
-                this.account = null;
+                this.Account = null;
                 MessageBox.Show("交易已登出");
             }
             else
@@ -211,28 +236,33 @@ namespace com.wer.sc.ui.comp
 
         private void tb_AccountAna_Click(object sender, EventArgs e)
         {
-            if (account == null)
+            if (Account == null)
             {
                 MessageBox.Show("当前没有登陆任何账号，请选择一个账号进行分析");
                 FormAccount formAccount = new FormAccount(DataCenter.Default.AccountManager, "");
                 DialogResult result = formAccount.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    this.account = formAccount.SelectedAccount;
+                    this.Account = formAccount.SelectedAccount;
                     string code = null;
-                    if (account.CurrentTradeInfo.Count > 0)
-                        code = account.CurrentTradeInfo[account.CurrentTradeInfo.Count - 1].InstrumentID;
+                    if (Account.CurrentTradeInfo.Count > 0)
+                        code = Account.CurrentTradeInfo[Account.CurrentTradeInfo.Count - 1].InstrumentID;
                     if (code != null)
-                        chartComponent.Controller.Change(code, account.Time);
+                        chartComponent.Controller.Change(code, Account.Time);
                     else
-                        chartComponent.Controller.Change(account.Time);
+                        chartComponent.Controller.Change(Account.Time);
                 }
                 else
                     return;
             }
-            FormAccountAna formAccountAna = new FormAccountAna(account, this.chartComponent);
+            FormAccountAna formAccountAna = new FormAccountAna(Account, this.chartComponent);
             formAccountAna.TopMost = true;
             formAccountAna.Show();
+        }
+
+        private void tb_Play_Click(object sender, EventArgs e)
+        {
+            chartComponent.Controller.Play();
         }
     }
 }

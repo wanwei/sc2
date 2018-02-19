@@ -45,9 +45,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.compParameters1 = new com.wer.sc.graphic.param.CompParameters();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -119,6 +119,7 @@
             this.btStrategyDataPackage.Name = "btStrategyDataPackage";
             this.btStrategyDataPackage.Size = new System.Drawing.Size(28, 28);
             this.btStrategyDataPackage.Text = "数据包";
+            this.btStrategyDataPackage.Visible = false;
             this.btStrategyDataPackage.Click += new System.EventHandler(this.btStrategyDataPackage_Click);
             // 
             // toolStripSeparator1
@@ -233,6 +234,14 @@
             this.tabPage2.Text = "数据";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // compCodePackage1
+            // 
+            this.compCodePackage1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compCodePackage1.Location = new System.Drawing.Point(3, 3);
+            this.compCodePackage1.Name = "compCodePackage1";
+            this.compCodePackage1.Size = new System.Drawing.Size(768, 446);
+            this.compCodePackage1.TabIndex = 0;
+            // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -264,14 +273,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(782, 522);
             this.splitContainer1.SplitterDistance = 481;
             this.splitContainer1.TabIndex = 11;
-            // 
-            // compCodePackage1
-            // 
-            this.compCodePackage1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compCodePackage1.Location = new System.Drawing.Point(3, 3);
-            this.compCodePackage1.Name = "compCodePackage1";
-            this.compCodePackage1.Size = new System.Drawing.Size(768, 446);
-            this.compCodePackage1.TabIndex = 0;
             // 
             // FormStrategy
             // 

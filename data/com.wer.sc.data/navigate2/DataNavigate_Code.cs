@@ -1,145 +1,149 @@
-﻿using com.wer.sc.data.cache.impl;
-using com.wer.sc.data.reader;
-using com.wer.sc.data.utils;
-using com.wer.sc.utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.data.datapackage;
+using com.wer.sc.data.reader;
+using com.wer.sc.data.forward;
 
 namespace com.wer.sc.data.navigate
 {
-    public class DataNavigate_Code
+    public class DataNavigate_Code : IDataNavigate_Code
     {
-        DataReaderFactory fac;
-        private string code;
-        private int startDate;
-        private int endDate;
-        private double currentTime;
+        private string[] codes = new string[1];
 
-        private Dictionary<KLinePeriod, DataNavigate_KLine> dicNavigateKLine = new Dictionary<KLinePeriod, DataNavigate_KLine>();
+        private DataForNavigate_Code dataForNavigate;
 
-        private SimpleDataCache<RealTimeDataBuilder_DayData> cache_DataBuilder_Day1Minute = new SimpleDataCache<RealTimeDataBuilder_DayData>();
-
-        private DataNavigate_TimeLine navigate_Real;
-
-        private DataCache_Code dataCache_Code;
-
-        private ITimeLineData currentRealData;
-
-        private RealTimeDataBuilder_DayDataCache dayDataBuilderCache;
-
-        public DataNavigate_Code(DataReaderFactory fac, string code, int startDate, int endDate, double currentTime)
+        internal DataNavigate_Code(DataForNavigate_Code dataForNavigate)
         {
-            this.fac = fac;
-            this.code = code;
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.currentTime = currentTime;
-            this.dataCache_Code = new DataCache_Code(fac, code);
-            this.dayDataBuilderCache = new RealTimeDataBuilder_DayDataCache(dataCache_Code);
-            this.navigate_Real = new DataNavigate_TimeLine(fac, dataCache_Code, currentTime);
+            this.dataForNavigate = dataForNavigate;
+            codes[0] = dataForNavigate.Code;
         }
 
-        /// <summary>
-        /// 设置或获取导航的开始日期
-        /// </summary>
-        public int StartDate { get { return startDate; } }
+        public DataNavigate_Code(IDataPackage_Code dataPackage, double time)
+        {
+            this.dataForNavigate = new DataForNavigate_Code(dataPackage, time);
+            codes[0] = dataForNavigate.Code;
+            this.NavigateTo(time);
+        }
 
-        /// <summary>
-        /// 设置或获取导航的结束时间
-        /// </summary>
-        public int EndDate { get { return endDate; } }
+        public string Code
+        {
+            get
+            {
+                return dataForNavigate.Code;
+            }
+        }
 
-        /// <summary>
-        /// 得到当前股票或期货代码
-        /// </summary>
-        public String Code { get { return code; } }
+        public IDataPackage_Code DataPackage
+        {
+            get
+            {
+                return dataForNavigate.DataPackage;
+            }
+        }
 
-        /// <summary>
-        /// 得到当前时间
-        /// </summary>
-        public double CurrentTime { get { return currentTime; } }
+        public double Time
+        {
+            get
+            {
+                return dataForNavigate.Time;
+            }
+        }
 
-        /// <summary>
-        /// 得到指定周期的K线
-        /// </summary>
-        /// <param name="period"></param>
-        /// <returns></returns>
+        public float Price
+        {
+            get { return dataForNavigate.Price; }
+        }
+
+        public IList<string> ListenedCodes
+        {
+            get
+            {
+                return this.codes;
+            }
+        }
+
+        public event DelegateOnNavigateTo OnNavigateTo;
+        public event DelegateOnRealTimeChanged OnRealTimeChanged;
+
+        public bool Backward(KLinePeriod forwardPeriod)
+        {
+            IKLineData klineData = GetKLineData(forwardPeriod);
+            int prevBarPos = klineData.BarPos - 1;
+            if (prevBarPos < 0)
+                return false;
+            double time = klineData.Arr_Time[prevBarPos];
+            NavigateTo(time);
+            return true;
+        }
+
+        public bool Forward(KLinePeriod forwardPeriod)
+        {
+            IKLineData klineData = GetKLineData(forwardPeriod);
+            int nextBarPos = klineData.BarPos + 1;
+            if (nextBarPos >= klineData.Length)
+            {
+                ITickData tickData = GetTickData();
+                if (tickData.BarPos == tickData.Length - 1)
+                    return false;
+                double endtime = tickData.Arr_Time[tickData.Length - 1];
+                NavigateTo(endtime);
+                return true;
+            }
+            double time = klineData.Arr_Time[nextBarPos];
+            NavigateTo(time);
+            return true;
+        }
+
+        public bool Forward(ForwardPeriod forwardPeriod)
+        {
+            if (!forwardPeriod.IsTickForward)
+                return Forward(forwardPeriod.KlineForwardPeriod);
+            ITickData tickData = this.GetTickData();
+            if (tickData.BarPos >= tickData.Length - 1)
+                return Forward(KLinePeriod.KLinePeriod_1Minute);
+            double time = tickData.Arr_Time[tickData.BarPos + 1];
+            if (time != tickData.Time)
+                return NavigateTo(time);
+            return false;
+        }
+
         public IKLineData GetKLineData(KLinePeriod period)
         {
-            if (dicNavigateKLine.ContainsKey(period))
-            {               
-                return dicNavigateKLine[period].CurrentKLineData;
-            }
-            DataNavigate_KLine navigate_KLine = new DataNavigate_KLine(fac, code, period, currentTime);
-            dicNavigateKLine.Add(period, navigate_KLine);
-            navigate_KLine.CurrentTime = currentTime;
-            return navigate_KLine.CurrentKLineData;
+            return dataForNavigate.GetKLineData(period);
         }
 
-        /// <summary>
-        /// 得到当前的分时线
-        /// </summary>
-        /// <returns></returns>
-        public ITimeLineData GetRealData()
-        {
-            //if (IsCreateNewRealData())
-            //{
-            //    int date = chartBuilder.CurrentDate;
-            //    LogHelper.Info(typeof(DataNavigate), "装载分时数据" + code + "-" + date);
-            //    realData = dayDataCache.GetRealData(code, date);
-            //}
-            //return realData;
-            //int date = chartb
-            //dataCache_Code.GetCache_CodeDate(date)
-            //int date = day
-            //RealData r = dataCache_Code.GetCache_CodeDate(date);
-            //dataCache_Code.GetCache_CodeDate()
-            return null;
-        }
-
-        /// <summary>
-        /// 得到今日的TICK数据
-        /// </summary>
-        /// <returns></returns>
         public ITickData GetTickData()
         {
-            return null;
+            return dataForNavigate.GetTickData();
         }
 
-        /// <summary>
-        /// 修改当前时间
-        /// </summary>
-        /// <param name="time"></param>
-        public void ChangeTime(double time)
+        public ITimeLineData GetTimeLineData()
         {
-            this.currentTime = time;
-            foreach (DataNavigate_KLine kline in dicNavigateKLine.Values)
-            {
-                kline.CurrentTime = time;
-            }
-
+            return dataForNavigate.GetTimeLineData();
         }
 
-        /// <summary>
-        /// 前进，前进时会修改当前时间
-        /// </summary>
-        /// <param name="period"></param>
-        /// <param name="len"></param>
-        public void Forward(KLinePeriod period, int len)
+        public bool IsPeriodEnd(KLinePeriod period)
         {
-
+            return false;
         }
 
-        /// <summary>
-        /// 前进一个tick数据
-        /// </summary>
-        /// <param name="len"></param>
-        public void ForwardTick(int len)
+        public bool NavigateTo(double time)
         {
+            double prevTime = time;
+            bool canNav = this.dataForNavigate.NavigateTo(time);
+            if (OnRealTimeChanged != null)
+                OnRealTimeChanged(this, new RealTimeChangedArgument(prevTime, this.Time, this));
+            if (OnNavigateTo != null)
+                OnNavigateTo(this, new DataNavigateEventArgs(Code, Code, prevTime, time));
+            return canNav;
+        }
 
+        public IRealTimeData_Code GetRealTimeData(string code)
+        {
+            return this;
         }
     }
 }

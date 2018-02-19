@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{324C4AB8-167D-4187-97BA-3B7AD59C7F5F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.wer.sc.plugin.cnstock.historydata</RootNamespace>
+    <AssemblyName>com.wer.sc.plugin.cnstock.historydata</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\Debug\plugin\cnstock\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin\Release\plugin\cnstock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\..\bin\Release_Stock\plugin\cnstock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\codes" />
+    <Compile Include="dataprepare\DataPrepare.cs" />
+    <Compile Include="dataprepare\DataPrepare_TickData.cs" />
+    <Compile Include="dataupdater\DataConst.cs" />
+    <Compile Include="dataupdater\DataUpdater_CnStock.cs" />
+    <Compile Include="dataupdater\Plugin_DataUpdater_CnStock.cs" />
+    <Compile Include="dataupdater\StepPreparer.cs" />
+    <Compile Include="dataupdater\Step_CodeInfo.cs" />
+    <Compile Include="dataupdater\Step_KLineData.cs" />
+    <Compile Include="dataupdater\Step_SinaDownload.cs" />
+    <Compile Include="dataupdater\Step_TickData_Code.cs" />
+    <Compile Include="dataupdater\Step_TradingDay.cs" />
+    <Compile Include="dataupdater\Step_TradingTime.cs" />
+    <Compile Include="dataupdater\UpdateStepGetter_CnStock.cs" />
+    <Compile Include="download\HttpUtils.cs" />
+    <Compile Include="download\sina\DownloadPathUtils.cs" />
+    <Compile Include="download\sina\Download_DayKLine.cs" />
+    <Compile Include="download\sina\Download_Sina.cs" />
+    <Compile Include="download\sina\Download_Tick.cs" />
+    <Compile Include="download\HttpParser.cs" />
+    <Compile Include="Plugin_HistoryData_CnStock.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="config\HistoryData.CnStock.pluginconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
+      <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
+      <Name>com.wer.sc.utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\com.wer.sc.plugin\com.wer.sc.plugin.csproj">
+      <Project>{b8955457-f108-4060-a35b-69b482a19ab6}</Project>
+      <Name>com.wer.sc.plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)config
+copy $(ProjectDir)config\* $(TargetDir)config\
+copy $(ProjectDir)config\HistoryData.CnStock.pluginconfig $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

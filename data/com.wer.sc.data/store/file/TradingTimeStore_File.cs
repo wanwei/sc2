@@ -19,6 +19,8 @@ namespace com.wer.sc.data.store.file
 
         public void Save(string code, IList<ITradingTime> tradingTimes)
         {
+            if (tradingTimes == null)
+                return;
             string path = dataPathUtils.GetTradingTimePath(code);            
             TextExchangeUtils.Write<ITradingTime>(path, tradingTimes);
         }

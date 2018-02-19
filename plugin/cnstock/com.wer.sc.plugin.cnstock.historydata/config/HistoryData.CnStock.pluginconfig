@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Plugins>
+  <Assembly file="com.wer.sc.plugin.cnstock.historydata.dll">
+    <Plugin class="com.wer.sc.plugin.cnstock.historydata.Plugin_HistoryData_CnStock">
+    </Plugin>
+    <Plugin class="com.wer.sc.plugin.cnstock.historydata.dataupdater.Plugin_DataUpdater_CnStock">
+    </Plugin>
+  </Assembly>
+</Plugins>

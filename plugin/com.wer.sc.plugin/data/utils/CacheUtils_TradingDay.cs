@@ -35,9 +35,25 @@ namespace com.wer.sc.data.utils
             return openDatesList;
         }
 
-        public int FirstTradingDay { get { return openDatesList[0]; } }
+        public int FirstTradingDay
+        {
+            get
+            {
+                if (openDatesList.Count == 0)
+                    return -1;
+                return openDatesList[0];
+            }
+        }
 
-        public int LastTradingDay { get { return openDatesList[openDatesList.Count - 1]; } }
+        public int LastTradingDay
+        {
+            get
+            {
+                if (openDatesList.Count == 0)
+                    return -1;
+                return openDatesList[openDatesList.Count - 1];
+            }
+        }
 
         public IList<int> GetTradingDays(int startDate, int endDate)
         {

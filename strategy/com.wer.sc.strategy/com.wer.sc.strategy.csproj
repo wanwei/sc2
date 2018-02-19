@@ -29,6 +29,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,9 +66,10 @@
     <Compile Include="StrategyOnTickArgument.cs" />
     <Compile Include="StrategyOnTickInfo.cs" />
     <Compile Include="StrategyPackage.cs" />
+    <Compile Include="StrategyQueryResultManager.cs" />
     <Compile Include="StrategyReport.cs" />
-    <Compile Include="StrategyResult.cs" />
-    <Compile Include="StrategyResult_Single.cs" />
+    <Compile Include="StrategyQueryResult.cs" />
+    <Compile Include="StrategyQueryResultRow.cs" />
     <Compile Include="StrategyTrader_History.cs" />
     <Compile Include="loader\StrategyData.cs" />
     <Compile Include="StrategyHelper.cs" />

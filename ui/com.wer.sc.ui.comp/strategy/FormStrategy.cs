@@ -1,6 +1,7 @@
 ﻿using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
 using com.wer.sc.ui.comp;
+using com.wer.sc.utils.ui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,9 +18,11 @@ namespace com.wer.sc.ui.comp.strategy
     {
         private ChartComponent chartComponent;
 
+        private IStrategyDrawer drawer;
+
         private IStrategyData strategyData;
 
-        private IDataPackage_Code dataPackage;
+        //private IDataPackage_Code dataPackage;
 
         private CodePackageInfo codePackageInfo;
 
@@ -36,6 +39,12 @@ namespace com.wer.sc.ui.comp.strategy
             }
         }
 
+        public FormStrategy(CodePackageInfo codePackageInfo, IStrategyData strategyData, IStrategyDrawer drawer)
+        {
+            this.codePackageInfo = codePackageInfo;
+            this.strategyData = strategyData;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -47,8 +56,19 @@ namespace com.wer.sc.ui.comp.strategy
             InitializeComponent();
             this.ShowIcon = false;
             this.chartComponent = chartComponent;
-            this.dataPackage = chartComponent.Controller.CurrentNavigater.DataPackage;
+
+            this.InitCodePackage(chartComponent);
             this.Init(chartComponent.StrategyData);
+        }
+
+        private void InitCodePackage(ChartComponent chartComponent)
+        {
+            IDataPackage_Code dataPackage = chartComponent.Controller.CurrentNavigater.DataPackage;
+            CodePackageInfo codePackageInfo = new CodePackageInfo();
+            codePackageInfo.Codes.Add(dataPackage.Code);
+            codePackageInfo.Start = dataPackage.StartDate;
+            codePackageInfo.End = dataPackage.EndDate;
+            this.compCodePackage1.Init(codePackageInfo);
         }
 
         private void Init(IStrategyData strategyData)
@@ -57,32 +77,59 @@ namespace com.wer.sc.ui.comp.strategy
                 return;
             this.StrategyData = strategyData;
             this.compParameters1.Parameters = this.strategyData.Strategy.Parameters;
-        }
-
-        private void InitPreparedData()
-        {
-
+            this.chartComponent.ChartComponentStrategy.ExecuteFinished += ChartComponentStrategy_ExecuteFinished;
+            this.Text = "策略：" + this.strategyData.StrategyInfo.Name;
         }
 
         private void btExecutor_Click(object sender, EventArgs e)
         {
+            //设置参数
             if (this.compParameters1.Parameters != null)
             {
                 this.compParameters1.Parameters.GetParameterValues();
                 IStrategy strategy = this.strategyData.Strategy;
                 strategy.Parameters.SetParameterValue(this.compParameters1.Parameters.GetParameterValues());
             }
-            //try
-            //{
-            this.chartComponent.ChartComponentStrategy.Run();
-            this.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    FormException form = new FormException(ex);
-            //    form.ShowDialog();
-            //    //MessageBox.Show("执行策略出错：" + e.Message);
-            //}
+            //
+            //this.chartComponent.ChartComponentStrategy.Run();
+            try
+            {
+                this.chartComponent.ChartComponentStrategy.Run();
+                //this.Close();
+            }
+            catch (Exception ex)
+            {
+                FormException form = new FormException(ex);
+                form.ShowDialog();
+                //MessageBox.Show("执行策略出错：" + e.Message);
+            }
+        }
+
+        private void ChartComponentStrategy_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        {
+            MessageBox.Show("执行完毕");
+            //this.progressBar1.Maximum = 100;
+            //this.progressBar1.Value = 100;                             
+        }
+
+        //private void UpdateMaxProgress(int max)
+        //{
+        //    if (progressBar1.InvokeRequired)
+        //    {
+        //        UpdateProgressInvokeCallback pi = new UpdateProgressInvokeCallback(this.UpdateMaxProgress);
+        //        this.Invoke(pi, max);
+        //    }
+        //    else
+        //    {
+        //        progressBar1.Maximum = max;//设置最大长度值
+        //        progressBar1.Value = 0;//设置当前值
+        //        progressBar1.Step = 1;//设置没次增长多少                
+        //    }
+        //}
+
+        private void ExecuteStrategy()
+        {
+
         }
 
         private void btCancel_Click(object sender, EventArgs e)
@@ -98,8 +145,8 @@ namespace com.wer.sc.ui.comp.strategy
 
         private void btStrategyDataPackage_Click(object sender, EventArgs e)
         {
-            FormStrategyDataPackage form = new FormStrategyDataPackage(this.dataPackage);
-            form.ShowDialog();
+            //FormStrategyDataPackage form = new FormStrategyDataPackage(this.dataPackage);
+            //form.ShowDialog();
         }
 
         private void btStrategyReport_Click(object sender, EventArgs e)

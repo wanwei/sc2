@@ -68,7 +68,10 @@ namespace com.wer.sc.data.reader
 
         public CodeInfo GetCodeInfo(String code)
         {
-            return dicCodes[code.ToUpper()];
+            string uCode = code.ToUpper();
+            if (dicCodes.ContainsKey(uCode))
+                return dicCodes[uCode];
+            return null;
         }
 
         public List<String> GetAllCatelogs()

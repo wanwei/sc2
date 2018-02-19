@@ -8,6 +8,9 @@ using com.wer.sc.data.reader;
 using com.wer.sc.data;
 using com.wer.sc.utils.param;
 using com.wer.sc.data.forward;
+using com.wer.sc.data.market;
+using System.Drawing;
+using com.wer.sc.graphic;
 
 namespace com.wer.sc.strategy
 {
@@ -26,9 +29,14 @@ namespace com.wer.sc.strategy
             //this.Parameters.AddParameter(PARAMETER_PERIOD, "计算周期", "计算周期", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);
         }
 
+        private IKLineData mainKlineData;
+
         public virtual void OnStart(Object sender, IStrategyOnStartArgument argument)
         {
-
+            if (mainKlineData == null && MainKLinePeriod != null)
+            {
+                mainKlineData = argument.CurrentData.GetKLineData(MainKLinePeriod);
+            }
         }
 
         public virtual void OnEnd(Object sender, IStrategyOnEndArgument argument)
@@ -85,6 +93,11 @@ namespace com.wer.sc.strategy
             return this.parameters.GetParameterValue(parameterName);
         }
 
+        //public virtual IStrategyQueryResult GetQueryResult()
+        //{
+        //    return null;
+        //}
+
         public virtual StrategyReferedPeriods GetReferedPeriods()
         {
             return null;
@@ -98,6 +111,38 @@ namespace com.wer.sc.strategy
         public virtual IList<IStrategy> GetReferedStrategies()
         {
             return null;
+        }
+
+        public void DrawAccount()
+        {
+            IStrategyTrader trader = this.StrategyOperator.Trader;
+            if (trader == null || trader.Account == null)
+                return;
+            if (MainKLinePeriod == null || mainKlineData == null)
+                return;
+            IShapeDrawer_PriceRect drawer = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IList<TradeInfo> trades = trader.Account.CurrentTradeInfo;
+            for (int i = 0; i < trades.Count; i++)
+            {
+                TradeInfo trade = trades[i];
+                float price = (float)trade.Price;
+                Color color = trade.Side == OrderSide.Sell ? Color.Green : Color.Red;
+                // trade.Time;
+                int barPos = FindMainBarPos(trade.Time);
+                drawer.DrawPoint(new graphic.shape.PriceShape_Point(barPos, price, 8, color));
+            }
+        }
+
+        private int FindMainBarPos(double time)
+        {
+            if (mainKlineData == null)
+                return -1;
+            for (int i = 1; i < mainKlineData.Arr_Time.Count; i++)
+            {
+                if (time > mainKlineData.Arr_Time[i - 1] && time <= mainKlineData.Arr_Time[i])
+                    return i + 1;
+            }
+            return -1;
         }
     }
 }

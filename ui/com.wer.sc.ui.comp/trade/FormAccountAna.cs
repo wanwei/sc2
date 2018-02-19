@@ -33,7 +33,15 @@ namespace com.wer.sc.ui.comp.trade
             {
                 TradeInfo trade = trades[i];
                 AddTradeToGrid(trade);
-            }            
+            }
+            if (trades.Count > 0)
+            {
+                this.lbStart.Text = trades[0].Time.ToString();
+                this.lbEnd.Text = trades[trades.Count - 1].Time.ToString();
+            }
+            lbInitMoney.Text = this.account.InitMoney.ToString();
+            lbMoney.Text = this.account.Money.ToString();
+            
         }
 
         private void AddTradeToGrid(TradeInfo trade)

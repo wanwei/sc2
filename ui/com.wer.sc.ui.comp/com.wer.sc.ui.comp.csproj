@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +96,12 @@
     </Compile>
     <Compile Include="FormCodePackage.Designer.cs">
       <DependentUpon>FormCodePackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCodeTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCodeTime.Designer.cs">
+      <DependentUpon>FormCodeTime.cs</DependentUpon>
     </Compile>
     <Compile Include="trade\FormAccountAna.cs">
       <SubType>Form</SubType>
@@ -237,6 +252,9 @@
     <EmbeddedResource Include="FormCodePackageSelected.resx">
       <DependentUpon>FormCodePackageSelected.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCodeTime.resx">
+      <DependentUpon>FormCodeTime.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="trade\FormAccountAna.resx">
       <DependentUpon>FormAccountAna.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,6 +321,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\common\com.wer.sc.utils.ui\com.wer.sc.utils.ui.csproj">
+      <Project>{FFFFC645-3A82-48F2-8705-D4EE4552F1B7}</Project>
+      <Name>com.wer.sc.utils.ui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">
       <Project>{6a9e6268-e856-4072-8b74-06f710d5ca33}</Project>
       <Name>com.wer.sc.utils</Name>

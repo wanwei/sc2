@@ -142,6 +142,7 @@ namespace com.wer.sc.ui.comp
             this.tb_SwitchTick.Size = new System.Drawing.Size(28, 42);
             this.tb_SwitchTick.Tag = com.wer.sc.ui.comp.ChartType.Tick;
             this.tb_SwitchTick.Text = "闪电线";
+            this.tb_SwitchTick.Visible = false;
             this.tb_SwitchTick.Click += new System.EventHandler(this.tb_SwitchChartType_Click);
             // 
             // tb_Refresh
@@ -279,6 +280,7 @@ namespace com.wer.sc.ui.comp
             this.tb_ChangeCode.Name = "tb_ChangeCode";
             this.tb_ChangeCode.Size = new System.Drawing.Size(28, 42);
             this.tb_ChangeCode.Text = "修改代码";
+            this.tb_ChangeCode.Visible = false;
             this.tb_ChangeCode.Click += new System.EventHandler(this.tb_ChangeCode_Click);
             // 
             // tb_ForwardSetting
@@ -300,7 +302,7 @@ namespace com.wer.sc.ui.comp
             this.tb_BackwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_BackwordTime.Name = "tb_BackwordTime";
             this.tb_BackwordTime.Size = new System.Drawing.Size(28, 42);
-            this.tb_BackwordTime.Text = "指定周期后退";
+            this.tb_BackwordTime.Text = "后退1分钟";
             this.tb_BackwordTime.Click += new System.EventHandler(this.tb_BackwordTime_Click);
             // 
             // tb_Play
@@ -312,6 +314,7 @@ namespace com.wer.sc.ui.comp
             this.tb_Play.Name = "tb_Play";
             this.tb_Play.Size = new System.Drawing.Size(28, 42);
             this.tb_Play.Text = "播放";
+            this.tb_Play.Click += new System.EventHandler(this.tb_Play_Click);
             // 
             // tb_ForwordTime
             // 
@@ -321,7 +324,7 @@ namespace com.wer.sc.ui.comp
             this.tb_ForwordTime.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_ForwordTime.Name = "tb_ForwordTime";
             this.tb_ForwordTime.Size = new System.Drawing.Size(28, 42);
-            this.tb_ForwordTime.Text = "指定周期前进";
+            this.tb_ForwordTime.Text = "前进1分钟";
             this.tb_ForwordTime.Click += new System.EventHandler(this.tb_ForwordTime_Click);
             // 
             // toolStripSeparator2
@@ -349,6 +352,7 @@ namespace com.wer.sc.ui.comp
             this.tb_StrategyDataPackage.Name = "tb_StrategyDataPackage";
             this.tb_StrategyDataPackage.Size = new System.Drawing.Size(28, 42);
             this.tb_StrategyDataPackage.Text = "数据包";
+            this.tb_StrategyDataPackage.Visible = false;
             this.tb_StrategyDataPackage.Click += new System.EventHandler(this.btStrategyDataPackage_Click);
             // 
             // tb_StrategyReport
@@ -360,6 +364,7 @@ namespace com.wer.sc.ui.comp
             this.tb_StrategyReport.Name = "tb_StrategyReport";
             this.tb_StrategyReport.Size = new System.Drawing.Size(28, 42);
             this.tb_StrategyReport.Text = "回测报告";
+            this.tb_StrategyReport.Visible = false;
             // 
             // tb_StrategyResult
             // 
@@ -376,6 +381,7 @@ namespace com.wer.sc.ui.comp
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 45);
+            this.toolStripSeparator3.Visible = false;
             // 
             // tb_Connect
             // 
@@ -386,6 +392,7 @@ namespace com.wer.sc.ui.comp
             this.tb_Connect.Name = "tb_Connect";
             this.tb_Connect.Size = new System.Drawing.Size(28, 42);
             this.tb_Connect.Text = "连接服务器";
+            this.tb_Connect.Visible = false;
             // 
             // tb_Trade
             // 

@@ -31,6 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Stock|AnyCPU'">
+    <OutputPath>..\..\bin\Release_Stock\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,6 +56,7 @@
     <Compile Include="datapackage\CodePackage.cs" />
     <Compile Include="datapackage\CodePackageFactory.cs" />
     <Compile Include="datapackage\CodePackageInfo.cs" />
+    <Compile Include="datapackage\CodePackage_MainContractList.cs" />
     <Compile Include="market\Plugin_MarketData_Simu.cs" />
     <Compile Include="market\Plugin_MarketTrader_Simu.cs" />
     <Compile Include="account\TradeFee.cs" />
@@ -177,6 +186,7 @@
   <ItemGroup>
     <None Include="account\allvariety.fee" />
     <None Include="datacenter.config" />
+    <None Include="datacenter.CnStock.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\com.wer.sc.utils\com.wer.sc.utils.csproj">

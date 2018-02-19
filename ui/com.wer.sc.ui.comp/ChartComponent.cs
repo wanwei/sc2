@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using com.wer.sc.data.account;
 
 namespace com.wer.sc.ui.comp
 {
@@ -24,6 +25,9 @@ namespace com.wer.sc.ui.comp
         private IStrategyData strategyData = null;
 
         private ChartComponentStrategy chartComponentStrategy = null;
+
+        //账号
+        private IAccount account;
 
         public ChartComponent()
         {
@@ -115,6 +119,19 @@ namespace com.wer.sc.ui.comp
             set
             {
                 connectedServer = value;
+            }
+        }
+
+        public IAccount Account
+        {
+            get
+            {
+                return account;
+            }
+
+            set
+            {
+                account = value;
             }
         }
 

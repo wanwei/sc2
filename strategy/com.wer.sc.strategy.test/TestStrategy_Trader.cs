@@ -38,7 +38,7 @@ namespace com.wer.sc.strategy
             IList<TradeInfo> tradeInfos = trader.Account.CurrentTradeInfo;
             AssertUtils.PrintLineList((IList)tradeInfos);
             AssertUtils.AssertEqual_List("StrategyTrade", GetType(), tradeInfos);
-            Assert.AreEqual(98870, trader.Account.Asset);
+            Assert.AreEqual(96250, trader.Account.Asset);
             //Assert.AreEqual(98870, trader.Account.Asset);
             //IList<OrderInfo> orderInfos = strategy.StrategyOperator.Trader.CurrentOrderInfo;
             //for (int i = 0; i < tradeInfos.Count; i++)
