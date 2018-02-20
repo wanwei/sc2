@@ -13,17 +13,17 @@ namespace com.wer.sc.ui.comp
 {
     public partial class FormCodePackageSelected : Form
     {
-        private CodePackageInfo codePackageInfo;
+        private CodePeriodPackageInfo codePackageInfo;
 
-        public FormCodePackageSelected(CodePackageInfo codePackageInfo)
+        public FormCodePackageSelected(CodePeriodPackageInfo codePackageInfo)
         {
             InitializeComponent();
             this.codeTree1.MultiSelect = true;
             this.codeTree1.Init();
             this.codePackageInfo = codePackageInfo;
-            if (this.codePackageInfo.ChoosedByMainContract)
+            if (this.codePackageInfo.CodeChooseMethod == CodeChooseMethod.Maincontract)
                 this.cbChooseType.SelectedIndex = 2;
-            else if (this.codePackageInfo.ChoosedByCatelog)
+            else if (this.codePackageInfo.CodeChooseMethod == CodeChooseMethod.Catelog)
                 this.cbChooseType.SelectedIndex = 1;
             else
                 this.cbChooseType.SelectedIndex = 0;
@@ -47,20 +47,17 @@ namespace com.wer.sc.ui.comp
             this.codePackageInfo.Codes.Clear();
             if (this.cbChooseType.SelectedIndex == 0)
             {
-                this.codePackageInfo.ChoosedByMainContract = false;
-                this.codePackageInfo.ChoosedByCatelog = false;
+                this.codePackageInfo.CodeChooseMethod = CodeChooseMethod.Normal;
                 this.codePackageInfo.Codes.AddRange(codeTree1.SelectedCodes);
             }
             else if (this.cbChooseType.SelectedIndex == 1)
             {
-                this.codePackageInfo.ChoosedByMainContract = false;
-                this.codePackageInfo.ChoosedByCatelog = true;
+                this.codePackageInfo.CodeChooseMethod = CodeChooseMethod.Catelog;
                 this.codePackageInfo.Codes.AddRange(codeTree1.SelectedCatelogs);
             }
             else
             {
-                this.codePackageInfo.ChoosedByMainContract = true;
-                this.codePackageInfo.ChoosedByCatelog = false;
+                this.codePackageInfo.CodeChooseMethod = CodeChooseMethod.Maincontract;
                 this.codePackageInfo.Codes.AddRange(codeTree1.SelectedCatelogs);
             }
 

@@ -24,7 +24,7 @@ namespace com.wer.sc.ui.comp.strategy
 
         //private IDataPackage_Code dataPackage;
 
-        private CodePackageInfo codePackageInfo;
+        private CodePeriodPackageInfo codePackageInfo;
 
         public IStrategyData StrategyData
         {
@@ -39,7 +39,7 @@ namespace com.wer.sc.ui.comp.strategy
             }
         }
 
-        public FormStrategy(CodePackageInfo codePackageInfo, IStrategyData strategyData, IStrategyDrawer drawer)
+        public FormStrategy(CodePeriodPackageInfo codePackageInfo, IStrategyData strategyData, IStrategyDrawer drawer)
         {
             this.codePackageInfo = codePackageInfo;
             this.strategyData = strategyData;
@@ -64,7 +64,7 @@ namespace com.wer.sc.ui.comp.strategy
         private void InitCodePackage(ChartComponent chartComponent)
         {
             IDataPackage_Code dataPackage = chartComponent.Controller.CurrentNavigater.DataPackage;
-            CodePackageInfo codePackageInfo = new CodePackageInfo();
+            CodePeriodPackageInfo codePackageInfo = new CodePeriodPackageInfo();
             codePackageInfo.Codes.Add(dataPackage.Code);
             codePackageInfo.Start = dataPackage.StartDate;
             codePackageInfo.End = dataPackage.EndDate;
@@ -77,7 +77,7 @@ namespace com.wer.sc.ui.comp.strategy
                 return;
             this.StrategyData = strategyData;
             this.compParameters1.Parameters = this.strategyData.Strategy.Parameters;
-            this.chartComponent.ChartComponentStrategy.ExecuteFinished += ChartComponentStrategy_ExecuteFinished;
+            //this.chartComponent.ChartComponentStrategy.ExecuteFinished += ChartComponentStrategy_ExecuteFinished;
             this.Text = "策略：" + this.strategyData.StrategyInfo.Name;
         }
 
@@ -90,12 +90,11 @@ namespace com.wer.sc.ui.comp.strategy
                 IStrategy strategy = this.strategyData.Strategy;
                 strategy.Parameters.SetParameterValue(this.compParameters1.Parameters.GetParameterValues());
             }
-            //
-            //this.chartComponent.ChartComponentStrategy.Run();
             try
             {
                 this.chartComponent.ChartComponentStrategy.Run();
-                //this.Close();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -105,12 +104,12 @@ namespace com.wer.sc.ui.comp.strategy
             }
         }
 
-        private void ChartComponentStrategy_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
-        {
-            MessageBox.Show("执行完毕");
-            //this.progressBar1.Maximum = 100;
-            //this.progressBar1.Value = 100;                             
-        }
+        //private void ChartComponentStrategy_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        //{
+        //    //MessageBox.Show("执行完毕");
+        //    //this.progressBar1.Maximum = 100;
+        //    //this.progressBar1.Value = 100;                             
+        //}
 
         //private void UpdateMaxProgress(int max)
         //{

@@ -54,6 +54,7 @@ namespace com.wer.sc.ui.comp
             this.tb_ForwordTime = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tb_Strategy = new System.Windows.Forms.ToolStripButton();
+            this.btRunState = new System.Windows.Forms.ToolStripButton();
             this.tb_StrategyDataPackage = new System.Windows.Forms.ToolStripButton();
             this.tb_StrategyReport = new System.Windows.Forms.ToolStripButton();
             this.tb_StrategyResult = new System.Windows.Forms.ToolStripButton();
@@ -94,6 +95,7 @@ namespace com.wer.sc.ui.comp
             this.tb_ForwordTime,
             this.toolStripSeparator2,
             this.tb_Strategy,
+            this.btRunState,
             this.tb_StrategyDataPackage,
             this.tb_StrategyReport,
             this.tb_StrategyResult,
@@ -343,6 +345,16 @@ namespace com.wer.sc.ui.comp
             this.tb_Strategy.Text = "策略";
             this.tb_Strategy.Click += new System.EventHandler(this.btStrategy_Click);
             // 
+            // btRunState
+            // 
+            this.btRunState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btRunState.Image = ((System.Drawing.Image)(resources.GetObject("btRunState.Image")));
+            this.btRunState.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btRunState.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btRunState.Name = "btRunState";
+            this.btRunState.Size = new System.Drawing.Size(28, 42);
+            this.btRunState.Text = "策略执行状态";
+            // 
             // tb_StrategyDataPackage
             // 
             this.tb_StrategyDataPackage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -409,9 +421,10 @@ namespace com.wer.sc.ui.comp
             // 
             this.tb_AccountAna.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tb_AccountAna.Image = ((System.Drawing.Image)(resources.GetObject("tb_AccountAna.Image")));
+            this.tb_AccountAna.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tb_AccountAna.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tb_AccountAna.Name = "tb_AccountAna";
-            this.tb_AccountAna.Size = new System.Drawing.Size(24, 42);
+            this.tb_AccountAna.Size = new System.Drawing.Size(28, 42);
             this.tb_AccountAna.Text = "账户分析";
             this.tb_AccountAna.Click += new System.EventHandler(this.tb_AccountAna_Click);
             // 
@@ -472,5 +485,6 @@ namespace com.wer.sc.ui.comp
         private System.Windows.Forms.ToolStripButton tb_Trade;
         private System.Windows.Forms.ToolStripButton btLogout;
         private System.Windows.Forms.ToolStripButton tb_AccountAna;
+        private System.Windows.Forms.ToolStripButton btRunState;
     }
 }

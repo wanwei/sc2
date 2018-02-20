@@ -11,11 +11,9 @@ namespace com.wer.sc.data.datapackage
     /// <summary>
     /// 
     /// </summary>
-    public class CodePackageInfo : IXmlExchange
+    public class CodePeriodPackageInfo : IXmlExchange, ICodePeriodPackageInfo
     {
-        private bool choosedByMainContract;
-
-        private bool choosedByCatelog;
+        private CodeChooseMethod codeChooseMethod;
 
         private List<string> codes = new List<string>();
 
@@ -23,30 +21,10 @@ namespace com.wer.sc.data.datapackage
 
         private int end;
 
-        public bool ChoosedByMainContract
+        public CodeChooseMethod CodeChooseMethod
         {
-            get
-            {
-                return choosedByMainContract;
-            }
-
-            set
-            {
-                choosedByMainContract = value;
-            }
-        }
-
-        public bool ChoosedByCatelog
-        {
-            get
-            {
-                return choosedByCatelog;
-            }
-
-            set
-            {
-                choosedByCatelog = value;
-            }
+            get { return codeChooseMethod; }
+            set { this.codeChooseMethod = value; }
         }
 
         public List<string> Codes
@@ -87,7 +65,7 @@ namespace com.wer.sc.data.datapackage
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(start).Append("-").Append(end).Append(",");
-            sb.Append(choosedByCatelog).Append(",").Append(choosedByMainContract).Append("\r\n");
+            sb.Append(codeChooseMethod).Append("\r\n");
             for (int i = 0; i < codes.Count; i++)
             {
                 sb.Append(codes[i]).Append(",");
@@ -99,8 +77,7 @@ namespace com.wer.sc.data.datapackage
         {
             xmlElem.SetAttribute("start", start.ToString());
             xmlElem.SetAttribute("end", end.ToString());
-            xmlElem.SetAttribute("maincontract", ChoosedByMainContract.ToString());
-            xmlElem.SetAttribute("catelog", ChoosedByCatelog.ToString());
+            xmlElem.SetAttribute("codechoosemethod", codeChooseMethod.ToString());
             xmlElem.SetAttribute("codes", ListUtils.ToString(codes));
         }
 
@@ -108,9 +85,7 @@ namespace com.wer.sc.data.datapackage
         {
             this.start = int.Parse(xmlElem.GetAttribute("start"));
             this.end = int.Parse(xmlElem.GetAttribute("end"));
-            this.choosedByMainContract = this.choosedByMainContract = bool.Parse(xmlElem.GetAttribute("maincontract"));
-            this.ChoosedByCatelog = this.choosedByMainContract = bool.Parse(xmlElem.GetAttribute("catelog"));
-
+            this.codeChooseMethod = (CodeChooseMethod)EnumUtils.Parse(typeof(CodeChooseMethod), xmlElem.GetAttribute("codechoosemethod"));
             string codesStr = xmlElem.GetAttribute("codes");
             string[] arr = codesStr.Split(',');
             this.codes.AddRange(arr);

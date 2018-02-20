@@ -143,7 +143,13 @@ namespace com.wer.sc.ui.comp
         private void btStrategy_Click(object sender, EventArgs e)
         {
             FormStrategy form = new FormStrategy(chartComponent);
-            form.ShowDialog();
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                FormRunState formRunState = new FormRunState();
+                formRunState.TopMost = true;
+                formRunState.Show();
+            }
         }
 
         private void btStrategyDataPackage_Click(object sender, EventArgs e)

@@ -13,9 +13,9 @@ namespace com.wer.sc.ui.comp
 {
     public partial class CompCodePackage : UserControl
     {
-        private CodePackageInfo codePackageInfo;
+        private CodePeriodPackageInfo codePackageInfo;
 
-        public CodePackageInfo CodePackage
+        public CodePeriodPackageInfo CodePackage
         {
             get
             {
@@ -30,7 +30,7 @@ namespace com.wer.sc.ui.comp
             InitializeComponent();
         }
 
-        public void Init(CodePackageInfo codePackageInfo)
+        public void Init(CodePeriodPackageInfo codePackageInfo)
         {
             this.codePackageInfo = codePackageInfo;
             this.tbStart.Text = this.codePackageInfo.Start.ToString();
@@ -38,12 +38,12 @@ namespace com.wer.sc.ui.comp
             this.RefreshGrid(codePackageInfo);
         }
 
-        private void RefreshGrid(CodePackageInfo codePackageInfo)
+        private void RefreshGrid(CodePeriodPackageInfo codePackageInfo)
         {
             string title = "合约";
-            if (codePackageInfo.ChoosedByMainContract)
+            if (codePackageInfo.CodeChooseMethod == CodeChooseMethod.Maincontract)
                 title = "主合约品种";
-            else if (codePackageInfo.ChoosedByCatelog)
+            else if (codePackageInfo.CodeChooseMethod == CodeChooseMethod.Catelog)
                 title = "品种";
             this.gridCodes.Columns[0].HeaderText = title;
             this.gridCodes.Rows.Clear();

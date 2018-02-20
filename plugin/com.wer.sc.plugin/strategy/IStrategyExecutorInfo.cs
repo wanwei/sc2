@@ -10,7 +10,7 @@ namespace com.wer.sc.strategy
     public interface IStrategyExecutorInfo
     {
         /// <summary>
-        /// 
+        /// 获得当前执行的数据包
         /// </summary>
         /// <returns></returns>
         IDataPackage_Code GetDataPackage();

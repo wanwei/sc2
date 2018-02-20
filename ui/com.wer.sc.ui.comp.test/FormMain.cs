@@ -56,11 +56,10 @@ namespace com.wer.sc.ui.comp.test
 
         private void btCodePackage_Click(object sender, EventArgs e)
         {
-            CodePackageInfo codePackage = new CodePackageInfo();
+            CodePeriodPackageInfo codePackage = new CodePeriodPackageInfo();
             codePackage.Start = 20160101;
             codePackage.End = 20170101;
-            codePackage.ChoosedByCatelog = false;
-            codePackage.ChoosedByMainContract = true;
+            codePackage.CodeChooseMethod = CodeChooseMethod.Maincontract;
             codePackage.Codes.Add("RB");
             FormCodePackage form = new FormCodePackage(codePackage);
             DialogResult result = form.ShowDialog();

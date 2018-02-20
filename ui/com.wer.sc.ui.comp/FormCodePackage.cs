@@ -14,16 +14,16 @@ namespace com.wer.sc.ui.comp
 {
     public partial class FormCodePackage : Form
     {
-        private CodePackageInfo codePackageInfo;
+        private CodePeriodPackageInfo codePackageInfo;
 
-        public FormCodePackage(CodePackageInfo codePackageInfo)
+        public FormCodePackage(CodePeriodPackageInfo codePackageInfo)
         {
             InitializeComponent();
             this.codePackageInfo = codePackageInfo;
             this.Init(codePackageInfo);
         }
 
-        private void Init(CodePackageInfo dataPackageInfo)
+        private void Init(CodePeriodPackageInfo dataPackageInfo)
         {
             this.compCodePackage1.Init(dataPackageInfo);           
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyExecuteDataPackageExecutor
+    public interface IStrategyExecutor_Multi
     {
 
     }

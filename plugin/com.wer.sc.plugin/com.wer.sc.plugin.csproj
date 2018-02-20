@@ -58,9 +58,14 @@
     <Compile Include="data\account\IAccountManager.cs" />
     <Compile Include="data\account\ITradeFee.cs" />
     <Compile Include="data\account\ITradeFee_Code.cs" />
+    <Compile Include="data\datapackage\ICodePeriodPackage.cs" />
+    <Compile Include="data\datapackage\ICodePeriodFactory.cs" />
+    <Compile Include="data\datapackage\ICodePeriodPackageInfo.cs" />
+    <Compile Include="data\datapackage\ICodePeriod.cs" />
     <Compile Include="data\datapackage\IDataPackage.cs" />
     <Compile Include="data\datapackage\IDataPackage_Code.cs" />
     <Compile Include="data\datapackage\IDataPackageFactory.cs" />
+    <Compile Include="data\datapackage\IDataPackage_CodeInfo.cs" />
     <Compile Include="data\forward\IDataForForward_Code.cs" />
     <Compile Include="data\IKLineDataTradingTimeInfo.cs" />
     <Compile Include="data\ITimeLineData_RealTime.cs" />
@@ -147,6 +152,7 @@
     <Compile Include="PluginInfo.cs" />
     <Compile Include="graphic\IShapeDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
+    <Compile Include="strategy\IStrategyExecutor_Multi.cs" />
     <Compile Include="strategy\IStrategyResultRow.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />

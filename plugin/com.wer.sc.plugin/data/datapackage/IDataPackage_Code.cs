@@ -16,23 +16,8 @@ namespace com.wer.sc.data.datapackage
     /// 整个系统里用到的数据建议都通过该接口完成，不建议直接调用IDataReader接口调用数据
     /// 系统对该接口做了很多优化工作，包括缓存，调用时初始化，数据共享等
     /// </summary>
-    public interface IDataPackage_Code : IXmlExchange
+    public interface IDataPackage_Code : IDataPackage_CodeInfo, IXmlExchange
     {
-        /// <summary>
-        /// 得到股票或期货的ID
-        /// </summary>
-        string Code { get; }
-
-        /// <summary>
-        /// 得到开始日期
-        /// </summary>
-        int StartDate { get; }
-
-        /// <summary>
-        /// 得到结束日期
-        /// </summary>
-        int EndDate { get; }
-
         /// <summary>
         /// 得到这段时间内的所有交易日
         /// </summary>

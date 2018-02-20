@@ -48,6 +48,7 @@
             this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btRunState = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -69,6 +70,7 @@
             this.btStrategyDescription,
             this.btStrategyDataPackage,
             this.toolStripSeparator1,
+            this.btRunState,
             this.btStrategyReport,
             this.btStrategyResult});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -274,6 +276,15 @@
             this.splitContainer1.SplitterDistance = 481;
             this.splitContainer1.TabIndex = 11;
             // 
+            // btRunState
+            // 
+            this.btRunState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btRunState.Image = ((System.Drawing.Image)(resources.GetObject("btRunState.Image")));
+            this.btRunState.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btRunState.Name = "btRunState";
+            this.btRunState.Size = new System.Drawing.Size(24, 28);
+            this.btRunState.Text = "toolStripButton1";
+            // 
             // FormStrategy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -321,5 +332,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private CompCodePackage compCodePackage1;
+        private System.Windows.Forms.ToolStripButton btRunState;
     }
 }

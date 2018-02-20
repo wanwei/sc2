@@ -25,6 +25,8 @@ namespace com.wer.sc.data
 
         private IDataPackageFactory dataPackageFactory;
 
+        private ICodePeriodFactory codePackageFactory;
+
         private IDataForwardFactory historyDataForwardFactory;
 
         private IDataNavigateFactory dataNavigateFactory;
@@ -36,6 +38,7 @@ namespace com.wer.sc.data
             this.dataStore = DataStoreFactory.CreateDataStore(this);
             this.dataReader = DataReaderFactory.CreateDataReader(this);
             this.dataPackageFactory = new DataPackageFactory(dataReader);
+            this.codePackageFactory = new CodePeriodFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(this);
             this.accountFactory = new AccountManager(this, this.dataStore.CreateAccountStore());
@@ -47,9 +50,10 @@ namespace com.wer.sc.data
             this.dataStore = dataStore;
             this.dataReader = dataReaderFactory;
             this.dataPackageFactory = new DataPackageFactory(dataReader);
+            this.codePackageFactory = new CodePeriodFactory(dataReader);
             this.historyDataForwardFactory = new DataForwardFactory(this);
             this.dataNavigateFactory = new DataNavigateFactory(this);
-            this.accountFactory = new AccountManager(this,this.dataStore.CreateAccountStore());
+            this.accountFactory = new AccountManager(this, this.dataStore.CreateAccountStore());
         }
 
         public DataCenterInfo Config
@@ -122,6 +126,15 @@ namespace com.wer.sc.data
                 return this.dataPackageFactory;
             }
         }
+
+        public ICodePeriodFactory CodePackageFactory
+        {
+            get
+            {
+                return this.codePackageFactory;
+            }
+        }
+
 
         public IDataNavigateFactory DataNavigateFactory
         {

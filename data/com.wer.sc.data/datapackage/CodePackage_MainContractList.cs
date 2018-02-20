@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.data.datapackage
 {
-    public class CodePackage_MainContractList
+    public class CodePackage_MainContractList : ICodePackage_MainContractList
     {
-        private List<CodePackage_MainContract> varieties = new List<CodePackage_MainContract>();
+        private List<ICodePeriod_MainContract> varieties = new List<ICodePeriod_MainContract>();
 
-        public List<CodePackage_MainContract> Varieties
+        public List<ICodePeriod_MainContract> Varieties
         {
             get { return varieties; }
         }
@@ -26,17 +26,35 @@ namespace com.wer.sc.data.datapackage
         }
     }
 
-    public class CodePackage_MainContract
+    public class CodePackage_MainContract : ICodePeriod_MainContract
     {
-        private List<CodePackageInfo_Code> mainCodes = new List<CodePackageInfo_Code>();
+        private List<ICodePackageInfo_Code> mainCodes = new List<ICodePackageInfo_Code>();
 
-        public string Variety;
+        private string variety;
 
-        public int StartDate;
+        public string Variety
+        {
+            get { return variety; }
+            set { this.variety = value; }
+        }
 
-        public int EndDate;
+        private int startDate;
 
-        public List<CodePackageInfo_Code> MainCodes
+        public int StartDate
+        {
+            get { return this.startDate; }
+            set { this.startDate = value; }
+        }
+
+        private int endDate;
+
+        public int EndDate
+        {
+            get { return endDate; }
+            set { this.endDate = value; }
+        }
+
+        public List<ICodePackageInfo_Code> MainCodes
         {
             get { return mainCodes; }
         }
