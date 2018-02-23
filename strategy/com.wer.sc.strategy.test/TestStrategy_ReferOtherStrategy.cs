@@ -25,10 +25,11 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+            StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(code, startDate, endDate, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_ReferOtherStrategy));
-            executor.SetStrategy(strategy);
+            executor.Strategy = strategy;
             executor.Run();
         }
     }

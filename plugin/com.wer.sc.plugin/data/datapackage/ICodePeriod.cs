@@ -29,13 +29,14 @@ namespace com.wer.sc.data.datapackage
         int EndDate { get; }
 
         /// <summary>
-        /// 是否是主合约
+        /// 是否是从多个合约而来的
+        /// 该方式一般用于期货
         /// </summary>
-        bool IsMainContract { get; }
+        bool IsFromContracts { get; }
 
         /// <summary>
-        /// 主合约列表
+        /// 多个合约列表
         /// </summary>
-        IList<ICodePeriod> MainCodes { get; }
+        IList<ICodePeriod> Contracts { get; }
     }
 }

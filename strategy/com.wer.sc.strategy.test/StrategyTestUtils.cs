@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,31 @@ namespace com.wer.sc.strategy
 {
     public class StrategyTestUtils
     {
-        public static IStrategyExecutor GetExecutor(string code, int start, int end)
+        public static IStrategyExecutor CreateExecutor_CodePeriod(string code, int start, int end)
         {
-            IStrategyExecutorFactory_History executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory_History();
+            IStrategyExecutorFactory executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
+            StrategyReferedPeriods referedPeriods = GetReferedPeriods();
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+
+            StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(code, start, end, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
+            return executor;
+        }
+
+        public static IStrategyExecutor CreateExecutor_DataPackage(string code, int start, int end)
+        {
+            IStrategyExecutorFactory executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
+            StrategyReferedPeriods referedPeriods = GetReferedPeriods();
+            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
+
+            IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, start, end);
+            StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
+            return executor;
+        }
+
+        private static StrategyReferedPeriods GetReferedPeriods()
+        {
             List<KLinePeriod> usedKLinePeriods = new List<KLinePeriod>();
             usedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             usedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
@@ -19,9 +42,7 @@ namespace com.wer.sc.strategy
             usedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Hour);
             usedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Day);
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods(usedKLinePeriods, true, true);
-            StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
-            IStrategyExecutor executor = executorFactory.CreateExecutor(code, start, end, referedPeriods, forwardPeriod);
-            return executor;
+            return referedPeriods;
         }
     }
 }

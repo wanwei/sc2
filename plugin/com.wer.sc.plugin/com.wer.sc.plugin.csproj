@@ -58,6 +58,7 @@
     <Compile Include="data\account\IAccountManager.cs" />
     <Compile Include="data\account\ITradeFee.cs" />
     <Compile Include="data\account\ITradeFee_Code.cs" />
+    <Compile Include="data\datapackage\CodePeriod.cs" />
     <Compile Include="data\datapackage\ICodePeriodPackage.cs" />
     <Compile Include="data\datapackage\ICodePeriodFactory.cs" />
     <Compile Include="data\datapackage\ICodePeriodPackageInfo.cs" />
@@ -152,13 +153,13 @@
     <Compile Include="PluginInfo.cs" />
     <Compile Include="graphic\IShapeDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
-    <Compile Include="strategy\IStrategyExecutor_Multi.cs" />
+    <Compile Include="strategy\IStrategyExecutor.cs" />
+    <Compile Include="strategy\IStrategyExecutorFactory.cs" />
+    <Compile Include="strategy\IStrategyExecutorInfo.cs" />
+    <Compile Include="strategy\IStrategyExecutorPool.cs" />
+    <Compile Include="strategy\IStrategyOnDayArgument.cs" />
     <Compile Include="strategy\IStrategyResultRow.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
-    <Compile Include="strategy\IStrategyExecutor.cs" />
-    <Compile Include="strategy\IStrategyExecutorFactory_Current.cs" />
-    <Compile Include="strategy\IStrategyExecutorFactory_History.cs" />
-    <Compile Include="strategy\IStrategyExecutorInfo.cs" />
     <Compile Include="strategy\plugin\IStrategyCenter.cs" />
     <Compile Include="strategy\IStrategyPackage.cs" />
     <Compile Include="strategy\plugin\IStrategyInfo.cs" />
@@ -231,6 +232,10 @@
     <Compile Include="data\utils\TimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\IStrategyHelper.cs" />
+    <Compile Include="strategy\StrategyArguments_CodePeriod.cs" />
+    <Compile Include="strategy\StrategyArguments_CodePeriodPackage.cs" />
+    <Compile Include="strategy\StrategyArguments_DataPackages.cs" />
+    <Compile Include="strategy\StrategyArguments_DataPackage.cs" />
     <Compile Include="strategy\StrategyException.cs" />
     <Compile Include="strategy\StrategyForwardPeriod.cs" />
     <Compile Include="strategy\StrategyDynamicArray.cs" />

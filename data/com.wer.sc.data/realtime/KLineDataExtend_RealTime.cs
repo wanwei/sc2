@@ -8,7 +8,12 @@ namespace com.wer.sc.data.realtime
 {
     public class KLineDataExtend_RealTime : KLineData_RealTime, IKLineData_RealTime
     {
-        private IKLineData_Extend klineData_Extend;
+        //private IKLineData_Extend klineData_Extend;
+
+        protected IKLineData_Extend klineData_Extend
+        {
+            get { return (IKLineData_Extend)this.klineData; }
+        }
 
         public int TradingDay
         {
@@ -20,7 +25,20 @@ namespace com.wer.sc.data.realtime
 
         public KLineDataExtend_RealTime(IKLineData_Extend klineData) : base(klineData)
         {
-            this.klineData_Extend = klineData;
+            //this.klineData_Extend = klineData;
+        }
+
+        public override int BarPos
+        {
+            get
+            {
+                return klineData_Extend.BarPos;
+            }
+
+            set
+            {
+                klineData_Extend.BarPos = value;
+            }
         }
 
         public IKLineData_Extend GetKLineData_Original()

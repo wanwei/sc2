@@ -56,8 +56,12 @@
     <Compile Include="StrategyCenter.cs" />
     <Compile Include="loader\StrategyMgr.cs" />
     <Compile Include="loader\StrategyMgrFactory.cs" />
+    <Compile Include="StrategyExecutor.cs" />
+    <Compile Include="StrategyExecutorInfo.cs" />
     <Compile Include="StrategyExecutorManager.cs" />
-    <Compile Include="StrategyExecutor_HistoryCodePackage.cs" />
+    <Compile Include="StrategyExecutor_CodePeriod.cs" />
+    <Compile Include="StrategyExecutor_CodePeriodPackage.cs" />
+    <Compile Include="StrategyExecutor_DataPackages.cs" />
     <Compile Include="StrategyOnBarArgument.cs" />
     <Compile Include="StrategyOnBarInfo.cs" />
     <Compile Include="StrategyOnEndArgument.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="StrategyHelper.cs" />
     <Compile Include="StrategyRunnerArguments.cs" />
     <Compile Include="StrategyExecutorFactory.cs" />
-    <Compile Include="StrategyExecutor_History.cs" />
+    <Compile Include="StrategyExecutor_DataPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategy_ComplexAbstract.cs" />
   </ItemGroup>

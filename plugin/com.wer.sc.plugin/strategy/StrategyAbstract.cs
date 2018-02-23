@@ -48,6 +48,11 @@ namespace com.wer.sc.strategy
 
         public abstract void OnTick(Object sender, IStrategyOnTickArgument currentData);
 
+        public virtual void OnDay(Object sender, IStrategyOnDayArgument argument)
+        {
+
+        }
+
         public IStrategyHelper StrategyOperator
         {
             get { return strategyHelper; }

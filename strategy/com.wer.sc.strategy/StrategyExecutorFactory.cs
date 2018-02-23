@@ -13,7 +13,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略执行器工厂
     /// </summary>
-    public class StrategyExecutorFactory : IStrategyExecutorFactory_History
+    public class StrategyExecutorFactory : IStrategyExecutorFactory
     {
         private IDataCenter dataCenter;
 
@@ -22,25 +22,46 @@ namespace com.wer.sc.strategy
             this.dataCenter = dataCenter;
         }
 
-        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyArguments)
         {
-            return CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+            return new StrategyExecutor_DataPackage(strategyArguments);
         }
 
-        public IStrategyExecutor CreateExecutor(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator)
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyArguments, IStrategyHelper strategyHelper)
         {
-            IDataPackage_Code dataPackage_Code = dataCenter.DataPackageFactory.CreateDataPackage_Code(code, startDate, endDate, 200, 0);
-            return CreateExecutorByDataPackage(dataPackage_Code, referedPeriods, forwardPeriod);
+            return new StrategyExecutor_DataPackage(strategyArguments, strategyHelper);
         }
 
-        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyArguments)
         {
-            return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+            //return new StrategyExecutor_DataPackages(strategyArguments);
+            return null;
         }
 
-        public IStrategyExecutor CreateExecutorByDataPackage(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyOperator)
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyArguments, IStrategyHelper strategyHelper)
         {
-            return new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
+            //return new StrategyExecutor_DataPackages(strategyArguments, strategyHelper);
+            return null;
+        }
+
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod)
+        {
+            return new StrategyExecutor_CodePeriod(dataCenter, strategyCodePeriod);
+        }
+
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod, IStrategyHelper strategyHelper)
+        {
+            return new StrategyExecutor_CodePeriod(dataCenter, strategyCodePeriod, strategyHelper);
+        }
+
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage)
+        {
+            return new StrategyExecutor_CodePeriodPackage(dataCenter, strategyCodePeriodPackage);
+        }
+
+        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper)
+        {
+            return new StrategyExecutor_CodePeriodPackage(dataCenter, strategyCodePeriodPackage, strategyHelper);
         }
     }
 

@@ -22,8 +22,8 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.GetExecutor(code, start, end);
-            executor.SetStrategy(strategy);
+            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
+            executor.Strategy = strategy;
             executor.Run();
 
             List<string> results = (List<string>)strategy.GetData("RESULT");

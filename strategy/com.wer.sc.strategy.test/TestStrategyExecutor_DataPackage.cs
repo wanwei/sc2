@@ -14,7 +14,7 @@ using com.wer.sc.strategy;
 namespace com.wer.sc.strategy
 {
     [TestClass]
-    public class TestStrategyExecutor
+    public class TestStrategyExecutor_DataPackage
     {
         [TestMethod]
         public void TestRunStrategy_Minute()
@@ -22,6 +22,7 @@ namespace com.wer.sc.strategy
             string code = "RB1710";
             int startDate = 20170601;
             int endDate = 20170603;
+            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, startDate, endDate);
 
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = false;
@@ -29,10 +30,11 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory_History().CreateExecutor(code, startDate, endDate, referedPeriods, forwardPeriod, null);
+            StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
-            executor.SetStrategy(strategy);
+            executor.Strategy = strategy;
             executor.Run();
         }
 
@@ -53,7 +55,8 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
 
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
-            StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+            StrategyArguments_DataPackage arguments = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            StrategyExecutor_DataPackage runner = new StrategyExecutor_DataPackage(arguments);
 
             DateTime prevtime = DateTime.Now;
 
@@ -78,11 +81,12 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_1Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            StrategyExecutor_History runner = new StrategyExecutor_History(dataPackage, referedPeriods, forwardPeriod);
+            StrategyArguments_DataPackage arguments = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            StrategyExecutor_DataPackage runner = new StrategyExecutor_DataPackage(arguments);
 
             DateTime prevtime = DateTime.Now;
             runner.SetStrategy(new MockStrategy(null));
-            runner.ExecuteFinished += Runner_ExecuteFinished;
+            runner.OnFinished += Runner_OnFinished;
             runner.Execute();
             while (!isFinished)
             {
@@ -93,12 +97,12 @@ namespace com.wer.sc.strategy
             Console.WriteLine(span.Minutes * 60 + span.Seconds);
         }
 
-        private bool isFinished = false;
-
-        private void Runner_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        private void Runner_OnFinished(object sender, StrategyFinishedArguments arguments)
         {
             Console.WriteLine("ExecuteFinished:");
             isFinished = true;
         }
+
+        private bool isFinished = false;
     }
 }

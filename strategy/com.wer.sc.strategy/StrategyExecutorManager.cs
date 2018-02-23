@@ -16,54 +16,5 @@ namespace com.wer.sc.strategy
         {
 
         }
-
-    }
-
-    public abstract class StrategyExecuteInfo_Abstract
-    {
-        private StrategyExecutor_History executor;
-
-        public StrategyExecuteInfo_Abstract(StrategyExecutor_History executor)
-        {
-            this.executor = executor;
-            this.executor.DayFinished += Executor_DayFinished;
-        }
-
-        private void Executor_DayFinished(IStrategy strategy)
-        {
-            
-        }
-
-        /// <summary>
-        /// 策略
-        /// </summary>
-        public IStrategy Strategy;
-
-        /// <summary>
-        /// 策略引用的周期
-        /// </summary>
-        public StrategyReferedPeriods ReferedPeriods;
-
-        /// <summary>
-        /// 策略的前进周期
-        /// </summary>
-        public StrategyForwardPeriod ForwardPeriod;
-
-        /// <summary>
-        /// 总共的日子
-        /// </summary>
-        public int TotalDays;
-
-        public int CurrentDay;
-
-
-    }
-
-    /// <summary>
-    /// 策略执行信息
-    /// </summary>
-    public class StrategyExecuteInfo_Normal
-    {
-        //public CodePackageInfo_Code CodePackageInfo;
     }
 }

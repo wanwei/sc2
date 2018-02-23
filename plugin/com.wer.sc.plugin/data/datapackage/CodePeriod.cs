@@ -33,7 +33,7 @@ namespace com.wer.sc.data.datapackage
 
         private bool isMainContract;
 
-        public bool IsMainContract
+        public bool IsFromContracts
         {
             get
             {
@@ -48,7 +48,7 @@ namespace com.wer.sc.data.datapackage
 
         private IList<ICodePeriod> mainCodes;
 
-        public IList<ICodePeriod> MainCodes
+        public IList<ICodePeriod> Contracts
         {
             get
             {
@@ -77,9 +77,9 @@ namespace com.wer.sc.data.datapackage
             sb.Append(Code + "," + StartDate + "," + EndDate);
             if (isMainContract)
             {
-                for (int i = 0; i < MainCodes.Count; i++)
+                for (int i = 0; i < Contracts.Count; i++)
                 {
-                    ICodePeriod codePeriod = MainCodes[i];
+                    ICodePeriod codePeriod = Contracts[i];
                     sb.Append("\r\n").Append(codePeriod);
                 }
             }

@@ -86,6 +86,8 @@ namespace com.wer.sc.strategy
         /// <param name="currentData"></param>
         void OnBar(Object sender, IStrategyOnBarArgument currentData);
 
+        void OnDay(Object sender, IStrategyOnDayArgument argument);
+
         /// <summary>
         /// 
         /// </summary>

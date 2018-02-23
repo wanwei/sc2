@@ -12,7 +12,7 @@ namespace com.wer.sc.data.realtime
     /// </summary>
     public class KLineData_RealTime : KLineData_Abstract, IKLineData
     {
-        private IKLineData klineData;
+        protected IKLineData klineData;
 
         private ReadOnlyList_TmpValue<double> list_Time;
         private ReadOnlyList_TmpValue<float> list_Start;

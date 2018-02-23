@@ -40,7 +40,7 @@ namespace com.wer.sc.strategy
             return new StrategyCenter(dataCenter);
         }
 
-        public IStrategyExecutorFactory_History GetStrategyExecutorFactory_History()
+        public IStrategyExecutorFactory GetStrategyExecutorFactory()
         {
             return strategyExecutorFactory;
         }

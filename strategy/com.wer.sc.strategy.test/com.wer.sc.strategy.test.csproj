@@ -62,6 +62,7 @@
     <Compile Include="CommonData.cs" />
     <Compile Include="loader\TestStrategyAssemblyConfig.cs" />
     <Compile Include="mock\MockStrategy.cs" />
+    <Compile Include="mock\MockStrategy_Empty.cs" />
     <Compile Include="mock\MockStrategy_Ma.cs" />
     <Compile Include="mock\MockStrategy_Parameter.cs" />
     <Compile Include="mock\MockStrategy_ReferOtherCode.cs" />
@@ -75,7 +76,8 @@
     <None Include="TestCase\com\wer\sc\strategy\loader\strategy.common.strategyconfig" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyParameter_15Minute" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyTrade" />
-    <Compile Include="TestStrategyExecutor.cs" />
+    <Compile Include="TestStrategyExecutor_DataPackage.cs" />
+    <Compile Include="TestStrategyExecutor_DataPackage_Event.cs" />
     <Compile Include="TestStrategyExecutor_History.cs" />
     <Compile Include="TestStrategyExecutor_Multi.cs" />
     <Compile Include="TestStrategyMgr.cs" />

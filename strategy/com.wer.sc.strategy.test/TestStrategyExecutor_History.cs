@@ -21,9 +21,9 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.GetExecutor(code, start, end);
+            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy strategy = new MockStrategy();
-            executor.SetStrategy(strategy);
+            executor.Strategy = strategy;
             //executor.Execute();
             executor.Run();
             //AssertUtils.PrintLineList(strategy.PrintData);
@@ -36,18 +36,18 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.GetExecutor(code, start, end);
+            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy strategy = new MockStrategy();
-            executor.SetStrategy(strategy);
-            executor.ExecuteFinished += Executor_ExecuteFinished;
+            executor.Strategy = strategy;
+            executor.OnFinished += Executor_OnFinished;
             executor.Execute();
             //AssertUtils.AssertEqual_List("executorhistory", GetType(), strategy.PrintData);
         }
 
-        private void Executor_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        private void Executor_OnFinished(object sender, StrategyFinishedArguments arguments)
         {
-            AssertUtils.AssertEqual_List("executorhistory", GetType(), ((MockStrategy)strategy).PrintData);
-        }
+            AssertUtils.AssertEqual_List("executorhistory", GetType(), ((MockStrategy)arguments.Strategy).PrintData);
+        }        
 
         //public static IStrategyExecutor GetExecutor(string code, int start, int end)
         //{
@@ -70,9 +70,9 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.GetExecutor(code, start, end);
+            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy_Ma strategy = new MockStrategy_Ma();
-            executor.SetStrategy(strategy);
+            executor.Strategy = strategy;
             executor.Run();
 
             List<float> floats = strategy.MAList;

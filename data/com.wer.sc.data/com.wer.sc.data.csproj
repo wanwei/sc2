@@ -56,7 +56,6 @@
     <Compile Include="datapackage\CodePeriodPackage.cs" />
     <Compile Include="datapackage\CodePeriodFactory.cs" />
     <Compile Include="datapackage\CodePeriodPackageInfo.cs" />
-    <Compile Include="datapackage\CodePeriod.cs" />
     <Compile Include="market\Plugin_MarketData_Simu.cs" />
     <Compile Include="market\Plugin_MarketTrader_Simu.cs" />
     <Compile Include="account\TradeFee.cs" />

@@ -44,7 +44,7 @@ namespace com.wer.sc.data
         {
             get
             {
-                return Arr_Time[barPos];
+                return Arr_Time[BarPos];
             }
             set { throw new NotImplementedException(); }
         }
@@ -53,7 +53,7 @@ namespace com.wer.sc.data
         {
             get
             {
-                return Arr_Start[barPos];
+                return Arr_Start[BarPos];
             }
             set { throw new NotImplementedException(); }
         }
@@ -116,12 +116,12 @@ namespace com.wer.sc.data
 
         #region 完整数据
 
-        public IKLineBar GetCurrentBar()
+        public virtual IKLineBar GetCurrentBar()
         {
             return this;
         }
 
-        public IKLineData GetRange(int start, int end)
+        public virtual IKLineData GetRange(int start, int end)
         {
             IKLineData data = this;
             KLineData d1 = new KLineData(end - start + 1);
@@ -138,18 +138,19 @@ namespace com.wer.sc.data
             }
             return d1;
         }
+
         /// <summary>
         /// 得到一段子K线数据，该方法和GetRange区别是生成的新k线和老K线公用K线
         /// </summary>
         /// <param name="startPos"></param>
         /// <param name="endPos"></param>
         /// <returns></returns>
-        public IKLineData Sub(int startPos, int endPos)
+        public virtual IKLineData Sub(int startPos, int endPos)
         {
             return new KLineData_Sub(this, startPos, endPos);
         }
 
-        public IKLineBar GetAggrKLineBar(int startIndex, int endIndex)
+        public virtual IKLineBar GetAggrKLineBar(int startIndex, int endIndex)
         {
             KLineBar bar = new KLineBar();
             bar.Time = this.Arr_Time[startIndex];
@@ -296,12 +297,12 @@ namespace com.wer.sc.data
             return sb.ToString();
         }
 
-        public IKLineBar GetBar(int index)
+        public virtual IKLineBar GetBar(int index)
         {
             return new KLineBar_KLineData(this, index);
         }
 
-        public int Length
+        public virtual int Length
         {
             get
             {
@@ -309,7 +310,7 @@ namespace com.wer.sc.data
             }
         }
 
-        public int BarPos
+        public virtual int BarPos
         {
             get
             {

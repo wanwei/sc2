@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data;
+using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,39 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
+    /// <summary>
+    /// 单个策略的执行信息类
+    /// </summary>
     public interface IStrategyExecutorInfo
     {
         /// <summary>
-        /// 获得当前执行的数据包
+        /// 得到策略执行器里执行的品种ID及时间
         /// </summary>
-        /// <returns></returns>
-        IDataPackage_Code GetDataPackage();
+        ICodePeriod CodePeriod { get; }
 
         /// <summary>
-        /// 策略执行器准备的数据
+        /// 得到当前的K线
         /// </summary>
-        /// <returns></returns>
-        StrategyReferedPeriods GetReferedPeriods();
+        IKLineData CurrentKLineData { get; }
 
         /// <summary>
-        /// 策略执行器的前进周期
+        /// 总共要执行的天数
         /// </summary>
-        /// <returns></returns>
-        StrategyForwardPeriod GetForwardPeriod();
+        int TotalDayCount { get; }
+
+        /// <summary>
+        /// 当前执行的日期
+        /// </summary>
+        int CurrentDay { get; }
+
+        /// <summary>
+        /// 当前执行的日期索引号
+        /// </summary>
+        int CurrentDayIndex { get; }
+
+        /// <summary>
+        /// 执行是否结束
+        /// </summary>
+        bool IsFinished { get; }
     }
 }

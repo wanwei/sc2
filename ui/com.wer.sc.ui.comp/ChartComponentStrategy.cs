@@ -95,7 +95,7 @@ namespace com.wer.sc.ui.comp
             KLinePeriod mainPeriod = referedPeriods.MainPeriod;
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(referedPeriods.UseTickData, mainPeriod);
 
-            IStrategyExecutorFactory_History executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory_History();
+            IStrategyExecutorFactory executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
             IDataPackage_Code dataPackage = this.compChart.Controller.CurrentNavigater.DataPackage;
 
             Dictionary<KLinePeriod, int> dic_KLinePeriod_StartPos = new Dictionary<KLinePeriod, int>();
@@ -106,18 +106,19 @@ namespace com.wer.sc.ui.comp
             }
 
             drawOperator = new ChartComponentStrategyDrawer(this.compChart.Drawer, dic_KLinePeriod_StartPos, 0, 0);
+            StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod); ;
             IStrategyHelper strategyOperator = new StrategyHelper(drawOperator);
-            strategyExecutor = executorFactory.CreateExecutorByDataPackage(dataPackage, referedPeriods, forwardPeriod, strategyOperator);
+            strategyExecutor = executorFactory.CreateExecutor_History(strategyDataPackage, strategyOperator);
 
-            strategyExecutor.SetStrategy(strategy);
+            strategyExecutor.Strategy = strategy;
             //strategyExecutor.Run();
-            strategyExecutor.ExecuteFinished += StrategyExecutor_ExecuteFinished;
+            //strategyExecutor.ExecuteFinished += StrategyExecutor_ExecuteFinished;
             strategyExecutor.Execute();
         }
 
-        public event StrategyExecuteFinished ExecuteFinished;
+        public event StrategyFinished ExecuteFinished;
 
-        private void StrategyExecutor_ExecuteFinished(IStrategy strategy, StrategyExecuteFinishedArguments arg)
+        private void StrategyExecutor_ExecuteFinished(IStrategy strategy, StrategyFinishedArguments arg)
         {
             IStrategyTrader trader = strategyExecutor.StrategyReport.StrategyTrader;
             if (trader != null)

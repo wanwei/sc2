@@ -17,35 +17,60 @@ namespace com.wer.sc.strategy
     /// 策略执行器
     /// 策略执行前进周期：tick或者K线
     /// </summary>
-    public class StrategyExecutor_History : IStrategyExecutor
+    public class StrategyExecutor_DataPackage : IStrategyExecutor
     {
+        private StrategyDayFinishedArguments dayFinishedArguments = null;
+
+        private StrategyBarFinishedArguments barFinishedArguments = null;
+
+        private StrategyFinishedArguments finishedArguments = null;
+
+        private ICodePeriod codePeriod;
+
         private IStrategy strategy;
 
-        private bool isRunning;
+        private StrategyExecutorInfo strategyExecutorInfo;
+
+        public IStrategy Strategy
+        {
+            get { return this.strategy; }
+            set { SetStrategy(value); }
+        }
+
+        private IDataPackage_Code dataPackage;
 
         private StrategyReferedPeriods referedPeriods;
 
         private StrategyForwardPeriod forwardPeriod;
 
-        private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
-
-        private IDataPackage_Code dataPackage;
-
         private StrategyHelper strategyHelper;
+
+        private bool isRunning;
+
+        private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
 
         private IStrategyResult report;
 
-        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod) : this(dataPackage, referedPeriods, forwardPeriod, new StrategyHelper(null))
+        public StrategyExecutor_DataPackage(StrategyArguments_DataPackage strategyArguments) : this(strategyArguments, new StrategyHelper(null))
         {
 
         }
 
-        public StrategyExecutor_History(IDataPackage_Code dataPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, IStrategyHelper strategyHelper)
+        public StrategyExecutor_DataPackage(StrategyArguments_DataPackage strategyArguments, IStrategyHelper strategyHelper)
         {
-            this.dataPackage = dataPackage;
-            this.referedPeriods = referedPeriods;
-            this.forwardPeriod = forwardPeriod;
+            this.dataPackage = strategyArguments.DataPackage;
+            this.referedPeriods = strategyArguments.ReferedPeriods;
+            this.forwardPeriod = strategyArguments.ForwardPeriod;
+            this.codePeriod = new CodePeriod(dataPackage.Code, dataPackage.StartDate, dataPackage.EndDate);
+            this.InitStrategyExecutorInfo();
             this.strategyHelper = (StrategyHelper)strategyHelper;
+        }
+
+        private void InitStrategyExecutorInfo()
+        {
+            this.strategyExecutorInfo = new StrategyExecutorInfo(codePeriod, dataPackage.GetTradingDays().Count);
+            this.strategyExecutorInfo.CurrentDay = dataPackage.GetTradingDays()[0];
+            this.strategyExecutorInfo.CurrentDayIndex = 0;
         }
 
         public void SetStrategy(IStrategy strategy)
@@ -61,7 +86,6 @@ namespace com.wer.sc.strategy
                 for (int i = 0; i < referedStrategies.Count; i++)
                 {
                     InitStrategy(referedStrategies[i]);
-                    //referedStrategies[i].StrategyOperator = strategyHelper;
                 }
             }
         }
@@ -70,11 +94,6 @@ namespace com.wer.sc.strategy
         {
             if (strategy is StrategyAbstract)
                 ((StrategyAbstract)strategy).StrategyOperator = strategyHelper;
-        }
-
-        public void SetStrategyPackage(IStrategyPackage strategyPackage)
-        {
-
         }
 
         private object lockObj = new object();
@@ -183,12 +202,11 @@ namespace com.wer.sc.strategy
                 IStrategyOnEndArgument argument = new StrategyOnEndArgument(dataForward);
                 ExecuteReferStrategyEnd(strategy, argument);
                 this.BuildStrategyReport();
-                if (ExecuteFinished != null)
-                    ExecuteFinished(this.strategy, new StrategyExecuteFinishedArguments(this.report));
+                OnFinished?.Invoke(this.strategy, new StrategyFinishedArguments(this.strategy, this.strategyExecutorInfo, this.report));
             }
             catch (Exception e)
             {
-                LogHelper.Warn(GetType(), e);
+                LogHelper.Warn(this.GetType(), e);
             }
         }
 
@@ -231,6 +249,27 @@ namespace com.wer.sc.strategy
         private void RealTimeReader_OnBar(object sender, IForwardOnBarArgument argument)
         {
             OnBar_ReferedStrategies(this.strategy, argument);
+            IKLineData_Extend mainKLineData = argument.MainBar.KLineData;
+            if (this.strategyExecutorInfo != null)
+                this.strategyExecutorInfo.CurrentKLineData = mainKLineData;
+            if (OnBarFinished != null)
+            {
+                if (barFinishedArguments == null)
+                    barFinishedArguments = new StrategyBarFinishedArguments(this.strategyExecutorInfo);
+                OnBarFinished(strategy, barFinishedArguments);
+            }
+            if (OnDayFinished != null && mainKLineData.IsDayEnd())
+            {
+                if (dayFinishedArguments == null)
+                    dayFinishedArguments = new StrategyDayFinishedArguments(this.strategyExecutorInfo);
+                OnDayFinished(strategy, dayFinishedArguments);
+            }
+            if (mainKLineData.IsDayStart())
+            {
+                this.strategyExecutorInfo.CurrentDayIndex++;
+                this.strategyExecutorInfo.CurrentDay = mainKLineData.GetTradingTime().TradingDay;
+
+            }
         }
 
         private void OnBar_ReferedStrategies(IStrategy strategy, IForwardOnBarArgument argument)
@@ -254,22 +293,33 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return null;
+                return this.strategyExecutorInfo;
             }
         }
+
+        public ICodePeriod CodePeriod
+        {
+            get
+            {
+                return codePeriod;
+            }
+        }
+
+        public event StrategyStart OnStart;
+
         /// <summary>
-        /// 
+        /// 执行完每一个bar
         /// </summary>
-        public event StrategyExecuteBarFinished BarFinished;
+        public event StrategyBarFinished OnBarFinished;
 
         /// <summary>
         /// 
         /// </summary>
-        public event StrategyExecuteDayFinished DayFinished;
+        public event StrategyDayFinished OnDayFinished;
 
         /// <summary>
         /// 执行完
         /// </summary>
-        public event StrategyExecuteFinished ExecuteFinished;
+        public event StrategyFinished OnFinished;
     }
 }
