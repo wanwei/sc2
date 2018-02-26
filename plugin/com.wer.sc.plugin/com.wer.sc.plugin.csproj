@@ -157,6 +157,7 @@
     <Compile Include="strategy\IStrategyExecutorFactory.cs" />
     <Compile Include="strategy\IStrategyExecutorInfo.cs" />
     <Compile Include="strategy\IStrategyExecutorPool.cs" />
+    <Compile Include="strategy\IStrategyExecutor_Multi.cs" />
     <Compile Include="strategy\IStrategyOnDayArgument.cs" />
     <Compile Include="strategy\IStrategyResultRow.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />

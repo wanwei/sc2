@@ -34,14 +34,12 @@ namespace com.wer.sc.strategy
 
         public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyArguments)
         {
-            //return new StrategyExecutor_DataPackages(strategyArguments);
-            return null;
+            return new StrategyExecutor_DataPackages(strategyArguments);
         }
 
         public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyArguments, IStrategyHelper strategyHelper)
         {
-            //return new StrategyExecutor_DataPackages(strategyArguments, strategyHelper);
-            return null;
+            return new StrategyExecutor_DataPackages(strategyArguments, strategyHelper);
         }
 
         public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod)
@@ -54,36 +52,39 @@ namespace com.wer.sc.strategy
             return new StrategyExecutor_CodePeriod(dataCenter, strategyCodePeriod, strategyHelper);
         }
 
-        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage)
+        public IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage)
         {
-            return new StrategyExecutor_CodePeriodPackage(dataCenter, strategyCodePeriodPackage);
+            return null;
         }
 
-        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper)
+        public IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper)
         {
-            return new StrategyExecutor_CodePeriodPackage(dataCenter, strategyCodePeriodPackage, strategyHelper);
+            return null;
+        }
+
+
+        public IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage)
+        {
+            List<IStrategyExecutor> executors = new List<IStrategyExecutor>();
+            List<ICodePeriod> codePeriods = strategyCodePeriodPackage.CodePeriodPackage.CodePeriods;
+            for (int i = 0; i < codePeriods.Count; i++)
+            {
+                StrategyArguments_CodePeriod argument = new StrategyArguments_CodePeriod(codePeriods[i], strategyCodePeriodPackage.ReferedPeriods, strategyCodePeriodPackage.ForwardPeriod);
+                executors.Add(CreateExecutor_History(argument));
+            }
+            return executors;
+        }
+
+        public IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper)
+        {
+            List<IStrategyExecutor> executors = new List<IStrategyExecutor>();
+            List<ICodePeriod> codePeriods = strategyCodePeriodPackage.CodePeriodPackage.CodePeriods;
+            for (int i = 0; i < codePeriods.Count; i++)
+            {
+                StrategyArguments_CodePeriod argument = new StrategyArguments_CodePeriod(codePeriods[i], strategyCodePeriodPackage.ReferedPeriods, strategyCodePeriodPackage.ForwardPeriod);
+                executors.Add(CreateExecutor_History(argument, strategyHelper));
+            }
+            return executors;
         }
     }
-
-    /// <summary>
-    /// 策略的执行参数
-    /// </summary>
-    //public interface StrategyRunnerArgument
-    //{
-    //    /// <summary>
-    //    /// 获得
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    StrategyReferedPeriods GetReferedPeriods();
-
-    //    /// <summary>
-    //    /// 
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    ForwardPeriod GetForwardPeriod();
-
-    //    event DelegateOnStrategyRedraw Redraw;
-    //}
-
-    //public delegate void DelegateOnStrategyRedraw(object sender, StrategyHelper strategyHelper);
 }

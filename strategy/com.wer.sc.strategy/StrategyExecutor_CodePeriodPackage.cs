@@ -8,7 +8,7 @@ using com.wer.sc.data.datapackage;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyExecutor_CodePeriodPackage : IStrategyExecutor
+    public class StrategyExecutor_CodePeriodPackage 
     {
         private IDataCenter dataCenter;
         private StrategyArguments_CodePeriodPackage strategyCodePeriodPackage;

@@ -21,6 +21,18 @@ namespace com.wer.sc.data.datapackage
 
         private int end;
 
+        public CodePeriodPackageInfo()
+        {
+        }
+
+        public CodePeriodPackageInfo(List<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
+        {
+            this.codes = codes;
+            this.start = startDate;
+            this.end = endDate;
+            this.codeChooseMethod = codeChooseMethod;
+        }
+
         public CodeChooseMethod CodeChooseMethod
         {
             get { return codeChooseMethod; }

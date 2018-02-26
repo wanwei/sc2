@@ -18,11 +18,14 @@ namespace com.wer.sc.strategy
 
         private IStrategyAssemblyMgr strategyAssemblyMgr;
 
+        private IStrategyExecutorPool strategyExecutorPool;
+
         public StrategyCenter(DataCenter dataCenter)
         {
             this.dataCenter = dataCenter;
             this.strategyExecutorFactory = new StrategyExecutorFactory(dataCenter);
             this.strategyAssemblyMgr = StrategyMgrFactory.DefaultPluginMgr;
+            this.strategyExecutorPool = new StrategyExecutorPool();
         }
 
         public static IStrategyCenter Default
@@ -48,6 +51,11 @@ namespace com.wer.sc.strategy
         public IStrategyAssemblyMgr GetStrategyMgr()
         {
             return strategyAssemblyMgr;
+        }
+
+        public IStrategyExecutorPool GetStrategyExecutorPool()
+        {
+            return strategyExecutorPool;
         }
     }
 }

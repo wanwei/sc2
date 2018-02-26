@@ -76,6 +76,8 @@
     <None Include="TestCase\com\wer\sc\strategy\loader\strategy.common.strategyconfig" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyParameter_15Minute" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyTrade" />
+    <Compile Include="TestStrategyExecutorPool.cs" />
+    <Compile Include="TestStrategyExecutor_CodePeriod.cs" />
     <Compile Include="TestStrategyExecutor_DataPackage.cs" />
     <Compile Include="TestStrategyExecutor_DataPackage_Event.cs" />
     <Compile Include="TestStrategyExecutor_History.cs" />

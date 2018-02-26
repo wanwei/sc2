@@ -58,7 +58,7 @@
     <Compile Include="loader\StrategyMgrFactory.cs" />
     <Compile Include="StrategyExecutor.cs" />
     <Compile Include="StrategyExecutorInfo.cs" />
-    <Compile Include="StrategyExecutorManager.cs" />
+    <Compile Include="StrategyExecutorPool.cs" />
     <Compile Include="StrategyExecutor_CodePeriod.cs" />
     <Compile Include="StrategyExecutor_CodePeriodPackage.cs" />
     <Compile Include="StrategyExecutor_DataPackages.cs" />

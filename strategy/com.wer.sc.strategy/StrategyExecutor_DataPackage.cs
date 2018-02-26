@@ -23,8 +23,6 @@ namespace com.wer.sc.strategy
 
         private StrategyBarFinishedArguments barFinishedArguments = null;
 
-        private StrategyFinishedArguments finishedArguments = null;
-
         private ICodePeriod codePeriod;
 
         private IStrategy strategy;
@@ -96,7 +94,7 @@ namespace com.wer.sc.strategy
                 ((StrategyAbstract)strategy).StrategyOperator = strategyHelper;
         }
 
-        private object lockObj = new object();
+        private object lockObj = new object();          
 
         public void Execute()
         {

@@ -30,8 +30,8 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
+            StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyDataPackage);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             executor.Strategy = strategy;

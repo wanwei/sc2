@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.strategy;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace com.wer.sc.ui.comp.strategy
 {
     public partial class FormRunState : Form
     {
-        public FormRunState()
+        public FormRunState(IStrategyExecutorPool executorPool)
         {
             InitializeComponent();
         }

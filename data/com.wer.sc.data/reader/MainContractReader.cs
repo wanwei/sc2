@@ -46,9 +46,12 @@ namespace com.wer.sc.data.reader
 
         public List<MainContractInfo> GetMainContractInfos(string variety)
         {
-            if (!dic_Variety_Contracts.ContainsKey(variety))
+            if (variety == null)
                 return null;
-            return dic_Variety_Contracts[variety];
+            string varietyUpper = variety.ToUpper();
+            if (!dic_Variety_Contracts.ContainsKey(varietyUpper))
+                return null;
+            return dic_Variety_Contracts[varietyUpper];
         }
 
         public List<MainContractInfo> GetMainContractInfos(string variety, int startDate, int endDate)
@@ -66,8 +69,8 @@ namespace com.wer.sc.data.reader
                 MainContractInfo contract = new MainContractInfo();
                 contract.CopyFrom(currentContract);
                 if (isFirst)
-                {                    
-                    contract.Start = startDate;                    
+                {
+                    contract.Start = startDate;
                     isFirst = false;
                 }
                 if (contract.End > endDate)

@@ -13,14 +13,14 @@ namespace com.wer.sc.strategy
         private StrategyReferedPeriods referedPeriods;
         private StrategyForwardPeriod forwardPeriod;
 
-        public StrategyArguments_CodePeriodPackage(ICodePeriodPackage codePeriod, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        public StrategyArguments_CodePeriodPackage(ICodePeriodPackage codePeriodPackage, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
         {
-            this.codePeriodPackage = codePeriod;
+            this.codePeriodPackage = codePeriodPackage;
             this.referedPeriods = referedPeriods;
             this.forwardPeriod = forwardPeriod;
         }
 
-        public ICodePeriodPackage CodePeriod
+        public ICodePeriodPackage CodePeriodPackage
         {
             get
             {

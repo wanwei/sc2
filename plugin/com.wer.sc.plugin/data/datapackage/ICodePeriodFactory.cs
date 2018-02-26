@@ -7,6 +7,10 @@ namespace com.wer.sc.data.datapackage
     /// </summary>
     public interface ICodePeriodFactory
     {
+        ICodePeriodPackageInfo CreateCodePeriodPackageInfo(List<string> codes, int startDate, int endDate, CodeChooseMethod CodeChooseMethod);
+
+        ICodePeriodPackage CreateCodePeriodPackage(List<string> codes, int startDate, int endDate, CodeChooseMethod CodeChooseMethod);
+
         ICodePeriodPackage CreateCodePeriodPackage(ICodePeriodPackageInfo codePackageInfo);
 
         ICodePeriod CreateCodePeriod(string code, int startDate, int endDate);

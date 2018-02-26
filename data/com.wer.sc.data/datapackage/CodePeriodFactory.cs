@@ -16,6 +16,16 @@ namespace com.wer.sc.data.datapackage
             this.dataReader = dataReader;
         }
 
+        public ICodePeriodPackageInfo CreateCodePeriodPackageInfo(List<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
+        {
+            return new CodePeriodPackageInfo(codes, startDate, endDate, codeChooseMethod);
+        }
+
+        public ICodePeriodPackage CreateCodePeriodPackage(List<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
+        {
+            return CreateCodePeriodPackage(new CodePeriodPackageInfo(codes, startDate, endDate, codeChooseMethod));
+        }
+
         public ICodePeriodPackage CreateCodePeriodPackage(ICodePeriodPackageInfo codePackageInfo)
         {
             switch (codePackageInfo.CodeChooseMethod)

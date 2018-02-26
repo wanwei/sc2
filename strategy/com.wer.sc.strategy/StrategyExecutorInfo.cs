@@ -94,5 +94,16 @@ namespace com.wer.sc.strategy
                 return totalDayCount;
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(CodePeriod).Append(",");
+            sb.Append(TotalDayCount).Append(",");
+            sb.Append(CurrentDay).Append(",");
+            sb.Append(CurrentDayIndex).Append(",");
+            sb.Append(IsFinished);
+            return sb.ToString();
+        }
     }
 }

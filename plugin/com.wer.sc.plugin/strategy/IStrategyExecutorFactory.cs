@@ -24,10 +24,6 @@ namespace com.wer.sc.strategy
         /// <returns></returns>
         IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod, IStrategyHelper strategyHelper);
 
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage);
-
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper);
-
         IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyDataPackage);
 
         IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyDataPackage, IStrategyHelper strategyHelper);
@@ -35,5 +31,13 @@ namespace com.wer.sc.strategy
         IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyDataPackage);
 
         IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyDataPackage, IStrategyHelper strategyHelper);
+
+        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage);
+
+        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper);
+
+        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage);
+
+        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper);
     }
 }

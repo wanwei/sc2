@@ -71,6 +71,22 @@ namespace com.wer.sc.data.datapackage
             this.mainCodes = mainCodePeriods;
         }
 
+        public override int GetHashCode()
+        {
+            int hash = Code.GetHashCode();
+            hash = hash * 10 + startDate;
+            hash = hash * 10 + endDate;
+            if (isMainContract)
+            {
+                for (int i = 0; i < Contracts.Count; i++)
+                {
+                    ICodePeriod codePeriod = Contracts[i];
+                    hash = hash * 10 + codePeriod.GetHashCode();
+                }
+            }
+            return hash;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

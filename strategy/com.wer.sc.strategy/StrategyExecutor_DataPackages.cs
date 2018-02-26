@@ -1,36 +1,71 @@
-﻿using System;
+﻿using com.wer.sc.data.datapackage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyExecutor_DataPackages 
+    public class StrategyExecutor_DataPackages : IStrategyExecutor
     {
+        private IStrategy strategy;
+
+        private List<StrategyExecutor_DataPackage> executors = new List<StrategyExecutor_DataPackage>();
+
+        private StrategyExecutor_DataPackage currentExecutor;
+
         private StrategyArguments_DataPackages strategyArguments;
+
         private IStrategyHelper strategyHelper;
 
-        public StrategyExecutor_DataPackages(StrategyArguments_DataPackages strategyArguments)
+        public StrategyExecutor_DataPackages(StrategyArguments_DataPackages strategyArguments) : this(strategyArguments, new StrategyHelper(null))
         {
-            this.strategyArguments = strategyArguments;
         }
 
-        public StrategyExecutor_DataPackages(StrategyArguments_DataPackages strategyArguments, IStrategyHelper strategyHelper) : this(strategyArguments)
+        public StrategyExecutor_DataPackages(StrategyArguments_DataPackages strategyArguments, IStrategyHelper strategyHelper)
         {
+            this.strategyArguments = strategyArguments;
             this.strategyHelper = strategyHelper;
+
+            List<IDataPackage_Code> dataPackages = this.strategyArguments.DataPackages;
+            for (int i = 0; i < dataPackages.Count; i++)
+            {
+                StrategyArguments_DataPackage strategyArgument = new StrategyArguments_DataPackage(dataPackages[i], strategyArguments.ReferedPeriods, strategyArguments.ForwardPeriod);
+                StrategyExecutor_DataPackage executor = new StrategyExecutor_DataPackage(strategyArgument, strategyHelper);
+                executor.OnBarFinished += Executor_OnBarFinished;
+                executor.OnDayFinished += Executor_OnDayFinished;
+                this.executors.Add(executor);
+            }
+        }
+
+        private void Executor_OnBarFinished(object sender, StrategyBarFinishedArguments arguments)
+        {
+            if (OnBarFinished != null)
+                OnBarFinished(sender, arguments);
+        }
+
+        private void Executor_OnDayFinished(object sender, StrategyDayFinishedArguments arguments)
+        {
+            if (OnDayFinished != null)
+                OnDayFinished(sender, arguments);
         }
 
         public IStrategy Strategy
         {
             get
             {
-                throw new NotImplementedException();
+                return strategy;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.strategy = value;
+                for (int i = 0; i < executors.Count; i++)
+                {
+                    executors[i].Strategy = value;
+                }
             }
         }
 
@@ -38,7 +73,9 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                throw new NotImplementedException();
+                if (currentExecutor != null)
+                    return currentExecutor.StrategyExecutorInfo;
+                return null;
             }
         }
 
@@ -46,32 +83,65 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
 
-        public event StrategyBarFinished BarFinished;
-        public event StrategyDayFinished DayFinished;
-        public event StrategyFinished ExecuteFinished;
+        public event StrategyStart OnStart;
+
+        public event StrategyBarFinished OnBarFinished;
+
+        public event StrategyDayFinished OnDayFinished;
+
+        public event StrategyFinished OnFinished;
+
+        private bool isCancel = false;
 
         public void Cancel()
         {
-            throw new NotImplementedException();
+            isCancel = true;
+            if (currentExecutor != null)
+                currentExecutor.Cancel();
         }
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            Thread thread = new Thread(new ThreadStart(Run));
+            thread.Start();
         }
 
         public void Run()
         {
-            throw new NotImplementedException();
-        }
+            StrategyExecutor_DataPackage firstExecutor = executors[0];
+            StrategyExecutor_DataPackage lastExecutor = executors[executors.Count - 1];
 
-        public void SetStrategy(IStrategy strategy)
-        {
-            throw new NotImplementedException();
+            if (OnStart != null)
+                OnStart(this, new StrategyStartArguments(firstExecutor.StrategyExecutorInfo));
+            firstExecutor.Run();
+            if (isCancel)
+            {
+                if (OnFinished != null)
+                    OnFinished(this, new StrategyFinishedArguments(strategy, lastExecutor.StrategyExecutorInfo, StrategyReport));
+                return;
+            }
+            if (executors.Count != 1)
+            {
+                int last = executors.Count - 1;
+                for (int i = 1; i < last; i++)
+                {
+                    StrategyExecutor_DataPackage executor = executors[i];
+                    executor.Run();
+                    if (isCancel)
+                    {
+                        if (OnFinished != null)
+                            OnFinished(this, new StrategyFinishedArguments(strategy, lastExecutor.StrategyExecutorInfo, StrategyReport));
+                        return;
+                    }
+                }
+                lastExecutor.Run();
+            }
+            if (OnFinished != null)
+                OnFinished(this, new StrategyFinishedArguments(strategy, lastExecutor.StrategyExecutorInfo, StrategyReport));
         }
     }
 }
