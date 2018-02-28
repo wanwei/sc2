@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +8,11 @@ namespace com.wer.sc.utils
 {
     public class ColorUtils
     {
+        public static string ToString(Color color)
+        {
+            return ColorTranslator.ToHtml(color);
+        }
+
         public static System.Drawing.Color GetColor(string colorString)
         {
             System.Drawing.Color color;

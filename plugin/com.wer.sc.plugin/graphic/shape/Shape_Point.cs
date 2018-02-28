@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Xml;
 
 namespace com.wer.sc.graphic.shape
 {
@@ -35,5 +36,16 @@ namespace com.wer.sc.graphic.shape
         {
             return ShapeType.Point;
         }
+
+        public void Save(XmlElement xmlElem)
+        {
+
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+
+        }
+
     }
 }

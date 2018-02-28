@@ -26,7 +26,7 @@ namespace com.wer.sc.graphic
             SetRect(drawRect, priceRect);
         }
 
-        public PointF CalcPoint(PriceShape_Point pricePoint)
+        public PointF CalcPoint(PricePoint pricePoint)
         {
             return new PointF(CalcX(pricePoint.X), CalcY(pricePoint.Y));
         }

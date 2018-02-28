@@ -120,16 +120,16 @@ namespace com.wer.sc.ui.comp
 
         private void StrategyExecutor_ExecuteFinished(IStrategy strategy, StrategyFinishedArguments arg)
         {
-            IStrategyTrader trader = strategyExecutor.StrategyReport.StrategyTrader;
-            if (trader != null)
-            {
-                if (trader is StrategyTrader_History)
-                {
-                    compChart.Account = ((StrategyTrader_History)trader).Account;
-                }
-            }
-            if (ExecuteFinished != null)
-                ExecuteFinished(strategy, arg);
+            //IStrategyTrader trader = strategyExecutor.StrategyReport.StrategyTrader;
+            //if (trader != null)
+            //{
+            //    if (trader is StrategyTrader_History)
+            //    {
+            //        compChart.Account = ((StrategyTrader_History)trader).Account;
+            //    }
+            //}
+            //if (ExecuteFinished != null)
+            //    ExecuteFinished(strategy, arg);
         }
 
         public void Refresh()

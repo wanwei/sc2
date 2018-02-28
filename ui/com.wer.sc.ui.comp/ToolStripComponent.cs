@@ -28,8 +28,6 @@ namespace com.wer.sc.ui.comp
         //交易插件
         private IPlugin_MarketTrader marketTrader;
 
-
-
         public ToolStripComponent()
         {
             InitializeComponent();
@@ -146,7 +144,8 @@ namespace com.wer.sc.ui.comp
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                FormRunState formRunState = new FormRunState();
+                IStrategyExecutorPool pool = StrategyCenter.Default.GetStrategyExecutorPool();                
+                FormStrategyExecutorPool formRunState = new FormStrategyExecutorPool(pool);
                 formRunState.TopMost = true;
                 formRunState.Show();
             }
@@ -167,7 +166,7 @@ namespace com.wer.sc.ui.comp
                 MessageBox.Show("没有执行的策略");
                 return;
             }
-            IStrategyQueryResultManager strategyResult = componentStrategy.StrategyExecutor.StrategyReport.StrategyResult;
+            IStrategyQueryResultManager strategyResult = componentStrategy.StrategyExecutor.StrategyReport.StrategyQueryResults;
             if (strategyResult == null || strategyResult.GetQueryResults().Count == 0)
             {
                 MessageBox.Show("没有查询结果");

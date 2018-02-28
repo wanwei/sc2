@@ -9,6 +9,7 @@ using com.wer.sc.graphic;
 using com.wer.sc.data;
 using com.wer.sc.data.utils;
 using com.wer.sc.graphic.shape;
+using System.Xml;
 
 namespace com.wer.sc.ui.comp
 {
@@ -17,7 +18,7 @@ namespace com.wer.sc.ui.comp
         //画的title，存在该属性里，在图形刷新的时候重画
         private Shape_Label title;
         //画的图形，图形都存储在该list里，在图形刷新的时候重画
-        private List<PriceShape> priceShapes = new List<PriceShape>();
+        private List<IPriceShape> priceShapes = new List<IPriceShape>();
         //画图的面板
         private IGraphicDrawer_PriceRect drawer;
         //图画数据
@@ -134,7 +135,7 @@ namespace com.wer.sc.ui.comp
             RecordShape(priceRect);
         }
 
-        private void RecordShape(PriceShape shape)
+        private void RecordShape(IPriceShape shape)
         {
             this.priceShapes.Add(shape);
             DrawShape(shape);
@@ -200,7 +201,7 @@ namespace com.wer.sc.ui.comp
             DrawShape(polyline);
         }
 
-        private void DrawShape(PriceShape shape)
+        private void DrawShape(IPriceShape shape)
         {
             if (shape is StrategyShape)
                 this.DrawShape2((StrategyShape)shape);
@@ -240,7 +241,7 @@ namespace com.wer.sc.ui.comp
         }
     }
 
-    interface StrategyShape : PriceShape
+    interface StrategyShape : IPriceShape
     {
     }
 
@@ -259,6 +260,14 @@ namespace com.wer.sc.ui.comp
         public PriceShapeType GetShapeType()
         {
             return PriceShapeType.PolyLine;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
         }
     }
 
@@ -280,6 +289,14 @@ namespace com.wer.sc.ui.comp
         {
             return PriceShapeType.Point;
         }
+
+        public void Save(XmlElement xmlElem)
+        {
+        }
+
+        public void Load(XmlElement xmlElem)
+        {            
+        }
     }
 
     class StrategyLabels : StrategyShape
@@ -298,6 +315,14 @@ namespace com.wer.sc.ui.comp
         public PriceShapeType GetShapeType()
         {
             return PriceShapeType.Label;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
         }
     }
 
@@ -319,6 +344,14 @@ namespace com.wer.sc.ui.comp
         public PriceShapeType GetShapeType()
         {
             return PriceShapeType.Line;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {            
+        }
+
+        public void Load(XmlElement xmlElem)
+        {           
         }
     }
 }

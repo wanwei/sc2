@@ -2,6 +2,9 @@
 
 namespace com.wer.sc.graphic
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PriceRectangle
     {
         private float priceLeft;
@@ -24,10 +27,7 @@ namespace com.wer.sc.graphic
 
         public float PriceTop
         {
-            get
-            {
-                return priceTop;
-            }
+            get { return priceTop; }
         }
 
         public float PriceHeight
@@ -37,18 +37,12 @@ namespace com.wer.sc.graphic
 
         public float PriceLeft
         {
-            get
-            {
-                return priceLeft;
-            }
+            get { return priceLeft; }
         }
 
         public float PriceRight
         {
-            get
-            {
-                return priceRight;
-            }
+            get { return priceRight; }
         }
 
         public float PriceWidth

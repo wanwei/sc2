@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data.account;
 using com.wer.sc.data.market;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略交易器
     /// </summary>
-    public interface IStrategyTrader
+    public interface IStrategyTrader : IXmlExchange
     {
         /// <summary>
         /// 设置了该选项，则系统会按照一开一平信号执行
@@ -100,5 +101,5 @@ namespace com.wer.sc.strategy
         /// 得到策略交易账户
         /// </summary>
         IAccount Account { get; }
-   }
+    }
 }

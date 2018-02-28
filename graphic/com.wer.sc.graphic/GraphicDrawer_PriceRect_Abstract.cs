@@ -15,7 +15,7 @@ namespace com.wer.sc.graphic
 
         private PriceRectangle priceRect;
 
-        private List<PriceShape> shapes = new List<PriceShape>();
+        private List<IPriceShape> shapes = new List<IPriceShape>();
 
         /// <summary>
         /// 设置价格块
@@ -47,17 +47,17 @@ namespace com.wer.sc.graphic
             graphic.SmoothingMode = SmoothingMode.None;
         }
 
-        public void DrawPriceShape(PriceShape priceShape)
+        public void DrawPriceShape(IPriceShape priceShape)
         {
             this.shapes.Add(priceShape);
         }
 
-        public List<PriceShape> GetAllShapes()
+        public List<IPriceShape> GetAllShapes()
         {
             return this.shapes;
         }
 
-        public void RemoveShape(PriceShape shape)
+        public void RemoveShape(IPriceShape shape)
         {
             this.shapes.Remove(shape);
         }

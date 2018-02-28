@@ -45,6 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
@@ -82,6 +83,8 @@
     <Compile Include="data\utils\TestTimeIndexUtils.cs" />
     <Compile Include="data\utils\TestTimeUtils.cs" />
     <Compile Include="data\utils\TestTradingTimeUtils.cs" />
+    <Compile Include="graphic\TestPriceShapeContainerManager.cs" />
+    <Compile Include="graphic\TestShapeContainer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

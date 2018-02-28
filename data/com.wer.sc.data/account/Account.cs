@@ -55,7 +55,7 @@ namespace com.wer.sc.data.account
 
         private Dictionary<string, OrderDelayInfo> dic_Code_OrderDelayInfo = new Dictionary<string, OrderDelayInfo>();
 
-        internal Account()
+        public Account()
         {
 
         }

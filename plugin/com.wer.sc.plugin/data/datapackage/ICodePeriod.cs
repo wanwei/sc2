@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,12 @@ using System.Threading.Tasks;
 namespace com.wer.sc.data.datapackage
 {
     /// <summary>
+    /// 代码周期类
+    /// 
     /// 该类描述了一只股票或期货的一段时间
-    /// 一般用做策略执行等
+    /// 一般在策略执行时使用，用作确定回测的范围
     /// </summary>
-    public interface ICodePeriod
+    public interface ICodePeriod : IXmlExchange
     {
         /// <summary>
         /// 获得或设置代码

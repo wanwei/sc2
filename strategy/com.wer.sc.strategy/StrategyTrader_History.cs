@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.strategy
 {
@@ -17,6 +18,11 @@ namespace com.wer.sc.strategy
         public IAccount Account
         {
             get { return account; }
+        }
+
+        public StrategyTrader_History()
+        {
+
         }
 
         public StrategyTrader_History(IAccount account)
@@ -181,6 +187,17 @@ namespace com.wer.sc.strategy
         public void CancelOrder(string orderid)
         {
             this.Account.CancelOrder(orderid);
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            this.account.Save(xmlElem);
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.account = new Account();
+            account.Load(xmlElem);
         }
     }
 }

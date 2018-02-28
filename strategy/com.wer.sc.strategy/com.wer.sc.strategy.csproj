@@ -70,9 +70,10 @@
     <Compile Include="StrategyOnTickInfo.cs" />
     <Compile Include="StrategyPackage.cs" />
     <Compile Include="StrategyQueryResultManager.cs" />
-    <Compile Include="StrategyReport.cs" />
+    <Compile Include="StrategyResult.cs" />
     <Compile Include="StrategyQueryResult.cs" />
     <Compile Include="StrategyQueryResultRow.cs" />
+    <Compile Include="StrategyResult_CodePeriod.cs" />
     <Compile Include="StrategyTrader_History.cs" />
     <Compile Include="loader\StrategyData.cs" />
     <Compile Include="StrategyHelper.cs" />

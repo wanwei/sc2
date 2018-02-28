@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.graphic.shape
 {
@@ -12,5 +13,16 @@ namespace com.wer.sc.graphic.shape
         {
             return ShapeType.Line;
         }
+
+        public void Save(XmlElement xmlElem)
+        {
+
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+
+        }
+
     }
 }

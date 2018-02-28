@@ -149,14 +149,14 @@ namespace com.wer.sc.strategy
 
         private void BuildStrategyReport()
         {
-            StrategyReport report = new StrategyReport();
-            report.code = dataPackage.Code;
-            report.startDate = dataPackage.StartDate;
-            report.endDate = dataPackage.EndDate;
-            report.forwardPeriod = forwardPeriod;
-            report.parameters = strategy.Parameters;
-            report.strategyResultManager = strategyHelper.QueryResultManager;
-            report.strategyTrader = strategyHelper.Trader;
+            StrategyResult report = new StrategyResult();
+            //report.code = dataPackage.Code;
+            //report.startDate = dataPackage.StartDate;
+            //report.endDate = dataPackage.EndDate;
+            //report.forwardPeriod = forwardPeriod;
+            //report.parameters = strategy.Parameters;
+            //report.strategyResultManager = strategyHelper.QueryResultManager;
+            //report.strategyTrader = strategyHelper.Trader;
             this.report = report;
         }
 

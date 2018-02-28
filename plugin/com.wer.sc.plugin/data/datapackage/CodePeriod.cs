@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.data.datapackage
 {
@@ -31,31 +32,35 @@ namespace com.wer.sc.data.datapackage
             set { this.endDate = value; }
         }
 
-        private bool isMainContract;
+        private bool isFromContract;
 
         public bool IsFromContracts
         {
             get
             {
-                return isMainContract;
+                return isFromContract;
             }
 
             set
             {
-                this.isMainContract = value;
+                this.isFromContract = value;
             }
         }
 
-        private IList<ICodePeriod> mainCodes;
+        private IList<ICodePeriod> contracts;
 
         public IList<ICodePeriod> Contracts
         {
             get
             {
-                if (mainCodes == null)
-                    mainCodes = new List<ICodePeriod>();
-                return mainCodes;
+                if (contracts == null)
+                    contracts = new List<ICodePeriod>();
+                return contracts;
             }
+        }
+
+        public CodePeriod()
+        {
         }
 
         public CodePeriod(string code, int startDate, int endDate)
@@ -65,10 +70,10 @@ namespace com.wer.sc.data.datapackage
             this.endDate = endDate;
         }
 
-        public CodePeriod(string code, int startDate, int endDate, IList<ICodePeriod> mainCodePeriods) : this(code, startDate, endDate)
+        public CodePeriod(string code, int startDate, int endDate, IList<ICodePeriod> contracts) : this(code, startDate, endDate)
         {
-            this.isMainContract = true;
-            this.mainCodes = mainCodePeriods;
+            this.isFromContract = true;
+            this.contracts = contracts;
         }
 
         public override int GetHashCode()
@@ -76,7 +81,7 @@ namespace com.wer.sc.data.datapackage
             int hash = Code.GetHashCode();
             hash = hash * 10 + startDate;
             hash = hash * 10 + endDate;
-            if (isMainContract)
+            if (isFromContract)
             {
                 for (int i = 0; i < Contracts.Count; i++)
                 {
@@ -91,7 +96,7 @@ namespace com.wer.sc.data.datapackage
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Code + "," + StartDate + "," + EndDate);
-            if (isMainContract)
+            if (isFromContract)
             {
                 for (int i = 0; i < Contracts.Count; i++)
                 {
@@ -100,6 +105,42 @@ namespace com.wer.sc.data.datapackage
                 }
             }
             return sb.ToString();
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("code", code);
+            xmlElem.SetAttribute("start", startDate.ToString());
+            xmlElem.SetAttribute("end", endDate.ToString());
+            xmlElem.SetAttribute("isfromcontract", IsFromContracts.ToString());
+            if (this.Contracts != null)
+            {
+                for (int i = 0; i < Contracts.Count; i++)
+                {
+                    XmlElement elemContract = xmlElem.OwnerDocument.CreateElement("contract");
+                    xmlElem.AppendChild(elemContract);
+                    Contracts[i].Save(elemContract);
+                }
+            }
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.code = xmlElem.GetAttribute("code");
+            this.startDate = int.Parse(xmlElem.GetAttribute("start"));
+            this.endDate = int.Parse(xmlElem.GetAttribute("end"));
+            this.isFromContract = Boolean.Parse(xmlElem.GetAttribute("isfromcontract"));
+            if (this.isFromContract)
+            {
+                XmlNodeList nodes = xmlElem.GetElementsByTagName("contract");
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    XmlElement elem = (XmlElement)nodes[i];
+                    CodePeriod c = new CodePeriod();
+                    c.Load(elem);
+                    contracts.Add(c);
+                }
+            }
         }
     }
 }

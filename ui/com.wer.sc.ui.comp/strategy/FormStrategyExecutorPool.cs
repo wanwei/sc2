@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace com.wer.sc.ui.comp.strategy
 {
-    public partial class FormRunState : Form
+    public partial class FormStrategyExecutorPool : Form
     {
-        public FormRunState(IStrategyExecutorPool executorPool)
+        public FormStrategyExecutorPool(IStrategyExecutorPool executorPool)
         {
             InitializeComponent();
         }

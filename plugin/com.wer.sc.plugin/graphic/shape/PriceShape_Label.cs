@@ -1,17 +1,19 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.graphic.shape
 {
-    public class PriceShape_Label : PriceShape
+    public class PriceShape_Label : IPriceShape
     {
         private string text;
 
-        private PriceShape_Point point;
+        private PricePoint point;
 
         private StringFormat stringFormat;
 
@@ -19,7 +21,7 @@ namespace com.wer.sc.graphic.shape
 
         private Color color;
 
-        public PriceShape_Point Point
+        public PricePoint Point
         {
             get
             {
@@ -87,6 +89,28 @@ namespace com.wer.sc.graphic.shape
         public PriceShapeType GetShapeType()
         {
             return PriceShapeType.Label;
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("type", PriceShapeType.Label.ToString());
+            if (this.point != null)
+                this.point.Save(xmlElem);
+            if (this.text != null)
+                xmlElem.SetAttribute("text", this.text);
+            if (this.Color != default(Color))
+                xmlElem.SetAttribute("color", ColorTranslator.ToHtml(Color));
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            if (this.point == null)
+                this.point = new PricePoint();
+            this.point.Load(xmlElem);
+            if (xmlElem.HasAttribute("text"))
+                this.text = xmlElem.GetAttribute("text");
+            if (xmlElem.HasAttribute("color"))
+                this.Color = ColorTranslator.FromHtml(xmlElem.GetAttribute("color"));
         }
     }
 }

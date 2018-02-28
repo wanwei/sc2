@@ -16,7 +16,7 @@ namespace com.wer.sc.graphic
         private ShapePainter_PolyLine shapePainter_PolyLine = new ShapePainter_PolyLine();
         private ShapePainter_Rect shapePainter_Rect = new ShapePainter_Rect();
 
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             switch (shape.GetShapeType())
             {
@@ -41,12 +41,12 @@ namespace com.wer.sc.graphic
 
     public interface IShapePainter
     {
-        void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape);
+        void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape);
     }
 
     class ShapePainter_Label : IShapePainter
     {
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             PriceShape_Label label = (PriceShape_Label)shape;
             float x1 = priceGraphic.CalcX(label.Point.X);
@@ -59,7 +59,7 @@ namespace com.wer.sc.graphic
 
     class ShapePainter_Point : IShapePainter
     {
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             PriceShape_Point point = (PriceShape_Point)shape;
             float x1 = priceGraphic.CalcX(point.X);
@@ -71,7 +71,7 @@ namespace com.wer.sc.graphic
 
     class ShapePainter_Line : IShapePainter
     {
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             PriceShape_Line line = (PriceShape_Line)shape;
             float x1 = priceGraphic.CalcX(line.StartPoint.X);
@@ -86,7 +86,7 @@ namespace com.wer.sc.graphic
 
     class ShapePainter_PolyLine : IShapePainter
     {
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             PriceShape_PolyLine line = (PriceShape_PolyLine)shape;
             PointF[] points = new PointF[line.Points.Count];
@@ -97,7 +97,7 @@ namespace com.wer.sc.graphic
             g.DrawLines(new Pen(line.Color, line.Width), points);
         }
 
-        private PointF GetPointF(PriceGraphicMapping priceGraphic, PriceShape_Point pricePoint)
+        private PointF GetPointF(PriceGraphicMapping priceGraphic, PricePoint pricePoint)
         {
             float x1 = priceGraphic.CalcX(pricePoint.X);
             float y1 = priceGraphic.CalcY(pricePoint.Y);
@@ -107,7 +107,7 @@ namespace com.wer.sc.graphic
 
     class ShapePainter_Rect : IShapePainter
     {
-        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, PriceShape shape)
+        public void Paint(Graphics g, PriceGraphicMapping priceGraphic, IPriceShape shape)
         {
             PriceShape_Rect point = (PriceShape_Rect)shape;
             float x1 = priceGraphic.CalcX(point.PriceLeft);

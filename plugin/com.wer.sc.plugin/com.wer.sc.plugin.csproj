@@ -69,6 +69,7 @@
     <Compile Include="data\datapackage\IDataPackage_CodeInfo.cs" />
     <Compile Include="data\forward\IDataForForward_Code.cs" />
     <Compile Include="data\IKLineDataTradingTimeInfo.cs" />
+    <Compile Include="data\IDataKey.cs" />
     <Compile Include="data\ITimeLineData_RealTime.cs" />
     <Compile Include="data\forward\Delegate.cs" />
     <Compile Include="data\forward\ForwardPeriod.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="data\KLineDataTradingTimeInfo.cs" />
     <Compile Include="data\KLineDataTimeInfo.cs" />
     <Compile Include="data\KLineData_Extend.cs" />
+    <Compile Include="data\KLineKey.cs" />
     <Compile Include="data\MainContractInfo.cs" />
     <Compile Include="data\market\AccountFeeInfo.cs" />
     <Compile Include="data\KLinePriceType.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="data\StoreMethod.cs" />
     <Compile Include="data\TickData_Extend.cs" />
     <Compile Include="data\TimeLineData_Extend.cs" />
+    <Compile Include="data\TimeLineKey.cs" />
     <Compile Include="data\utils\CacheUtils_CodeInfo.cs" />
     <Compile Include="data\utils\CacheUtils_MainContract.cs" />
     <Compile Include="data\utils\CacheUtils_TradingTime.cs" />
@@ -129,8 +132,16 @@
     <Compile Include="graphic\IGraphicDrawer_PriceRect.cs" />
     <Compile Include="graphic\PriceGraphicMapping.cs" />
     <Compile Include="graphic\PriceRectangle.cs" />
+    <Compile Include="graphic\shape\IPriceShapeContainerManager.cs" />
     <Compile Include="graphic\shape\IShape.cs" />
     <Compile Include="graphic\shape\IPriceShape.cs" />
+    <Compile Include="graphic\shape\IPriceShapeContainer.cs" />
+    <Compile Include="graphic\PricePoint.cs" />
+    <Compile Include="graphic\shape\PriceShapeContainer.cs" />
+    <Compile Include="graphic\shape\PriceShapeContainerManager.cs" />
+    <Compile Include="graphic\shape\PriceShapeContainer_KLine.cs" />
+    <Compile Include="graphic\shape\PriceShapeContainer_TImeLine.cs" />
+    <Compile Include="graphic\shape\PriceShapeFactory.cs" />
     <Compile Include="graphic\shape\PriceShapeType.cs" />
     <Compile Include="graphic\shape\PriceShape_Label.cs" />
     <Compile Include="graphic\shape\PriceShape_Line.cs" />
@@ -159,7 +170,7 @@
     <Compile Include="strategy\IStrategyExecutorPool.cs" />
     <Compile Include="strategy\IStrategyExecutor_Multi.cs" />
     <Compile Include="strategy\IStrategyOnDayArgument.cs" />
-    <Compile Include="strategy\IStrategyResultRow.cs" />
+    <Compile Include="strategy\IStrategyResult_CodePeriod.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
     <Compile Include="strategy\plugin\IStrategyCenter.cs" />
     <Compile Include="strategy\IStrategyPackage.cs" />

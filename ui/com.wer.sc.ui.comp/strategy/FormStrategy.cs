@@ -16,6 +16,8 @@ namespace com.wer.sc.ui.comp.strategy
 {
     public partial class FormStrategy : Form
     {
+        //private IStrategyResult 
+
         private ChartComponent chartComponent;
 
         private IStrategyDrawer drawer;

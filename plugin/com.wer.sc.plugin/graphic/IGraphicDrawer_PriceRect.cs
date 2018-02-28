@@ -18,19 +18,19 @@ namespace com.wer.sc.graphic
         /// 绘制形状
         /// </summary>
         /// <param name="priceShape"></param>
-        void DrawPriceShape(PriceShape priceShape);
+        void DrawPriceShape(IPriceShape priceShape);
 
         /// <summary>
         /// 得到所有形状
         /// </summary>
         /// <returns></returns>
-        List<PriceShape> GetAllShapes();
+        List<IPriceShape> GetAllShapes();
 
         /// <summary>
         /// 删除形状
         /// </summary>
         /// <param name="shape"></param>
-        void RemoveShape(PriceShape shape);
+        void RemoveShape(IPriceShape shape);
 
         /// <summary>
         /// 清除所有图形

@@ -1,6 +1,6 @@
 ﻿namespace com.wer.sc.ui.comp.strategy
 {
-    partial class FormRunState
+    partial class FormStrategyExecutorPool
     {
         /// <summary>
         /// Required designer variable.

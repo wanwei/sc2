@@ -66,4 +66,22 @@ namespace com.wer.sc.utils
             return XmlUtils.ToString(this);
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IXmlExchange_File
+    {
+        /// <summary>
+        /// 将数据保存为xml
+        /// </summary>
+        /// <param name="xmlElem"></param>
+        void Save(string filePath, XmlElement xmlElem);
+
+        /// <summary>
+        /// 从xml装载数据
+        /// </summary>
+        /// <param name="xmlElem"></param>
+        void Load(string filePath, XmlElement xmlElem);
+    }
 }
