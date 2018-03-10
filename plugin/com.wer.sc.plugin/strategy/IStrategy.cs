@@ -28,7 +28,7 @@ namespace com.wer.sc.strategy
     ///     OnStrategyEnd   策略所有数据接收并处理完成后触发该方法
     /// </summary>
     public interface IStrategy
-    {       
+    {
         /// <summary>
         /// 该方法用来设置策略引用的周期，比如tick，1分钟K线等
         /// 在执行策略时，执行器会根据该属性准备数据；策略接收数据时也会根据该方法决定策略的数据接收周期
@@ -73,26 +73,21 @@ namespace com.wer.sc.strategy
         void OnEnd(Object sender, IStrategyOnEndArgument argument);
 
         /// <summary>
-        /// 每接收到一个tick触发该方法
-        /// 需要在GetStrategyPeriods里面设置usetick=true
+        /// 每接收到一条tick数据触发该方法
+        /// 如果策略仅引用K线，则不会触发该事件
+        /// 要触发该事件有两个方法：
+        /// 1.在GetReferedPeriods()方法里配置对tick的引用
+        /// 2.执行事件时设置引用tick数据
         /// </summary>
-        /// <param name="currentData"></param>
-        void OnTick(Object sender, IStrategyOnTickArgument currentData);
+        /// <param name="data"></param>
+        void OnTick(Object sender, IStrategyOnTickArgument data);
 
         /// <summary>
-        /// 策略引用
-        /// 每到一个bar结束触发该方法
+        /// 每当该bar的结束时间到了触发该事件
+        /// 对于主合约一般是接收到最后一条tick数据触发该方法
         /// </summary>
-        /// <param name="currentData"></param>
-        void OnBar(Object sender, IStrategyOnBarArgument currentData);
-
-        void OnDay(Object sender, IStrategyOnDayArgument argument);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        Object GetData(string key);
+        /// <param name="sender"></param>
+        /// <param name="data"></param>
+        void OnBar(Object sender, IStrategyOnBarArgument data);
     }
 }

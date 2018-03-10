@@ -10,12 +10,12 @@ namespace com.wer.sc.strategy.common.zigzag
 {
     public class ZigzagDrawer
     {
-        public static void DrawZigzagPoints(IShapeDrawer_PriceRect drawHelper, List<ZigzagPoint> points, int width)
+        public static void DrawZigzagPoints(IStrategyDrawer_PriceRect drawHelper, List<ZigzagPoint> points, int width)
         {
             DrawZigzagPoints(drawHelper, points, Color.Red, Color.Green, width);
         }
 
-        public static void DrawZigzagPoints(IShapeDrawer_PriceRect drawHelper, List<ZigzagPoint> points, Color colorHigh, Color colorLow, int width)
+        public static void DrawZigzagPoints(IStrategyDrawer_PriceRect drawHelper, List<ZigzagPoint> points, Color colorHigh, Color colorLow, int width)
         {
             for (int i = 0; i < points.Count; i++)
             {

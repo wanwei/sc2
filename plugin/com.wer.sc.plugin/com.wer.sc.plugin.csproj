@@ -58,11 +58,12 @@
     <Compile Include="data\account\IAccountManager.cs" />
     <Compile Include="data\account\ITradeFee.cs" />
     <Compile Include="data\account\ITradeFee_Code.cs" />
-    <Compile Include="data\datapackage\CodePeriod.cs" />
-    <Compile Include="data\datapackage\ICodePeriodPackage.cs" />
-    <Compile Include="data\datapackage\ICodePeriodFactory.cs" />
-    <Compile Include="data\datapackage\ICodePeriodPackageInfo.cs" />
-    <Compile Include="data\datapackage\ICodePeriod.cs" />
+    <Compile Include="data\codeperiod\CodePeriod.cs" />
+    <Compile Include="data\codeperiod\CodePeriodList.cs" />
+    <Compile Include="data\codeperiod\ICodePeriodList.cs" />
+    <Compile Include="data\codeperiod\ICodePeriodFactory.cs" />
+    <Compile Include="data\codeperiod\ICodePeriodListChooser.cs" />
+    <Compile Include="data\codeperiod\ICodePeriod.cs" />
     <Compile Include="data\datapackage\IDataPackage.cs" />
     <Compile Include="data\datapackage\IDataPackage_Code.cs" />
     <Compile Include="data\datapackage\IDataPackageFactory.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="data\StoreDataTypes.cs" />
     <Compile Include="data\StoreMethod.cs" />
     <Compile Include="data\TickData_Extend.cs" />
+    <Compile Include="graphic\ITimeXConverter.cs" />
     <Compile Include="data\TimeLineData_Extend.cs" />
     <Compile Include="data\TimeLineKey.cs" />
     <Compile Include="data\utils\CacheUtils_CodeInfo.cs" />
@@ -162,17 +164,22 @@
     <Compile Include="market\Plugin_MarketAbstract.cs" />
     <Compile Include="PluginHelper.cs" />
     <Compile Include="PluginInfo.cs" />
-    <Compile Include="graphic\IShapeDrawer_PriceRect.cs" />
+    <Compile Include="strategy\IStrategyDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory.cs" />
     <Compile Include="strategy\IStrategyExecutorInfo.cs" />
     <Compile Include="strategy\IStrategyExecutorPool.cs" />
+    <Compile Include="strategy\IStrategyExecutor_Event.cs" />
     <Compile Include="strategy\IStrategyExecutor_Multi.cs" />
+    <Compile Include="strategy\IStrategyGraphic.cs" />
+    <Compile Include="strategy\IStrategyGraphicContainer.cs" />
     <Compile Include="strategy\IStrategyOnDayArgument.cs" />
+    <Compile Include="strategy\IStrategyQueryColumn.cs" />
+    <Compile Include="strategy\IStrategyResultStore.cs" />
     <Compile Include="strategy\IStrategyResult_CodePeriod.cs" />
     <Compile Include="strategy\plugin\IStrategyData.cs" />
-    <Compile Include="strategy\plugin\IStrategyCenter.cs" />
+    <Compile Include="strategy\IStrategyCenter.cs" />
     <Compile Include="strategy\IStrategyPackage.cs" />
     <Compile Include="strategy\plugin\IStrategyInfo.cs" />
     <Compile Include="strategy\IStrategyOnBarArgument.cs" />
@@ -244,14 +251,18 @@
     <Compile Include="data\utils\TimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\IStrategyHelper.cs" />
+    <Compile Include="strategy\StrategyArgumentsAbstract.cs" />
     <Compile Include="strategy\StrategyArguments_CodePeriod.cs" />
-    <Compile Include="strategy\StrategyArguments_CodePeriodPackage.cs" />
-    <Compile Include="strategy\StrategyArguments_DataPackages.cs" />
+    <Compile Include="strategy\StrategyArguments_CodePeriodList.cs" />
     <Compile Include="strategy\StrategyArguments_DataPackage.cs" />
     <Compile Include="strategy\StrategyException.cs" />
+    <Compile Include="strategy\StrategyExecutorState.cs" />
     <Compile Include="strategy\StrategyForwardPeriod.cs" />
     <Compile Include="strategy\StrategyDynamicArray.cs" />
+    <Compile Include="strategy\IStrategyGraphicTitle.cs" />
+    <Compile Include="strategy\StrategyQueryResultAbstract.cs" />
     <Compile Include="strategy\StrategyReferedPeriods.cs" />
+    <Compile Include="strategy\StrategyTraderSetting.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

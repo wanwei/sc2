@@ -36,7 +36,7 @@ namespace com.wer.sc.strategy.sample.draw
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
 
             //drawHelper.DrawRect()
             //drawHelper.DrawPolyLine(maArr_1, color_1);

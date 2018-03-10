@@ -62,6 +62,7 @@
     <Compile Include="DynamicArray.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="IDataRow.cs" />
+    <Compile Include="IDataStore.cs" />
     <Compile Include="ItemObject.cs" />
     <Compile Include="MathUtils.cs" />
     <Compile Include="OffsetList.cs" />

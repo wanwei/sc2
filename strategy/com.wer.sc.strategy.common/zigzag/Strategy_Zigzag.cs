@@ -85,7 +85,7 @@ namespace com.wer.sc.strategy.common.zigzag
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(ZigzagPeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(ZigzagPeriod);
             List<ZigzagPoint> points = this.zigzag.GetPoints();
             ZigzagDrawer.DrawZigzagPoints(drawHelper, points, Color.Blue, Color.White, 8);
             ZigzagDrawer.DrawZigzagPoints(drawHelper, this.zigzag.GetMergedPoints(), 12);

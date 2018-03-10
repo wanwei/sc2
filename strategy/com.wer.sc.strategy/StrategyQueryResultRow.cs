@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.strategy
 {
@@ -43,6 +44,17 @@ namespace com.wer.sc.strategy
             {
                 return values;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(code).Append(",").Append(time);
+            for(int i = 0; i < Data.Count; i++)
+            {
+                sb.Append(",").Append(Data[i]);
+            }
+            return sb.ToString();
         }
     }
 }

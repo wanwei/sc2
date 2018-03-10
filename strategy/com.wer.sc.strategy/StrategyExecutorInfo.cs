@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.codeperiod;
 
 namespace com.wer.sc.strategy
 {

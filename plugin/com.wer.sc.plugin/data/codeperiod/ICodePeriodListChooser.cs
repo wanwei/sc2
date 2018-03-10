@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace com.wer.sc.data.datapackage
+namespace com.wer.sc.data.codeperiod
 {
-    public interface ICodePeriodPackageInfo
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface ICodePeriodListChooser
     {
         int Start { get; set; }
+
         int End { get; set; }
+
         List<string> Codes { get; }
 
         CodeChooseMethod CodeChooseMethod { get; set; }

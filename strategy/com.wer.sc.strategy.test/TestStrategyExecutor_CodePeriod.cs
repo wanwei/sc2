@@ -31,6 +31,8 @@ namespace com.wer.sc.strategy
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             executor.Strategy = strategy;
             executor.Run();
+
+            //IStrategyResult result = executor.StrategyResult;
         }
     }
 }

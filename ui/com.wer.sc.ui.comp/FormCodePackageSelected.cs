@@ -8,14 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.codeperiod;
 
 namespace com.wer.sc.ui.comp
 {
     public partial class FormCodePackageSelected : Form
     {
-        private CodePeriodPackageInfo codePackageInfo;
+        private CodePeriodListChooser codePackageInfo;
 
-        public FormCodePackageSelected(CodePeriodPackageInfo codePackageInfo)
+        public FormCodePackageSelected(CodePeriodListChooser codePackageInfo)
         {
             InitializeComponent();
             this.codeTree1.MultiSelect = true;

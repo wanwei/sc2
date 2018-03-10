@@ -11,11 +11,11 @@ namespace com.wer.sc.ui.comp
 {
     public class ChartComponentStrategyDrawer : IStrategyDrawer
     {
-        private Dictionary<KLinePeriod, IShapeDrawer_PriceRect> dic_Period_Drawer = new Dictionary<KLinePeriod, IShapeDrawer_PriceRect>();
+        private Dictionary<KLinePeriod, IStrategyDrawer_PriceRect> dic_Period_Drawer = new Dictionary<KLinePeriod, IStrategyDrawer_PriceRect>();
 
-        private IShapeDrawer_PriceRect drawer_TimeLine;
+        private IStrategyDrawer_PriceRect drawer_TimeLine;
 
-        private IShapeDrawer_PriceRect drawer_Tick;
+        private IStrategyDrawer_PriceRect drawer_Tick;
 
         private ChartComponentDrawer compChart;
 
@@ -30,24 +30,24 @@ namespace com.wer.sc.ui.comp
             this.startPos_Tick = startPos_Tick;
         }
 
-        public IShapeDrawer_PriceRect GetDrawer_KLine(KLinePeriod klinePeriod)
+        public IStrategyDrawer_PriceRect GetDrawer_KLine(KLinePeriod klinePeriod)
         {
             if (dic_Period_Drawer.ContainsKey(klinePeriod))
             {
                 return dic_Period_Drawer[klinePeriod];
             }
             //每个周期单独建立drawer
-            IShapeDrawer_PriceRect drawer = new ChartComponentShapeDrawer(compChart.Drawer_PriceRect, compChart.GraphicData_Candle, compChart.GraphicMapping);
+            IStrategyDrawer_PriceRect drawer = new ChartComponentShapeDrawer(compChart.Drawer_PriceRect, compChart.GraphicData_Candle, compChart.GraphicMapping);
             dic_Period_Drawer.Add(klinePeriod, drawer);
             return drawer;
         }
 
-        public IShapeDrawer_PriceRect GetDrawer_Tick()
+        public IStrategyDrawer_PriceRect GetDrawer_Tick()
         {
             return drawer_Tick;
         }
 
-        public IShapeDrawer_PriceRect GetDrawer_TimeLine()
+        public IStrategyDrawer_PriceRect GetDrawer_TimeLine()
         {
             return drawer_TimeLine;
         }

@@ -25,6 +25,49 @@ namespace com.wer.sc.utils
             return ToString(xmlexchange, "root");
         }
 
+        public static String[] ToStringArr(IXmlExchange_Multi xmlexchange, string[] rootTags)
+        {
+            int arrLen = xmlexchange.XmlElementCount;
+            XmlElement[] elemArr = new XmlElement[arrLen];
+            for (int i = 0; i < arrLen; i++)
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                XmlNode rootNode = xmlDoc.CreateElement(rootTags[i]);
+                xmlDoc.AppendChild(rootNode);
+                elemArr[i] = (XmlElement)rootNode;
+            }
+            xmlexchange.Save(elemArr);
+            string[] strArr = new string[arrLen];
+            for (int i = 0; i < arrLen; i++)
+            {
+                XmlElement elem = elemArr[i];
+                strArr[i] = ToString(elem.OwnerDocument);
+            }
+            return strArr;
+        }
+
+        public static String ToString(IXmlExchange_Multi xmlexchange, string[] rootTags)
+        {
+            string[] arr = ToStringArr(xmlexchange, rootTags);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < arr.Length; i++) {
+                if (i != 0)
+                    sb.Append("\r\n");
+                sb.Append(arr[i]);
+            }
+            return sb.ToString();
+        }
+
+        public static String ToString(IXmlExchange_Multi xmlexchange_Multi)
+        {
+            string[] rootTags = new string[xmlexchange_Multi.XmlElementCount];
+            for(int i = 0; i < rootTags.Length; i++)
+            {
+                rootTags[i] = "root";
+            }
+            return ToString(xmlexchange_Multi, rootTags);
+        }
+
         public static string ToString(XmlDocument xmlDoc)
         {
             MemoryStream stream = new MemoryStream();
@@ -70,18 +113,23 @@ namespace com.wer.sc.utils
     /// <summary>
     /// 
     /// </summary>
-    public interface IXmlExchange_File
+    public interface IXmlExchange_Multi
     {
         /// <summary>
         /// 将数据保存为xml
         /// </summary>
-        /// <param name="xmlElem"></param>
-        void Save(string filePath, XmlElement xmlElem);
+        /// <param name="xmlElems"></param>
+        void Save(IList<XmlElement> xmlElems);
 
         /// <summary>
         /// 从xml装载数据
         /// </summary>
-        /// <param name="xmlElem"></param>
-        void Load(string filePath, XmlElement xmlElem);
+        /// <param name="xmlElems"></param>
+        void Load(IList<XmlElement> xmlElems);
+
+        /// <summary>
+        /// 获得保存的Element数量
+        /// </summary>
+        int XmlElementCount { get; }
     }
 }

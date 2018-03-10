@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.utils;
 using com.wer.sc.utils.param;
@@ -15,8 +16,13 @@ namespace com.wer.sc.strategy
     /// 
     /// 一个策略执行结果可能包含多支股票或期货在一段时间的执行结果
     /// </summary>
-    public interface IStrategyResult : IXmlExchange_File
+    public interface IStrategyResult : IXmlExchange, IDataStore
     {
+        /// <summary>
+        /// 策略结果名称
+        /// </summary>
+        string Name { get; }
+
         /// <summary>
         /// 策略里使用的
         /// </summary>
@@ -50,7 +56,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 回测找到的总结果集
         /// </summary>
-        IStrategyQueryResultManager StrategyQueryResults { get; }
+        IStrategyQueryResultManager StrategyQueryResultManager { get; }
 
         /// <summary>
         /// 得到代码周期的单独运行结果

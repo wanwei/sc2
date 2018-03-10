@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.reader;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.reader;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace com.wer.sc.data.datapackage
         [TestMethod]
         public void TestCodePackageCreate_Normal()
         {
-            CodePeriodPackageInfo codePackageInfo = new CodePeriodPackageInfo();
+            CodePeriodListChooser codePackageInfo = new CodePeriodListChooser();
             codePackageInfo.CodeChooseMethod = CodeChooseMethod.Normal;
             codePackageInfo.Codes.Add("RB1705");
             codePackageInfo.Codes.Add("RB1709");
@@ -24,7 +25,7 @@ namespace com.wer.sc.data.datapackage
 
             IDataReader dataReader = TestDataCenter.Instance.DataReader;
             CodePeriodFactory fac = new CodePeriodFactory(dataReader);
-            ICodePeriodPackage codePackage = fac.CreateCodePeriodPackage(codePackageInfo);
+            ICodePeriodList codePackage = fac.CreateCodePeriodList(codePackageInfo);
 
             Assert.AreEqual(3, codePackage.CodePeriods.Count);
             Assert.AreEqual(20170101, codePackage.CodePeriods[0].StartDate);
@@ -33,7 +34,7 @@ namespace com.wer.sc.data.datapackage
         [TestMethod]
         public void TestCodePackageCreate_MainContract()
         {
-            CodePeriodPackageInfo codePackageInfo = new CodePeriodPackageInfo();
+            CodePeriodListChooser codePackageInfo = new CodePeriodListChooser();
             codePackageInfo.CodeChooseMethod = CodeChooseMethod.Maincontract;
             codePackageInfo.Codes.Add("RB");
             codePackageInfo.Codes.Add("M");
@@ -43,14 +44,14 @@ namespace com.wer.sc.data.datapackage
 
             IDataReader dataReader = TestDataCenter.Instance.DataReader;
             CodePeriodFactory fac = new CodePeriodFactory(dataReader);
-            ICodePeriodPackage codePackage = fac.CreateCodePeriodPackage(codePackageInfo);
+            ICodePeriodList codePackage = fac.CreateCodePeriodList(codePackageInfo);
             Console.WriteLine(codePackage);
         }
 
         [TestMethod]
         public void TestCodePackageCreate_Catelog()
         {
-            CodePeriodPackageInfo codePackageInfo = new CodePeriodPackageInfo();
+            CodePeriodListChooser codePackageInfo = new CodePeriodListChooser();
             codePackageInfo.CodeChooseMethod = CodeChooseMethod.Catelog;            
             codePackageInfo.Codes.Add("RB");
             codePackageInfo.Codes.Add("M");
@@ -60,7 +61,7 @@ namespace com.wer.sc.data.datapackage
 
             IDataReader dataReader = TestDataCenter.Instance.DataReader;
             CodePeriodFactory fac = new CodePeriodFactory(dataReader);
-            ICodePeriodPackage codePackage = fac.CreateCodePeriodPackage(codePackageInfo);
+            ICodePeriodList codePackage = fac.CreateCodePeriodList(codePackageInfo);
             Console.WriteLine(codePackage);
         }
     }

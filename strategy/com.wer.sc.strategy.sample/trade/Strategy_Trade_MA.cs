@@ -40,7 +40,7 @@ namespace com.wer.sc.strategy.sample.trade
         public override void OnStart(object sender, IStrategyOnStartArgument argument)
         {
             base.OnStart(sender, argument);
-            trader = this.StrategyOperator.Trader;
+            trader = this.StrategyHelper.Trader;
             trader.AutoFilter = true;
         }
 
@@ -52,12 +52,12 @@ namespace com.wer.sc.strategy.sample.trade
                 return;
             if (ma10[ma10.Count - 2] > ma20[ma20.Count - 2] && ma10[ma10.Count - 1] > ma20[ma20.Count - 1])
             {
-                this.StrategyOperator.Trader.CloseAll();
+                this.StrategyHelper.Trader.CloseAll();
                 return;
             }
             if (ma10[ma10.Count - 2] < ma20[ma20.Count - 2] && ma10[ma10.Count - 1] < ma20[ma20.Count - 1])
             {                
-                this.StrategyOperator.Trader.Open(currentData.Code, OrderSide.Buy, currentData.CurrentData.Price, 5);
+                this.StrategyHelper.Trader.Open(currentData.Code, OrderSide.Buy, currentData.CurrentData.Price, 5);
                 return;
             }
         }
@@ -68,7 +68,7 @@ namespace com.wer.sc.strategy.sample.trade
         public override void OnEnd(object sender, IStrategyOnEndArgument argument)
         {
             DrawAccount();
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
             List<float> ma10 = referedStrategy_MA10.MAList;
             List<float> ma20 = referedStrategy_MA20.MAList;
             drawHelper.DrawPolyLine(ma10, color_1);

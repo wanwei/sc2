@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.data.account;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.reader;
@@ -14,54 +15,44 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 策略执行器
-    /// 策略执行前进周期：tick或者K线
+    /// 数据包策略执行器
+    /// 使用该执行器必须提供一个
     /// </summary>
-    public class StrategyExecutor_DataPackage : IStrategyExecutor
+    public class StrategyExecutor_DataPackage : StrategyExecutorAbstract, IStrategyExecutor
     {
-        private StrategyDayFinishedArguments dayFinishedArguments = null;
-
-        private StrategyBarFinishedArguments barFinishedArguments = null;
+        private object lockRunObject = new object();
 
         private ICodePeriod codePeriod;
 
-        private IStrategy strategy;
-
-        private StrategyExecutorInfo strategyExecutorInfo;
-
-        public IStrategy Strategy
+        public ICodePeriod CodePeriod
         {
-            get { return this.strategy; }
-            set { SetStrategy(value); }
+            get
+            {
+                return codePeriod;
+            }
         }
 
+        //执行时使用的数据包
         private IDataPackage_Code dataPackage;
-
-        private StrategyReferedPeriods referedPeriods;
-
-        private StrategyForwardPeriod forwardPeriod;
-
-        private StrategyHelper strategyHelper;
-
-        private bool isRunning;
 
         private Dictionary<KLinePeriod, IKLineData> dic_Period_KLineData = new Dictionary<KLinePeriod, IKLineData>();
 
-        private IStrategyResult report;
+        private StrategyDayFinishedArguments tempDayFinishedArguments = null;
 
-        public StrategyExecutor_DataPackage(StrategyArguments_DataPackage strategyArguments) : this(strategyArguments, new StrategyHelper(null))
+        private StrategyBarFinishedArguments tempBarFinishedArguments = null;
+
+        public StrategyExecutor_DataPackage(IStrategyCenter strategyCenter, StrategyArguments_DataPackage strategyArguments) : this(strategyCenter, strategyArguments, null)
         {
-
         }
 
-        public StrategyExecutor_DataPackage(StrategyArguments_DataPackage strategyArguments, IStrategyHelper strategyHelper)
+        public StrategyExecutor_DataPackage(IStrategyCenter strategyCenter, StrategyArguments_DataPackage strategyArguments, StrategyExecutorInfo strategyExecutorInfo) : base(strategyCenter, strategyArguments)
         {
             this.dataPackage = strategyArguments.DataPackage;
-            this.referedPeriods = strategyArguments.ReferedPeriods;
-            this.forwardPeriod = strategyArguments.ForwardPeriod;
             this.codePeriod = new CodePeriod(dataPackage.Code, dataPackage.StartDate, dataPackage.EndDate);
-            this.InitStrategyExecutorInfo();
-            this.strategyHelper = (StrategyHelper)strategyHelper;
+            if (strategyExecutorInfo == null)
+                this.InitStrategyExecutorInfo();
+            else
+                this.strategyExecutorInfo = strategyExecutorInfo;
         }
 
         private void InitStrategyExecutorInfo()
@@ -69,95 +60,72 @@ namespace com.wer.sc.strategy
             this.strategyExecutorInfo = new StrategyExecutorInfo(codePeriod, dataPackage.GetTradingDays().Count);
             this.strategyExecutorInfo.CurrentDay = dataPackage.GetTradingDays()[0];
             this.strategyExecutorInfo.CurrentDayIndex = 0;
+
+            this.tempBarFinishedArguments = new StrategyBarFinishedArguments(this.strategyExecutorInfo);
+            this.tempDayFinishedArguments = new StrategyDayFinishedArguments(this.strategyExecutorInfo);
         }
 
-        public void SetStrategy(IStrategy strategy)
+        private IDataForward_Code dataForward;
+
+        public override void Run()
         {
-            this.strategy = strategy;
-            InitStrategy(this.strategy);
-            StrategyReferedPeriods referedPeriods = strategy.GetReferedPeriods();
-            if (referedPeriods != null)
-                this.referedPeriods = referedPeriods;
-            IList<IStrategy> referedStrategies = this.strategy.GetReferedStrategies();
-            if (referedStrategies != null)
+            if (this.state != StrategyExecutorState.NotStart)
+                return;
+            lock (lockRunObject)
             {
-                for (int i = 0; i < referedStrategies.Count; i++)
-                {
-                    InitStrategy(referedStrategies[i]);
-                }
-            }
-        }
-
-        private void InitStrategy(IStrategy strategy)
-        {
-            if (strategy is StrategyAbstract)
-                ((StrategyAbstract)strategy).StrategyOperator = strategyHelper;
-        }
-
-        private object lockObj = new object();          
-
-        public void Execute()
-        {
-            Thread thread = new Thread(new ThreadStart(Run));
-            thread.Start();
-        }
-
-        private bool isCancel = false;
-
-        public void Cancel()
-        {
-            this.isCancel = true;
-        }
-
-        public void Run()
-        {
-            lock (lockObj)
-            {
-                if (isRunning)
+                if (this.state != StrategyExecutorState.NotStart)
                     return;
-                isRunning = true;
-                isCancel = false;
 
-                IDataForward_Code dataForward = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, referedPeriods, forwardPeriod);
-                dataForward.OnBar += RealTimeReader_OnBar;
-                dataForward.OnTick += RealTimeReader_OnTick;
+                if (ReferedPeriods == null)
+                    throw new ApplicationException("策略运行时引用周期为空" + dataPackage);
+                if (ForwardPeriod == null)
+                    throw new ApplicationException("策略运行时前进周期为空" + dataPackage);
 
-                IAccount account = DataCenter.Default.AccountManager.CreateAccount(100000);
-                account.BindRealTimeReader(dataForward);
-                StrategyTrader_History trader = new StrategyTrader_History(account);
-                this.strategyHelper.Trader = trader;//.GetStrategyTrader(dataPackage.Code);
+                //创建前进器
+                this.dataForward = PrepareDataForward();
+                //创建StrategyHelper
+                this.strategyHelper = PrepareStrategyHelper();
+                if (Strategy is StrategyAbstract)
+                    ((StrategyAbstract)Strategy).StrategyHelper = StrategyHelper;
 
+                //开始执行
+                this.state = StrategyExecutorState.Running;
                 ExecuteStrategyStart(dataForward);
                 if (isCancel)
+                {
+                    DealCancelEvent();
                     return;
-                bool continueExecute = ExecuteStrategy(dataForward);
-                if (!continueExecute)
-                    return;
+                }
+                ExecuteStrategy(dataForward);
                 if (isCancel)
+                {
+                    DealCancelEvent();
                     return;
+                }
                 ExecuteStrategyEnd(dataForward);
             }
         }
 
-        public IStrategyResult StrategyReport
+        private IDataForward_Code PrepareDataForward()
         {
-            get
-            {
-                return report;
-            }
+            IDataForward_Code dataForward = DataCenter.Default.HistoryDataForwardFactory.CreateDataForward_Code(dataPackage, ReferedPeriods, ForwardPeriod);
+            dataForward.OnBar += RealTimeReader_OnBar;
+            dataForward.OnTick += RealTimeReader_OnTick;
+            return dataForward;
         }
 
-        private void BuildStrategyReport()
+        private IStrategyHelper PrepareStrategyHelper()
         {
-            StrategyResult report = new StrategyResult();
-            //report.code = dataPackage.Code;
-            //report.startDate = dataPackage.StartDate;
-            //report.endDate = dataPackage.EndDate;
-            //report.forwardPeriod = forwardPeriod;
-            //report.parameters = strategy.Parameters;
-            //report.strategyResultManager = strategyHelper.QueryResultManager;
-            //report.strategyTrader = strategyHelper.Trader;
-            this.report = report;
+            //如果在参数里设定了strategyHelper，则不再更改
+            if (this.strategyHelper != null)
+            {
+                this.strategyHelper.Trader.Account.BindRealTimeReader(dataForward);
+                return this.strategyHelper;
+            }
+
+            this.strategyHelper = GetDefaultStrategyHelper();
+            this.strategyHelper.Trader.Account.BindRealTimeReader(dataForward);
+            return this.strategyHelper;
         }
 
         private bool ExecuteStrategy(IDataForward_Code realTimeReader)
@@ -174,8 +142,8 @@ namespace com.wer.sc.strategy
 
         private void ExecuteStrategyStart(IDataForward_Code dataForward)
         {
-            IStrategyOnStartArgument argument = new StrategyOnStartArgument(dataForward, referedPeriods, forwardPeriod);
-            ExecuteReferStrategyStart(strategy, argument);
+            IStrategyOnStartArgument argument = new StrategyOnStartArgument(dataForward, ReferedPeriods, ForwardPeriod);
+            ExecuteReferStrategyStart(Strategy, argument);
         }
 
         private void ExecuteReferStrategyStart(IStrategy strategy, IStrategyOnStartArgument argument)
@@ -198,9 +166,11 @@ namespace com.wer.sc.strategy
             try
             {
                 IStrategyOnEndArgument argument = new StrategyOnEndArgument(dataForward);
-                ExecuteReferStrategyEnd(strategy, argument);
-                this.BuildStrategyReport();
-                OnFinished?.Invoke(this.strategy, new StrategyFinishedArguments(this.strategy, this.strategyExecutorInfo, this.report));
+                ExecuteReferStrategyEnd(Strategy, argument);
+                this.BuildStrategyResult();
+                if (IsSaveResult)
+                    this.SaveStrategyResult();
+                DealFinishedEvent(new StrategyFinishedArguments(this.Strategy, this.strategyExecutorInfo, this.strategyResult));
             }
             catch (Exception e)
             {
@@ -222,9 +192,42 @@ namespace com.wer.sc.strategy
             }
         }
 
+        private void BuildStrategyResult()
+        {
+            StrategyResult strategyResult = new StrategyResult();
+            strategyResult.Name = GetResultName();
+            strategyResult.CodePeriods.Add(this.CodePeriod);
+            strategyResult.StartDate = dataPackage.StartDate;
+            strategyResult.EndDate = dataPackage.EndDate;
+            strategyResult.ReferedPeriods = this.ReferedPeriods;
+            strategyResult.ForwardPeriod = this.ForwardPeriod;
+            strategyResult.Parameters = Strategy.Parameters;
+            strategyResult.StrategyQueryResultManager = strategyHelper.QueryResultManager;
+
+            //绘图暂时不处理，绘图需要特别处理，不是一个container能解决的
+            IStrategyGraphicContainer shapeContainer = null;
+            StrategyResult_CodePeriod strategyResult_CodePeriod = new StrategyResult_CodePeriod(CodePeriod, ForwardPeriod, ReferedPeriods, shapeContainer, StrategyHelper.Trader);
+            strategyResult.AddStrategyResult_Code(strategyResult_CodePeriod);
+            this.strategyResult = strategyResult;
+        }
+
+        private string GetResultName()
+        {
+            string resultName = "";
+            if (Strategy is StrategyAbstract)
+            {
+                resultName += ((StrategyAbstract)Strategy).Name;
+            }
+            else
+                resultName += Strategy.GetType().ToString();
+
+            resultName += "_" + DateTime.Now.ToString("HHmmss") + "_" + dataPackage.StartDate + "-" + dataPackage.EndDate;
+            return resultName;
+        }
+
         private void RealTimeReader_OnTick(object sender, IForwardOnTickArgument argument)
         {
-            OnTick_ReferedStrategies(this.strategy, argument);
+            OnTick_ReferedStrategies(this.Strategy, argument);
         }
 
         private void OnTick_ReferedStrategies(IStrategy strategy, IForwardOnTickArgument argument)
@@ -246,27 +249,30 @@ namespace com.wer.sc.strategy
 
         private void RealTimeReader_OnBar(object sender, IForwardOnBarArgument argument)
         {
-            OnBar_ReferedStrategies(this.strategy, argument);
+            OnBar_ReferedStrategies(this.Strategy, argument);
             IKLineData_Extend mainKLineData = argument.MainBar.KLineData;
             if (this.strategyExecutorInfo != null)
                 this.strategyExecutorInfo.CurrentKLineData = mainKLineData;
-            if (OnBarFinished != null)
+            if (HasBarFinishedEvent())
             {
-                if (barFinishedArguments == null)
-                    barFinishedArguments = new StrategyBarFinishedArguments(this.strategyExecutorInfo);
-                OnBarFinished(strategy, barFinishedArguments);
+                if (tempBarFinishedArguments == null)
+                    tempBarFinishedArguments = new StrategyBarFinishedArguments(this.strategyExecutorInfo);
+                DealBarFinishEvent(tempBarFinishedArguments);
             }
-            if (OnDayFinished != null && mainKLineData.IsDayEnd())
+            if (HasDayFinishedEvent() && mainKLineData.IsDayEnd())
             {
-                if (dayFinishedArguments == null)
-                    dayFinishedArguments = new StrategyDayFinishedArguments(this.strategyExecutorInfo);
-                OnDayFinished(strategy, dayFinishedArguments);
+                if (tempDayFinishedArguments == null)
+                    tempDayFinishedArguments = new StrategyDayFinishedArguments(this.strategyExecutorInfo);
+                DealDayFinishEvent(tempDayFinishedArguments);
             }
+
+            this.strategyExecutorInfo.CurrentKLineData = mainKLineData;
+            this.strategyExecutorInfo.CurrentDay = mainKLineData.GetTradingTime().TradingDay;
+
             if (mainKLineData.IsDayStart())
             {
                 this.strategyExecutorInfo.CurrentDayIndex++;
-                this.strategyExecutorInfo.CurrentDay = mainKLineData.GetTradingTime().TradingDay;
-
+                //this.strategyExecutorInfo.CurrentDay = mainKLineData.GetTradingTime().TradingDay;
             }
         }
 
@@ -284,40 +290,10 @@ namespace com.wer.sc.strategy
             strategy.OnBar(this, new StrategyOnBarArgument((ForwardOnBarArgument)argument));
         }
 
-        /// <summary>
-        /// 得到执行器相关信息
-        /// </summary>
-        public IStrategyExecutorInfo StrategyExecutorInfo
+        private void DealCancelEvent()
         {
-            get
-            {
-                return this.strategyExecutorInfo;
-            }
+            this.state = StrategyExecutorState.Canceled;
+            DealCancelEvent(new StrategyCanceledArguments(this.strategyExecutorInfo));
         }
-
-        public ICodePeriod CodePeriod
-        {
-            get
-            {
-                return codePeriod;
-            }
-        }
-
-        public event StrategyStart OnStart;
-
-        /// <summary>
-        /// 执行完每一个bar
-        /// </summary>
-        public event StrategyBarFinished OnBarFinished;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event StrategyDayFinished OnDayFinished;
-
-        /// <summary>
-        /// 执行完
-        /// </summary>
-        public event StrategyFinished OnFinished;
     }
 }

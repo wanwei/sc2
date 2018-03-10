@@ -45,6 +45,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -67,6 +69,7 @@
     <Compile Include="mock\MockStrategy_Parameter.cs" />
     <Compile Include="mock\MockStrategy_ReferOtherCode.cs" />
     <Compile Include="mock\MockStrategy_ReferOtherStrategy.cs" />
+    <Compile Include="mock\MockStrategy_Results.cs" />
     <Compile Include="mock\MockStrategy_Simple.cs" />
     <Compile Include="mock\MockStrategy_Tick.cs" />
     <Compile Include="mock\MockStrategy_Trade.cs" />
@@ -76,12 +79,17 @@
     <None Include="TestCase\com\wer\sc\strategy\loader\strategy.common.strategyconfig" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyParameter_15Minute" />
     <None Include="TestCase\com\wer\sc\strategy\StrategyTrade" />
+    <Compile Include="TestStrategyExecutorEvent_CodePeriod.cs" />
+    <Compile Include="TestStrategyExecutorResult.cs" />
     <Compile Include="TestStrategyExecutorPool.cs" />
     <Compile Include="TestStrategyExecutor_CodePeriod.cs" />
     <Compile Include="TestStrategyExecutor_DataPackage.cs" />
-    <Compile Include="TestStrategyExecutor_DataPackage_Event.cs" />
+    <Compile Include="TestStrategyExecutor_DataPackageLink.cs" />
+    <Compile Include="TestStrategyExecutorEvent_DataPackage.cs" />
     <Compile Include="TestStrategyExecutor_History.cs" />
     <Compile Include="TestStrategyExecutor_Multi.cs" />
+    <Compile Include="TestStrategyGraphic.cs" />
+    <Compile Include="TestStrategyGraphicList.cs" />
     <Compile Include="TestStrategyMgr.cs" />
     <Compile Include="TestStrategy_Parameter.cs" />
     <Compile Include="TestStrategy_ReferOtherCode.cs" />

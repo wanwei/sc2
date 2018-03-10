@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy.mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,7 +40,7 @@ namespace com.wer.sc.strategy
                 codes.Add("jm");
                 codes.Add("p");
                 codes.Add("pp");
-                StrategyArguments_CodePeriodPackage strategyCodePeriodPackage = GetStrategyPackage(codes, 20170101, 20170601);
+                StrategyArguments_CodePeriodList strategyCodePeriodPackage = GetStrategyPackage(codes, 20170101, 20170601);
 
                 IList<IStrategyExecutor> executors = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutors_History(strategyCodePeriodPackage);
                 for (int i = 0; i < executors.Count; i++)
@@ -87,7 +88,7 @@ namespace com.wer.sc.strategy
             poolDetector.StartExecutor(arguments.ExecutorInfo);
         }
 
-        private static StrategyArguments_CodePeriodPackage GetStrategyPackage(List<string> codes, int start, int end)
+        private static StrategyArguments_CodePeriodList GetStrategyPackage(List<string> codes, int start, int end)
         {
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = false;
@@ -95,9 +96,9 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            ICodePeriodFactory codePeriodFactory = DataCenter.Default.CodePackageFactory;
-            ICodePeriodPackage codePeriodPackage = codePeriodFactory.CreateCodePeriodPackage(codes, start, end, CodeChooseMethod.Maincontract);
-            StrategyArguments_CodePeriodPackage strategyCodePeriodPackage = new StrategyArguments_CodePeriodPackage(codePeriodPackage, referedPeriods, forwardPeriod);
+            ICodePeriodFactory codePeriodFactory = DataCenter.Default.CodePeriodFactory;
+            ICodePeriodList codePeriodPackage = codePeriodFactory.CreateCodePeriodList(codes, start, end, CodeChooseMethod.Maincontract);
+            StrategyArguments_CodePeriodList strategyCodePeriodPackage = new StrategyArguments_CodePeriodList(codePeriodPackage, referedPeriods, forwardPeriod);
             return strategyCodePeriodPackage;
         }
     }

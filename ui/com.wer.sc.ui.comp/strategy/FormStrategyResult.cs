@@ -57,7 +57,7 @@ namespace com.wer.sc.ui.comp.strategy
             this.currentQueryResultName = name;
             IStrategyQueryResult strategyResult = strategyResultManager.GetQueryResultByName(name);
             this.InitGridView(strategyResult);
-            IList<IStrategyQueryResultRow> results = strategyResult.StrategyResults;
+            IList<IStrategyQueryResultRow> results = strategyResult.Rows;
             for (int i = 0; i < results.Count; i++)
             {
                 IStrategyQueryResultRow result = results[i];
@@ -81,7 +81,7 @@ namespace com.wer.sc.ui.comp.strategy
             this.dataGridView1.Rows.Clear();
             while (this.dataGridView1.Columns.Count > 2)
                 this.dataGridView1.Columns.RemoveAt(2);
-            string[] titles = strategyResult.Title;
+            string[] titles = strategyResult.Titles;
             for (int i = 0; i < titles.Length; i++)
             {
                 string title = titles[i];

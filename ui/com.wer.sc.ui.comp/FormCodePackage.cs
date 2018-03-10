@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,16 @@ namespace com.wer.sc.ui.comp
 {
     public partial class FormCodePackage : Form
     {
-        private CodePeriodPackageInfo codePackageInfo;
+        private CodePeriodListChooser codePackageInfo;
 
-        public FormCodePackage(CodePeriodPackageInfo codePackageInfo)
+        public FormCodePackage(CodePeriodListChooser codePackageInfo)
         {
             InitializeComponent();
             this.codePackageInfo = codePackageInfo;
             this.Init(codePackageInfo);
         }
 
-        private void Init(CodePeriodPackageInfo dataPackageInfo)
+        private void Init(CodePeriodListChooser dataPackageInfo)
         {
             this.compCodePackage1.Init(dataPackageInfo);           
         }

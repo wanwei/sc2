@@ -19,18 +19,18 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="klinePeriod"></param>
         /// <returns></returns>
-        IShapeDrawer_PriceRect GetDrawer_KLine(KLinePeriod klinePeriod);
+        IStrategyDrawer_PriceRect GetDrawer_KLine(KLinePeriod klinePeriod);
 
         /// <summary>
         /// 得到分时线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IShapeDrawer_PriceRect GetDrawer_TimeLine();
+        IStrategyDrawer_PriceRect GetDrawer_TimeLine();
 
         /// <summary>
         /// 得到tick线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IShapeDrawer_PriceRect GetDrawer_Tick();
+        IStrategyDrawer_PriceRect GetDrawer_Tick();
     }
 }

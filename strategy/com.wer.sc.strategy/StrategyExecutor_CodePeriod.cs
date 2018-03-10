@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
@@ -10,69 +11,45 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 将一个策略在多个上验证
+    /// CodePeriod执行器
+    /// 
+    /// 该类是代理类
+    /// 
     /// </summary>
     public class StrategyExecutor_CodePeriod : IStrategyExecutor
     {
         private IStrategyExecutor strategyExecutor;
 
-        public IStrategy Strategy
+        public StrategyExecutor_CodePeriod(IStrategyCenter strategyCenter, StrategyArguments_CodePeriod strategyArguments)
         {
-            get { return strategyExecutor.Strategy; }
-            set { strategyExecutor.Strategy = value; }
+            InitByCodePeriod(strategyCenter, strategyArguments);
         }
 
-        private ICodePeriod codePeriod;
-
-        public ICodePeriod CodePeriod
+        private void InitByCodePeriod(IStrategyCenter strategyCenter, StrategyArguments_CodePeriod strategyArguments)
         {
-            get { return codePeriod; }
-        }
-
-        private IStrategyExecutorFactory executorFactory;
-
-        private IStrategyHelper strategyHelper;
-
-        public StrategyExecutor_CodePeriod(IDataCenter dataCenter, StrategyArguments_CodePeriod strategyCodePeriod) : this(dataCenter, strategyCodePeriod, new StrategyHelper(null))
-        {
-
-        }
-
-        public StrategyExecutor_CodePeriod(IDataCenter dataCenter, StrategyArguments_CodePeriod strategyCodePeriod, IStrategyHelper strategyHelper)
-        {
-            this.codePeriod = strategyCodePeriod.CodePeriod;
-            this.executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
-            this.strategyHelper = strategyHelper;
-            InitByCodePeriod(dataCenter, strategyCodePeriod, strategyHelper);
-        }
-
-        private void InitByCodePeriod(IDataCenter dataCenter, StrategyArguments_CodePeriod strategyCodePeriod, IStrategyHelper strategyHelper)
-        {
-            ICodePeriod codePeriod = strategyCodePeriod.CodePeriod;
+            ICodePeriod codePeriod = strategyArguments.CodePeriod;
             if (codePeriod.IsFromContracts)
             {
-                StrategyArguments_DataPackages strategyArguments = new StrategyArguments_DataPackages();
-                for(int i = 0; i < codePeriod.Contracts.Count; i++)
-                {
-                    ICodePeriod contractCodePeriod = codePeriod.Contracts[i];
-                    IDataPackage_Code dataPackage = dataCenter.DataPackageFactory.CreateDataPackage_Code(contractCodePeriod.Code, contractCodePeriod.StartDate, contractCodePeriod.EndDate);
-                    strategyArguments.DataPackages.Add(dataPackage);
-                }
-                strategyArguments.ReferedPeriods = strategyCodePeriod.ReferedPeriods;
-                strategyArguments.ForwardPeriod = strategyCodePeriod.ForwardPeriod;
-                this.strategyExecutor = this.executorFactory.CreateExecutor_History(strategyArguments);
+                this.strategyExecutor = new StrategyExecutor_CodePeriod_MainContract(strategyCenter, strategyArguments);
             }
             else
             {
-                IDataPackage_Code dataPackage = dataCenter.DataPackageFactory.CreateDataPackage_Code(codePeriod.Code, codePeriod.StartDate, codePeriod.EndDate);
-                StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, strategyCodePeriod.ReferedPeriods, strategyCodePeriod.ForwardPeriod);
-                this.strategyExecutor = this.executorFactory.CreateExecutor_History(strategyDataPackage, strategyHelper);
+                IDataPackage_Code dataPackage = strategyCenter.BelongDataCenter.DataPackageFactory.CreateDataPackage_Code(codePeriod.Code, codePeriod.StartDate, codePeriod.EndDate);
+                StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, strategyArguments.ReferedPeriods, strategyArguments.ForwardPeriod);
+                this.strategyExecutor = strategyCenter.GetStrategyExecutorFactory().CreateExecutor_History(strategyDataPackage);
             }
 
             this.strategyExecutor.OnStart += StrategyExecutor_OnStart; ;
             this.strategyExecutor.OnBarFinished += StrategyExecutor_OnBarFinished;
             this.strategyExecutor.OnDayFinished += StrategyExecutor_OnDayFinished;
+            this.strategyExecutor.OnCanceled += StrategyExecutor_OnCanceled;
             this.strategyExecutor.OnFinished += StrategyExecutor_OnFinished;
+        }
+
+        private void StrategyExecutor_OnCanceled(object sender, StrategyCanceledArguments arguments)
+        {
+            if (OnCanceled != null)
+                OnCanceled(this, arguments);
         }
 
         private void StrategyExecutor_OnFinished(object sender, StrategyFinishedArguments arguments)
@@ -99,7 +76,11 @@ namespace com.wer.sc.strategy
                 OnStart(this, arguments);
         }
 
-
+        public IStrategy Strategy
+        {
+            get { return strategyExecutor.Strategy; }
+            set { strategyExecutor.Strategy = value; }
+        }
 
         /// <summary>
         /// 执行策略
@@ -130,11 +111,11 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 得到策略执行报告，策略执行完才能获得
         /// </summary>
-        public IStrategyResult StrategyReport
+        public IStrategyResult StrategyResult
         {
             get
             {
-                return this.strategyExecutor.StrategyReport;
+                return this.strategyExecutor.StrategyResult;
             }
         }
 
@@ -146,21 +127,54 @@ namespace com.wer.sc.strategy
             get { return this.strategyExecutor.StrategyExecutorInfo; }
         }
 
+        public StrategyExecutorState State
+        {
+            get
+            {
+                return this.strategyExecutor.State;
+            }
+        }
+
+        public StrategyReferedPeriods ReferedPeriods
+        {
+            get
+            {
+                return this.strategyExecutor.ReferedPeriods;
+            }
+        }
+
+        public StrategyForwardPeriod ForwardPeriod
+        {
+            get
+            {
+                return this.strategyExecutor.ForwardPeriod;
+            }
+        }
+
+        public StrategyTraderSetting TraderSetting
+        {
+            get
+            {
+                return this.strategyExecutor.TraderSetting;
+            }
+        }
+
+        public IStrategyHelper StrategyHelper
+        {
+            get
+            {
+                return this.strategyExecutor.StrategyHelper;
+            }
+        }
+
         public event StrategyStart OnStart;
 
-        /// <summary>
-        /// 执行完每一个bar
-        /// </summary>
         public event StrategyBarFinished OnBarFinished;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public event StrategyDayFinished OnDayFinished;
 
-        /// <summary>
-        /// 执行完
-        /// </summary>
+        public event StrategyCanceled OnCanceled;
+
         public event StrategyFinished OnFinished;
     }
 }

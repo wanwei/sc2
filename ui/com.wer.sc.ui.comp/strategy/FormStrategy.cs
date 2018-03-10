@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.strategy;
 using com.wer.sc.ui.comp;
 using com.wer.sc.utils.ui;
@@ -26,7 +27,7 @@ namespace com.wer.sc.ui.comp.strategy
 
         //private IDataPackage_Code dataPackage;
 
-        private CodePeriodPackageInfo codePackageInfo;
+        private CodePeriodListChooser codePackageInfo;
 
         public IStrategyData StrategyData
         {
@@ -41,7 +42,7 @@ namespace com.wer.sc.ui.comp.strategy
             }
         }
 
-        public FormStrategy(CodePeriodPackageInfo codePackageInfo, IStrategyData strategyData, IStrategyDrawer drawer)
+        public FormStrategy(CodePeriodListChooser codePackageInfo, IStrategyData strategyData, IStrategyDrawer drawer)
         {
             this.codePackageInfo = codePackageInfo;
             this.strategyData = strategyData;
@@ -66,7 +67,7 @@ namespace com.wer.sc.ui.comp.strategy
         private void InitCodePackage(ChartComponent chartComponent)
         {
             IDataPackage_Code dataPackage = chartComponent.Controller.CurrentNavigater.DataPackage;
-            CodePeriodPackageInfo codePackageInfo = new CodePeriodPackageInfo();
+            CodePeriodListChooser codePackageInfo = new CodePeriodListChooser();
             codePackageInfo.Codes.Add(dataPackage.Code);
             codePackageInfo.Start = dataPackage.StartDate;
             codePackageInfo.End = dataPackage.EndDate;

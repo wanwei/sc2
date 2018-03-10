@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace com.wer.sc.data.datapackage
+namespace com.wer.sc.data.codeperiod
 {
     public class CodePeriod : ICodePeriod
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.data.datapackage
+namespace com.wer.sc.data.codeperiod
 {
     /// <summary>
     /// 代码周期类

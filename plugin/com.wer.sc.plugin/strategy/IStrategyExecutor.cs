@@ -1,7 +1,4 @@
-﻿using com.wer.sc.data;
-using com.wer.sc.data.datapackage;
-using com.wer.sc.utils.param;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +10,9 @@ namespace com.wer.sc.strategy
     /// 策略执行器
     /// 该接口负责单支股票或期货品种在一段时间内的策略执行
     /// 
-    /// 品种ID和时间可以通过CodePeriod获得
+    /// 一个策略执行器创建后只能执行一次，一旦执行后就不能被再次执行
     /// </summary>
-    public interface IStrategyExecutor
+    public interface IStrategyExecutor : IStrategyExecutor_Event
     {
         /// <summary>
         /// 设置和获取需要执行的策略
@@ -40,164 +37,39 @@ namespace com.wer.sc.strategy
         void Cancel();
 
         /// <summary>
-        /// 策略执行开始
+        /// 策略执行器的运行状态
+        /// 还未开始，正在执行，被取消，执行完毕
         /// </summary>
-        event StrategyStart OnStart;
+        StrategyExecutorState State { get; }
 
         /// <summary>
-        /// 每执行完一个主周期的bar触发该事件
+        /// 该策略执行器引用的数据周期
         /// </summary>
-        event StrategyBarFinished OnBarFinished;
+        StrategyReferedPeriods ReferedPeriods { get; }
 
         /// <summary>
-        /// 每执行完一天的所有bar触发该事件
+        /// 该策略的前进周期
         /// </summary>
-        event StrategyDayFinished OnDayFinished;
+        StrategyForwardPeriod ForwardPeriod { get; }
 
         /// <summary>
-        /// 执行完所有数据触发该事件
+        /// 策略执行时的交易设定
         /// </summary>
-        event StrategyFinished OnFinished;
+        StrategyTraderSetting TraderSetting { get; }
 
         /// <summary>
-        /// 得到策略执行报告，策略执行完才能获得
+        /// 策略执行帮助接口
         /// </summary>
-        IStrategyResult StrategyReport { get; }
+        IStrategyHelper StrategyHelper { get; }
+
+        /// <summary>
+        /// 得到策略执行结果，策略执行结束后生成
+        /// </summary>
+        IStrategyResult StrategyResult { get; }
 
         /// <summary>
         /// 得到执行时相关信息
         /// </summary>
         IStrategyExecutorInfo StrategyExecutorInfo { get; }
-    }
-
-    /// <summary>
-    /// 策略开始执行
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="executorInfo"></param>
-    public delegate void StrategyStart(Object sender, StrategyStartArguments arguments);
-
-    /// <summary>
-    /// 策略执行时bar
-    /// </summary>
-    /// <param name="strategy"></param>
-    public delegate void StrategyBarFinished(Object sender, StrategyBarFinishedArguments arguments);
-
-    /// <summary>
-    /// 当天的策略执行完毕
-    /// </summary>
-    /// <param name="strategy"></param>
-    /// <param name="args"></param>
-    public delegate void StrategyDayFinished(Object sender, StrategyDayFinishedArguments arguments);
-
-    /// <summary>
-    /// 策略执行完毕
-    /// </summary>
-    /// <param name="strategy"></param>
-    public delegate void StrategyFinished(Object sender, StrategyFinishedArguments arguments);
-
-    public abstract class StrategyArguments
-    {
-        private IStrategyExecutorInfo executorInfo;
-
-        public StrategyArguments(IStrategyExecutorInfo executorInfo)
-        {
-            this.executorInfo = executorInfo;
-        }
-
-        public IStrategyExecutorInfo ExecutorInfo
-        {
-            get
-            {
-                return executorInfo;
-            }
-        }
-    }
-
-    public class StrategyStartArguments : StrategyArguments
-    {
-        public StrategyStartArguments(IStrategyExecutorInfo executorInfo) : base(executorInfo)
-        {
-        }
-    }
-
-    public class StrategyBarFinishedArguments : StrategyArguments
-    {
-        public StrategyBarFinishedArguments(IStrategyExecutorInfo executorInfo) : base(executorInfo)
-        {
-        }
-    }
-
-    public class StrategyDayFinishedArguments : StrategyArguments
-    {
-        public StrategyDayFinishedArguments(IStrategyExecutorInfo executorInfo) : base(executorInfo)
-        {
-        }
-    }
-
-    public class StrategyFinishedArguments : StrategyArguments
-    {
-        private IStrategyExecutorInfo strategyExecutorInfo;
-
-        private IStrategyResult report;
-
-        private IStrategy strategy;
-
-        public StrategyFinishedArguments(IStrategy strategy, IStrategyExecutorInfo executorInfo, IStrategyResult report) : base(executorInfo)
-        {
-            this.strategy = strategy;
-            this.strategyExecutorInfo = executorInfo;
-            this.report = report;
-        }
-
-        public IStrategy Strategy
-        {
-            get { return this.strategy; }
-        }
-
-        public IStrategyResult Report
-        {
-            get
-            {
-                return report;
-            }
-        }
-
-        public IStrategyExecutorInfo StrategyExecutorInfo
-        {
-            get
-            {
-                return strategyExecutorInfo;
-            }
-        }
-    }
-
-    public class StrategyExecuteArguments
-    {
-        private IStrategyHelper strategyHelper;
-
-        private IStrategy strategy;
-
-        public StrategyExecuteArguments(IStrategyHelper strategyHelper, IStrategy strategy)
-        {
-            this.strategyHelper = strategyHelper;
-            this.strategy = strategy;
-        }
-
-        public IStrategyHelper StrategyHelper
-        {
-            get
-            {
-                return strategyHelper;
-            }
-        }
-
-        public IStrategy Strategy
-        {
-            get
-            {
-                return strategy;
-            }
-        }
-    }
+    }   
 }

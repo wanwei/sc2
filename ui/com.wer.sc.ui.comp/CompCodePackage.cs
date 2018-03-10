@@ -8,14 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.codeperiod;
 
 namespace com.wer.sc.ui.comp
 {
     public partial class CompCodePackage : UserControl
     {
-        private CodePeriodPackageInfo codePackageInfo;
+        private CodePeriodListChooser codePackageInfo;
 
-        public CodePeriodPackageInfo CodePackage
+        public CodePeriodListChooser CodePackage
         {
             get
             {
@@ -30,7 +31,7 @@ namespace com.wer.sc.ui.comp
             InitializeComponent();
         }
 
-        public void Init(CodePeriodPackageInfo codePackageInfo)
+        public void Init(CodePeriodListChooser codePackageInfo)
         {
             this.codePackageInfo = codePackageInfo;
             this.tbStart.Text = this.codePackageInfo.Start.ToString();
@@ -38,7 +39,7 @@ namespace com.wer.sc.ui.comp
             this.RefreshGrid(codePackageInfo);
         }
 
-        private void RefreshGrid(CodePeriodPackageInfo codePackageInfo)
+        private void RefreshGrid(CodePeriodListChooser codePackageInfo)
         {
             string title = "合约";
             if (codePackageInfo.CodeChooseMethod == CodeChooseMethod.Maincontract)

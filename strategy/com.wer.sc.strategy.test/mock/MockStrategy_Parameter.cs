@@ -14,6 +14,7 @@ namespace com.wer.sc.strategy.mock
         private const string PARAMKEY_RESULT = "RESULT";
 
         private List<string> results = new List<string>();
+
         public MockStrategy_Parameter()
         {
             this.Parameters.AddParameter(PARAMKEY_PRINTPERIOD, "输出周期", "", utils.param.ParameterType.OBJECT, KLinePeriod.KLinePeriod_1Minute);

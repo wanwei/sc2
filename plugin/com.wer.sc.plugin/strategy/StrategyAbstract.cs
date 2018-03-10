@@ -16,6 +16,8 @@ namespace com.wer.sc.strategy
 {
     public abstract class StrategyAbstract : IStrategy
     {
+        private string name;
+
         public const string PARAMETER_PERIOD = "PARAMETER_PERIOD";
 
         private KLinePeriod defaultMainPeriod = KLinePeriod.KLinePeriod_1Minute;
@@ -53,7 +55,7 @@ namespace com.wer.sc.strategy
 
         }
 
-        public IStrategyHelper StrategyOperator
+        public IStrategyHelper StrategyHelper
         {
             get { return strategyHelper; }
             set { strategyHelper = value; }
@@ -79,6 +81,20 @@ namespace com.wer.sc.strategy
                 return parameters;
             }
         }
+
+        public virtual string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
         protected Dictionary<string, object> dic_Key_Data = new Dictionary<string, object>();
 
         protected void AddData(String key, object obj)
@@ -120,12 +136,12 @@ namespace com.wer.sc.strategy
 
         public void DrawAccount()
         {
-            IStrategyTrader trader = this.StrategyOperator.Trader;
+            IStrategyTrader trader = this.StrategyHelper.Trader;
             if (trader == null || trader.Account == null)
                 return;
             if (MainKLinePeriod == null || mainKlineData == null)
                 return;
-            IShapeDrawer_PriceRect drawer = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawer = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
             IList<TradeInfo> trades = trader.Account.CurrentTradeInfo;
             for (int i = 0; i < trades.Count; i++)
             {

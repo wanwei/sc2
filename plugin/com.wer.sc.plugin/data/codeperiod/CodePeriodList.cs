@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.data.datapackage
+namespace com.wer.sc.data.codeperiod
 {
     /// <summary>
     /// 数据包
     /// </summary>
-    public class CodePeriodPackage : ICodePeriodPackage
+    public class CodePeriodList : ICodePeriodList
     {
         private List<ICodePeriod> codePeriods = new List<ICodePeriod>();
 

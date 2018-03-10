@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.utils;
 
 namespace com.wer.sc.strategy.common.platform
 {
@@ -66,7 +67,7 @@ namespace com.wer.sc.strategy.common.platform
 
         public override void OnEnd(object sender, IStrategyOnEndArgument argument)
         {
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(period);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(period);
             StrategyArray<double> arr = looper_ma.GetMaData(MaPeriod).Data;
             List<float> ff = new List<float>();
             for (int i = 0; i < arr.Count; i++)
@@ -81,10 +82,10 @@ namespace com.wer.sc.strategy.common.platform
                 DrawPlatform(platform, drawHelper);
             }
 
-            StrategyOperator.QueryResultManager.AddQueryResult(new StrategyQueryResult_Platform(platForms));
+            StrategyHelper.QueryResultManager.AddQueryResult(new StrategyQueryResult_Platform(platForms));
         }
 
-        private void DrawPlatform(Platform platform, IShapeDrawer_PriceRect drawHelper)
+        private void DrawPlatform(Platform platform, IStrategyDrawer_PriceRect drawHelper)
         {
             PriceShape_Rect priceRect = new PriceShape_Rect();
             priceRect.PriceLeft = platform.StartIndex;
@@ -97,7 +98,7 @@ namespace com.wer.sc.strategy.common.platform
         }
     }
 
-    class StrategyQueryResult_Platform : IStrategyQueryResult
+    class StrategyQueryResult_Platform : StrategyQueryResultAbstract
     {
         private List<IStrategyQueryResultRow> rows;
 
@@ -108,7 +109,7 @@ namespace com.wer.sc.strategy.common.platform
                 rows.Add(platforms[i]);
         }
 
-        public string Name
+        public override string Name
         {
             get
             {
@@ -116,7 +117,7 @@ namespace com.wer.sc.strategy.common.platform
             }
         }
 
-        public string[] Title
+        public override string[] Titles
         {
             get
             {
@@ -124,12 +125,20 @@ namespace com.wer.sc.strategy.common.platform
             }
         }
 
-        public IList<IStrategyQueryResultRow> StrategyResults
+        public override ObjectType[] DataTypes
+        {
+            get
+            {
+                return Platform.DataTypes;
+            }
+        }
+
+        public override IList<IStrategyQueryResultRow> Rows
         {
             get
             {
                 return rows;
             }
-        }
+        }        
     }
 }

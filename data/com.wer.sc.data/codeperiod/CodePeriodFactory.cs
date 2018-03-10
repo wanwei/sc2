@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.wer.sc.data.datapackage
+namespace com.wer.sc.data.codeperiod
 {
     public class CodePeriodFactory : ICodePeriodFactory
     {
@@ -16,17 +16,17 @@ namespace com.wer.sc.data.datapackage
             this.dataReader = dataReader;
         }
 
-        public ICodePeriodPackageInfo CreateCodePeriodPackageInfo(List<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
+        public ICodePeriodListChooser CreateCodePeriodListChooser(IList<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
         {
-            return new CodePeriodPackageInfo(codes, startDate, endDate, codeChooseMethod);
+            return new CodePeriodListChooser(codes, startDate, endDate, codeChooseMethod);
         }
 
-        public ICodePeriodPackage CreateCodePeriodPackage(List<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
+        public ICodePeriodList CreateCodePeriodList(IList<string> codes, int startDate, int endDate, CodeChooseMethod codeChooseMethod)
         {
-            return CreateCodePeriodPackage(new CodePeriodPackageInfo(codes, startDate, endDate, codeChooseMethod));
+            return CreateCodePeriodList(new CodePeriodListChooser(codes, startDate, endDate, codeChooseMethod));
         }
 
-        public ICodePeriodPackage CreateCodePeriodPackage(ICodePeriodPackageInfo codePackageInfo)
+        public ICodePeriodList CreateCodePeriodList(ICodePeriodListChooser codePackageInfo)
         {
             switch (codePackageInfo.CodeChooseMethod)
             {
@@ -40,9 +40,9 @@ namespace com.wer.sc.data.datapackage
             return null;
         }
 
-        private CodePeriodPackage CreateCodePackage_MainContract(ICodePeriodPackageInfo codePackageInfo)
+        private CodePeriodList CreateCodePackage_MainContract(ICodePeriodListChooser codePackageInfo)
         {
-            CodePeriodPackage codePackage = new CodePeriodPackage();
+            CodePeriodList codePackage = new CodePeriodList();
             List<string> codes = codePackageInfo.Codes;
             for (int i = 0; i < codes.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace com.wer.sc.data.datapackage
             return CreateCodePeriod_MainContract(variety, start, end, mainContracts);
         }
 
-        private CodePeriodPackage CreateCodePackage_Catelog(ICodePeriodPackageInfo codePackageInfo)
+        private CodePeriodList CreateCodePackage_Catelog(ICodePeriodListChooser codePackageInfo)
         {
 
             int start = codePackageInfo.Start;
@@ -81,14 +81,14 @@ namespace com.wer.sc.data.datapackage
             return CreateCodePeriodPackage(allCodes, start, end);
         }
 
-        private CodePeriodPackage CreateCodePackage_Normal(ICodePeriodPackageInfo codePackageInfo)
+        private CodePeriodList CreateCodePackage_Normal(ICodePeriodListChooser codePackageInfo)
         {
             return CreateCodePeriodPackage(codePackageInfo.Codes, codePackageInfo.Start, codePackageInfo.End);
         }
 
-        private CodePeriodPackage CreateCodePeriodPackage(IList<string> codes, int startDate, int endDate)
+        private CodePeriodList CreateCodePeriodPackage(IList<string> codes, int startDate, int endDate)
         {
-            CodePeriodPackage codePackage = new CodePeriodPackage();
+            CodePeriodList codePackage = new CodePeriodList();
             for (int i = 0; i < codes.Count; i++)
             {
                 codePackage.CodePeriods.Add(CreateCodePeriod(codes[i], startDate, endDate));
@@ -104,6 +104,11 @@ namespace com.wer.sc.data.datapackage
         public ICodePeriod CreateCodePeriod_MainContract(string variety, int startDate, int endDate, IList<ICodePeriod> mainContracts)
         {
             return new CodePeriod(variety, startDate, endDate, mainContracts);
+        }
+
+        public ICodePeriod CreateCodePeriod_MainContract(string variety, int startDate, int endDate)
+        {
+            return GetCodePackage_MainContract(variety, startDate, endDate);
         }
     }
 }

@@ -10,6 +10,10 @@ namespace com.wer.sc.strategy
     [TestClass]
     public class TestStrategyExecutor_Multi
     {
+        [TestMethod]
+        public void TestStrategyExecute_Multi()
+        {
 
+        }
     }
 }

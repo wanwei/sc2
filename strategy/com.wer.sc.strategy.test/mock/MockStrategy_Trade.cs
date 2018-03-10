@@ -42,12 +42,12 @@ namespace com.wer.sc.strategy.mock
                 return;
             if (ma10[ma10.Count - 2] > ma20[ma20.Count - 2] && ma10[ma10.Count - 1] > ma20[ma20.Count - 1])
             {
-                this.StrategyOperator.Trader.CloseAll();
+                this.StrategyHelper.Trader.CloseAll();
                 return;
             }
             if (ma10[ma10.Count - 2] < ma20[ma20.Count - 2] && ma10[ma10.Count - 1] < ma20[ma20.Count - 1])
             {
-                this.StrategyOperator.Trader.Open(currentData.Code, OrderSide.Buy, currentData.CurrentData.Price, 5);
+                this.StrategyHelper.Trader.Open(currentData.Code, OrderSide.Buy, currentData.CurrentData.Price, 5);
                 return;
             }
         }
@@ -59,7 +59,7 @@ namespace com.wer.sc.strategy.mock
 
         public override void OnStart(object sender, IStrategyOnStartArgument argument)
         {
-            this.StrategyOperator.Trader.AutoFilter = true;
+            this.StrategyHelper.Trader.AutoFilter = true;
         }
 
         public override void OnTick(object sender, IStrategyOnTickArgument currentData)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.wer.sc.utils;
 
 namespace com.wer.sc.strategy.common.platform
 {
@@ -12,7 +13,9 @@ namespace com.wer.sc.strategy.common.platform
     /// </summary>
     public class Platform : IStrategyQueryResultRow
     {
-        public static string[] Title = new string[] { "开始时间", "结束时间", "长度", "高度", "上沿", "下沿" };
+        public static readonly string[] Title = new string[] { "开始时间", "结束时间", "长度", "高度", "上沿", "下沿" };
+
+        public static readonly ObjectType[] DataTypes = new ObjectType[] { ObjectType.DOUBLE, ObjectType.DOUBLE, ObjectType.INTEGER, ObjectType.DOUBLE, ObjectType.DOUBLE, ObjectType.DOUBLE };
 
         private List<object> data = new List<object>();
 

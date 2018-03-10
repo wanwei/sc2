@@ -53,9 +53,8 @@
   <ItemGroup>
     <Compile Include="account\Account.cs" />
     <Compile Include="account\AccountManager.cs" />
-    <Compile Include="datapackage\CodePeriodPackage.cs" />
-    <Compile Include="datapackage\CodePeriodFactory.cs" />
-    <Compile Include="datapackage\CodePeriodPackageInfo.cs" />
+    <Compile Include="codeperiod\CodePeriodListChooser.cs" />
+    <Compile Include="codeperiod\CodePeriodFactory.cs" />
     <Compile Include="market\Plugin_MarketData_Simu.cs" />
     <Compile Include="market\Plugin_MarketTrader_Simu.cs" />
     <Compile Include="account\TradeFee.cs" />

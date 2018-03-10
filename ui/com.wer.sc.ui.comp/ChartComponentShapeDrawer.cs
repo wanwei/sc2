@@ -13,7 +13,7 @@ using System.Xml;
 
 namespace com.wer.sc.ui.comp
 {
-    public class ChartComponentShapeDrawer : IShapeDrawer_PriceRect
+    public class ChartComponentShapeDrawer : IStrategyDrawer_PriceRect
     {
         //画的title，存在该属性里，在图形刷新的时候重画
         private Shape_Label title;

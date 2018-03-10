@@ -20,7 +20,7 @@ namespace com.wer.sc.strategy
         public void TestRunStrategy_Minute()
         {
             string code = "RB1710";
-            int startDate = 20170601;
+            int startDate = 20170301;
             int endDate = 20170603;
             IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, startDate, endDate);
 
@@ -31,11 +31,14 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            //strategyDataPackage.IsSaveResult = true;
             IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyDataPackage);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             executor.Strategy = strategy;
             executor.Run();
+
+            Console.WriteLine(executor.StrategyResult);
         }
 
         [TestMethod]
@@ -56,11 +59,11 @@ namespace com.wer.sc.strategy
 
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
             StrategyArguments_DataPackage arguments = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
-            StrategyExecutor_DataPackage runner = new StrategyExecutor_DataPackage(arguments);
+            IStrategyExecutor runner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
 
             DateTime prevtime = DateTime.Now;
 
-            runner.SetStrategy(new MockStrategy(referedPeriods));
+            runner.Strategy = new MockStrategy(referedPeriods);
             runner.Run();
 
             DateTime time = DateTime.Now;
@@ -82,10 +85,10 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_DataPackage arguments = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
-            StrategyExecutor_DataPackage runner = new StrategyExecutor_DataPackage(arguments);
+            IStrategyExecutor runner = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
 
             DateTime prevtime = DateTime.Now;
-            runner.SetStrategy(new MockStrategy(null));
+            runner.Strategy = new MockStrategy(null);
             runner.OnFinished += Runner_OnFinished;
             runner.Execute();
             while (!isFinished)

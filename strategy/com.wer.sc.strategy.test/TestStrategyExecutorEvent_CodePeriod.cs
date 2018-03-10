@@ -1,5 +1,5 @@
 ﻿using com.wer.sc.data;
-using com.wer.sc.data.datapackage;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.strategy.mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,29 +11,15 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     [TestClass]
-    public class TestStrategyExecutor_DataPackage_Event
+    public class TestStrategyExecutorEvent_CodePeriod
     {
         [TestMethod]
-        public void TestStrategyExecutorEvent1()
+        public void TestStrategyExecutorEvent_CodePeriod1()
         {
-            string code = "RB1710";
-            int startDate = 20170601;
-            int endDate = 20170603;
-            ExecuteStrategy_Event(code, startDate, endDate);
-        }
-
-        [TestMethod]
-        public void TestStrategyExecutorEvent2()
-        {
-            string code = "RB1710";
+            string code = "RB";
             int startDate = 20170101;
-            int endDate = 20170603;
-            ExecuteStrategy_Event(code, startDate, endDate);
-        }
-
-        private void ExecuteStrategy_Event(string code, int startDate, int endDate)
-        {
-            IDataPackage_Code dataPackage = CommonData.GetDataPackage(code, startDate, endDate);
+            int endDate = 20180101;
+            ICodePeriod codePeriod = DataCenter.Default.CodePeriodFactory.CreateCodePeriod_MainContract(code, startDate, endDate);
 
             StrategyReferedPeriods referedPeriods = new StrategyReferedPeriods();
             referedPeriods.UseTickData = false;
@@ -41,7 +27,8 @@ namespace com.wer.sc.strategy
             referedPeriods.UsedKLinePeriods.Add(KLinePeriod.KLinePeriod_5Minute);
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
-            StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            //StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
+            StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(codePeriod, referedPeriods, forwardPeriod);
             IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
             executor.OnBarFinished += Executor_OnBarFinished;
             executor.OnDayFinished += Executor_OnDayFinished;
@@ -59,7 +46,9 @@ namespace com.wer.sc.strategy
 
         private void Executor_OnDayFinished(object sender, StrategyDayFinishedArguments arguments)
         {
-            Console.WriteLine(arguments.ExecutorInfo.CurrentDay + " Finished");
+            IKLineData klineData = arguments.ExecutorInfo.CurrentKLineData;
+            //Console.WriteLine(klineData.Code + "," + klineData + " Finished");
+            Console.WriteLine(arguments.ExecutorInfo.CurrentDayIndex + "|" + arguments.ExecutorInfo.TotalDayCount);
         }
 
         private void Executor_OnBarFinished(object sender, StrategyBarFinishedArguments arguments)

@@ -9,6 +9,7 @@ using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.account;
+using com.wer.sc.data.codeperiod;
 
 namespace com.wer.sc.data
 {
@@ -127,7 +128,7 @@ namespace com.wer.sc.data
             }
         }
 
-        public ICodePeriodFactory CodePackageFactory
+        public ICodePeriodFactory CodePeriodFactory
         {
             get
             {

@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace com.wer.sc.strategy
     {
         /// <summary>
         /// 创建一个策略执行器
+        /// 根据股票或期货代码，起止时间创建
         /// </summary>
         /// <param name="strategyCodePeriod"></param>
         /// <returns></returns>
@@ -18,26 +20,28 @@ namespace com.wer.sc.strategy
 
         /// <summary>
         /// 创建一个策略执行器
+        /// 根据已有数据创建
         /// </summary>
-        /// <param name="strategyCodePeriod"></param>
-        /// <param name="strategyHelper"></param>
+        /// <param name="strategyDataPackage"></param>
         /// <returns></returns>
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod, IStrategyHelper strategyHelper);
-
         IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyDataPackage);
 
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyDataPackage, IStrategyHelper strategyHelper);
+        //IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackageLink strategyDataPackage);
 
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyDataPackage);
+        /// <summary>
+        /// 创建一个多重策略执行器
+        /// 根据股票或期货代码，起止时间创建
+        /// </summary>
+        /// <param name="strategyCodePeriodList"></param>
+        /// <returns></returns>
+        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList strategyCodePeriodList);
 
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackages strategyDataPackage, IStrategyHelper strategyHelper);
-
-        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage);
-
-        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper);
-
-        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage);
-
-        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper);
+        /// <summary>
+        /// 创建多个策略执行器
+        /// 根据股票或期货代码，起止时间创建
+        /// </summary>
+        /// <param name="strategyCodePeriodList"></param>
+        /// <returns></returns>
+        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodList strategyCodePeriodList);
     }
 }

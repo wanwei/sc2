@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace com.wer.sc.strategy
     /// </summary>
     public interface IStrategyCenter
     {
+        IDataCenter BelongDataCenter { get; }
+
         /// <summary>
         /// 策略管理器
         /// </summary>
@@ -30,5 +33,11 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <returns></returns>
         IStrategyExecutorPool GetStrategyExecutorPool();
+
+        /// <summary>
+        /// 得到策略结果集保存器
+        /// </summary>
+        /// <returns></returns>
+        IStrategyResultStore StrategyResultStore { get; }
     }
 }

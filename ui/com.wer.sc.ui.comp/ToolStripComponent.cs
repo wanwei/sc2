@@ -166,7 +166,7 @@ namespace com.wer.sc.ui.comp
                 MessageBox.Show("没有执行的策略");
                 return;
             }
-            IStrategyQueryResultManager strategyResult = componentStrategy.StrategyExecutor.StrategyReport.StrategyQueryResults;
+            IStrategyQueryResultManager strategyResult = componentStrategy.StrategyExecutor.StrategyResult.StrategyQueryResultManager;
             if (strategyResult == null || strategyResult.GetQueryResults().Count == 0)
             {
                 MessageBox.Show("没有查询结果");

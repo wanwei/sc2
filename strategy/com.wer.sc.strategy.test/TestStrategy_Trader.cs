@@ -35,7 +35,7 @@ namespace com.wer.sc.strategy
             executor.Strategy = strategy;
             executor.Run();
 
-            StrategyTrader_History trader =((StrategyTrader_History)strategy.StrategyOperator.Trader);
+            StrategyTrader_History trader =((StrategyTrader_History)strategy.StrategyHelper.Trader);
             IList<TradeInfo> tradeInfos = trader.Account.CurrentTradeInfo;
             AssertUtils.PrintLineList((IList)tradeInfos);
             AssertUtils.AssertEqual_List("StrategyTrade", GetType(), tradeInfos);
@@ -69,7 +69,7 @@ namespace com.wer.sc.strategy
             executor.Strategy = strategy;
             executor.Run();
 
-            StrategyTrader_History trader = ((StrategyTrader_History)strategy.StrategyOperator.Trader);
+            StrategyTrader_History trader = ((StrategyTrader_History)strategy.StrategyHelper.Trader);
             IList<TradeInfo> tradeInfos = trader.Account.CurrentTradeInfo;
             AssertUtils.PrintLineList((IList)tradeInfos);
             Console.WriteLine(trader.Account.Asset);

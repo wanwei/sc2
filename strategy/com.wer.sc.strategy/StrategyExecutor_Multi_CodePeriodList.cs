@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using com.wer.sc.data;
 using com.wer.sc.data.datapackage;
+using com.wer.sc.data.codeperiod;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyExecutor_CodePeriodPackage 
+    public class StrategyExecutor_Multi_CodePeriodList 
     {
         private IDataCenter dataCenter;
-        private StrategyArguments_CodePeriodPackage strategyCodePeriodPackage;
+        private StrategyArguments_CodePeriodList strategyCodePeriodPackage;
         private IStrategyHelper strategyHelper;
 
-        public StrategyExecutor_CodePeriodPackage(IDataCenter dataCenter, StrategyArguments_CodePeriodPackage strategyCodePeriodPackage)
+        public StrategyExecutor_Multi_CodePeriodList(IDataCenter dataCenter, StrategyArguments_CodePeriodList strategyCodePeriodPackage)
         {
             this.dataCenter = dataCenter;
             this.strategyCodePeriodPackage = strategyCodePeriodPackage;
         }
 
-        public StrategyExecutor_CodePeriodPackage(IDataCenter dataCenter, StrategyArguments_CodePeriodPackage strategyCodePeriodPackage, IStrategyHelper strategyHelper) : this(dataCenter, strategyCodePeriodPackage)
+        public StrategyExecutor_Multi_CodePeriodList(IDataCenter dataCenter, StrategyArguments_CodePeriodList strategyCodePeriodPackage, IStrategyHelper strategyHelper) : this(dataCenter, strategyCodePeriodPackage)
         {
             this.strategyHelper = strategyHelper;
         }

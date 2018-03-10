@@ -107,8 +107,9 @@ namespace com.wer.sc.ui.comp
 
             drawOperator = new ChartComponentStrategyDrawer(this.compChart.Drawer, dic_KLinePeriod_StartPos, 0, 0);
             StrategyArguments_DataPackage strategyDataPackage = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod); ;
-            IStrategyHelper strategyOperator = new StrategyHelper(drawOperator);
-            strategyExecutor = executorFactory.CreateExecutor_History(strategyDataPackage, strategyOperator);
+            StrategyHelper strategyOperator = new StrategyHelper();
+            strategyOperator.Drawer = drawOperator;
+            strategyExecutor = executorFactory.CreateExecutor_History(strategyDataPackage);
 
             strategyExecutor.Strategy = strategy;
             //strategyExecutor.Run();
@@ -138,7 +139,7 @@ namespace com.wer.sc.ui.comp
             ChartType chartType = compData.ChartType;
             if (chartType == ChartType.KLine)
             {
-                IShapeDrawer_PriceRect drawer = drawOperator.GetDrawer_KLine(compData.KlinePeriod);
+                IStrategyDrawer_PriceRect drawer = drawOperator.GetDrawer_KLine(compData.KlinePeriod);
                 drawer.Refresh();
             }
             else if (chartType == ChartType.TimeLine)

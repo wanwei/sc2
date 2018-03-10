@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,7 +57,7 @@ namespace com.wer.sc.ui.comp.test
 
         private void btCodePackage_Click(object sender, EventArgs e)
         {
-            CodePeriodPackageInfo codePackage = new CodePeriodPackageInfo();
+            CodePeriodListChooser codePackage = new CodePeriodListChooser();
             codePackage.Start = 20160101;
             codePackage.End = 20170101;
             codePackage.CodeChooseMethod = CodeChooseMethod.Maincontract;

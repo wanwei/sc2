@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.wer.sc.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,16 @@ namespace com.wer.sc.strategy
         private Dictionary<string, IStrategyQueryResult> dic_Name_QueryResult = new Dictionary<string, IStrategyQueryResult>();
 
         private List<IStrategyQueryResult> queryResults = new List<IStrategyQueryResult>();
+
+        public IStrategyQueryResult NewQueryResult(string name, string[] titles, ObjectType[] types)
+        {
+            if (this.dic_Name_QueryResult.ContainsKey(name))
+                return this.dic_Name_QueryResult[name];
+            StrategyQueryResult result = new StrategyQueryResult(name, titles, types);
+            this.queryResults.Add(result);
+            this.dic_Name_QueryResult.Add(result.Name, result);
+            return result;
+        }
 
         public void AddQueryResult(IStrategyQueryResult strategyResult)
         {

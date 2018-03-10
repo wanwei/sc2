@@ -154,7 +154,7 @@ namespace com.wer.sc.ui.comp
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maArr_1, color_1);
             drawHelper.DrawPolyLine(maArr_2, color_2);
             drawHelper.DrawPolyLine(maArr_3, color_3);

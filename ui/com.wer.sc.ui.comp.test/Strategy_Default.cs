@@ -96,7 +96,7 @@ namespace com.wer.sc.strategy.cnfutures
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
             drawHelper.DrawPolyLine(maPrice_1, color_1);
             drawHelper.DrawPolyLine(maPrice_2, color_2);
             drawHelper.DrawPolyLine(maPrice_3, color_3);

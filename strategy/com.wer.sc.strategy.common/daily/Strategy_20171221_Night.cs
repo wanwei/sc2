@@ -52,7 +52,7 @@ namespace com.wer.sc.strategy.daily._20171222
 
         public override void OnEnd(Object sender, IStrategyOnEndArgument argument)
         {            
-            IShapeDrawer_PriceRect drawHelper = StrategyOperator.Drawer.GetDrawer_KLine(MainKLinePeriod);
+            IStrategyDrawer_PriceRect drawHelper = StrategyHelper.Drawer.GetDrawer_KLine(MainKLinePeriod);
             ZigzagDrawer.DrawZigzagPoints(drawHelper, this.zigzag.GetPoints(), Color.Blue, Color.White, 8);
             ZigzagDrawer.DrawZigzagPoints(drawHelper, this.zigzag.GetMergedPoints(), 12);
             //DrawZigzagPoints(drawHelper, this.zigzag.GetMergedPoints(), 12);

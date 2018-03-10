@@ -1,6 +1,9 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.graphic.shape;
+using com.wer.sc.strategy;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +22,7 @@ namespace com.wer.sc.strategy
 
         private StrategyReferedPeriods referedPeriods;
 
-        private IPriceShapeContainer priceShapeContainer;
+        private IStrategyGraphicContainer priceShapeContainerManager;
 
         private IStrategyTrader strategyTrader;
 
@@ -35,12 +38,12 @@ namespace com.wer.sc.strategy
             this.referedPeriods = referedPeriods;
         }
 
-        public StrategyResult_CodePeriod(ICodePeriod codePeriod, StrategyForwardPeriod forwardPeriod, StrategyReferedPeriods referedPeriods, IPriceShapeContainer shapeContainer, IStrategyTrader strategyTrader)
+        public StrategyResult_CodePeriod(ICodePeriod codePeriod, StrategyForwardPeriod forwardPeriod, StrategyReferedPeriods referedPeriods, IStrategyGraphicContainer shapeContainer, IStrategyTrader strategyTrader)
         {
             this.codePeriod = codePeriod;
             this.forwardPeriod = forwardPeriod;
             this.referedPeriods = referedPeriods;
-            this.priceShapeContainer = shapeContainer;
+            this.priceShapeContainerManager = shapeContainer;
             this.strategyTrader = strategyTrader;
         }
 
@@ -80,11 +83,11 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 策略在该代码周期内画的所有形状
         /// </summary>
-        public IPriceShapeContainer PriceShapes
+        public IStrategyGraphicContainer PriceShapes
         {
             get
             {
-                return priceShapeContainer;
+                return priceShapeContainerManager;
             }
         }
 
@@ -99,37 +102,136 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public void Save(string file, XmlElement xmlElem)
+        public int XmlElementCount
+        {
+            get
+            {
+                return 3;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xmlElems"></param>
+        public void Save(IList<XmlElement> xmlElems)
+        {
+            SaveMain(xmlElems[0]);
+            if (this.priceShapeContainerManager != null && xmlElems[1] != null)
+                this.priceShapeContainerManager.Save(xmlElems[1]);
+            if (this.strategyTrader != null && xmlElems[2] != null)
+                this.strategyTrader.Save(xmlElems[2]);
+        }
+
+        private void SaveMain(XmlElement xmlElem)
         {
             XmlElement elemCodePeriod = xmlElem.OwnerDocument.CreateElement("codeperiod");
             xmlElem.AppendChild(elemCodePeriod);
             codePeriod.Save(elemCodePeriod);
 
             XmlElement elemForwardPeriod = xmlElem.OwnerDocument.CreateElement("forwardperiod");
-            xmlElem.AppendChild(elemCodePeriod);
-            forwardPeriod.Save(elemCodePeriod);
+            xmlElem.AppendChild(elemForwardPeriod);
+            forwardPeriod.Save(elemForwardPeriod);
 
             XmlElement elemReferedPeriods = xmlElem.OwnerDocument.CreateElement("referedperiods");
             xmlElem.AppendChild(elemReferedPeriods);
             referedPeriods.Save(elemReferedPeriods);
-
-            SaveShapes(file);
-            SaveTrader(file);
         }
 
-        private void SaveShapes(string file)
+        public void Load(IList<XmlElement> xmlElems)
         {
-            string shapeFile = file + ".shapes";
-            
+            LoadMain(xmlElems[0]);
+            if (xmlElems.Count > 1)
+            {
+                XmlElement elemShapes = xmlElems[1];
+                if (elemShapes != null)
+                {
+                    this.priceShapeContainerManager = new StrategyGraphicList();
+                    this.priceShapeContainerManager.Load(elemShapes);
+                }
+            }
+            if (xmlElems.Count > 2)
+            {
+                XmlElement elemTrader = xmlElems[2];
+                if (elemTrader != null)
+                {
+                    this.strategyTrader = new StrategyTrader_History();
+                    this.StrategyTrader.Load(elemTrader);
+                }
+            }
         }
 
-        private void SaveTrader(string file)
+        private void LoadMain(XmlElement xmlElem)
         {
+            XmlElement elemCodePeriod = (XmlElement)xmlElem.GetElementsByTagName("codeperiod")[0];
+            codePeriod = new CodePeriod();
+            codePeriod.Load(elemCodePeriod);
 
+            XmlElement elemForwardPeriod = (XmlElement)xmlElem.GetElementsByTagName("forwardperiod")[0];
+            forwardPeriod = new StrategyForwardPeriod();
+            forwardPeriod.Load(elemForwardPeriod);
+
+            XmlElement elemReferedPeriods = (XmlElement)xmlElem.GetElementsByTagName("referedperiods")[0];
+            referedPeriods = new StrategyReferedPeriods();
+            referedPeriods.Load(elemReferedPeriods);
         }
 
-        public void Load(string file, XmlElement xmlElem)
+        public void Save(string path)
         {
+            XmlElement[] elemArr = new XmlElement[3];
+            elemArr[0] = GetRoot("strategyresult_code");
+            if (this.priceShapeContainerManager != null)
+                elemArr[1] = GetRoot("strategyshape");
+            if (this.strategyTrader != null)
+                elemArr[2] = GetRoot("strategytrader");
+            Save(elemArr);
+
+            elemArr[0].OwnerDocument.Save(path);
+            if (elemArr[1] != null)
+                elemArr[1].OwnerDocument.Save(path + ".shape");
+            if (elemArr[2] != null)
+                elemArr[2].OwnerDocument.Save(path + ".trader");
+        }
+
+        private XmlElement GetRoot(string rootTag)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement(rootTag);
+            doc.AppendChild(root);
+            return root;
+        }
+
+        public void Load(string path)
+        {
+            if (!File.Exists(path))
+                return;
+            XmlElement[] elemArr = new XmlElement[3];
+            XmlDocument docResult = new XmlDocument();
+            docResult.Load(path);
+            elemArr[0] = docResult.DocumentElement;
+
+            string shapePath = path + ".shape";
+            if (File.Exists(shapePath))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(shapePath);
+                elemArr[1] = doc.DocumentElement;
+            }
+
+            string traderPath = path + ".trader";
+            if (File.Exists(traderPath))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(traderPath);
+                elemArr[2] = doc.DocumentElement;
+            }
+
+            this.Load(elemArr);
+        }
+
+        public override string ToString()
+        {
+            return XmlUtils.ToString(this);
         }
     }
 }

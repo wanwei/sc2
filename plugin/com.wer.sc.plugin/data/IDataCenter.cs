@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data.account;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.data.navigate;
@@ -38,7 +39,7 @@ namespace com.wer.sc.data
         /// <summary>
         /// 得到股票或期货代码的数据包
         /// </summary>
-        ICodePeriodFactory CodePackageFactory { get; }
+        ICodePeriodFactory CodePeriodFactory { get; }
 
         /// <summary>
         /// 得到数据导航器创建工厂

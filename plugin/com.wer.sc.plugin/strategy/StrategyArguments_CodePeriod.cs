@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,26 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyArguments_CodePeriod
+    public class StrategyArguments_CodePeriod : StrategyArgumentsAbstract
     {
-        private ICodePeriod codePeriod;
-        private StrategyReferedPeriods referedPeriods;
-        private StrategyForwardPeriod forwardPeriod;
+        private bool closeOnCodeChanged;
 
-        public StrategyArguments_CodePeriod(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
+        private ICodePeriod codePeriod;
+
+        public StrategyArguments_CodePeriod(string code, int startDate, int endDate, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod) : this(new CodePeriod(code, startDate, endDate), referedPeriods, forwardPeriod)
         {
-            this.codePeriod = new CodePeriod(code, startDate, endDate);
-            this.referedPeriods = referedPeriods;
-            this.forwardPeriod = forwardPeriod;
         }
 
         public StrategyArguments_CodePeriod(ICodePeriod codePeriod, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod)
         {
             this.codePeriod = codePeriod;
-            this.referedPeriods = referedPeriods;
-            this.forwardPeriod = forwardPeriod;
+            this.ReferedPeriods = referedPeriods;
+            this.ForwardPeriod = forwardPeriod;
+        }
+
+        public StrategyArguments_CodePeriod(ICodePeriod codePeriod, StrategyReferedPeriods referedPeriods, StrategyForwardPeriod forwardPeriod, StrategyTraderSetting traderSetting) : this(codePeriod, referedPeriods, forwardPeriod)
+        {
+            this.TraderSetting = traderSetting;
         }
 
         public ICodePeriod CodePeriod
@@ -40,29 +43,16 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public StrategyReferedPeriods ReferedPeriods
+        public bool CloseOnCodeChanged
         {
             get
             {
-                return referedPeriods;
+                return closeOnCodeChanged;
             }
 
             set
             {
-                referedPeriods = value;
-            }
-        }
-
-        public StrategyForwardPeriod ForwardPeriod
-        {
-            get
-            {
-                return forwardPeriod;
-            }
-
-            set
-            {
-                forwardPeriod = value;
+                closeOnCodeChanged = value;
             }
         }
     }

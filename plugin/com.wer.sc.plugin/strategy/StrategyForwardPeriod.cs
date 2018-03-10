@@ -10,6 +10,11 @@ namespace com.wer.sc.strategy
 {
     public class StrategyForwardPeriod : ForwardPeriod
     {
+        public StrategyForwardPeriod() : base()
+        {
+
+        }
+
         public StrategyForwardPeriod(bool isTickForward, KLinePeriod klineForwardPeriod) : base(isTickForward, klineForwardPeriod)
         {
         }

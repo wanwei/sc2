@@ -1,4 +1,5 @@
-﻿using com.wer.sc.data.datapackage;
+﻿using com.wer.sc.data.codeperiod;
+using com.wer.sc.data.datapackage;
 using com.wer.sc.data.forward;
 using com.wer.sc.graphic.shape;
 using com.wer.sc.utils;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     /// <summary>
-    /// 
+    /// 单支股票的计算结果
     /// </summary>
-    public interface IStrategyResult_CodePeriod : IXmlExchange_File
+    public interface IStrategyResult_CodePeriod : IXmlExchange_Multi, IDataStore
     {
         /// <summary>
         /// 单个代码周期
@@ -33,7 +34,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 策略在该代码周期内画的所有形状
         /// </summary>
-        IPriceShapeContainer PriceShapes { get; }
+        IStrategyGraphicContainer PriceShapes { get; }
 
         /// <summary>
         /// 策略交易部分

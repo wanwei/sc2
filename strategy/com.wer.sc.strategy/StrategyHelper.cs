@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace com.wer.sc.strategy
 {
     public class StrategyHelper : IStrategyHelper
-    {        
-        private IStrategyDrawer drawHelper;
+    {
+        private IStrategyDrawer strategyDrawer;
 
-        private IStrategyTrader strategyTrader_Code;
+        private IStrategyTrader strategyTrader;
 
-        private IStrategyQueryResultManager queryResultManager = new StrategyQueryResultManager();
+        private IStrategyQueryResultManager queryResultManager;
 
-        public StrategyHelper(IStrategyDrawer drawHelper)
+        public StrategyHelper()
         {
-            this.drawHelper = drawHelper;
+            this.queryResultManager = new StrategyQueryResultManager();
         }
 
         /// <summary>
@@ -26,7 +26,11 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return drawHelper;
+                return strategyDrawer;
+            }
+            set
+            {
+                this.strategyDrawer = value;
             }
         }
 
@@ -34,13 +38,13 @@ namespace com.wer.sc.strategy
         {
             get
             {
-                return strategyTrader_Code;
+                return strategyTrader;
             }
             set
             {
-                strategyTrader_Code = value;
+                strategyTrader = value;
             }
-        }        
+        }
 
         public IStrategyQueryResultManager QueryResultManager
         {
@@ -48,6 +52,10 @@ namespace com.wer.sc.strategy
             {
                 return queryResultManager;
             }
-        }        
+            set
+            {
+                this.queryResultManager = value;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.data;
+using com.wer.sc.data.codeperiod;
 using com.wer.sc.data.datapackage;
 using System;
 using System.Collections.Generic;
