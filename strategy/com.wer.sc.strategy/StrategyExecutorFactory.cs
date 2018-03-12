@@ -23,29 +23,24 @@ namespace com.wer.sc.strategy
             this.strategyCenter = strategyCenter;
         }
 
-        public IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod)
+        public IStrategyExecutor_Single CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod)
         {
             return new StrategyExecutor_CodePeriod(strategyCenter, strategyCodePeriod);
         }
 
-        public IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyArguments)
+        public IStrategyExecutor_Single CreateExecutor_History(StrategyArguments_DataPackage strategyArguments)
         {
             return new StrategyExecutor_DataPackage(strategyCenter, strategyArguments);
         }
 
-        public IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList strategyCodePeriodPackage)
+        public IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList arguments)
         {
-            return null;
+            return new StrategyExecutor_Multi(strategyCenter, arguments);
         }
 
-        public IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList strategyCodePeriodPackage, IStrategyHelper strategyHelper)
+        public IList<IStrategyExecutor_Single> CreateExecutors_History(StrategyArguments_CodePeriodList strategyCodePeriodPackage)
         {
-            return null;
-        }
-
-        public IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodList strategyCodePeriodPackage)
-        {
-            List<IStrategyExecutor> executors = new List<IStrategyExecutor>();
+            List<IStrategyExecutor_Single> executors = new List<IStrategyExecutor_Single>();
             List<ICodePeriod> codePeriods = strategyCodePeriodPackage.CodePeriodPackage.CodePeriods;
             for (int i = 0; i < codePeriods.Count; i++)
             {

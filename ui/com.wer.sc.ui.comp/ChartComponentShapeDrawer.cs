@@ -60,6 +60,11 @@ namespace com.wer.sc.ui.comp
             this.title = label;
         }
 
+        public void DrawTitle(int x, string text, Color color, Font font)
+        {
+
+        }
+
         public void DrawPoints(IList<PriceShape_Point> points)
         {
             for (int i = 0; i < points.Count; i++)
@@ -238,6 +243,16 @@ namespace com.wer.sc.ui.comp
             this.priceShapes.Clear();
             drawer.ClearShapes();
             drawer.ClearPriceShapes();
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(code, startDate, endDate, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
 
             StrategyAbstract strategy = (StrategyAbstract)StrategyGetter.GetStrategy(typeof(MockStrategy_Trade));
             executor.Strategy = strategy;
@@ -63,7 +63,7 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(code, startDate, endDate, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
 
             StrategyAbstract strategy = (StrategyAbstract)StrategyGetter.GetStrategy(typeof(MockStrategy_Trade));
             executor.Strategy = strategy;

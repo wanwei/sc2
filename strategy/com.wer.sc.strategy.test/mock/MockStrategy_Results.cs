@@ -20,7 +20,7 @@ namespace com.wer.sc.strategy.mock
 
         private bool isOpen = false;
 
-        private float openPrice;
+        private float openPrice;        
 
         public MockStrategy_Results()
         {
@@ -51,6 +51,8 @@ namespace com.wer.sc.strategy.mock
                 StrategyHelper.Trader.Open(currentData.Code, data.market.OrderSide.Buy, openPrice, 10);
                 isOpen = true;
                 strategyResult.AddRow(currentBar.Code, barInfo.KLineBar.Time, new object[] { currentBar.BlockHeight, lastBar.BlockHeight });
+                IStrategyDrawer_PriceRect drawer = StrategyHelper.Drawer.GetDrawer_KLine(barInfo.KLinePeriod);
+                drawer.DrawPoint(new graphic.shape.PriceShape_Point(barInfo.BarPos, openPrice));
             }
         }
 

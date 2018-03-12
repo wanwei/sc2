@@ -6,16 +6,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace com.wer.sc.strategy
 {
     public class StrategyDrawer_PriceRect : IStrategyDrawer_PriceRect
     {
+        private int startBarPos;
+
         private StrategyGraphic strategyGraphic;
 
-        public StrategyDrawer_PriceRect(StrategyGraphic strategy, int startBarPos)
+        public StrategyDrawer_PriceRect()
         {
 
+        }
+
+        public StrategyDrawer_PriceRect(StrategyGraphic strategyGraphic, int startBarPos)
+        {
+            this.strategyGraphic = strategyGraphic;
+            this.startBarPos = startBarPos;
         }
 
         /// <summary>
@@ -33,6 +42,15 @@ namespace com.wer.sc.strategy
             title.Color = color;
         }
 
+        public void DrawTitle(int x, string text, Color color, Font font)
+        {
+            StrategyGraphicTitle title = (StrategyGraphicTitle)strategyGraphic.Title;
+            title.X = x;
+            title.Text = text;
+            title.Color = color;
+            title.Font = font;
+        }
+
         /// <summary>
         /// 画折线
         /// 该方法会在每一个bar绘制折线
@@ -42,7 +60,8 @@ namespace com.wer.sc.strategy
         /// <param name="points"></param>
         public void DrawPolyLine(IList<float> points, Color color)
         {
-
+            PriceShape_PolyLineLink polyLine = new PriceShape_PolyLineLink(startBarPos, points);
+            this.strategyGraphic.Shapes.AddPriceShape(polyLine);
         }
 
         /// <summary>
@@ -54,7 +73,7 @@ namespace com.wer.sc.strategy
         /// <param name="color"></param>
         public void DrawPolyLine(PriceShape_PolyLine polyLine)
         {
-
+            this.strategyGraphic.Shapes.AddPriceShape(polyLine);
         }
 
         /// <summary>
@@ -65,7 +84,8 @@ namespace com.wer.sc.strategy
         /// <param name="color"></param>
         public void DrawPoints(IList<float> points, Color color)
         {
-
+            PriceShape_PointLink pointLink = new PriceShape_PointLink(startBarPos, points);
+            this.strategyGraphic.Shapes.AddPriceShape(pointLink);
         }
 
         /// <summary>
@@ -75,7 +95,7 @@ namespace com.wer.sc.strategy
         /// <param name="color"></param>
         public void DrawPoint(PriceShape_Point points)
         {
-
+            this.strategyGraphic.Shapes.AddPriceShape(points);
         }
 
         /// <summary>
@@ -87,7 +107,9 @@ namespace com.wer.sc.strategy
         /// <param name="width"></param>
         public void DrawPoints(IList<float> points, Color color, int width)
         {
-
+            PriceShape_PointLink pointLink = new PriceShape_PointLink(startBarPos, points);
+            pointLink.Width = width;
+            this.strategyGraphic.Shapes.AddPriceShape(pointLink);
         }
 
         /// <summary>
@@ -96,7 +118,8 @@ namespace com.wer.sc.strategy
         /// <param name="points"></param>
         public void DrawPoints(IList<PriceShape_Point> points)
         {
-
+            foreach (PriceShape_Point point in points)
+                this.strategyGraphic.Shapes.AddPriceShape(point);
         }
 
         /// <summary>
@@ -136,7 +159,7 @@ namespace com.wer.sc.strategy
         /// <param name="line"></param>
         public void DrawLine(PriceShape_Line line)
         {
-
+            this.strategyGraphic.Shapes.AddPriceShape(line);
         }
 
         /// <summary>
@@ -145,7 +168,8 @@ namespace com.wer.sc.strategy
         /// <param name="line"></param>
         public void DrawLines(IList<PriceShape_Line> lines)
         {
-
+            foreach (PriceShape_Line line in lines)
+                this.strategyGraphic.Shapes.AddPriceShape(line);
         }
 
         /// <summary>
@@ -154,7 +178,7 @@ namespace com.wer.sc.strategy
         /// <param name="priceRect"></param>
         public void DrawRect(PriceShape_Rect priceRect)
         {
-
+            this.strategyGraphic.Shapes.AddPriceShape(priceRect);
         }
 
         /// <summary>
@@ -170,7 +194,21 @@ namespace com.wer.sc.strategy
         /// </summary>
         public void ClearShapes()
         {
+            this.strategyGraphic.Title.Text = "";
+            this.strategyGraphic.Shapes.Clear();
+        }
 
+        public void Save(XmlElement xmlElem)
+        {
+            xmlElem.SetAttribute("startBarPos", startBarPos.ToString());
+            this.strategyGraphic.Save(xmlElem);
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            this.startBarPos = int.Parse(xmlElem.GetAttribute("startBarPos"));
+            strategyGraphic = new StrategyGraphic();
+            strategyGraphic.Load(xmlElem);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略执行器抽象类
     /// </summary>
-    public abstract class StrategyExecutorAbstract : IStrategyExecutor
+    public abstract class StrategyExecutorAbstract : IStrategyExecutor_Single
     {
 
 
@@ -131,8 +131,6 @@ namespace com.wer.sc.strategy
             account.AccountSetting.TradeType = traderSetting.TradeType;
             StrategyTrader_History trader = new StrategyTrader_History(account);
             defaultStrategyHelper.Trader = trader;
-            //初始化绘图器
-            defaultStrategyHelper.Drawer = new StrategyDrawer();
             return defaultStrategyHelper;
         }
 

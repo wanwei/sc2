@@ -59,7 +59,7 @@ namespace com.wer.sc.strategy
 
         public void Load(XmlElement xmlElem)
         {
-            string type = xmlElem.GetAttribute("type");
+            string type = xmlElem.GetAttribute("datatype");
             if ("kline".Equals(type))
             {
                 dataKey = new KLineKey();
@@ -86,12 +86,12 @@ namespace com.wer.sc.strategy
         {
             if (dataKey is KLineKey)
             {
-                xmlElem.SetAttribute("type", "kline");
+                xmlElem.SetAttribute("datatype", "kline");
                 ((KLineKey)dataKey).Save(xmlElem);
             }
             else if (dataKey is TimeLineKey)
             {
-                xmlElem.SetAttribute("type", "timeline");
+                xmlElem.SetAttribute("datatype", "timeline");
                 ((TimeLineKey)dataKey).Save(xmlElem);
             }
 

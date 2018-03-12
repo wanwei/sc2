@@ -21,7 +21,7 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
+            IStrategyExecutor_Single executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy strategy = new MockStrategy();
             executor.Strategy = strategy;
             //executor.Execute();
@@ -36,7 +36,7 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
+            IStrategyExecutor_Single executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy strategy = new MockStrategy();
             executor.Strategy = strategy;
             executor.OnFinished += Executor_OnFinished;
@@ -70,7 +70,7 @@ namespace com.wer.sc.strategy
             string code = "rb1710";
             int start = 20170601;
             int end = 20170603;
-            IStrategyExecutor executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
+            IStrategyExecutor_Single executor = StrategyTestUtils.CreateExecutor_CodePeriod(code, start, end);
             MockStrategy_Ma strategy = new MockStrategy_Ma();
             executor.Strategy = strategy;
             executor.Run();

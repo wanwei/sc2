@@ -66,6 +66,14 @@ namespace com.wer.sc.strategy
             return strategyAssemblyMgr;
         }
 
+        public IStrategyExecutorManager StrategyExecutorManager
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public IStrategyExecutorPool GetStrategyExecutorPool()
         {
             return strategyExecutorPool;

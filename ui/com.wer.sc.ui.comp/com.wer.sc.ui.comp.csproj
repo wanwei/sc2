@@ -103,11 +103,11 @@
     <Compile Include="FormCodeTime.Designer.cs">
       <DependentUpon>FormCodeTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="strategy\FormStrategyExecutorPool.cs">
+    <Compile Include="strategy\FormStrategyExecutorState.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="strategy\FormStrategyExecutorPool.Designer.cs">
-      <DependentUpon>FormStrategyExecutorPool.cs</DependentUpon>
+    <Compile Include="strategy\FormStrategyExecutorState.Designer.cs">
+      <DependentUpon>FormStrategyExecutorState.cs</DependentUpon>
     </Compile>
     <Compile Include="trade\FormAccountAna.cs">
       <SubType>Form</SubType>
@@ -261,8 +261,8 @@
     <EmbeddedResource Include="FormCodeTime.resx">
       <DependentUpon>FormCodeTime.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="strategy\FormStrategyExecutorPool.resx">
-      <DependentUpon>FormStrategyExecutorPool.cs</DependentUpon>
+    <EmbeddedResource Include="strategy\FormStrategyExecutorState.resx">
+      <DependentUpon>FormStrategyExecutorState.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="trade\FormAccountAna.resx">
       <DependentUpon>FormAccountAna.cs</DependentUpon>

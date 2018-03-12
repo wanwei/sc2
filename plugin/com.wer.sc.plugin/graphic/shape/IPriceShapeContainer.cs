@@ -25,6 +25,8 @@ namespace com.wer.sc.graphic.shape
 
         IList<IPriceShape> GetAllPriceShapes();
 
+        void Clear();
+
         /// <summary>
         /// 
         /// </summary>

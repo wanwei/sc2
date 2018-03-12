@@ -22,6 +22,11 @@ namespace com.wer.sc.graphic.shape
             priceShapes.Remove(priceShape);
         }
 
+        public void Clear()
+        {
+            this.priceShapes.Clear();
+        }
+
         public IList<IPriceShape> GetAllPriceShapes()
         {
             return priceShapes;

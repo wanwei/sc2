@@ -10,18 +10,18 @@ namespace com.wer.sc.strategy
 {
     public class StrategyTestUtils
     {
-        public static IStrategyExecutor CreateExecutor_CodePeriod(string code, int start, int end)
+        public static IStrategyExecutor_Single CreateExecutor_CodePeriod(string code, int start, int end)
         {
             IStrategyExecutorFactory executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
             StrategyReferedPeriods referedPeriods = GetReferedPeriods();
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(code, start, end, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
             return executor;
         }
 
-        public static IStrategyExecutor CreateExecutor_DataPackage(string code, int start, int end)
+        public static IStrategyExecutor_Single CreateExecutor_DataPackage(string code, int start, int end)
         {
             IStrategyExecutorFactory executorFactory = StrategyCenter.Default.GetStrategyExecutorFactory();
             StrategyReferedPeriods referedPeriods = GetReferedPeriods();
@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy
 
             IDataPackage_Code dataPackage = DataCenter.Default.DataPackageFactory.CreateDataPackage_Code(code, start, end);
             StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = executorFactory.CreateExecutor_History(strategyCodePeriod);
             return executor;
         }
 

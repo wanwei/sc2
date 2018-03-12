@@ -1,5 +1,6 @@
 ﻿using com.wer.sc.data;
 using com.wer.sc.graphic;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace com.wer.sc.strategy
     /// <summary>
     /// 策略绘图器
     /// </summary>
-    public interface IStrategyDrawer
+    public interface IStrategyDrawer : IXmlExchange
     {
         /// <summary>
         /// 得到K线的画图帮助接口
@@ -25,12 +26,12 @@ namespace com.wer.sc.strategy
         /// 得到分时线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IStrategyDrawer_PriceRect GetDrawer_TimeLine();
+        IStrategyDrawer_PriceRect GetDrawer_TimeLine(int date);
 
         /// <summary>
         /// 得到tick线画图帮助类
         /// </summary>
         /// <returns></returns>
-        IStrategyDrawer_PriceRect GetDrawer_Tick();
+        IStrategyDrawer_PriceRect GetDrawer_Tick(int date);
     }
 }

@@ -42,10 +42,10 @@ namespace com.wer.sc.strategy
                 codes.Add("pp");
                 StrategyArguments_CodePeriodList strategyCodePeriodPackage = GetStrategyPackage(codes, 20170101, 20170601);
 
-                IList<IStrategyExecutor> executors = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutors_History(strategyCodePeriodPackage);
+                IList<IStrategyExecutor_Single> executors = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutors_History(strategyCodePeriodPackage);
                 for (int i = 0; i < executors.Count; i++)
                 {
-                    IStrategyExecutor executor = executors[i];
+                    IStrategyExecutor_Single executor = executors[i];
                     executor.Strategy = new MockStrategy_Empty();
                     pool.Queue(executor);
                 }

@@ -42,7 +42,7 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(false, KLinePeriod.KLinePeriod_1Minute);
 
             StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
             executor.OnBarFinished += Executor_OnBarFinished;
             executor.OnDayFinished += Executor_OnDayFinished;
             executor.OnFinished += Executor_OnFinished;

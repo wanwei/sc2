@@ -40,6 +40,23 @@ namespace com.wer.sc.utils
             return timeStr.Substring(0, 2) + ":" + timeStr.Substring(2, 2) + ":" + timeStr.Substring(2, 2);
         }
 
+        public static String JoinArr<T>(IList<T> arr)
+        {
+            return JoinArr(arr, ",");
+        }
+
+        public static String JoinArr<T>(IList<T> arr, string sep)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < arr.Count; i++)
+            {
+                if (i != 0)
+                    sb.Append(sep);
+                sb.Append(arr[i]);
+            }
+            return sb.ToString();
+        }
+
         public static String JoinArr(String[] arr)
         {
             StringBuilder sb = new StringBuilder();

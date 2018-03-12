@@ -44,12 +44,12 @@ namespace com.wer.sc.strategy
         /// 将策略执行器加入执行队列
         /// </summary>
         /// <param name="strategyExecutor"></param>
-        void Queue(IStrategyExecutor strategyExecutor);
+        void Queue(IStrategyExecutor_Single strategyExecutor);
 
         /// <summary>
         /// 得到正在执行的执行器信息
         /// </summary>
-        IList<IStrategyExecutor> ExecutingExecutors { get; }
+        IList<IStrategyExecutor_Single> ExecutingExecutors { get; }
 
         /// <summary>
         /// 当策略执行池里的一个新的执行器开始执行时触发该事件

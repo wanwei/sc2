@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace com.wer.sc.strategy
 {
-    public class StrategyExecutor_CodePeriod_MainContract : StrategyExecutorAbstract, IStrategyExecutor
+    public class StrategyExecutor_CodePeriod_MainContract : StrategyExecutorAbstract, IStrategyExecutor_Single
     {
         private object lockRunObject = new object();
 

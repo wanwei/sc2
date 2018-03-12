@@ -14,34 +14,32 @@ namespace com.wer.sc.strategy
         /// 创建一个策略执行器
         /// 根据股票或期货代码，起止时间创建
         /// </summary>
-        /// <param name="strategyCodePeriod"></param>
+        /// <param name="arguments"></param>
         /// <returns></returns>
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_CodePeriod strategyCodePeriod);
+        IStrategyExecutor_Single CreateExecutor_History(StrategyArguments_CodePeriod arguments);
 
         /// <summary>
         /// 创建一个策略执行器
         /// 根据已有数据创建
         /// </summary>
-        /// <param name="strategyDataPackage"></param>
+        /// <param name="arguments"></param>
         /// <returns></returns>
-        IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackage strategyDataPackage);
-
-        //IStrategyExecutor CreateExecutor_History(StrategyArguments_DataPackageLink strategyDataPackage);
+        IStrategyExecutor_Single CreateExecutor_History(StrategyArguments_DataPackage arguments);
 
         /// <summary>
         /// 创建一个多重策略执行器
         /// 根据股票或期货代码，起止时间创建
         /// </summary>
-        /// <param name="strategyCodePeriodList"></param>
+        /// <param name="arguments"></param>
         /// <returns></returns>
-        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList strategyCodePeriodList);
+        IStrategyExecutor_Multi CreateExecutor_Multi_History(StrategyArguments_CodePeriodList arguments);
 
         /// <summary>
         /// 创建多个策略执行器
         /// 根据股票或期货代码，起止时间创建
         /// </summary>
-        /// <param name="strategyCodePeriodList"></param>
+        /// <param name="arguments"></param>
         /// <returns></returns>
-        IList<IStrategyExecutor> CreateExecutors_History(StrategyArguments_CodePeriodList strategyCodePeriodList);
+        IList<IStrategyExecutor_Single> CreateExecutors_History(StrategyArguments_CodePeriodList arguments);
     }
 }

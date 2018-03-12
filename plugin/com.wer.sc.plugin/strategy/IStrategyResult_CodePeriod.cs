@@ -34,7 +34,7 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 策略在该代码周期内画的所有形状
         /// </summary>
-        IStrategyGraphicContainer PriceShapes { get; }
+        IStrategyDrawer StrategyDrawer { get; }
 
         /// <summary>
         /// 策略交易部分

@@ -29,6 +29,11 @@ namespace com.wer.sc.strategy
         IStrategyExecutorFactory GetStrategyExecutorFactory();
 
         /// <summary>
+        /// 得到策略执行管理器
+        /// </summary>
+        IStrategyExecutorManager StrategyExecutorManager { get; }
+
+        /// <summary>
         /// 得到默认的策略执行池
         /// </summary>
         /// <returns></returns>

@@ -147,6 +147,8 @@
     <Compile Include="graphic\shape\PriceShapeType.cs" />
     <Compile Include="graphic\shape\PriceShape_Label.cs" />
     <Compile Include="graphic\shape\PriceShape_Line.cs" />
+    <Compile Include="graphic\shape\PriceShape_PointLink.cs" />
+    <Compile Include="graphic\shape\PriceShape_PolyLineLink.cs" />
     <Compile Include="graphic\shape\Shape_Point.cs" />
     <Compile Include="graphic\shape\PriceShape_Point.cs" />
     <Compile Include="graphic\shape\Shape_PolyLine.cs" />
@@ -167,8 +169,10 @@
     <Compile Include="strategy\IStrategyDrawer_PriceRect.cs" />
     <Compile Include="strategy\IStrategyDrawer.cs" />
     <Compile Include="strategy\IStrategyExecutor.cs" />
+    <Compile Include="strategy\IStrategyExecutor_Single.cs" />
     <Compile Include="strategy\IStrategyExecutorFactory.cs" />
     <Compile Include="strategy\IStrategyExecutorInfo.cs" />
+    <Compile Include="strategy\IStrategyExecutorManager.cs" />
     <Compile Include="strategy\IStrategyExecutorPool.cs" />
     <Compile Include="strategy\IStrategyExecutor_Event.cs" />
     <Compile Include="strategy\IStrategyExecutor_Multi.cs" />

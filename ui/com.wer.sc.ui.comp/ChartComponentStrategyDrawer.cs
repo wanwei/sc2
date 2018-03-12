@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.wer.sc.data;
 using com.wer.sc.strategy;
 using com.wer.sc.graphic;
+using System.Xml;
 
 namespace com.wer.sc.ui.comp
 {
@@ -50,6 +51,26 @@ namespace com.wer.sc.ui.comp
         public IStrategyDrawer_PriceRect GetDrawer_TimeLine()
         {
             return drawer_TimeLine;
+        }
+
+        public IStrategyDrawer_PriceRect GetDrawer_TimeLine(int date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IStrategyDrawer_PriceRect GetDrawer_Tick(int date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save(XmlElement xmlElem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load(XmlElement xmlElem)
+        {
+            throw new NotImplementedException();
         }
     }
 }

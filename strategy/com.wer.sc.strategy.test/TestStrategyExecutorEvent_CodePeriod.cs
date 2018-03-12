@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy
 
             //StrategyArguments_DataPackage strategyCodePeriod = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
             StrategyArguments_CodePeriod strategyCodePeriod = new StrategyArguments_CodePeriod(codePeriod, referedPeriods, forwardPeriod);
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyCodePeriod);
             executor.OnBarFinished += Executor_OnBarFinished;
             executor.OnDayFinished += Executor_OnDayFinished;
             executor.OnFinished += Executor_OnFinished;

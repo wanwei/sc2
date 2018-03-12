@@ -16,9 +16,9 @@ namespace com.wer.sc.strategy
     /// 该类是代理类
     /// 
     /// </summary>
-    public class StrategyExecutor_CodePeriod : IStrategyExecutor
+    public class StrategyExecutor_CodePeriod : IStrategyExecutor_Single
     {
-        private IStrategyExecutor strategyExecutor;
+        private IStrategyExecutor_Single strategyExecutor;
 
         public StrategyExecutor_CodePeriod(IStrategyCenter strategyCenter, StrategyArguments_CodePeriod strategyArguments)
         {

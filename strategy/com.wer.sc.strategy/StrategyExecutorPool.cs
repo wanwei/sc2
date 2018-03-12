@@ -19,9 +19,9 @@ namespace com.wer.sc.strategy
 
         private bool isRunning;
 
-        private Queue<IStrategyExecutor> waitingQueue = new Queue<IStrategyExecutor>();
+        private Queue<IStrategyExecutor_Single> waitingQueue = new Queue<IStrategyExecutor_Single>();
 
-        private List<IStrategyExecutor> executingExecutors = new List<IStrategyExecutor>();
+        private List<IStrategyExecutor_Single> executingExecutors = new List<IStrategyExecutor_Single>();
 
         public int ThreadCount
         {
@@ -49,7 +49,7 @@ namespace com.wer.sc.strategy
             }
         }
 
-        public IList<IStrategyExecutor> ExecutingExecutors
+        public IList<IStrategyExecutor_Single> ExecutingExecutors
         {
             get
             {
@@ -65,7 +65,7 @@ namespace com.wer.sc.strategy
 
         public event PoolExecuteFinished OnPoolFinished;
 
-        public void Queue(IStrategyExecutor strategyExecutor)
+        public void Queue(IStrategyExecutor_Single strategyExecutor)
         {
             this.waitingQueue.Enqueue(strategyExecutor);
         }
@@ -95,7 +95,7 @@ namespace com.wer.sc.strategy
                             continue;
                         lock (lockExecutingListObj)
                         {
-                            IStrategyExecutor executor = waitingQueue.Dequeue();
+                            IStrategyExecutor_Single executor = waitingQueue.Dequeue();
                             executor.OnStart += Executor_OnStart;
                             executor.OnDayFinished += Executor_OnDayFinished;
                             executor.OnFinished += Executor_OnFinished;
@@ -122,9 +122,9 @@ namespace com.wer.sc.strategy
         {
             if (OnStrategyFinished != null)
                 OnStrategyFinished(sender, arguments);
-            if (sender != null && sender is IStrategyExecutor)
+            if (sender != null && sender is IStrategyExecutor_Single)
             {
-                IStrategyExecutor executor = ((IStrategyExecutor)sender);
+                IStrategyExecutor_Single executor = ((IStrategyExecutor_Single)sender);
                 executor.OnStart -= Executor_OnStart;
                 executor.OnDayFinished -= Executor_OnDayFinished;
                 executor.OnFinished -= Executor_OnFinished;
@@ -152,9 +152,9 @@ namespace com.wer.sc.strategy
 
     class StrategyExecutorRuner
     {
-        private IStrategyExecutor executor;
+        private IStrategyExecutor_Single executor;
 
-        public StrategyExecutorRuner(IStrategyExecutor executor)
+        public StrategyExecutorRuner(IStrategyExecutor_Single executor)
         {
             this.executor = executor;
         }

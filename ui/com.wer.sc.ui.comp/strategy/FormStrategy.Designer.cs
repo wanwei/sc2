@@ -35,6 +35,7 @@
             this.btStrategyDescription = new System.Windows.Forms.ToolStripButton();
             this.btStrategyDataPackage = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btRunState = new System.Windows.Forms.ToolStripButton();
             this.btStrategyReport = new System.Windows.Forms.ToolStripButton();
             this.btStrategyResult = new System.Windows.Forms.ToolStripButton();
             this.btExecutor = new System.Windows.Forms.Button();
@@ -45,10 +46,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.compParameters1 = new com.wer.sc.graphic.param.CompParameters();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btRunState = new System.Windows.Forms.ToolStripButton();
+            this.compCodePackage1 = new com.wer.sc.ui.comp.CompCodePackage();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -129,6 +129,15 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
+            // btRunState
+            // 
+            this.btRunState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btRunState.Image = ((System.Drawing.Image)(resources.GetObject("btRunState.Image")));
+            this.btRunState.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btRunState.Name = "btRunState";
+            this.btRunState.Size = new System.Drawing.Size(24, 28);
+            this.btRunState.Text = "toolStripButton1";
+            // 
             // btStrategyReport
             // 
             this.btStrategyReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -198,6 +207,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -217,6 +227,7 @@
             // 
             // compParameters1
             // 
+            this.compParameters1.BackColor = System.Drawing.Color.Transparent;
             this.compParameters1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compParameters1.Location = new System.Drawing.Point(3, 3);
             this.compParameters1.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
@@ -228,28 +239,20 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.compCodePackage1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(774, 452);
+            this.tabPage2.Size = new System.Drawing.Size(774, 447);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "数据";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // compCodePackage1
-            // 
-            this.compCodePackage1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compCodePackage1.Location = new System.Drawing.Point(3, 3);
-            this.compCodePackage1.Name = "compCodePackage1";
-            this.compCodePackage1.Size = new System.Drawing.Size(768, 446);
-            this.compCodePackage1.TabIndex = 0;
-            // 
             // tabPage3
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Location = new System.Drawing.Point(4, 30);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(774, 452);
+            this.tabPage3.Size = new System.Drawing.Size(774, 447);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "配置";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -276,14 +279,13 @@
             this.splitContainer1.SplitterDistance = 481;
             this.splitContainer1.TabIndex = 11;
             // 
-            // btRunState
+            // compCodePackage1
             // 
-            this.btRunState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btRunState.Image = ((System.Drawing.Image)(resources.GetObject("btRunState.Image")));
-            this.btRunState.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btRunState.Name = "btRunState";
-            this.btRunState.Size = new System.Drawing.Size(24, 28);
-            this.btRunState.Text = "toolStripButton1";
+            this.compCodePackage1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compCodePackage1.Location = new System.Drawing.Point(3, 3);
+            this.compCodePackage1.Name = "compCodePackage1";
+            this.compCodePackage1.Size = new System.Drawing.Size(768, 441);
+            this.compCodePackage1.TabIndex = 0;
             // 
             // FormStrategy
             // 

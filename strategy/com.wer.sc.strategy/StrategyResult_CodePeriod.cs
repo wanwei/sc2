@@ -22,7 +22,7 @@ namespace com.wer.sc.strategy
 
         private StrategyReferedPeriods referedPeriods;
 
-        private IStrategyGraphicContainer priceShapeContainerManager;
+        private IStrategyDrawer strategyDrawer;
 
         private IStrategyTrader strategyTrader;
 
@@ -38,12 +38,12 @@ namespace com.wer.sc.strategy
             this.referedPeriods = referedPeriods;
         }
 
-        public StrategyResult_CodePeriod(ICodePeriod codePeriod, StrategyForwardPeriod forwardPeriod, StrategyReferedPeriods referedPeriods, IStrategyGraphicContainer shapeContainer, IStrategyTrader strategyTrader)
+        public StrategyResult_CodePeriod(ICodePeriod codePeriod, StrategyForwardPeriod forwardPeriod, StrategyReferedPeriods referedPeriods, IStrategyDrawer strategyDrawer, IStrategyTrader strategyTrader)
         {
             this.codePeriod = codePeriod;
             this.forwardPeriod = forwardPeriod;
             this.referedPeriods = referedPeriods;
-            this.priceShapeContainerManager = shapeContainer;
+            this.strategyDrawer = strategyDrawer;
             this.strategyTrader = strategyTrader;
         }
 
@@ -83,11 +83,11 @@ namespace com.wer.sc.strategy
         /// <summary>
         /// 策略在该代码周期内画的所有形状
         /// </summary>
-        public IStrategyGraphicContainer PriceShapes
+        public IStrategyDrawer StrategyDrawer
         {
             get
             {
-                return priceShapeContainerManager;
+                return strategyDrawer;
             }
         }
 
@@ -117,8 +117,8 @@ namespace com.wer.sc.strategy
         public void Save(IList<XmlElement> xmlElems)
         {
             SaveMain(xmlElems[0]);
-            if (this.priceShapeContainerManager != null && xmlElems[1] != null)
-                this.priceShapeContainerManager.Save(xmlElems[1]);
+            if (this.strategyDrawer != null && xmlElems[1] != null)
+                this.strategyDrawer.Save(xmlElems[1]);
             if (this.strategyTrader != null && xmlElems[2] != null)
                 this.strategyTrader.Save(xmlElems[2]);
         }
@@ -146,8 +146,8 @@ namespace com.wer.sc.strategy
                 XmlElement elemShapes = xmlElems[1];
                 if (elemShapes != null)
                 {
-                    this.priceShapeContainerManager = new StrategyGraphicList();
-                    this.priceShapeContainerManager.Load(elemShapes);
+                    this.strategyDrawer = new StrategyDrawer();
+                    this.strategyDrawer.Load(elemShapes);
                 }
             }
             if (xmlElems.Count > 2)
@@ -180,7 +180,7 @@ namespace com.wer.sc.strategy
         {
             XmlElement[] elemArr = new XmlElement[3];
             elemArr[0] = GetRoot("strategyresult_code");
-            if (this.priceShapeContainerManager != null)
+            if (this.strategyDrawer != null)
                 elemArr[1] = GetRoot("strategyshape");
             if (this.strategyTrader != null)
                 elemArr[2] = GetRoot("strategytrader");

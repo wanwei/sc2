@@ -28,7 +28,7 @@ namespace com.wer.sc.strategy
             StrategyForwardPeriod forwardPeriod = new StrategyForwardPeriod(true, KLinePeriod.KLinePeriod_15Minute);
 
             StrategyArguments_CodePeriod arguments = new StrategyArguments_CodePeriod(codePeriod, referedPeriods, forwardPeriod);     
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
 
             IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             executor.Strategy = strategy;

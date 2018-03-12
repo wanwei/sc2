@@ -18,7 +18,7 @@ namespace com.wer.sc.strategy
     /// 数据包策略执行器
     /// 使用该执行器必须提供一个
     /// </summary>
-    public class StrategyExecutor_DataPackage : StrategyExecutorAbstract, IStrategyExecutor
+    public class StrategyExecutor_DataPackage : StrategyExecutorAbstract, IStrategyExecutor_Single
     {
         private object lockRunObject = new object();
 
@@ -125,6 +125,9 @@ namespace com.wer.sc.strategy
 
             this.strategyHelper = GetDefaultStrategyHelper();
             this.strategyHelper.Trader.Account.BindRealTimeReader(dataForward);
+
+            //初始化绘图器
+            ((StrategyHelper)this.strategyHelper).Drawer = new StrategyDrawer(this.dataPackage, ReferedPeriods);
             return this.strategyHelper;
         }
 
@@ -204,9 +207,8 @@ namespace com.wer.sc.strategy
             strategyResult.Parameters = Strategy.Parameters;
             strategyResult.StrategyQueryResultManager = strategyHelper.QueryResultManager;
 
-            //绘图暂时不处理，绘图需要特别处理，不是一个container能解决的
-            IStrategyGraphicContainer shapeContainer = null;
-            StrategyResult_CodePeriod strategyResult_CodePeriod = new StrategyResult_CodePeriod(CodePeriod, ForwardPeriod, ReferedPeriods, shapeContainer, StrategyHelper.Trader);
+            //绘图暂时不处理，绘图需要特别处理，不是一个container能解决的            
+            StrategyResult_CodePeriod strategyResult_CodePeriod = new StrategyResult_CodePeriod(CodePeriod, ForwardPeriod, ReferedPeriods, StrategyHelper.Drawer, StrategyHelper.Trader);
             strategyResult.AddStrategyResult_Code(strategyResult_CodePeriod);
             this.strategyResult = strategyResult;
         }

@@ -65,6 +65,7 @@
     <Compile Include="loader\TestStrategyAssemblyConfig.cs" />
     <Compile Include="mock\MockStrategy.cs" />
     <Compile Include="mock\MockStrategy_Empty.cs" />
+    <Compile Include="mock\MockStrategy_Event.cs" />
     <Compile Include="mock\MockStrategy_Ma.cs" />
     <Compile Include="mock\MockStrategy_Parameter.cs" />
     <Compile Include="mock\MockStrategy_ReferOtherCode.cs" />

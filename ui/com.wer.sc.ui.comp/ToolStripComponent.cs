@@ -144,8 +144,8 @@ namespace com.wer.sc.ui.comp
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                IStrategyExecutorPool pool = StrategyCenter.Default.GetStrategyExecutorPool();                
-                FormStrategyExecutorPool formRunState = new FormStrategyExecutorPool(pool);
+                IStrategyExecutorPool pool = StrategyCenter.Default.GetStrategyExecutorPool();
+                FormStrategyExecutorState formRunState = new FormStrategyExecutorState(pool);
                 formRunState.TopMost = true;
                 formRunState.Show();
             }

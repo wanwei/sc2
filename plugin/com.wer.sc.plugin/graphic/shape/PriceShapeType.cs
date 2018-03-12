@@ -12,9 +12,13 @@ namespace com.wer.sc.graphic.shape
 
         Point,
 
+        PointLink,
+
         Line,
 
         PolyLine,
+
+        PolyLineLink,
 
         Rect,
 

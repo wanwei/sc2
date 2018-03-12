@@ -1,4 +1,5 @@
 ﻿using com.wer.sc.graphic.shape;
+using com.wer.sc.utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,7 +13,7 @@ namespace com.wer.sc.strategy
     /// 策略绘图器
     /// 该接口用于执行策略的绘制图形
     /// </summary>
-    public interface IStrategyDrawer_PriceRect
+    public interface IStrategyDrawer_PriceRect : IXmlExchange
     {
         /// <summary>
         /// 写该图的title，写在该图的左上角
@@ -22,6 +23,15 @@ namespace com.wer.sc.strategy
         /// <param name="text">绘制的文本</param>
         /// <param name="color">使用的颜色</param>
         void DrawTitle(int x, string text, Color color);
+
+        /// <summary>
+        /// 写该图的title，写在该图的左上角
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="font"></param>
+        void DrawTitle(int x, string text, Color color, Font font);
 
         /// <summary>
         /// 画折线
@@ -76,7 +86,7 @@ namespace com.wer.sc.strategy
         /// </summary>
         /// <param name="label"></param>
         void DrawLabel(PriceShape_Label label);
-      
+
         /// <summary>
         /// 写文字
         /// </summary>

@@ -29,7 +29,7 @@ namespace com.wer.sc.strategy
             StrategyArguments_DataPackage strategyArguments = new StrategyArguments_DataPackage(dataPackage, referedPeriods, forwardPeriod);
             //自动保存结果
             strategyArguments.IsSaveResult = true;
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyArguments);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(strategyArguments);
             MockStrategy_Results strategy = new MockStrategy_Results();
             strategy.Name = "策略结果保存";
             executor.Strategy = strategy;
@@ -74,7 +74,7 @@ namespace com.wer.sc.strategy
 
             StrategyArguments_CodePeriod arguments = new StrategyArguments_CodePeriod(codePeriod,referedPeriods,forwardPeriod); 
             arguments.IsSaveResult = true;
-            IStrategyExecutor executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
+            IStrategyExecutor_Single executor = StrategyCenter.Default.GetStrategyExecutorFactory().CreateExecutor_History(arguments);
 
             //IStrategy strategy = StrategyGetter.GetStrategy(typeof(MockStrategy_Simple));
             MockStrategy_Results strategy = new MockStrategy_Results();

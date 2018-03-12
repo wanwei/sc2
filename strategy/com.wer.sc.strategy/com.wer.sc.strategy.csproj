@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="store\StrategyDataPathUtils.cs" />
     <Compile Include="store\StrategyResultStore_File.cs" />
+    <Compile Include="StrategyDrawer_PriceRect_Empty.cs" />
     <Compile Include="StrategyGraphic.cs" />
     <Compile Include="StrategyGraphicList.cs" />
     <Compile Include="StrategyGraphicTitle.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="loader\StrategyMgrFactory.cs" />
     <Compile Include="StrategyDrawer.cs" />
     <Compile Include="StrategyDrawer_PriceRect.cs" />
-    <Compile Include="StrategyExecutor.cs" />
     <Compile Include="StrategyExecutorAbstract.cs" />
     <Compile Include="StrategyExecutorFactory.cs" />
     <Compile Include="StrategyExecutorInfo.cs" />

@@ -18,7 +18,7 @@ namespace com.wer.sc.ui.comp
     {
         private IStrategyData strategyData;
 
-        private IStrategyExecutor strategyExecutor;
+        private IStrategyExecutor_Single strategyExecutor;
         //画图器
         private IStrategyDrawer drawOperator;
 
@@ -37,7 +37,7 @@ namespace com.wer.sc.ui.comp
             }
         }
 
-        public IStrategyExecutor StrategyExecutor
+        public IStrategyExecutor_Single StrategyExecutor
         {
             get { return strategyExecutor; }
         }
@@ -142,10 +142,10 @@ namespace com.wer.sc.ui.comp
                 IStrategyDrawer_PriceRect drawer = drawOperator.GetDrawer_KLine(compData.KlinePeriod);
                 drawer.Refresh();
             }
-            else if (chartType == ChartType.TimeLine)
-                drawOperator.GetDrawer_TimeLine().Refresh();
-            else if (chartType == ChartType.Tick)
-                drawOperator.GetDrawer_Tick().Refresh();
+            //else if (chartType == ChartType.TimeLine)
+            //    drawOperator.GetDrawer_TimeLine().Refresh();
+            //else if (chartType == ChartType.Tick)
+            //    drawOperator.GetDrawer_Tick().Refresh();
         }
     }
 }
